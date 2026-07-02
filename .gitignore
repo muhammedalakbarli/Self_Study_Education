@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local-only assistant/config files (repoda saxlanmır)
+CLAUDE.md
+AGENTS.md
+.claude/
