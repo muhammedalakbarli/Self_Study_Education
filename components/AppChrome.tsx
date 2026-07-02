@@ -8,7 +8,8 @@ import Sidebar from "./Sidebar";
 
 export default function AppChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const bare = pathname === "/";
+  // Giriş və qeydiyyat səhifələrində sidebar göstərilmir.
+  const bare = pathname === "/" || pathname === "/signup";
 
   if (bare) return <>{children}</>;
 

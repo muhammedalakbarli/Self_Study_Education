@@ -3,10 +3,11 @@
 // Fənn səhifəsi (dark Holberton stili): hər bölmə üçün öyrənmə yolu (node path).
 
 import { use, useEffect, useState } from "react";
-import { useRouter, notFound } from "next/navigation";
+import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getSubject } from "@/lib/content";
 import { loadProgress, isLessonLocked, type ProgressState } from "@/lib/progress";
+import { useAuthUser } from "@/lib/useAuthUser";
 import { projectDates } from "@/lib/dates";
 import LearningPath, { type PathNode } from "@/components/LearningPath";
 
@@ -16,22 +17,17 @@ export default function SubjectPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = use(params);
-  const router = useRouter();
+  const { ready } = useAuthUser();
   const [state, setState] = useState<ProgressState | null>(null);
 
   const subject = getSubject(slug);
 
   useEffect(() => {
-    const p = loadProgress();
-    if (!p.name) {
-      router.replace("/");
-      return;
-    }
-    setState(p);
-  }, [router]);
+    setState(loadProgress());
+  }, []);
 
   if (!subject) notFound();
-  if (!state) return null;
+  if (!ready || !state) return null;
 
   const completed = state.completedLessons;
 

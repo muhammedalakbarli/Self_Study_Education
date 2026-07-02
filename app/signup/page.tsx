@@ -1,19 +1,20 @@
 "use client";
 
-// Giriş səhifəsi — Holberton üslubu: açıq fonda mərkəzi kart, loqo,
-// email/parol ilə real Supabase girişi, qeydiyyat səhifəsinə keçid.
+// Qeydiyyat səhifəsi — ad, email, parol ilə real Supabase qeydiyyatı.
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { signInWithEmail, getCurrentUser } from "@/lib/auth";
+import { signUpWithEmail, getCurrentUser } from "@/lib/auth";
 import Logo from "@/components/Logo";
 
-export default function LoginPage() {
+export default function SignupPage() {
   const router = useRouter();
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [info, setInfo] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -22,14 +23,22 @@ export default function LoginPage() {
     });
   }, [router]);
 
-  async function login() {
-    if (!email.trim() || !password) return;
+  async function submit() {
+    if (!name.trim() || !email.trim() || password.length < 6) {
+      setError("Ad, email və ən azı 6 simvolluq parol yazın.");
+      return;
+    }
     setLoading(true);
     setError("");
-    const res = await signInWithEmail(email.trim(), password);
+    setInfo("");
+    const res = await signUpWithEmail(name.trim(), email.trim(), password);
     setLoading(false);
     if (!res.ok) {
-      setError(res.error || "Giriş alınmadı.");
+      setError(res.error || "Qeydiyyat alınmadı.");
+      return;
+    }
+    if (res.needsEmailConfirm) {
+      setInfo("Emailinə təsdiq linki göndərildi. Təsdiqlədikdən sonra daxil ol.");
       return;
     }
     router.push("/dashboard");
@@ -42,10 +51,18 @@ export default function LoginPage() {
           <Logo size={64} />
         </div>
         <h1 className="mt-6 text-center text-xl font-bold text-slate-900">
-          Hesabına daxil ol
+          Yeni hesab yarat
         </h1>
 
-        <label className="mt-8 block text-sm font-bold text-slate-800">Email</label>
+        <label className="mt-8 block text-sm font-bold text-slate-800">Ad</label>
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className="mt-1.5 w-full rounded-md border border-slate-300 px-3 py-2 text-slate-900 outline-none focus:border-brand focus:ring-1 focus:ring-brand"
+        />
+
+        <label className="mt-4 block text-sm font-bold text-slate-800">Email</label>
         <input
           type="email"
           value={email}
@@ -58,7 +75,7 @@ export default function LoginPage() {
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && login()}
+          onKeyDown={(e) => e.key === "Enter" && submit()}
           className="mt-1.5 w-full rounded-md border border-slate-300 px-3 py-2 text-slate-900 outline-none focus:border-brand focus:ring-1 focus:ring-brand"
         />
 
@@ -67,20 +84,25 @@ export default function LoginPage() {
             {error}
           </p>
         )}
+        {info && (
+          <p className="mt-3 rounded-md bg-emerald-50 px-3 py-2 text-sm text-emerald-700">
+            {info}
+          </p>
+        )}
 
         <button
           type="button"
-          onClick={login}
-          disabled={!email.trim() || !password || loading}
+          onClick={submit}
+          disabled={loading}
           className="mt-6 w-full rounded-md bg-brand px-4 py-2.5 font-semibold text-white transition hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-40"
         >
-          {loading ? "Yoxlanılır..." : "Daxil ol"}
+          {loading ? "Yaradılır..." : "Qeydiyyatdan keç"}
         </button>
 
         <p className="mt-6 text-center text-sm text-slate-600">
-          Hesabın yoxdur?{" "}
-          <Link href="/signup" className="font-semibold text-brand hover:underline">
-            Qeydiyyatdan keç
+          Artıq hesabın var?{" "}
+          <Link href="/" className="font-semibold text-brand hover:underline">
+            Daxil ol
           </Link>
         </p>
       </div>
