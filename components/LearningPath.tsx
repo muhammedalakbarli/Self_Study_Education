@@ -14,7 +14,10 @@ export interface PathNode {
   deadline?: string; // son tarix etiketi
 }
 
-const PER_ROW = 3;
+// Sətir başına düyün sayı. 4 seçildi ki, hazırkı fənlərin bütün layihələri
+// (3–4 ədəd) tək, birləşmiş sırada görünsün — tək qalan qopuq düyün olmasın.
+// Layihələr 4-dən çoxalanda avtomatik ilanvari (serpentine) sarılır.
+const PER_ROW = 4;
 
 function Circle({ node, label }: { node: PathNode; label: number | string }) {
   const cls =
