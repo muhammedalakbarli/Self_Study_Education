@@ -3,11 +3,11 @@
 // Layihə (project) səhifəsi — holberton3 üslubu:
 // şəkil → başlıq → başlama/son tarix → ətraflı qaydalar → tapşırıqlar (15 + 5 bonus).
 
-import { use, useEffect, useState } from "react";
-import { useRouter, notFound } from "next/navigation";
+import { use, useState } from "react";
+import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getLesson, orderedLessonIds } from "@/lib/content";
-import { loadProgress } from "@/lib/progress";
+import { useAuthUser } from "@/lib/useAuthUser";
 import { projectDates } from "@/lib/dates";
 import LessonRunner from "@/components/lesson/LessonRunner";
 import LessonVisual from "@/components/LessonVisual";
@@ -18,19 +18,10 @@ export default function LessonPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = use(params);
-  const router = useRouter();
-  const [ready, setReady] = useState(false);
+  const { ready } = useAuthUser();
   const [started, setStarted] = useState(false);
 
   const found = getLesson(id);
-
-  useEffect(() => {
-    if (!loadProgress().name) {
-      router.replace("/");
-      return;
-    }
-    setReady(true);
-  }, [router]);
 
   if (!found) notFound();
   if (!ready) return null;

@@ -4,27 +4,23 @@
 // cari dərs / səviyyə (radar) / növbəti dərslər panelləri + score halqası və öyrənmə yolu.
 
 import { useEffect, useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { subjects } from "@/lib/content";
 import { loadProgress, isLessonLocked, type ProgressState } from "@/lib/progress";
+import { useAuthUser } from "@/lib/useAuthUser";
+import { displayName } from "@/lib/auth";
 import { projectDates } from "@/lib/dates";
 import RadialProgress from "@/components/RadialProgress";
 import LearningPath, { type PathNode } from "@/components/LearningPath";
 
 export default function DashboardPage() {
-  const router = useRouter();
+  const { user, ready } = useAuthUser();
   const [state, setState] = useState<ProgressState | null>(null);
   const [activeSlug, setActiveSlug] = useState(subjects[0].slug);
 
   useEffect(() => {
-    const p = loadProgress();
-    if (!p.name) {
-      router.replace("/");
-      return;
-    }
-    setState(p);
-  }, [router]);
+    setState(loadProgress());
+  }, []);
 
   const active = subjects.find((s) => s.slug === activeSlug)!;
 
@@ -51,7 +47,7 @@ export default function DashboardPage() {
     return { nodes, lessons, currentLesson, scorePct };
   }, [active, state]);
 
-  if (!state) return null;
+  if (!ready || !state) return null;
 
   // Radar üçün hər fənnin tamamlanma nisbəti
   const radarValues = subjects.map((s) => {
@@ -65,7 +61,7 @@ export default function DashboardPage() {
       <main className="mx-auto max-w-5xl px-4 py-6">
         <h1 className="text-2xl font-bold text-white">Öyrənmə yolun</h1>
         <p className="text-sm text-muted">
-          Salam, {state.name} — davam edək
+          Salam, {displayName(user)} — davam edək
         </p>
 
         {/* Fənn tab-ları */}
