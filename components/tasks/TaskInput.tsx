@@ -1,7 +1,6 @@
 "use client";
 
-// Tapşırıq tipini alıb uyğun giriş sahəsini göstərir (idarə olunan komponent).
-// Cavab dəyəri yuxarıdakı LessonRunner-də saxlanılır.
+// Tapşırıq tipini alıb uyğun giriş sahəsini göstərir (dark Holberton stili).
 
 import type { Task } from "@/lib/types";
 import type { UserAnswer } from "@/lib/grading";
@@ -10,8 +9,7 @@ interface Props {
   task: Task;
   value: UserAnswer | null;
   onChange: (value: UserAnswer) => void;
-  disabled: boolean; // yoxlandıqdan sonra giriş kilidlənir
-  correctIndex?: number | null; // yoxlandıqdan sonra düzgün variantı göstərmək üçün
+  disabled: boolean;
 }
 
 export default function TaskInput({ task, value, onChange, disabled }: Props) {
@@ -26,11 +24,11 @@ export default function TaskInput({ task, value, onChange, disabled }: Props) {
               type="button"
               disabled={disabled}
               onClick={() => onChange(i)}
-              className={`rounded-xl border-2 px-4 py-3 text-left text-lg transition
+              className={`rounded-xl border px-4 py-3 text-left text-lg transition
                 ${
                   selected
-                    ? "border-sky-500 bg-sky-50 font-medium"
-                    : "border-slate-200 bg-white hover:border-slate-300"
+                    ? "border-brand bg-brand/10 font-medium text-white"
+                    : "border-line bg-panel-2 text-slate-200 hover:border-slate-500"
                 }
                 ${disabled ? "cursor-not-allowed opacity-80" : "cursor-pointer"}`}
             >
@@ -42,17 +40,16 @@ export default function TaskInput({ task, value, onChange, disabled }: Props) {
     );
   }
 
-  // fill_blank və numeric üçün mətn girişi
   return (
     <input
-      type={task.type === "numeric" ? "text" : "text"}
+      type="text"
       inputMode={task.type === "numeric" ? "decimal" : "text"}
       value={value === null ? "" : String(value)}
       disabled={disabled}
       onChange={(e) => onChange(e.target.value)}
       placeholder="Cavabını yaz..."
-      className="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-lg
-        focus:border-sky-500 focus:outline-none disabled:opacity-80"
+      className="w-full rounded-xl border border-line bg-panel-2 px-4 py-3 text-lg text-white
+        placeholder:text-muted focus:border-brand focus:outline-none disabled:opacity-80"
     />
   );
 }
