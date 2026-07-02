@@ -1,19 +1,25 @@
 // Layihələrin başlama və son tarixləri (deadline).
-// Hər layihə 1 həftə sürür və ardıcıl gəlir. Baza — bu həftənin bazar ertəsi.
+// Hər layihə 1 həftə sürür və ardıcıl gəlir. Baza — dərs ilinin başlanğıcı: 15 Sentyabr.
 
 const MONTHS_AZ = [
   "Yanvar", "Fevral", "Mart", "Aprel", "May", "İyun",
   "İyul", "Avqust", "Sentyabr", "Oktyabr", "Noyabr", "Dekabr",
 ];
 
-function mondayOfThisWeek(): Date {
+// İlk layihənin başlama tarixi: cari dərs ilinin 15 Sentyabrı.
+// Dərs ili sentyabrda başlayıb yaza qədər davam edir, ona görə:
+//  - Sentyabr–Dekabr: bu ilin 15 Sentyabrı
+//  - Yanvar–İyun (dərs ili ortası): keçən ilin 15 Sentyabrı
+//  - İyul–Avqust (yay tətili, növbəti il üçün hazırlıq): bu ilin 15 Sentyabrı
+function academicStart(): Date {
   const now = new Date();
-  const day = now.getDay(); // 0=bazar, 1=bazar ertəsi ...
-  const diff = (day + 6) % 7; // bazar ertəsinə qədər geri
-  const monday = new Date(now);
-  monday.setHours(0, 0, 0, 0);
-  monday.setDate(now.getDate() - diff);
-  return monday;
+  const y = now.getFullYear();
+  const m = now.getMonth(); // 0=Yanvar ... 8=Sentyabr
+  let year = y;
+  if (m <= 5) year = y - 1; // Yanvar–İyun → keçən sentyabr
+  const start = new Date(year, 8, 15); // 15 Sentyabr
+  start.setHours(0, 0, 0, 0);
+  return start;
 }
 
 function addDays(d: Date, days: number): Date {
@@ -34,7 +40,7 @@ export function projectDates(index: number): {
   deadlineLabel: string;
   status: "gələcək" | "aktiv" | "keçmiş";
 } {
-  const base = mondayOfThisWeek();
+  const base = academicStart();
   const start = addDays(base, index * 7);
   const deadline = addDays(start, 6);
   const today = new Date();

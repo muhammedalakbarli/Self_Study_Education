@@ -81,8 +81,7 @@ export default function LessonRunner({ slug, lesson }: Props) {
   if (phase === "bonusPrompt") {
     return (
       <div className="mx-auto max-w-xl py-12 text-center">
-        <div className="text-5xl">⭐</div>
-        <h1 className="mt-4 text-2xl font-bold text-white">Əsas hissə bitdi!</h1>
+        <h1 className="text-2xl font-bold text-white">Əsas hissə bitdi!</h1>
         <p className="mt-2 text-muted">
           İndiyə qədər <b className="text-brand-soft">+{earnedXp} XP</b> qazandın.
         </p>
@@ -94,7 +93,7 @@ export default function LessonRunner({ slug, lesson }: Props) {
             onClick={startBonus}
             className="rounded-lg bg-brand px-5 py-3 font-semibold text-white hover:bg-brand-dark"
           >
-            ⭐ Bonusa başla
+            Bonusa başla
           </button>
           <button
             onClick={finishWithoutBonus}
@@ -111,10 +110,9 @@ export default function LessonRunner({ slug, lesson }: Props) {
   if (phase === "done") {
     return (
       <div className="mx-auto max-w-xl py-16 text-center">
-        <div className="text-6xl">🎉</div>
-        <h1 className="mt-4 text-2xl font-bold text-white">Layihə tamamlandı!</h1>
+        <h1 className="text-2xl font-bold text-white">Layihə tamamlandı!</h1>
         <div className="mt-6 inline-flex items-center gap-2 rounded-full bg-brand/15 px-5 py-2 text-lg font-semibold text-brand-soft">
-          ⭐ +{earnedXp} XP
+          +{earnedXp} XP
         </div>
         <div className="mt-8 flex justify-center gap-3">
           <Link
@@ -150,7 +148,7 @@ export default function LessonRunner({ slug, lesson }: Props) {
         </span>
         {inBonus && (
           <span className="rounded-full bg-amber-400/15 px-2.5 py-0.5 text-amber-400">
-            ⭐ Bonus
+            Bonus
           </span>
         )}
       </div>
@@ -176,7 +174,7 @@ export default function LessonRunner({ slug, lesson }: Props) {
               : "bg-brand/15 text-brand-soft"
           }`}
         >
-          {lastCorrect ? "✅ Doğru! Afərin." : "❌ Səhv. Növbəti dəfə alınacaq!"}
+          {lastCorrect ? "Doğru! Afərin." : "Səhv. Növbəti dəfə alınacaq!"}
         </div>
       )}
 

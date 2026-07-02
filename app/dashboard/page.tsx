@@ -9,7 +9,6 @@ import Link from "next/link";
 import { subjects } from "@/lib/content";
 import { loadProgress, isLessonLocked, type ProgressState } from "@/lib/progress";
 import { projectDates } from "@/lib/dates";
-import AppHeader from "@/components/AppHeader";
 import RadialProgress from "@/components/RadialProgress";
 import LearningPath, { type PathNode } from "@/components/LearningPath";
 
@@ -63,12 +62,10 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-ink">
-      <AppHeader />
-
       <main className="mx-auto max-w-5xl px-4 py-6">
         <h1 className="text-2xl font-bold text-white">Öyrənmə yolun</h1>
         <p className="text-sm text-muted">
-          Salam, {state.name} — davam edək 👇
+          Salam, {state.name} — davam edək
         </p>
 
         {/* Fənn tab-ları */}
@@ -85,7 +82,7 @@ export default function DashboardPage() {
                     : "bg-panel text-slate-300 hover:bg-panel-2"
                 }`}
               >
-                {s.icon} {s.name}
+                {s.name}
               </button>
             );
           })}
@@ -112,7 +109,7 @@ export default function DashboardPage() {
                 href={`/lessons/${currentLesson.id}`}
                 className="mt-4 inline-flex items-center gap-2 rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white hover:bg-brand-dark"
               >
-                ▶ Davam et
+                Davam et
               </Link>
             )}
           </div>
@@ -127,29 +124,40 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          {/* Növbəti dərslər */}
+          {/* Yaxınlaşan son tarixlər */}
           <div className="rounded-2xl border border-line bg-panel p-5">
             <div className="text-xs font-semibold uppercase tracking-wide text-muted">
-              Növbəti dərslər
+              Yaxınlaşan son tarixlər
             </div>
             <ul className="mt-3 space-y-2">
-              {lessons.slice(0, 4).map((l) => {
-                const done = state.completedLessons.includes(l.id);
-                return (
-                  <li key={l.id} className="flex items-center gap-3 text-sm">
-                    <span
-                      className={`flex h-6 w-6 items-center justify-center rounded-full text-xs ${
-                        done ? "bg-brand text-white" : "bg-panel-2 text-muted"
-                      }`}
-                    >
-                      {done ? "✓" : "•"}
-                    </span>
-                    <span className={done ? "text-slate-400 line-through" : "text-white"}>
-                      {l.title}
-                    </span>
-                  </li>
-                );
-              })}
+              {lessons
+                .map((l, i) => ({ l, i }))
+                .filter(({ l }) => !state.completedLessons.includes(l.id))
+                .slice(0, 4)
+                .map(({ l, i }) => {
+                  const d = projectDates(i);
+                  return (
+                    <li key={l.id} className="flex items-center gap-3">
+                      <span className="flex h-9 w-9 shrink-0 flex-col items-center justify-center rounded-lg bg-panel-2 leading-none">
+                        <span className="text-sm font-bold text-white">
+                          {d.deadline.getDate()}
+                        </span>
+                        <span className="text-[9px] text-muted">
+                          {d.deadlineLabel.split(" ")[1]?.slice(0, 3)}
+                        </span>
+                      </span>
+                      <div className="min-w-0">
+                        <div className="truncate text-sm text-white">{l.title}</div>
+                        <div className="text-[11px] text-muted">
+                          son tarix: {d.deadlineLabel}
+                        </div>
+                      </div>
+                    </li>
+                  );
+                })}
+              {lessons.every((l) => state.completedLessons.includes(l.id)) && (
+                <li className="text-sm text-muted">Hamısı tamamlandı</li>
+              )}
             </ul>
           </div>
         </div>
@@ -216,6 +224,23 @@ function SubjectRadar({ values, labels }: { values: number[]; labels: string[] }
           stroke="#33333f"
           strokeWidth="1"
         />
+      ))}
+      {/* səviyyə etiketləri (yuxarı ox boyunca) */}
+      {[
+        { r: 0.33, label: "Başlanğıc" },
+        { r: 0.66, label: "Orta" },
+        { r: 1, label: "Usta" },
+      ].map((lvl, i) => (
+        <text
+          key={i}
+          x={c + 3}
+          y={c - R * lvl.r}
+          fill="#6b6b78"
+          fontSize="8"
+          dominantBaseline="middle"
+        >
+          {lvl.label}
+        </text>
       ))}
       {/* oxlar */}
       {outer.map((p, i) => (

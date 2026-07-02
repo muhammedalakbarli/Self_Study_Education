@@ -1,4 +1,8 @@
-// Holberton-üslubu qırmızı dairəvi progress halqası.
+"use client";
+
+// Holberton-üslubu qırmızı dairəvi progress halqası (rəqəm count-up ilə canlanır).
+
+import { useCountUp } from "@/lib/useCountUp";
 
 interface Props {
   value: number; // 0-100
@@ -17,6 +21,7 @@ export default function RadialProgress({
   const circumference = 2 * Math.PI * radius;
   const clamped = Math.max(0, Math.min(100, value));
   const offset = circumference - (clamped / 100) * circumference;
+  const shown = useCountUp(clamped);
 
   return (
     <div
@@ -46,7 +51,7 @@ export default function RadialProgress({
         />
       </svg>
       <div className="absolute flex flex-col items-center leading-none">
-        <span className="text-2xl font-bold text-white">{clamped}%</span>
+        <span className="text-2xl font-bold text-white">{shown}%</span>
         {label && <span className="mt-1 text-xs text-muted">{label}</span>}
       </div>
     </div>

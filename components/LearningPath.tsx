@@ -1,6 +1,7 @@
-// Holberton-üslubu "öyrənmə yolu" — ilanvari (serpentine) layihə şəbəkəsi (holberton4).
-// Sətir başına 3 düyün; sətirlər növbəli istiqamətdə axır və xətlərlə birləşir.
-// Hər düyün bir layihədir: tamamlanmış (✓), açıq (nömrə), kiliddə (🔒).
+// Holberton-üslubu "öyrənmə yolu" — ilanvari (serpentine) şəbəkə, AŞAĞIDAN YUXARIYA.
+// İlk layihə ən altdadır; irəlilədikcə yol yuxarı doğru ilan kimi qıvrılır.
+// Bütün layihələr tək, birləşmiş yolda gedir. Hər düyün nömrəli bir layihədir:
+// tamamlanmış (dolu qırmızı), açıq (qırmızı halqa), kiliddə (boz).
 
 import Link from "next/link";
 
@@ -14,27 +15,22 @@ export interface PathNode {
   deadline?: string; // son tarix etiketi
 }
 
-// Sətir başına düyün sayı. 4 seçildi ki, hazırkı fənlərin bütün layihələri
-// (3–4 ədəd) tək, birləşmiş sırada görünsün — tək qalan qopuq düyün olmasın.
-// Layihələr 4-dən çoxalanda avtomatik ilanvari (serpentine) sarılır.
 const PER_ROW = 4;
 
-function Circle({ node, label }: { node: PathNode; label: number | string }) {
+// Layihə düyünü: sıra nömrəsi + vəziyyətə görə halqa/dolğu.
+function Circle({ node, label }: { node: PathNode; label: number }) {
   const cls =
     node.state === "done"
-      ? "bg-brand text-white shadow-[0_0_0_4px_rgba(224,20,63,0.2)]"
+      ? "bg-brand text-white ring-4 ring-brand/30"
       : node.state === "current"
-        ? "bg-panel text-brand ring-2 ring-brand shadow-[0_0_20px_rgba(224,20,63,0.35)]"
+        ? "bg-panel text-brand ring-2 ring-brand shadow-[0_0_20px_rgba(224,20,63,0.4)]"
         : "bg-panel-2 text-muted ring-1 ring-line";
-
-  const inner =
-    node.state === "done" ? "✓" : node.state === "locked" ? "🔒" : label;
 
   const circle = (
     <div
-      className={`flex h-16 w-16 items-center justify-center rounded-full text-lg font-bold transition ${cls}`}
+      className={`flex h-16 w-16 items-center justify-center rounded-full text-xl font-bold transition ${cls}`}
     >
-      {inner}
+      {label}
     </div>
   );
 
@@ -59,32 +55,58 @@ function Node({ node, label }: { node: PathNode; label: number }) {
         {node.title}
       </span>
       {node.deadline && (
-        <span className="text-[10px] text-muted">⏳ {node.deadline}</span>
+        <span className="text-[10px] text-muted">son: {node.deadline}</span>
       )}
     </div>
   );
 }
 
 export default function LearningPath({ nodes }: { nodes: PathNode[] }) {
-  // Sətirlərə böl
+  // Düyünləri sətirlərə böl: rows[0] = ilk layihələr (ən altda göstəriləcək).
   const rows: PathNode[][] = [];
   for (let i = 0; i < nodes.length; i += PER_ROW) {
     rows.push(nodes.slice(i, i + PER_ROW));
   }
 
+  // Yuxarıdan-aşağı render (ən üstdə sonuncu sətir): sətirləri tərsinə gəzirik.
+  const rendered = [...rows].reverse();
+
   return (
-    <div className="space-y-0">
-      {rows.map((row, r) => {
-        const reverse = r % 2 === 1;
-        const baseIndex = r * PER_ROW;
-        const rowDone = row.every((n) => n.state === "done");
+    <div className="overflow-x-auto">
+      {/* Qutu məzmun eninə sabitlənir ki, birləşdirici xətlər düz düyünlərə düşsün */}
+      <div className="mx-auto flex w-fit flex-col">
+        {rendered.map((row, ri) => {
+        const rowIndex = rows.length - 1 - ri; // orijinal (məntiqi) sıra
+        const reverse = rowIndex % 2 === 1; // tək sətirlər sağdan-sola axır
+        const baseIndex = rowIndex * PER_ROW;
+        const hasConnectorAbove = rowIndex < rows.length - 1;
+        // Dönüş tərəfi: cüt sətir sağda bitir (yuxarı sağdan qalxır), tək sətir solda.
+        const connectorOnRight = rowIndex % 2 === 0;
+        // Növbəti (yuxarıdakı) sətir tam açılıbsa xətt qırmızı olur.
+        const nextRowDone =
+          rowIndex + 1 < rows.length &&
+          rows[rowIndex + 1].every((n) => n.state === "done");
+
         return (
-          <div key={r}>
+          <div key={rowIndex}>
+            {/* Bu sətirlə yuxarıdakı sətir arasında şaquli birləşdirici */}
+            {hasConnectorAbove && (
+              <div
+                className={`flex ${connectorOnRight ? "justify-end" : "justify-start"}`}
+              >
+                <div className="w-24">
+                  <div
+                    className={`mx-auto h-8 w-1 rounded-full ${
+                      nextRowDone ? "bg-brand" : "bg-line"
+                    }`}
+                  />
+                </div>
+              </div>
+            )}
+
             {/* Düyün sətri */}
             <div
-              className={`flex items-start ${
-                reverse ? "flex-row-reverse" : ""
-              }`}
+              className={`flex items-start ${reverse ? "flex-row-reverse" : ""}`}
             >
               {row.map((node, i) => (
                 <div
@@ -102,22 +124,10 @@ export default function LearningPath({ nodes }: { nodes: PathNode[] }) {
                 </div>
               ))}
             </div>
-
-            {/* Sətirlər arası şaquli birləşdirici (dönüş tərəfində) */}
-            {r < rows.length - 1 && (
-              <div className={`flex ${reverse ? "justify-start" : "justify-end"}`}>
-                <div className="w-24">
-                  <div
-                    className={`mx-auto h-8 w-1 rounded-full ${
-                      rowDone ? "bg-brand" : "bg-line"
-                    }`}
-                  />
-                </div>
-              </div>
-            )}
-          </div>
-        );
-      })}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

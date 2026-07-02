@@ -81,17 +81,17 @@ export default function LessonPage({
           {/* Başlama / son tarix */}
           <div className="mt-5 flex flex-wrap gap-3 text-sm">
             <span className="rounded-lg bg-panel-2 px-3 py-1.5 text-slate-300">
-              📅 Başlama: <b className="text-white">{dates.startLabel}</b>
+              Başlama: <b className="text-white">{dates.startLabel}</b>
             </span>
             <span className="rounded-lg bg-panel-2 px-3 py-1.5 text-slate-300">
-              ⏳ Son tarix: <b className="text-white">{dates.deadlineLabel}</b>
+              Son tarix: <b className="text-white">{dates.deadlineLabel}</b>
             </span>
             <span className={`rounded-lg bg-panel-2 px-3 py-1.5 font-medium ${statusColor}`}>
               {dates.status === "aktiv"
-                ? "● Aktiv"
+                ? "Aktiv"
                 : dates.status === "gələcək"
-                  ? "○ Gələcək"
-                  : "● Vaxtı keçib"}
+                  ? "Gələcək"
+                  : "Vaxtı keçib"}
             </span>
           </div>
 
@@ -112,7 +112,7 @@ export default function LessonPage({
 
           {/* Tapşırıqlar */}
           <div className="mt-6 rounded-xl bg-panel-2 px-4 py-3 text-sm text-slate-300">
-            📝 {lesson.tasks.length} tapşırıq
+            {lesson.tasks.length} tapşırıq
             {bonusCount > 0 && (
               <>
                 {" "}

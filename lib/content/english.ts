@@ -8,7 +8,7 @@ export const english: Subject = {
   slug: "ingilis-dili",
   name: "İngilis dili",
   grade: 5,
-  icon: "🇬🇧",
+  icon: "İ",
   color: "violet",
   units: [
     {

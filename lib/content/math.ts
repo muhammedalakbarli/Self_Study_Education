@@ -11,7 +11,7 @@ export const math: Subject = {
   slug: "riyaziyyat",
   name: "Riyaziyyat",
   grade: 5,
-  icon: "🔢",
+  icon: "R",
   color: "sky",
   units: [
     // ═══════════════ 1. Natural ədədlər ═══════════════
@@ -293,7 +293,7 @@ export const math: Subject = {
             { id: "ry-frac-l4-t2", type: "multiple_choice", prompt: "2/9 + 5/9 cəmi neçəyə bərabərdir?", figure: { kind: "compareBars", a: { parts: 9, filled: 2 }, b: { parts: 9, filled: 5 } }, options: ["7/18", "7/9", "3/9", "10/9"], correctIndex: 1, xp: 10 },
             { id: "ry-frac-l4-t3", type: "numeric", prompt: "Hesabla: 6/13 − 2/13 fərqinin surəti neçədir?", answer: 4, xp: 10 },
             { id: "ry-frac-l4-t4", type: "multiple_choice", prompt: "1/6 + 2/6 + 3/6 cəmi neçəyə bərabərdir?", options: ["6/18", "6/6", "1/2", "6/12"], correctIndex: 1, xp: 10 },
-            { id: "ry-frac-l4-t5", type: "numeric", prompt: "Bir səbətdəki almaların 4/12-si qırmızı, 5/12-si yaşıldır. Qırmızı və yaşıl almalar birlikdə səbətin neçə on ikidə bir hissəsini təşkil edir? (Yalnız surəti yaz)", figure: { kind: "emoji", items: ["🍎", "🍎", "🍎", "🍎", "🍏", "🍏", "🍏", "🍏", "🍏", "⚪", "⚪", "⚪"] }, answer: 9, xp: 15 },
+            { id: "ry-frac-l4-t5", type: "numeric", prompt: "Bir səbətdəki almaların 4/12-si qırmızı, 5/12-si yaşıldır. Qırmızı və yaşıl almalar birlikdə səbətin neçə on ikidə bir hissəsini təşkil edir? (Yalnız surəti yaz)", figure: { kind: "dots", total: 12, filled: 9 }, answer: 9, xp: 15 },
             { id: "ry-frac-l4-t6", type: "fill_blank", prompt: "Məxrəcləri eyni olan kəsrləri toplayarkən yalnız ___ toplanır.", accepted: ["surətlər", "suretler", "surət", "suret"], xp: 10 },
             { id: "ry-frac-l4-t7", type: "numeric", prompt: "Hesabla: 4/11 + 5/11 kəsrinin surəti neçədir?", answer: 9, xp: 10 },
             { id: "ry-frac-l4-t8", type: "numeric", prompt: "Hesabla: 8/15 − 3/15 fərqinin surəti neçədir?", answer: 5, xp: 10 },

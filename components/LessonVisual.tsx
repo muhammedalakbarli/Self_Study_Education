@@ -1,4 +1,4 @@
-// Dərs izahlarını uşaqlar üçün canlandıran illüstrasiyalar.
+// Dərs izahlarını uşaqlar üçün canlandıran illüstrasiyalar (emojisiz — SVG/CSS).
 // Hər dərsin `visual` açarına görə uyğun şəkil göstərilir.
 
 import type { ReactNode } from "react";
@@ -29,14 +29,51 @@ function Fraction({ top, bottom }: { top: number | string; bottom: number | stri
   );
 }
 
-// Emoji söz kartı
-function WordCard({ emoji, word, tag }: { emoji: string; word: string; tag?: string }) {
+// Söz kartı (rəngli üst zolaqla).
+function WordCard({ word, tag }: { word: string; tag?: string }) {
   return (
-    <div className="flex flex-col items-center gap-1 rounded-xl border border-line bg-panel-2 px-4 py-3">
-      <span className="text-3xl">{emoji}</span>
-      <span className="font-semibold text-white">{word}</span>
-      {tag && <span className="text-xs text-brand-soft">{tag}</span>}
+    <div className="overflow-hidden rounded-xl border border-line bg-panel-2 text-center">
+      <div className="h-1.5 w-full bg-brand" />
+      <div className="flex flex-col items-center gap-1 px-5 py-3">
+        <span className="text-lg font-semibold text-white">{word}</span>
+        {tag && <span className="text-xs text-brand-soft">{tag}</span>}
+      </div>
     </div>
+  );
+}
+
+// Kiçik dairə (say nümunələri üçün).
+function Dot({ tone }: { tone: "brand" | "green" }) {
+  return (
+    <span
+      className={`inline-block h-4 w-4 rounded-full ${
+        tone === "brand" ? "bg-brand" : "bg-emerald-500"
+      }`}
+    />
+  );
+}
+
+// Sadə alma illüstrasiyası (SVG).
+function Apple({ size = 60 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 48 48" fill="none" aria-hidden>
+      <path
+        d="M24 15c-4-6-15-4-15 7 0 10 8 17 15 17s15-7 15-17c0-11-11-13-15-7z"
+        fill="#e0143f"
+      />
+      <rect x="22.7" y="7" width="2.6" height="9" rx="1.3" fill="#7a4a2b" />
+      <path d="M25 9c3-3 8-2 8-2s-1 6-8 4z" fill="#4caf50" />
+    </svg>
+  );
+}
+
+// Kitab illüstrasiyası (SVG düzbucaqlı).
+function Book({ w = 34, h = 46 }: { w?: number; h?: number }) {
+  return (
+    <div
+      className="rounded-md bg-brand/70 ring-1 ring-brand"
+      style={{ width: w, height: h }}
+    />
   );
 }
 
@@ -57,22 +94,19 @@ export default function LessonVisual({ visual }: { visual?: string }) {
       return (
         <Frame>
           <div className="flex items-center gap-5">
-            <div className="text-5xl">🍫</div>
             <div className="flex-1">
               <FractionBar parts={4} filled={3} />
               <p className="mt-2 text-center text-sm text-muted">
                 4 hissəyə bölünüb, 3-ü götürülüb
               </p>
             </div>
-            <div className="text-center">
-              <div className="text-3xl">
-                <Fraction top={3} bottom={4} />
-              </div>
+            <div className="text-3xl">
+              <Fraction top={3} bottom={4} />
             </div>
           </div>
           <div className="mt-3 flex justify-around text-xs">
-            <span className="text-white">↑ surət = götürülən hissə</span>
-            <span className="text-white">↓ məxrəc = ümumi hissə</span>
+            <span className="text-white">surət = götürülən hissə</span>
+            <span className="text-white">məxrəc = ümumi hissə</span>
           </div>
         </Frame>
       );
@@ -88,7 +122,7 @@ export default function LessonVisual({ visual }: { visual?: string }) {
               <div className="flex-1">
                 <FractionBar parts={8} filled={5} />
               </div>
-              <span className="text-brand-soft">böyük ✓</span>
+              <span className="font-semibold text-brand-soft">böyük</span>
             </div>
             <div className="flex items-center gap-3">
               <span className="w-10 text-white">
@@ -192,16 +226,14 @@ export default function LessonVisual({ visual }: { visual?: string }) {
     case "remainder":
       return (
         <Frame>
-          <div className="flex flex-wrap justify-center gap-1.5">
+          <div className="mx-auto flex max-w-[240px] flex-wrap justify-center gap-2">
             {Array.from({ length: 17 }).map((_, i) => (
-              <span key={i} className="text-2xl">
-                {i >= 15 ? "🍎" : "🍏"}
-              </span>
+              <Dot key={i} tone={i >= 15 ? "brand" : "green"} />
             ))}
           </div>
           <p className="mt-3 text-center text-sm text-muted">
-            17 alma, 5 uşaq: hərəyə 3 yaşıl düşür, <b className="text-white">2 qırmızı</b> artıq qalır →
-            17 : 5 = 3 (qalıq 2)
+            17 alma, 5 uşaq: hərəyə 3 (yaşıl) düşür,{" "}
+            <b className="text-white">2 (qırmızı)</b> artıq qalır → 17 : 5 = 3 (qalıq 2)
           </p>
         </Frame>
       );
@@ -266,10 +298,10 @@ export default function LessonVisual({ visual }: { visual?: string }) {
       return (
         <Frame>
           <div className="flex flex-wrap justify-center gap-3">
-            <WordCard emoji="👦" word="uşaq" tag="kim?" />
-            <WordCard emoji="🐦" word="quş" tag="kim?" />
-            <WordCard emoji="🍎" word="alma" tag="nə?" />
-            <WordCard emoji="📕" word="kitab" tag="nə?" />
+            <WordCard word="uşaq" tag="kim?" />
+            <WordCard word="quş" tag="kim?" />
+            <WordCard word="alma" tag="nə?" />
+            <WordCard word="kitab" tag="nə?" />
           </div>
           <p className="mt-3 text-center text-sm text-muted">
             İsim = əşyanın adı. Canlılar — <b className="text-white">kim?</b>, cansızlar — <b className="text-white">nə?</b>
@@ -281,7 +313,7 @@ export default function LessonVisual({ visual }: { visual?: string }) {
       return (
         <Frame>
           <div className="flex items-center justify-center gap-6">
-            <span className="text-6xl">🍎</span>
+            <Apple size={64} />
             <div className="space-y-2">
               {["qırmızı", "şirin", "yumru"].map((w) => (
                 <div
@@ -303,9 +335,9 @@ export default function LessonVisual({ visual }: { visual?: string }) {
       return (
         <Frame>
           <div className="flex flex-wrap justify-center gap-4 text-center">
-            <WordCard emoji="🏃" word="qaçmaq" />
-            <WordCard emoji="✍️" word="yazmaq" />
-            <WordCard emoji="😄" word="gülmək" />
+            <WordCard word="qaçmaq" />
+            <WordCard word="yazmaq" />
+            <WordCard word="gülmək" />
           </div>
           <div className="mt-4 flex items-center justify-between rounded-lg bg-panel-2 px-4 py-2 text-sm">
             <span className="text-white">yazdı<br /><span className="text-xs text-muted">keçmiş</span></span>
@@ -323,13 +355,12 @@ export default function LessonVisual({ visual }: { visual?: string }) {
         <Frame>
           <div className="grid grid-cols-3 gap-2 text-center">
             {[
-              { p: "I", v: "am", e: "🧒" },
-              { p: "he / she / it", v: "is", e: "👩" },
-              { p: "you / we / they", v: "are", e: "👨‍👩‍👧" },
+              { p: "I", v: "am" },
+              { p: "he / she / it", v: "is" },
+              { p: "you / we / they", v: "are" },
             ].map((r) => (
               <div key={r.v} className="rounded-xl border border-line bg-panel-2 p-3">
-                <div className="text-2xl">{r.e}</div>
-                <div className="mt-1 text-sm text-white">{r.p}</div>
+                <div className="text-sm text-white">{r.p}</div>
                 <div className="mt-1 text-lg font-bold text-brand-soft">{r.v}</div>
               </div>
             ))}
@@ -343,16 +374,22 @@ export default function LessonVisual({ visual }: { visual?: string }) {
     case "plural-books":
       return (
         <Frame>
-          <div className="flex items-center justify-center gap-5 text-center">
-            <div>
-              <div className="text-4xl">📕</div>
-              <div className="mt-1 text-white">book</div>
+          <div className="flex items-center justify-center gap-6 text-center">
+            <div className="flex flex-col items-center">
+              <Book />
+              <div className="mt-2 text-white">book</div>
               <div className="text-xs text-muted">bir</div>
             </div>
-            <div className="text-3xl font-bold text-brand">+s →</div>
-            <div>
-              <div className="text-4xl">📚</div>
-              <div className="mt-1 text-white">book<span className="text-brand-soft">s</span></div>
+            <div className="text-2xl font-bold text-brand">+s →</div>
+            <div className="flex flex-col items-center">
+              <div className="flex">
+                <div className="h-[46px] w-[22px] rounded-md bg-brand/40 ring-1 ring-brand" />
+                <div className="-ml-2 h-[46px] w-[22px] rounded-md bg-brand/60 ring-1 ring-brand" />
+                <div className="-ml-2 h-[46px] w-[22px] rounded-md bg-brand/80 ring-1 ring-brand" />
+              </div>
+              <div className="mt-2 text-white">
+                book<span className="text-brand-soft">s</span>
+              </div>
               <div className="text-xs text-muted">çox</div>
             </div>
           </div>
@@ -367,13 +404,17 @@ export default function LessonVisual({ visual }: { visual?: string }) {
         <Frame>
           <div className="grid grid-cols-2 gap-3">
             <div className="rounded-xl border border-line bg-panel-2 p-3 text-center">
-              <div className="text-2xl">🍎🍎🍎</div>
-              <div className="mt-1 text-sm font-semibold text-white">Countable</div>
+              <div className="flex justify-center gap-1.5">
+                <Dot tone="brand" />
+                <Dot tone="brand" />
+                <Dot tone="brand" />
+              </div>
+              <div className="mt-2 text-sm font-semibold text-white">Countable</div>
               <div className="text-xs text-muted">sayıla bilən (two apples)</div>
             </div>
             <div className="rounded-xl border border-line bg-panel-2 p-3 text-center">
-              <div className="text-2xl">💧🥛🍚</div>
-              <div className="mt-1 text-sm font-semibold text-white">Uncountable</div>
+              <div className="mx-auto h-6 w-20 rounded-full bg-gradient-to-r from-sky-500/70 to-sky-400/40" />
+              <div className="mt-2 text-sm font-semibold text-white">Uncountable</div>
               <div className="text-xs text-muted">sayıla bilməyən (water, milk)</div>
             </div>
           </div>

@@ -8,7 +8,7 @@ export const azerbaijani: Subject = {
   slug: "azerbaycan-dili",
   name: "Azərbaycan dili",
   grade: 5,
-  icon: "📖",
+  icon: "A",
   color: "rose",
   units: [
     {
