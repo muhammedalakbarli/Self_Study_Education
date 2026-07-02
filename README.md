@@ -75,4 +75,43 @@ Tapşırıq tipləri: `multiple_choice`, `fill_blank`, `numeric`. Tiplər `lib/t
 
 ---
 
+## Komanda üçün qurulum (Getting started)
+
+1. Reponu klonla və qovluğa keç:
+   ```bash
+   git clone https://github.com/muhammedalakbarli/Self_Study_Education.git
+   cd Self_Study_Education
+   ```
+2. Paketləri qur: `npm install`
+3. Env faylını hazırla: `.env.example`-i `.env.local` kimi kopyala və dəyərləri yaz
+   (Supabase qoşulana qədər boş qala bilər — app localStorage ilə də işləyir):
+   ```bash
+   cp .env.example .env.local
+   ```
+4. İşə sal: `npm run dev` → brauzerdə [http://localhost:3000](http://localhost:3000)
+
+Yoxlama: `npx tsc --noEmit` (tip yoxlaması təmiz olmalıdır).
+
+## Git iş axını (branch + PR)
+
+Heç kim birbaşa `main`-ə push etmir. Hər iş belə gedir:
+
+1. `main`-dən yeni branch aç: `git checkout main && git pull && git checkout -b feature/qisa-ad`
+2. İşlə, kiçik commit-lər et, öz adınla: `git commit -m "..."`
+3. Branch-ı göndər: `git push -u origin feature/qisa-ad`
+4. GitHub-da **Pull Request** aç. **Mahammad** yoxlayıb `main`-ə merge edir.
+5. `main` həmişə işlək qalır. Kiçik və tez-tez PR-lar ver.
+
+Branch adı nümunələri: `feature/auth`, `feature/profil`, `content/riyaziyyat-u3`, `fix/mobil-sidebar`.
+
+## Supabase qurulumu (backend)
+
+1. [supabase.com](https://supabase.com)-da pulsuz layihə yarat.
+2. **Settings > API**-dən `Project URL` və `anon public` açarını götür, `.env.local`-a yaz.
+3. **SQL Editor**-da `supabase/migrations/0001_init.sql`-i işə sal (cədvəllər yaransın).
+4. Sonra: `@supabase/ssr` ilə client (`lib/supabase/`), auth və `lib/progress.ts`-in DB-yə köçürülməsi
+   (paketlər artıq quraşdırılıb).
+
+---
+
 > Qeyd: "Bilik Yolu" işlək addır — dəyişdirilə bilər.
