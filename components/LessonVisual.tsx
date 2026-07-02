@@ -147,6 +147,120 @@ export default function LessonVisual({ visual }: { visual?: string }) {
         </Frame>
       );
 
+    case "place-value":
+      return (
+        <Frame>
+          <div className="mx-auto max-w-sm">
+            <div className="grid grid-cols-4 overflow-hidden rounded-xl border border-line text-center">
+              {["Minlik", "Yüzlük", "Onluq", "Təklik"].map((h) => (
+                <div key={h} className="border-b border-line bg-panel-2 py-1.5 text-xs text-muted">
+                  {h}
+                </div>
+              ))}
+              {["3", "2", "5", "4"].map((d, i) => (
+                <div key={i} className="py-3 text-2xl font-bold text-white">
+                  {d}
+                </div>
+              ))}
+            </div>
+            <p className="mt-3 text-center text-sm text-muted">
+              3 254 = <b className="text-white">3</b> minlik, <b className="text-white">2</b> yüzlük,{" "}
+              <b className="text-white">5</b> onluq, <b className="text-white">4</b> təklik
+            </p>
+          </div>
+        </Frame>
+      );
+
+    case "column-add":
+      return (
+        <Frame>
+          <div className="mx-auto w-fit font-mono text-2xl text-white">
+            <div className="text-right">3 456</div>
+            <div className="flex items-center justify-between gap-6">
+              <span className="text-brand">+</span>
+              <span>2 130</span>
+            </div>
+            <div className="my-1 border-t-2 border-line" />
+            <div className="text-right text-brand-soft">5 586</div>
+          </div>
+          <p className="mt-3 text-center text-sm text-muted">
+            Rəqəmləri mərtəbəyə görə alt-alta yazıb sağdan toplayırıq
+          </p>
+        </Frame>
+      );
+
+    case "remainder":
+      return (
+        <Frame>
+          <div className="flex flex-wrap justify-center gap-1.5">
+            {Array.from({ length: 17 }).map((_, i) => (
+              <span key={i} className="text-2xl">
+                {i >= 15 ? "🍎" : "🍏"}
+              </span>
+            ))}
+          </div>
+          <p className="mt-3 text-center text-sm text-muted">
+            17 alma, 5 uşaq: hərəyə 3 yaşıl düşür, <b className="text-white">2 qırmızı</b> artıq qalır →
+            17 : 5 = 3 (qalıq 2)
+          </p>
+        </Frame>
+      );
+
+    case "order-ops":
+      return (
+        <Frame>
+          <div className="space-y-2 text-center text-lg text-white">
+            <div>
+              2 + 3 × 4 = <b className="text-brand-soft">14</b>{" "}
+              <span className="text-xs text-muted">(əvvəl vurma)</span>
+            </div>
+            <div>
+              (2 + 3) × 4 = <b className="text-brand-soft">20</b>{" "}
+              <span className="text-xs text-muted">(əvvəl mötərizə)</span>
+            </div>
+          </div>
+          <p className="mt-3 text-center text-sm text-muted">
+            Sıra: mötərizə → vurma/bölmə → toplama/çıxma
+          </p>
+        </Frame>
+      );
+
+    case "proper-improper":
+      return (
+        <Frame>
+          <div className="grid grid-cols-2 gap-3 text-center">
+            <div className="rounded-xl border border-line bg-panel-2 p-3">
+              <div className="text-xl">
+                <Fraction top={3} bottom={4} />
+              </div>
+              <div className="mt-1 text-sm font-semibold text-white">Düzgün</div>
+              <div className="text-xs text-muted">surət &lt; məxrəc</div>
+            </div>
+            <div className="rounded-xl border border-line bg-panel-2 p-3">
+              <div className="text-xl">
+                <Fraction top={7} bottom={4} />
+              </div>
+              <div className="mt-1 text-sm font-semibold text-white">Düzgün olmayan</div>
+              <div className="text-xs text-muted">surət ≥ məxrəc</div>
+            </div>
+          </div>
+        </Frame>
+      );
+
+    case "mixed-number":
+      return (
+        <Frame>
+          <div className="flex items-center justify-center gap-3 text-2xl text-white">
+            <span className="font-bold">2</span>
+            <Fraction top={1} bottom={3} />
+            <span className="text-base text-muted">= 2 tam və 1/3</span>
+          </div>
+          <p className="mt-3 text-center text-sm text-muted">
+            Qarışıq ədəd: tam hissə + kəsr hissə. Məsələn, 7/3 = 2 tam 1/3
+          </p>
+        </Frame>
+      );
+
     // ── Azərbaycan dili ─────────────────────────────────────────
     case "noun-cards":
       return (
