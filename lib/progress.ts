@@ -1,18 +1,11 @@
-// İstifadəçi irəliləyişi: XP, streak və tamamlanmış dərslər.
-// MVP mərhələsində məlumat brauzerin localStorage-ında saxlanılır.
-// Sonrakı addım: bu funksiyaları Supabase user_progress/user_stats cədvəlləri ilə əvəz etmək.
+// İstifadəçi irəliləyişi — Supabase verilənlər bazasında saxlanılır.
+// XP və streak → user_stats; tamamlanmış dərslər → user_progress.
+// Bütün yazılar autentifikasiya olunmuş client ilə gedir (RLS: yalnız öz sətirləri).
 
+import { createClient } from "./supabase/client";
 import { orderedLessonIds } from "./content";
 
-// İrəliləyiş hər istifadəçi üçün ayrıca saxlanılır (id-yə görə açar).
-// Beləliklə eyni brauzerdə fərqli hesablar bir-birinin progress-ini görmür.
-// (Həftə 3-də bu localStorage qatı Supabase user_progress/user_stats ilə əvəz olunacaq.)
-function storageKey(userId: string): string {
-  return `tedris-progress-v1:${userId || "guest"}`;
-}
-
 export interface ProgressState {
-  name: string; // istifadəçinin adı (sadə "giriş" əvəzi)
   totalXp: number;
   streakDays: number;
   lastActiveDate: string | null; // "YYYY-MM-DD"
@@ -20,7 +13,6 @@ export interface ProgressState {
 }
 
 const emptyState: ProgressState = {
-  name: "",
   totalXp: 0,
   streakDays: 0,
   lastActiveDate: null,
@@ -36,55 +28,86 @@ function daysBetween(a: string, b: string): number {
   return Math.round(ms / (1000 * 60 * 60 * 24));
 }
 
-export function loadProgress(userId: string): ProgressState {
-  if (typeof window === "undefined") return { ...emptyState };
-  try {
-    const raw = localStorage.getItem(storageKey(userId));
-    if (!raw) return { ...emptyState };
-    return { ...emptyState, ...JSON.parse(raw) };
-  } catch {
-    return { ...emptyState };
-  }
+// Profil sətrini yaradır (user_progress/user_stats ona FK ilə bağlıdır).
+// İlk girişdə çağırılır; varsa toxunmur.
+export async function ensureProfile(userId: string, name: string): Promise<void> {
+  const supabase = createClient();
+  await supabase
+    .from("profiles")
+    .upsert({ id: userId, name: name || "İstifadəçi" }, { onConflict: "id", ignoreDuplicates: true });
 }
 
-function save(userId: string, state: ProgressState) {
-  if (typeof window === "undefined") return;
-  localStorage.setItem(storageKey(userId), JSON.stringify(state));
+// İstifadəçinin irəliləyişini DB-dən oxuyur.
+export async function loadProgress(userId: string): Promise<ProgressState> {
+  const supabase = createClient();
+  const [statsRes, progRes] = await Promise.all([
+    supabase
+      .from("user_stats")
+      .select("total_xp, streak_days, last_active_date")
+      .eq("user_id", userId)
+      .maybeSingle(),
+    supabase.from("user_progress").select("lesson_id").eq("user_id", userId),
+  ]);
+
+  const stats = statsRes.data;
+  const rows = progRes.data ?? [];
+  return {
+    totalXp: stats?.total_xp ?? 0,
+    streakDays: stats?.streak_days ?? 0,
+    lastActiveDate: stats?.last_active_date ?? null,
+    completedLessons: rows.map((r: { lesson_id: string }) => r.lesson_id),
+  };
 }
 
-// Streak-i günə görə yenilə: eyni gün → dəyişməz, ardıcıl gün → +1, boşluq → 1-ə sıfırlan
-function touchStreak(state: ProgressState) {
-  const today = todayStr();
-  if (state.lastActiveDate === today) return;
-  if (state.lastActiveDate && daysBetween(state.lastActiveDate, today) === 1) {
-    state.streakDays += 1;
-  } else {
-    state.streakDays = 1;
-  }
-  state.lastActiveDate = today;
-}
-
-// Dərs tamamlananda çağırılır: XP əlavə et, dərsi tamamlanmış işarələ, streak-i yenilə
-export function completeLesson(
+// Dərs tamamlananda: user_progress-ə yaz, user_stats-ı yenilə (XP + streak).
+export async function completeLesson(
   userId: string,
   lessonId: string,
   earnedXp: number,
-): ProgressState {
-  const state = loadProgress(userId);
-  if (!state.completedLessons.includes(lessonId)) {
-    state.completedLessons.push(lessonId);
+): Promise<void> {
+  const supabase = createClient();
+
+  await supabase
+    .from("user_progress")
+    .upsert(
+      { user_id: userId, lesson_id: lessonId, score: earnedXp },
+      { onConflict: "user_id,lesson_id" },
+    );
+
+  // Statistikanı oxu-dəyiş-yaz (XP topla, streak-i günə görə yenilə).
+  const { data: cur } = await supabase
+    .from("user_stats")
+    .select("total_xp, streak_days, last_active_date")
+    .eq("user_id", userId)
+    .maybeSingle();
+
+  const today = todayStr();
+  const last = cur?.last_active_date ?? null;
+  let streak = cur?.streak_days ?? 0;
+  if (last === today) {
+    // eyni gün — dəyişmir
+  } else if (last && daysBetween(last, today) === 1) {
+    streak += 1;
+  } else {
+    streak = 1;
   }
-  state.totalXp += earnedXp;
-  touchStreak(state);
-  save(userId, state);
-  return state;
+
+  await supabase.from("user_stats").upsert(
+    {
+      user_id: userId,
+      total_xp: (cur?.total_xp ?? 0) + earnedXp,
+      streak_days: streak,
+      last_active_date: today,
+    },
+    { onConflict: "user_id" },
+  );
 }
 
 // Dərs kiliddədirmi? Fəndəki əvvəlki dərs tamamlanmayıbsa kiliddədir (ilk dərs həmişə açıqdır).
 export function isLessonLocked(
   slug: string,
   lessonId: string,
-  completed: string[]
+  completed: string[],
 ): boolean {
   const order = orderedLessonIds(slug);
   const index = order.indexOf(lessonId);
@@ -92,3 +115,5 @@ export function isLessonLocked(
   const prev = order[index - 1];
   return !completed.includes(prev);
 }
+
+export { emptyState };
