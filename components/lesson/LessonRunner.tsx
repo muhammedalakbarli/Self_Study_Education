@@ -61,7 +61,7 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
       setPhase("bonusPrompt");
       setIndex(0);
     } else {
-      completeLesson(userId, lesson.id, earnedXp);
+      completeLesson(userId, lesson.id, earnedXp).catch(() => {});
       setPhase("done");
     }
   }
@@ -74,7 +74,7 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
   }
 
   function finishWithoutBonus() {
-    completeLesson(userId, lesson.id, earnedXp);
+    completeLesson(userId, lesson.id, earnedXp).catch(() => {});
     setPhase("done");
   }
 

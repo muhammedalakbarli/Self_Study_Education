@@ -5,7 +5,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getCurrentUser } from "./auth";
+import { getCurrentUser, displayName } from "./auth";
+import { ensureProfile } from "./progress";
 import type { User } from "@supabase/supabase-js";
 
 export function useAuthUser(): { user: User | null; ready: boolean } {
@@ -21,6 +22,8 @@ export function useAuthUser(): { user: User | null; ready: boolean } {
         router.replace("/");
         return;
       }
+      // Profil sətrini təmin et (progress FK üçün) — fon işi.
+      ensureProfile(u.id, displayName(u)).catch(() => {});
       setUser(u);
       setReady(true);
     });

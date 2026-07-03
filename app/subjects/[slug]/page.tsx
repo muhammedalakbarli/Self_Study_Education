@@ -23,7 +23,7 @@ export default function SubjectPage({
   const subject = getSubject(slug);
 
   useEffect(() => {
-    if (user) setState(loadProgress(user.id));
+    if (user) loadProgress(user.id).then(setState);
   }, [user]);
 
   if (!subject) notFound();
