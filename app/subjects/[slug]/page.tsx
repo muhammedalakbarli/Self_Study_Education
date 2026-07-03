@@ -17,14 +17,14 @@ export default function SubjectPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = use(params);
-  const { ready } = useAuthUser();
+  const { user, ready } = useAuthUser();
   const [state, setState] = useState<ProgressState | null>(null);
 
   const subject = getSubject(slug);
 
   useEffect(() => {
-    setState(loadProgress());
-  }, []);
+    if (user) setState(loadProgress(user.id));
+  }, [user]);
 
   if (!subject) notFound();
   if (!ready || !state) return null;

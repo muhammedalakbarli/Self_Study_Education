@@ -18,13 +18,13 @@ export default function LessonPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = use(params);
-  const { ready } = useAuthUser();
+  const { user, ready } = useAuthUser();
   const [started, setStarted] = useState(false);
 
   const found = getLesson(id);
 
   if (!found) notFound();
-  if (!ready) return null;
+  if (!ready || !user) return null;
 
   const { subject, lesson } = found;
   const index = orderedLessonIds(subject.slug).indexOf(lesson.id);
@@ -35,7 +35,7 @@ export default function LessonPage({
     return (
       <div className="min-h-screen bg-ink">
         <main className="mx-auto w-full max-w-xl px-4 py-8">
-          <LessonRunner slug={subject.slug} lesson={lesson} />
+          <LessonRunner slug={subject.slug} lesson={lesson} userId={user.id} />
         </main>
       </div>
     );

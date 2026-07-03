@@ -19,8 +19,8 @@ export default function DashboardPage() {
   const [activeSlug, setActiveSlug] = useState(subjects[0].slug);
 
   useEffect(() => {
-    setState(loadProgress());
-  }, []);
+    if (user) setState(loadProgress(user.id));
+  }, [user]);
 
   const active = subjects.find((s) => s.slug === activeSlug)!;
 
