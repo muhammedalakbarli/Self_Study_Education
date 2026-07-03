@@ -15,11 +15,12 @@ import TaskFigure from "@/components/TaskFigure";
 interface Props {
   slug: string;
   lesson: Lesson;
+  userId: string;
 }
 
 type Phase = "main" | "bonusPrompt" | "bonus" | "done";
 
-export default function LessonRunner({ slug, lesson }: Props) {
+export default function LessonRunner({ slug, lesson, userId }: Props) {
   const mainTasks = lesson.tasks;
   const bonusTasks = lesson.bonusTasks ?? [];
 
@@ -60,7 +61,7 @@ export default function LessonRunner({ slug, lesson }: Props) {
       setPhase("bonusPrompt");
       setIndex(0);
     } else {
-      completeLesson(lesson.id, earnedXp);
+      completeLesson(userId, lesson.id, earnedXp);
       setPhase("done");
     }
   }
@@ -73,7 +74,7 @@ export default function LessonRunner({ slug, lesson }: Props) {
   }
 
   function finishWithoutBonus() {
-    completeLesson(lesson.id, earnedXp);
+    completeLesson(userId, lesson.id, earnedXp);
     setPhase("done");
   }
 

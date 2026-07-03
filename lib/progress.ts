@@ -4,7 +4,12 @@
 
 import { orderedLessonIds } from "./content";
 
-const STORAGE_KEY = "tedris-progress-v1";
+// İrəliləyiş hər istifadəçi üçün ayrıca saxlanılır (id-yə görə açar).
+// Beləliklə eyni brauzerdə fərqli hesablar bir-birinin progress-ini görmür.
+// (Həftə 3-də bu localStorage qatı Supabase user_progress/user_stats ilə əvəz olunacaq.)
+function storageKey(userId: string): string {
+  return `tedris-progress-v1:${userId || "guest"}`;
+}
 
 export interface ProgressState {
   name: string; // istifadəçinin adı (sadə "giriş" əvəzi)
@@ -31,10 +36,10 @@ function daysBetween(a: string, b: string): number {
   return Math.round(ms / (1000 * 60 * 60 * 24));
 }
 
-export function loadProgress(): ProgressState {
+export function loadProgress(userId: string): ProgressState {
   if (typeof window === "undefined") return { ...emptyState };
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = localStorage.getItem(storageKey(userId));
     if (!raw) return { ...emptyState };
     return { ...emptyState, ...JSON.parse(raw) };
   } catch {
@@ -42,16 +47,9 @@ export function loadProgress(): ProgressState {
   }
 }
 
-function save(state: ProgressState) {
+function save(userId: string, state: ProgressState) {
   if (typeof window === "undefined") return;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-}
-
-export function setName(name: string): ProgressState {
-  const state = loadProgress();
-  state.name = name;
-  save(state);
-  return state;
+  localStorage.setItem(storageKey(userId), JSON.stringify(state));
 }
 
 // Streak-i günə görə yenilə: eyni gün → dəyişməz, ardıcıl gün → +1, boşluq → 1-ə sıfırlan
@@ -67,14 +65,18 @@ function touchStreak(state: ProgressState) {
 }
 
 // Dərs tamamlananda çağırılır: XP əlavə et, dərsi tamamlanmış işarələ, streak-i yenilə
-export function completeLesson(lessonId: string, earnedXp: number): ProgressState {
-  const state = loadProgress();
+export function completeLesson(
+  userId: string,
+  lessonId: string,
+  earnedXp: number,
+): ProgressState {
+  const state = loadProgress(userId);
   if (!state.completedLessons.includes(lessonId)) {
     state.completedLessons.push(lessonId);
   }
   state.totalXp += earnedXp;
   touchStreak(state);
-  save(state);
+  save(userId, state);
   return state;
 }
 
