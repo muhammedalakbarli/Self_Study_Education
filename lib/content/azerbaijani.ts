@@ -1,6 +1,8 @@
-// Azərbaycan dili — "Nitq hissələri" treki. Hər dərs bir layihədir (project).
-// Qaydalar (sections) holberton3 üslubunda şəkil altında göstərilir.
-// Hər layihə: 15 əsas tapşırıq + 5 bonus (İngilis treki ilə eyni standart).
+// Azərbaycan dili — 5-ci sinif proqramı. Bölmələrin sırası kurikuluma uyğundur:
+// 1) Dil qaydaları (Qrammatika)  2) Yazı və oxu mədəniyyəti  3) Nitq bacarıqları.
+// Hər dərs bir layihədir (project). Standart: 15 əsas + 5 bonus tapşırıq.
+// Qeyd: Fonetika, Leksika və Nitq hissələri (İsim/Sifət/Feil) tamdır; qalan mövzular
+// struktur + qaydalar + başlanğıc tapşırıqlarla verilib, mərhələli olaraq 15+5-ə dolacaq.
 
 import type { Subject } from "../types";
 
@@ -11,11 +13,102 @@ export const azerbaijani: Subject = {
   icon: "A",
   color: "rose",
   units: [
+    // ═══════════════ 1. Dil qaydaları (Qrammatika) ═══════════════
     {
-      id: "az-parts-of-speech",
-      title: "Nitq hissələri",
-      description: "İsim, sifət və feil — sözlərin növləri.",
+      id: "az-grammar",
+      title: "Dil qaydaları (Qrammatika)",
+      description:
+        "Fonetika, leksika, söz yaradıcılığı, nitq hissələri və sintaksis.",
       lessons: [
+        {
+          id: "az-fonetika",
+          title: "Fonetika: səslər və hərflər",
+          intro: "Səs və hərf, sait və samitlər, heca və vurğu.",
+          visual: "fonetika",
+          sections: [
+            { heading: "Səs və hərf", body: "Danışarkən tələffüz etdiyimiz — səsdir; yazıda onu göstərən işarə — hərfdir. Azərbaycan əlifbasında 32 hərf var." },
+            { heading: "Saitlər", body: "Ağız boşluğunda sərbəst tələffüz olunan səslər saitdir. Azərbaycan dilində 9 sait var: a, ı, o, u, e, ə, i, ö, ü. Qalın saitlər: a, ı, o, u; incə saitlər: e, ə, i, ö, ü." },
+            { heading: "Samitlər", body: "Tələffüzdə maneəyə rast gələn səslər samitdir. Samitlər kar və cingiltili olur." },
+            { heading: "Heca və vurğu", body: "Söz saitlərin sayı qədər hecaya bölünür. Vurğu adətən sözün son hecasına düşür." },
+          ],
+          tasks: [
+            { id: "az-fonetika-t1", type: "multiple_choice", prompt: "Azərbaycan əlifbasında neçə hərf var?", options: ["26", "29", "32", "33"], correctIndex: 2, xp: 10 },
+            { id: "az-fonetika-t2", type: "multiple_choice", prompt: "'a, ı, o, u' hansı saitlərdir?", options: ["qalın", "incə", "kar", "cingiltili"], correctIndex: 0, xp: 10 },
+            { id: "az-fonetika-t3", type: "multiple_choice", prompt: "Azərbaycan dilində neçə sait var?", options: ["7", "8", "9", "10"], correctIndex: 2, xp: 10 },
+            { id: "az-fonetika-t4", type: "numeric", prompt: "'Kitab' sözündə neçə heca var?", answer: 2, xp: 10 },
+            { id: "az-fonetika-t5", type: "multiple_choice", prompt: "Aşağıdakılardan hansı incə saitdir?", options: ["a", "o", "ə", "ı"], correctIndex: 2, xp: 10 },
+            { id: "az-fonetika-t6", type: "multiple_choice", prompt: "Yazıda səsi göstərən işarə necə adlanır?", options: ["səs", "hərf", "heca", "vurğu"], correctIndex: 1, xp: 10 },
+            { id: "az-fonetika-t7", type: "numeric", prompt: "'Məktəb' sözündə neçə heca var?", answer: 2, xp: 10 },
+            { id: "az-fonetika-t8", type: "multiple_choice", prompt: "Aşağıdakılardan hansı samitdir?", options: ["a", "e", "m", "ü"], correctIndex: 2, xp: 10 },
+            { id: "az-fonetika-t9", type: "fill_blank", prompt: "Söz ___ səslərin sayı qədər hecaya bölünür.", accepted: ["sait", "saitlərin", "saitlerin"], xp: 10 },
+            { id: "az-fonetika-t10", type: "multiple_choice", prompt: "Vurğu adətən sözün hansı hecasına düşür?", options: ["birinci", "ortadakı", "son", "heç birinə"], correctIndex: 2, xp: 10 },
+            { id: "az-fonetika-t11", type: "multiple_choice", prompt: "'o' və 'ö' saitlərindən hansı incədir?", options: ["o", "ö", "hər ikisi", "heç biri"], correctIndex: 1, xp: 10 },
+            { id: "az-fonetika-t12", type: "numeric", prompt: "'Alma' sözündə neçə sait var?", answer: 2, xp: 10 },
+            { id: "az-fonetika-t13", type: "multiple_choice", prompt: "Sait səslər necə tələffüz olunur?", options: ["maneə ilə", "sərbəst", "kar", "cingiltili"], correctIndex: 1, xp: 10 },
+            { id: "az-fonetika-t14", type: "multiple_choice", prompt: "Aşağıdakılardan hansı qalın saitdir?", options: ["i", "e", "u", "ö"], correctIndex: 2, xp: 10 },
+            { id: "az-fonetika-t15", type: "multiple_choice", prompt: "Səslərin yazıdakı işarələri toplusu necə adlanır?", options: ["heca", "əlifba", "vurğu", "səs"], correctIndex: 1, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "az-fonetika-b1", type: "multiple_choice", prompt: "'ü' saiti qalındır, yoxsa incə?", options: ["qalın", "incə"], correctIndex: 1, xp: 15 },
+            { id: "az-fonetika-b2", type: "numeric", prompt: "'Gözəllik' sözündə neçə heca var?", answer: 3, xp: 15 },
+            { id: "az-fonetika-b3", type: "fill_blank", prompt: "Samitlər ___ və cingiltili olur.", accepted: ["kar"], xp: 15 },
+            { id: "az-fonetika-b4", type: "multiple_choice", prompt: "Hansı qrupda yalnız saitlər var?", options: ["a, ə, o", "b, c, d", "a, b, c", "m, n, s"], correctIndex: 0, xp: 15 },
+            { id: "az-fonetika-b5", type: "numeric", prompt: "'Su' sözündə neçə səs var?", answer: 2, xp: 15 },
+          ],
+        },
+        {
+          id: "az-leksika",
+          title: "Leksika: sözün mənası",
+          intro: "Həqiqi və məcazi məna, sinonim, antonim, omonim, frazeologizm.",
+          visual: "leksika",
+          sections: [
+            { heading: "Həqiqi və məcazi məna", body: "Sözün əsl mənası həqiqi, obrazlı işlənməsi məcazi mənadır. Məsələn: 'dəmir qapı' (həqiqi), 'dəmir iradə' (məcazi)." },
+            { heading: "Sinonim və antonim", body: "Mənaca yaxın sözlər sinonim (gözəl–qəşəng), əks mənalı sözlər antonimdir (böyük–kiçik)." },
+            { heading: "Omonim və çoxmənalılıq", body: "Eyni yazılıb-tələffüz olunan, mənaca fərqli sözlər omonimdir (üz – sifət / üz – üzmək). Çoxmənalı söz bir neçə əlaqəli məna daşıyır." },
+            { heading: "Frazeoloji birləşmə", body: "Sözlərin sabit, obrazlı birləşməsi frazeologizmdir: əl-ələ vermək, ağzını açmaq." },
+          ],
+          tasks: [
+            { id: "az-leksika-t1", type: "multiple_choice", prompt: "'gözəl' sözünün sinonimi hansıdır?", options: ["çirkin", "qəşəng", "böyük", "ağ"], correctIndex: 1, xp: 10 },
+            { id: "az-leksika-t2", type: "multiple_choice", prompt: "'böyük' sözünün antonimi hansıdır?", options: ["geniş", "balaca", "hündür", "uzun"], correctIndex: 1, xp: 10 },
+            { id: "az-leksika-t3", type: "multiple_choice", prompt: "'dəmir iradə' birləşməsində 'dəmir' hansı mənadadır?", options: ["həqiqi", "məcazi"], correctIndex: 1, xp: 10 },
+            { id: "az-leksika-t4", type: "multiple_choice", prompt: "Mənaca əks olan sözlər necə adlanır?", options: ["sinonim", "antonim", "omonim", "frazeologizm"], correctIndex: 1, xp: 10 },
+            { id: "az-leksika-t5", type: "fill_blank", prompt: "Mənaca yaxın sözlər ___ adlanır.", accepted: ["sinonim", "sinonimlər", "sinonimler"], xp: 10 },
+            { id: "az-leksika-t6", type: "multiple_choice", prompt: "'isti' sözünün antonimi hansıdır?", options: ["ilıq", "soyuq", "qaynar", "yay"], correctIndex: 1, xp: 10 },
+            { id: "az-leksika-t7", type: "multiple_choice", prompt: "'üz' (sifət) və 'üz' (üzmək) sözləri hansı hadisədir?", options: ["sinonim", "omonim", "antonim", "frazeologizm"], correctIndex: 1, xp: 10 },
+            { id: "az-leksika-t8", type: "multiple_choice", prompt: "'qaranlıq' sözünün antonimi hansıdır?", options: ["qara", "işıqlı", "gecə", "tünd"], correctIndex: 1, xp: 10 },
+            { id: "az-leksika-t9", type: "multiple_choice", prompt: "'cəsur' sözünün sinonimi hansıdır?", options: ["qorxaq", "igid", "zəif", "sakit"], correctIndex: 1, xp: 10 },
+            { id: "az-leksika-t10", type: "multiple_choice", prompt: "'əl-ələ vermək' ifadəsi nədir?", options: ["frazeoloji birləşmə", "omonim", "antonim", "sinonim"], correctIndex: 0, xp: 10 },
+            { id: "az-leksika-t11", type: "fill_blank", prompt: "Sözün əsl mənası ___ məna adlanır.", accepted: ["həqiqi", "heqiqi"], xp: 10 },
+            { id: "az-leksika-t12", type: "multiple_choice", prompt: "'ağ' sözünün antonimi hansıdır?", options: ["boz", "qara", "sarı", "mavi"], correctIndex: 1, xp: 10 },
+            { id: "az-leksika-t13", type: "multiple_choice", prompt: "'sevincli' sözünün sinonimi hansıdır?", options: ["kədərli", "şad", "yorğun", "acıqlı"], correctIndex: 1, xp: 10 },
+            { id: "az-leksika-t14", type: "multiple_choice", prompt: "'yuxulu — oyaq' cütü hansı hadisədir?", options: ["sinonim", "antonim", "omonim", "frazeologizm"], correctIndex: 1, xp: 10 },
+            { id: "az-leksika-t15", type: "multiple_choice", prompt: "Eyni cür yazılıb fərqli məna daşıyan sözlər necə adlanır?", options: ["sinonim", "omonim", "antonim", "frazeologizm"], correctIndex: 1, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "az-leksika-b1", type: "multiple_choice", prompt: "'sürətli' sözünün sinonimi hansıdır?", options: ["yavaş", "iti", "ağır", "sakit"], correctIndex: 1, xp: 15 },
+            { id: "az-leksika-b2", type: "multiple_choice", prompt: "'dost' sözünün antonimi hansıdır?", options: ["yoldaş", "düşmən", "qonşu", "tanış"], correctIndex: 1, xp: 15 },
+            { id: "az-leksika-b3", type: "fill_blank", prompt: "'Ağzını açmaq' ifadəsi ___ birləşmədir.", accepted: ["frazeoloji", "frazeologizm"], xp: 15 },
+            { id: "az-leksika-b4", type: "multiple_choice", prompt: "'acı' sözünün antonimi hansıdır?", options: ["şor", "şirin", "turş", "duzlu"], correctIndex: 1, xp: 15 },
+            { id: "az-leksika-b5", type: "multiple_choice", prompt: "'zəngin' sözünün sinonimi hansıdır?", options: ["kasıb", "varlı", "yoxsul", "sadə"], correctIndex: 1, xp: 15 },
+          ],
+        },
+        {
+          id: "az-soz-yaradiciligi",
+          title: "Söz yaradıcılığı",
+          intro: "Sözün kökü, şəkilçilər və sözün tərkibi.",
+          sections: [
+            { heading: "Kök və şəkilçi", body: "Sözün əsas mənalı hissəsi kök, sonuna əlavə olunan hissə şəkilçidir. Məsələn, 'meşəlik' sözündə kök 'meşə', şəkilçi '-lik'-dir." },
+            { heading: "Leksik və qrammatik şəkilçi", body: "Leksik şəkilçi yeni söz düzəldir (kitab → kitabçı). Qrammatik şəkilçi sözü dəyişir, yeni söz yaratmır (kitab → kitablar)." },
+            { heading: "Başlanğıc forma", body: "Sözün şəkilçisiz, əsas forması onun başlanğıc formasıdır." },
+          ],
+          tasks: [
+            { id: "az-soz-t1", type: "multiple_choice", prompt: "'meşəlik' sözündə kök hansıdır?", options: ["meşə", "lik", "meşəl", "əlik"], correctIndex: 0, xp: 10 },
+            { id: "az-soz-t2", type: "fill_blank", prompt: "'Kitabçı' sözündəki şəkilçini yaz.", accepted: ["-çı", "çı"], xp: 10 },
+            { id: "az-soz-t3", type: "multiple_choice", prompt: "Yeni söz düzəldən şəkilçi necə adlanır?", options: ["leksik", "qrammatik"], correctIndex: 0, xp: 10 },
+            { id: "az-soz-t4", type: "multiple_choice", prompt: "'evlər' sözündə '-lər' hansı şəkilçidir?", options: ["leksik", "qrammatik"], correctIndex: 1, xp: 10 },
+            { id: "az-soz-t5", type: "multiple_choice", prompt: "Sözün əsas mənalı hissəsi necə adlanır?", options: ["kök", "şəkilçi", "vurğu", "heca"], correctIndex: 0, xp: 15 },
+          ],
+        },
         {
           id: "az-u1-l1",
           title: "İsim",
@@ -87,6 +180,38 @@ export const azerbaijani: Subject = {
           ],
         },
         {
+          id: "az-say",
+          title: "Say",
+          intro: "Say əşyanın miqdarını və ya sırasını bildirir.",
+          sections: [
+            { heading: "Say nədir?", body: "Say əşyanın miqdarını və ya sırasını bildirən nitq hissəsidir." },
+            { heading: "Növləri", body: "Miqdar sayı miqdarı bildirir (bir, iki, on) və 'neçə?' sualına cavab verir. Sıra sayı sıranı bildirir (birinci, ikinci) və 'neçənci?' sualına cavab verir." },
+          ],
+          tasks: [
+            { id: "az-say-t1", type: "multiple_choice", prompt: "'beş' hansı saydır?", options: ["miqdar", "sıra"], correctIndex: 0, xp: 10 },
+            { id: "az-say-t2", type: "multiple_choice", prompt: "'üçüncü' hansı saydır?", options: ["miqdar", "sıra"], correctIndex: 1, xp: 10 },
+            { id: "az-say-t3", type: "multiple_choice", prompt: "Miqdar sayı hansı suala cavab verir?", options: ["kim?", "neçə?", "necə?", "harada?"], correctIndex: 1, xp: 10 },
+            { id: "az-say-t4", type: "fill_blank", prompt: "'İkinci' ___ saydır. (miqdar / sıra)", accepted: ["sıra", "sira"], xp: 10 },
+            { id: "az-say-t5", type: "multiple_choice", prompt: "Aşağıdakılardan hansı miqdar sayıdır?", options: ["birinci", "on", "beşinci", "üçüncü"], correctIndex: 1, xp: 15 },
+          ],
+        },
+        {
+          id: "az-evezlik",
+          title: "Əvəzlik",
+          intro: "Əvəzlik ismin, sifətin yerində işlənir.",
+          sections: [
+            { heading: "Əvəzlik nədir?", body: "Əvəzlik ismi, sifəti və ya sayı əvəz edən nitq hissəsidir." },
+            { heading: "Şəxs əvəzlikləri", body: "mən, sən, o, biz, siz, onlar — şəxs əvəzlikləridir." },
+          ],
+          tasks: [
+            { id: "az-evezlik-t1", type: "multiple_choice", prompt: "'mən, sən, o' hansı əvəzliklərdir?", options: ["şəxs", "işarə", "sual"], correctIndex: 0, xp: 10 },
+            { id: "az-evezlik-t2", type: "multiple_choice", prompt: "Əvəzlik əsasən nəyi əvəz edir?", options: ["feili", "ismi", "yalnız sayı", "heç nəyi"], correctIndex: 1, xp: 10 },
+            { id: "az-evezlik-t3", type: "fill_blank", prompt: "'Biz' ___ əvəzliyidir. (şəxs / işarə)", accepted: ["şəxs", "sexs"], xp: 10 },
+            { id: "az-evezlik-t4", type: "multiple_choice", prompt: "Aşağıdakılardan hansı şəxs əvəzliyidir?", options: ["bu", "onlar", "gözəl", "kitab"], correctIndex: 1, xp: 10 },
+            { id: "az-evezlik-t5", type: "multiple_choice", prompt: "'O gəldi' cümləsində əvəzlik hansıdır?", options: ["o", "gəldi", "hər ikisi", "heç biri"], correctIndex: 0, xp: 15 },
+          ],
+        },
+        {
           id: "az-u1-l3",
           title: "Feil",
           intro: "Feil hərəkəti bildirir.",
@@ -119,6 +244,137 @@ export const azerbaijani: Subject = {
             { id: "az-u1-l3-b3", type: "multiple_choice", prompt: "'Getdi' feili hansı zamandadır?", options: ["keçmiş", "indiki", "gələcək", "heç biri"], correctIndex: 0, xp: 15 },
             { id: "az-u1-l3-b4", type: "multiple_choice", prompt: "Aşağıdakı sözlərdən hansı feil deyil?", options: ["oxumaq", "yazmaq", "qələm", "gülmək"], correctIndex: 2, xp: 15 },
             { id: "az-u1-l3-b5", type: "fill_blank", prompt: "'Nə edir?' sualına cavab verən söz hansı nitq hissəsidir?", accepted: ["feil", "feildir"], xp: 15 },
+          ],
+        },
+        {
+          id: "az-sintaksis",
+          title: "Sintaksis: söz birləşməsi və cümlə",
+          intro: "Söz birləşmələri, cümlənin növləri və üzvləri.",
+          sections: [
+            { heading: "Söz birləşməsi və cümlə", body: "İki və daha çox sözün mənaca əlaqəsi söz birləşməsidir. Fikri bitkin ifadə edən söz qrupu cümlədir." },
+            { heading: "Məqsədə görə cümlələr", body: "Nəqli (məlumat verir), sual (soruşur), əmr (əmr edir) və nida (güclü hiss bildirir) cümlələri." },
+            { heading: "Cümlə üzvləri", body: "Mübtəda iş görəni, xəbər isə işi bildirir. Məsələn, 'Uşaq oxuyur' cümləsində 'uşaq' mübtəda, 'oxuyur' xəbərdir." },
+          ],
+          tasks: [
+            { id: "az-sintaksis-t1", type: "multiple_choice", prompt: "Fikri bitkin ifadə edən söz qrupu necə adlanır?", options: ["söz", "heca", "cümlə", "hərf"], correctIndex: 2, xp: 10 },
+            { id: "az-sintaksis-t2", type: "multiple_choice", prompt: "'Kitab oxu!' hansı cümlədir?", options: ["nəqli", "sual", "əmr", "nida"], correctIndex: 2, xp: 10 },
+            { id: "az-sintaksis-t3", type: "multiple_choice", prompt: "Sonunda sual işarəsi olan cümlə necə adlanır?", options: ["nəqli", "sual", "nida", "əmr"], correctIndex: 1, xp: 10 },
+            { id: "az-sintaksis-t4", type: "fill_blank", prompt: "Cümlədə iş görəni bildirən üzv ___ adlanır.", accepted: ["mübtəda", "mubteda"], xp: 10 },
+            { id: "az-sintaksis-t5", type: "multiple_choice", prompt: "'Uşaq oxuyur' cümləsində xəbər hansıdır?", options: ["uşaq", "oxuyur", "hər ikisi", "heç biri"], correctIndex: 1, xp: 15 },
+          ],
+        },
+      ],
+    },
+
+    // ═══════════════ 2. Yazı və oxu mədəniyyəti ═══════════════
+    {
+      id: "az-writing",
+      title: "Yazı və oxu mədəniyyəti",
+      description:
+        "Orfoqrafiya-orfoepiya, durğu işarələri, mətnlə iş və janrlar.",
+      lessons: [
+        {
+          id: "az-orfoqrafiya",
+          title: "Orfoqrafiya və orfoepiya",
+          intro: "Sözlərin düzgün yazılışı və düzgün tələffüzü.",
+          sections: [
+            { heading: "Orfoqrafiya", body: "Sözlərin düzgün yazılışı qaydalarına orfoqrafiya deyilir." },
+            { heading: "Orfoepiya", body: "Sözlərin düzgün tələffüz (deyiliş) qaydalarına orfoepiya deyilir." },
+          ],
+          tasks: [
+            { id: "az-orfoqrafiya-t1", type: "multiple_choice", prompt: "Sözlərin düzgün yazılışı qaydaları necə adlanır?", options: ["orfoqrafiya", "orfoepiya"], correctIndex: 0, xp: 10 },
+            { id: "az-orfoqrafiya-t2", type: "multiple_choice", prompt: "Sözlərin düzgün tələffüzü qaydaları necə adlanır?", options: ["orfoqrafiya", "orfoepiya"], correctIndex: 1, xp: 10 },
+            { id: "az-orfoqrafiya-t3", type: "multiple_choice", prompt: "Hansı söz düzgün yazılıb?", options: ["gəldı", "gəldi", "geldi", "gəldï"], correctIndex: 1, xp: 10 },
+            { id: "az-orfoqrafiya-t4", type: "multiple_choice", prompt: "Hansı söz düzgün yazılıb?", options: ["kitap", "kitab", "gitab", "kıtab"], correctIndex: 1, xp: 10 },
+            { id: "az-orfoqrafiya-t5", type: "fill_blank", prompt: "Sözün düzgün deyilişi ___ adlanır.", accepted: ["orfoepiya"], xp: 15 },
+          ],
+        },
+        {
+          id: "az-durgu",
+          title: "Durğu işarələri",
+          intro: "Cümlədə nöqtə, vergül, sual və nida işarələri.",
+          sections: [
+            { heading: "Cümlə sonunda", body: "Nəqli cümlədən sonra nöqtə (.), sual cümləsindən sonra sual işarəsi (?), güclü hiss bildirən cümlədən sonra nida işarəsi (!) qoyulur." },
+            { heading: "Cümlə daxilində", body: "Sadalama və ayrı-ayrı hissələr arasında vergül (,) işlənir." },
+          ],
+          tasks: [
+            { id: "az-durgu-t1", type: "multiple_choice", prompt: "Nəqli cümlənin sonunda hansı işarə qoyulur?", options: ["nöqtə", "sual işarəsi", "nida işarəsi", "vergül"], correctIndex: 0, xp: 10 },
+            { id: "az-durgu-t2", type: "multiple_choice", prompt: "Sual cümləsinin sonunda hansı işarə qoyulur?", options: ["nöqtə", "sual işarəsi", "vergül", "nida işarəsi"], correctIndex: 1, xp: 10 },
+            { id: "az-durgu-t3", type: "multiple_choice", prompt: "Güclü hiss bildirən cümlədən sonra hansı işarə qoyulur?", options: ["nöqtə", "vergül", "nida işarəsi", "sual işarəsi"], correctIndex: 2, xp: 10 },
+            { id: "az-durgu-t4", type: "fill_blank", prompt: "Cümlə daxilində sadalamada ___ işarəsi qoyulur.", accepted: ["vergül", "vergul"], xp: 10 },
+            { id: "az-durgu-t5", type: "multiple_choice", prompt: "'Sən hara gedirsən' cümləsinin sonunda hansı işarə olmalıdır?", options: ["nöqtə", "sual işarəsi", "nida işarəsi", "vergül"], correctIndex: 1, xp: 15 },
+          ],
+        },
+        {
+          id: "az-metn",
+          title: "Mətnlə iş",
+          intro: "Mətnin hissələri, planı və başlığı.",
+          sections: [
+            { heading: "Mətnin hissələri", body: "Mətn üç hissədən ibarətdir: giriş, əsas hissə və nəticə." },
+            { heading: "Plan və başlıq", body: "Mətnin qısa məzmununu maddələrlə yazmaq — plan tutmaqdır. Mətnin əsas fikrini əks etdirən ad — başlıqdır." },
+          ],
+          tasks: [
+            { id: "az-metn-t1", type: "multiple_choice", prompt: "Mətnin ilk hissəsi necə adlanır?", options: ["giriş", "əsas hissə", "nəticə", "plan"], correctIndex: 0, xp: 10 },
+            { id: "az-metn-t2", type: "multiple_choice", prompt: "Mətnin əsas fikri hansı hissədə açılır?", options: ["giriş", "əsas hissə", "nəticə", "başlıq"], correctIndex: 1, xp: 10 },
+            { id: "az-metn-t3", type: "multiple_choice", prompt: "Mətnə ad seçmək nə deməkdir?", options: ["plan tutmaq", "başlıq seçmək", "nəticə yazmaq", "giriş yazmaq"], correctIndex: 1, xp: 10 },
+            { id: "az-metn-t4", type: "fill_blank", prompt: "Mətnin son hissəsi ___ adlanır.", accepted: ["nəticə", "netice"], xp: 10 },
+            { id: "az-metn-t5", type: "multiple_choice", prompt: "Mətnin qısa məzmununu maddələrlə yazmaq necə adlanır?", options: ["plan tutmaq", "başlıq seçmək", "giriş", "nəticə"], correctIndex: 0, xp: 15 },
+          ],
+        },
+        {
+          id: "az-uslub",
+          title: "Üslub və janrlar",
+          intro: "Hekayə, nağıl, şeir, təmsil.",
+          sections: [
+            { heading: "Janrlar", body: "Nağıl — xəyali, sehrli hadisələr; təmsil — heyvanlar dilindən ibrətamiz əsər; şeir — vəznli, qafiyəli əsər; hekayə — real həyata əsaslanan kiçik bədii əsər." },
+          ],
+          tasks: [
+            { id: "az-uslub-t1", type: "multiple_choice", prompt: "Uşaqlar üçün sehrli, xəyali hadisələr olan janr hansıdır?", options: ["nağıl", "məqalə", "elan", "məktub"], correctIndex: 0, xp: 10 },
+            { id: "az-uslub-t2", type: "multiple_choice", prompt: "Heyvanlar dilindən ibrətamiz janr hansıdır?", options: ["təmsil", "şeir", "hekayə", "nağıl"], correctIndex: 0, xp: 10 },
+            { id: "az-uslub-t3", type: "multiple_choice", prompt: "Vəznli və qafiyəli əsər hansıdır?", options: ["şeir", "hekayə", "nağıl", "təmsil"], correctIndex: 0, xp: 10 },
+            { id: "az-uslub-t4", type: "multiple_choice", prompt: "Real hadisə əsasında yazılmış kiçik bədii əsər hansıdır?", options: ["hekayə", "şeir", "nağıl", "təmsil"], correctIndex: 0, xp: 10 },
+            { id: "az-uslub-t5", type: "fill_blank", prompt: "'Tülkü və Qarğa' hansı janrdır?", accepted: ["təmsil", "temsil"], xp: 15 },
+          ],
+        },
+      ],
+    },
+
+    // ═══════════════ 3. Nitq bacarıqlarının inkişafı ═══════════════
+    {
+      id: "az-speech",
+      title: "Nitq bacarıqlarının inkişafı",
+      description: "Şifahi və yazılı nitq bacarıqları.",
+      lessons: [
+        {
+          id: "az-sifahi",
+          title: "Şifahi nitq",
+          intro: "Məruzə, müsahibə, diskussiya və fikrin əsaslandırılması.",
+          sections: [
+            { heading: "Şifahi nitq nədir?", body: "Danışıq yolu ilə ünsiyyət şifahi nitqdir." },
+            { heading: "Formaları", body: "Məruzə — bir mövzuda hazırlanmış çıxış; müsahibə — sual-cavab; diskussiya — fərqli fikirlərin müzakirəsi. Fikri əsaslandırmaq — sübutlarla izah etməkdir." },
+          ],
+          tasks: [
+            { id: "az-sifahi-t1", type: "multiple_choice", prompt: "Bir mövzuda hazırlanmış çıxış necə adlanır?", options: ["məruzə", "məktub", "inşa", "elan"], correctIndex: 0, xp: 10 },
+            { id: "az-sifahi-t2", type: "multiple_choice", prompt: "İki nəfərin sual-cavabı necə adlanır?", options: ["müsahibə", "məruzə", "inşa", "diskussiya"], correctIndex: 0, xp: 10 },
+            { id: "az-sifahi-t3", type: "multiple_choice", prompt: "Fərqli fikirlərin müzakirəsi necə adlanır?", options: ["diskussiya", "elan", "məktub", "məruzə"], correctIndex: 0, xp: 10 },
+            { id: "az-sifahi-t4", type: "multiple_choice", prompt: "Fikri əsaslandırmaq nə deməkdir?", options: ["sübut gətirmək", "susmaq", "sual vermək", "yazmaq"], correctIndex: 0, xp: 10 },
+            { id: "az-sifahi-t5", type: "fill_blank", prompt: "Danışıq yolu ilə ünsiyyət ___ nitqdir.", accepted: ["şifahi", "sifahi"], xp: 15 },
+          ],
+        },
+        {
+          id: "az-yazili",
+          title: "Yazılı nitq",
+          intro: "İnşa, məktub, elan və təbriknamə.",
+          sections: [
+            { heading: "İnşa", body: "Bir mövzuda yazılı əsər inşadır. Növləri: təsviri (təsvir edir), nəqli (hadisəni danışır), mühakimə (fikir yürüdür)." },
+            { heading: "Digər yazılar", body: "Məktub — kiməsə ünvanlanan yazı; elan — məlumat verən mətn; təbriknamə — bayram/uğur münasibətilə yazılan təbrik." },
+          ],
+          tasks: [
+            { id: "az-yazili-t1", type: "multiple_choice", prompt: "Bir mövzuda yazılı əsər necə adlanır?", options: ["inşa", "məruzə", "diskussiya", "müsahibə"], correctIndex: 0, xp: 10 },
+            { id: "az-yazili-t2", type: "multiple_choice", prompt: "Hadisəni ardıcıl danışan inşa növü hansıdır?", options: ["təsviri", "nəqli", "mühakimə"], correctIndex: 1, xp: 10 },
+            { id: "az-yazili-t3", type: "multiple_choice", prompt: "Əşyanı və ya mənzərəni təsvir edən inşa növü hansıdır?", options: ["təsviri", "nəqli", "mühakimə"], correctIndex: 0, xp: 10 },
+            { id: "az-yazili-t4", type: "multiple_choice", prompt: "Kiməsə ünvanlanan yazı necə adlanır?", options: ["məktub", "elan", "inşa", "məruzə"], correctIndex: 0, xp: 10 },
+            { id: "az-yazili-t5", type: "fill_blank", prompt: "Bayram münasibətilə yazılan təbrik ___ adlanır.", accepted: ["təbriknamə", "tebrikname"], xp: 15 },
           ],
         },
       ],

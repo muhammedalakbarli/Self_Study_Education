@@ -294,6 +294,47 @@ export default function LessonVisual({ visual }: { visual?: string }) {
       );
 
     // ── Azərbaycan dili ─────────────────────────────────────────
+    case "fonetika":
+      return (
+        <Frame>
+          <div className="grid grid-cols-2 gap-3 text-center">
+            <div className="rounded-xl border border-line bg-panel-2 p-3">
+              <div className="text-lg font-bold text-brand-soft">Saitlər (9)</div>
+              <div className="mt-1 text-white">a ı o u · e ə i ö ü</div>
+              <div className="text-xs text-muted">sərbəst tələffüz</div>
+            </div>
+            <div className="rounded-xl border border-line bg-panel-2 p-3">
+              <div className="text-lg font-bold text-brand-soft">Samitlər</div>
+              <div className="mt-1 text-white">b, c, d, m, s, t ...</div>
+              <div className="text-xs text-muted">maneə ilə tələffüz</div>
+            </div>
+          </div>
+          <p className="mt-3 text-center text-sm text-muted">
+            Qalın saitlər: a, ı, o, u · İncə saitlər: e, ə, i, ö, ü
+          </p>
+        </Frame>
+      );
+
+    case "leksika":
+      return (
+        <Frame>
+          <div className="flex flex-wrap justify-center gap-3 text-center text-sm">
+            <div className="rounded-lg border border-line bg-panel-2 px-4 py-2">
+              <div className="font-semibold text-white">gözəl = qəşəng</div>
+              <div className="text-xs text-brand-soft">sinonim (yaxın məna)</div>
+            </div>
+            <div className="rounded-lg border border-line bg-panel-2 px-4 py-2">
+              <div className="font-semibold text-white">böyük — kiçik</div>
+              <div className="text-xs text-brand-soft">antonim (əks məna)</div>
+            </div>
+            <div className="rounded-lg border border-line bg-panel-2 px-4 py-2">
+              <div className="font-semibold text-white">üz / üz</div>
+              <div className="text-xs text-brand-soft">omonim (eyni yazılış)</div>
+            </div>
+          </div>
+        </Frame>
+      );
+
     case "noun-cards":
       return (
         <Frame>
