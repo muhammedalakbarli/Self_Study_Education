@@ -13,7 +13,7 @@ export interface GradeResult {
 }
 
 function normalizeText(value: string): string {
-  return value.trim().toLowerCase().replace(/\s+/g, " ");
+  return value.trim().toLocaleLowerCase("az").replace(/\s+/g, " ");
 }
 
 export function gradeTask(task: Task, answer: UserAnswer): GradeResult {
