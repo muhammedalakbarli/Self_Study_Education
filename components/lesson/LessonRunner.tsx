@@ -49,6 +49,14 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
     }
   }
 
+if (total === 0) {
+  return (
+    <div className="text-center py-12 text-slate-300">
+      Bu dərs üçün hələ tapşırıq əlavə edilməyib.
+    </div>
+  );
+}
+
   function advance() {
     setAnswer(null);
     setChecked(false);
