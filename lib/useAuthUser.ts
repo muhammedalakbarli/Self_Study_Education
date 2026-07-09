@@ -14,23 +14,26 @@ export function useAuthUser(): { user: User | null; ready: boolean } {
   const [user, setUser] = useState<User | null>(null);
   const [ready, setReady] = useState(false);
 
-  useEffect(() => {
-    let active = true;
-    getCurrentUser().then((u) => {
-      if (!active) return;
-      if (!u) {
-        router.replace("/");
-        return;
-      }
-      // Profil sətrini təmin et (progress FK üçün) — fon işi.
+useEffect(() => {
+  const supabase = createClient();
+  // İlk yükləmə üçün mövcud sessiyanı oxu
+  supabase.auth.getSession().then(({ data: { session } }) => {
+    const u = session?.user ?? null;
+    if (!u) { router.replace("/"); return; }
+    ensureProfile(u.id, displayName(u)).catch(() => {});
+    setUser(u);
+    setReady(true);
+  });
+  // Sonrakı dəyişiklikləri real-time izlə
+  const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+    const u = session?.user ?? null;
+    if (event === "SIGNED_OUT" || !u) {
+      setUser(null); setReady(false); router.replace("/"); return;
+    }
+    if (event === "SIGNED_IN" || event === "TOKEN_REFRESHED") {
       ensureProfile(u.id, displayName(u)).catch(() => {});
-      setUser(u);
-      setReady(true);
-    });
-    return () => {
-      active = false;
-    };
-  }, [router]);
-
-  return { user, ready };
-}
+      setUser(u); setReady(true);
+    }
+  });
+  return () => subscription.unsubscribe();
+}, [router]);
