@@ -72,7 +72,8 @@ export default function SignupPage() {
       router.push("/login?confirm=1");
       return;
     }
-    router.push("/dashboard");
+    // Yeni istifadəçi — onboarding suallarına.
+    router.push("/onboarding");
   }
 
   return (

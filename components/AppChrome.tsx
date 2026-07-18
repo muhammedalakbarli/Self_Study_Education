@@ -10,7 +10,10 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   // Giriş və qeydiyyat səhifələrində sidebar göstərilmir.
   const bare =
-    pathname === "/" || pathname === "/login" || pathname === "/signup";
+    pathname === "/" ||
+    pathname === "/login" ||
+    pathname === "/signup" ||
+    pathname === "/onboarding";
 
   if (bare) return <>{children}</>;
 

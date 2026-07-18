@@ -21,7 +21,12 @@ export function useAuthUser(): { user: User | null; ready: boolean } {
       if (!u) {
         router.replace("/login");
         setReady(true);
-        return; 
+        return;
+      }
+      if (!u.user_metadata?.onboarded) {
+        router.replace("/onboarding");
+        setReady(true);
+        return;
       }
       ensureProfile(u.id, displayName(u)).catch(() => {});
       setUser(u);
@@ -38,8 +43,12 @@ export function useAuthUser(): { user: User | null; ready: boolean } {
         return;
       }
       if (event === "SIGNED_IN" || event === "TOKEN_REFRESHED") {
+        if (!u.user_metadata?.onboarded) {
+          router.replace("/onboarding");
+          return;
+        }
         ensureProfile(u.id, displayName(u)).catch(() => {});
-        setUser(u); 
+        setUser(u);
         setReady(true);
       }
     });
