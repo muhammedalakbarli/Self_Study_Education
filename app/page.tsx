@@ -10,6 +10,7 @@ import { Target, Sparkles, GraduationCap } from "lucide-react";
 import { getCurrentUser } from "@/lib/auth";
 import { subjects } from "@/lib/content";
 import Logo from "@/components/Logo";
+import Mascot from "@/components/Mascot";
 
 export default function LandingPage() {
   const router = useRouter();
@@ -76,7 +77,8 @@ export default function LandingPage() {
       {/* Hero */}
       <main className="mx-auto max-w-6xl px-5">
         <section className="flex flex-col items-center py-14 text-center sm:py-20">
-          <span className="rounded-full bg-brand/10 px-4 py-1.5 text-sm font-bold text-brand">
+          <Mascot size={96} />
+          <span className="mt-5 rounded-full bg-brand/10 px-4 py-1.5 text-sm font-bold text-brand">
             Azərbaycan məktəbliləri üçün · 5-ci sinif
           </span>
           <h1 className="mt-6 max-w-3xl text-4xl font-extrabold leading-tight text-fg sm:text-6xl">
