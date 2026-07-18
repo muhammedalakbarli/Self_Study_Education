@@ -19,6 +19,7 @@ interface Props {
   timed?: boolean;
   onExit: () => void;
   onCorrect?: (taskId: string) => void;
+  onFinish?: () => void; // dəst bitəndə (nəticə ekranı) çağırılır
 }
 
 export default function PracticeRunner(props: Props) {
@@ -26,7 +27,7 @@ export default function PracticeRunner(props: Props) {
 }
 
 // ── Adi praktika ──────────────────────────────────────────────
-function ReviewRunner({ tasks, title, onExit, onCorrect }: Props) {
+function ReviewRunner({ tasks, title, onExit, onCorrect, onFinish }: Props) {
   const [index, setIndex] = useState(0);
   const [answer, setAnswer] = useState<UserAnswer | null>(null);
   const [checked, setChecked] = useState(false);
@@ -52,7 +53,10 @@ function ReviewRunner({ tasks, title, onExit, onCorrect }: Props) {
     setAnswer(null);
     setChecked(false);
     if (index + 1 < total) setIndex((i) => i + 1);
-    else setDone(true);
+    else {
+      setDone(true);
+      onFinish?.();
+    }
   }
 
   function restart() {
@@ -116,7 +120,7 @@ function ReviewRunner({ tasks, title, onExit, onCorrect }: Props) {
 }
 
 // ── Sürət raundu ──────────────────────────────────────────────
-function SpeedRunner({ tasks, title, onExit }: Props) {
+function SpeedRunner({ tasks, title, onExit, onFinish }: Props) {
   const DURATION = 60;
   const mc = tasks.filter((t): t is MultipleChoiceTask => t.type === "multiple_choice");
 
@@ -132,6 +136,7 @@ function SpeedRunner({ tasks, title, onExit }: Props) {
     if (done) return;
     if (time <= 0) {
       setDone(true);
+      onFinish?.();
       return;
     }
     const t = setTimeout(() => setTime((x) => x - 1), 1000);

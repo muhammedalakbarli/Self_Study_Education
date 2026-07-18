@@ -10,6 +10,7 @@ import { subjects } from "@/lib/content";
 import { loadProgress, isLessonLocked, type ProgressState } from "@/lib/progress";
 import { useAuthUser } from "@/lib/useAuthUser";
 import { displayName } from "@/lib/auth";
+import { isDailyDone } from "@/lib/daily";
 import RadialProgress from "@/components/RadialProgress";
 import LearningPath, { type PathNode } from "@/components/LearningPath";
 import { PageSkeleton } from "@/components/Skeleton";
@@ -81,6 +82,21 @@ export default function DashboardPage() {
             color="text-brand"
           />
         </div>
+
+        {/* Gündəlik challenge banneri */}
+        {!isDailyDone(user?.user_metadata) && (
+          <Link
+            href="/praktika"
+            className="mt-4 flex items-center justify-between gap-3 rounded-2xl border-2 border-brand/30 bg-brand/10 px-5 py-3.5 transition hover:bg-brand/15"
+          >
+            <span className="font-bold text-brand">
+              Gündəlik challenge səni gözləyir — 5 tapşırıq
+            </span>
+            <span className="text-sm font-extrabold uppercase tracking-wide text-brand">
+              Başla →
+            </span>
+          </Link>
+        )}
 
         {/* Fənn tab-ları */}
         <div className="mt-6 flex flex-wrap gap-2">
