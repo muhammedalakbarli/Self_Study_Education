@@ -1,11 +1,11 @@
 "use client";
 
-// Layihə (project) səhifəsi:
-// şəkil → başlıq → başlama/son tarix → ətraflı qaydalar → tapşırıqlar (15 + 5 bonus).
+// Dərs səhifəsi: şəkil → başlıq → qaydalar → tapşırıqlar (15 + 5 bonus).
 
 import { use, useState } from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { X } from "lucide-react";
 import { getLesson, orderedLessonIds } from "@/lib/content";
 import { useAuthUser } from "@/lib/useAuthUser";
 import LessonRunner from "@/components/lesson/LessonRunner";
@@ -34,6 +34,16 @@ export default function LessonPage({
     return (
       <div className="min-h-screen bg-ink">
         <main className="mx-auto w-full max-w-xl px-4 py-8">
+          <div className="mb-4 flex items-center gap-3">
+            <Link
+              href={`/subjects/${subject.slug}`}
+              aria-label="Dərsdən çıx"
+              className="flex h-9 w-9 items-center justify-center rounded-full text-muted transition hover:bg-panel-2 hover:text-fg"
+            >
+              <X size={24} />
+            </Link>
+            <span className="text-sm font-bold text-muted">{lesson.title}</span>
+          </div>
           <LessonRunner slug={subject.slug} lesson={lesson} userId={user.id} />
         </main>
       </div>
