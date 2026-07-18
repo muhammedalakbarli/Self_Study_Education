@@ -72,10 +72,10 @@ export default function DashboardPage() {
               <button
                 key={s.slug}
                 onClick={() => setActiveSlug(s.slug)}
-                className={`rounded-lg px-4 py-2 text-sm font-semibold transition ${
+                className={`rounded-2xl px-4 py-2 text-sm font-extrabold uppercase tracking-wide transition ${
                   on
-                    ? "bg-brand text-white"
-                    : "bg-panel text-muted hover:bg-panel-2 border border-line"
+                    ? "bg-brand text-white btn-pop"
+                    : "bg-panel text-muted hover:bg-panel-2 border-2 border-line"
                 }`}
               >
                 {s.name}
@@ -103,7 +103,7 @@ export default function DashboardPage() {
             {currentLesson && (
               <Link
                 href={`/lessons/${currentLesson.id}`}
-                className="mt-4 inline-flex items-center gap-2 rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white hover:bg-brand-dark"
+                className="mt-4 inline-flex items-center gap-2 rounded-2xl bg-brand px-5 py-2.5 text-sm font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark"
               >
                 Davam et
               </Link>

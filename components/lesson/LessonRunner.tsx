@@ -100,13 +100,13 @@ if (total === 0) {
         <div className="mt-6 flex justify-center gap-3">
           <button
             onClick={startBonus}
-            className="rounded-lg bg-brand px-5 py-3 font-semibold text-white hover:bg-brand-dark"
+            className="rounded-2xl bg-brand px-5 py-3 font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark"
           >
             Bonusa başla
           </button>
           <button
             onClick={finishWithoutBonus}
-            className="rounded-lg border border-line px-5 py-3 font-medium text-fg hover:border-brand"
+            className="rounded-2xl border-2 border-line px-5 py-3 font-bold text-fg btn-pop btn-pop-ghost hover:border-brand"
           >
             Bitir
           </button>
@@ -126,13 +126,13 @@ if (total === 0) {
         <div className="mt-8 flex justify-center gap-3">
           <Link
             href={`/subjects/${slug}`}
-            className="rounded-lg bg-brand px-5 py-3 font-medium text-white hover:bg-brand-dark"
+            className="rounded-2xl bg-brand px-5 py-3 font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark"
           >
             Yola qayıt
           </Link>
           <Link
             href="/dashboard"
-            className="rounded-lg border border-line px-5 py-3 font-medium text-fg hover:border-brand"
+            className="rounded-2xl border-2 border-line px-5 py-3 font-bold text-fg btn-pop btn-pop-ghost hover:border-brand"
           >
             Ana səhifə
           </Link>
@@ -193,7 +193,7 @@ if (total === 0) {
             type="button"
             onClick={handleCheck}
             disabled={answer === null || answer === ""}
-            className="w-full rounded-lg bg-brand px-5 py-3 text-lg font-semibold text-white
+            className="w-full rounded-2xl bg-brand px-5 py-3.5 text-lg font-extrabold uppercase tracking-wide text-white btn-pop
               hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-40"
           >
             Yoxla
@@ -202,7 +202,7 @@ if (total === 0) {
           <button
             type="button"
             onClick={advance}
-            className="w-full rounded-lg bg-emerald-500 px-5 py-3 text-lg font-semibold text-white hover:bg-emerald-600"
+            className="w-full rounded-2xl bg-emerald-500 px-5 py-3.5 text-lg font-extrabold uppercase tracking-wide text-white btn-pop btn-pop-green hover:bg-emerald-600"
           >
             {index + 1 < total ? "Növbəti" : inBonus ? "Bitir" : "Davam et"}
           </button>

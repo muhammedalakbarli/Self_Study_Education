@@ -24,11 +24,11 @@ export default function TaskInput({ task, value, onChange, disabled }: Props) {
               type="button"
               disabled={disabled}
               onClick={() => onChange(i)}
-              className={`rounded-xl border px-4 py-3 text-left text-lg transition
+              className={`btn-pop rounded-2xl border-2 px-4 py-3.5 text-left text-lg font-semibold
                 ${
                   selected
-                    ? "border-brand bg-brand/10 font-medium text-fg"
-                    : "border-line bg-panel-2 text-fg hover:border-brand"
+                    ? "border-brand bg-brand/10 text-brand [--pop:var(--color-brand)]"
+                    : "border-line bg-panel text-fg btn-pop-ghost hover:border-brand"
                 }
                 ${disabled ? "cursor-not-allowed opacity-80" : "cursor-pointer"}`}
             >
@@ -48,8 +48,8 @@ export default function TaskInput({ task, value, onChange, disabled }: Props) {
       disabled={disabled}
       onChange={(e) => onChange(e.target.value)}
       placeholder="Cavabını yaz..."
-      className="w-full rounded-xl border border-line bg-panel-2 px-4 py-3 text-lg text-fg
-        placeholder:text-muted focus:border-brand focus:outline-none disabled:opacity-80"
+      className="w-full rounded-2xl border-2 border-line bg-panel px-4 py-3.5 text-lg font-semibold text-fg
+        placeholder:font-normal placeholder:text-muted focus:border-brand focus:outline-none disabled:opacity-80"
     />
   );
 }

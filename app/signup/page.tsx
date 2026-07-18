@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Eye, EyeOff, CheckCircle, XCircle } from "lucide-react";
 import Logo from "@/components/Logo";
+import { signUpWithEmail } from "@/lib/auth";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -53,11 +54,22 @@ export default function SignupPage() {
     setLoading(true);
     setError("");
 
-    // Simulyasiya: API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
+    // Real Supabase qeydiyyatı (ad + email + parol)
+    const res = await signUpWithEmail(fullName.trim(), email.trim(), password);
     setLoading(false);
-    // Uğurlu qeydiyyat
+
+    if (!res.ok) {
+      setError(res.error || "Qeydiyyat alınmadı. Yenidən cəhd et.");
+      return;
+    }
+
+    if (res.needsEmailConfirm) {
+      // Email təsdiqi aktivdirsə: girişə yönləndir.
+      router.push("/?confirm=1");
+      return;
+    }
+
+    // Uğurlu qeydiyyat — sessiya hazırdır.
     router.push("/dashboard");
   }
 
@@ -216,7 +228,7 @@ export default function SignupPage() {
               loading ||
               !doPasswordsMatch
             }
-            className="mt-2 w-full rounded-md bg-brand px-4 py-2.5 font-semibold text-white transition hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-40"
+            className="mt-2 w-full rounded-2xl bg-brand px-4 py-3 font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-40"
           >
             {loading ? (
               <span className="flex items-center justify-center gap-2">

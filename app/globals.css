@@ -25,5 +25,31 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  font-family: var(--font-nunito), "Segoe UI", system-ui, sans-serif;
+}
+
+/* Başlıqlar qalın və oynaq (dostyana görünüş) */
+h1, h2, h3 {
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+/* Duolingo-vari "basılan" 3D düymə effekti (öz indigo rəngimizlə).
+   İstifadə: className="... btn-pop"  → yaşıl variant üçün "btn-pop btn-pop-green" */
+@layer components {
+  .btn-pop {
+    --pop: var(--color-brand-dark);
+    box-shadow: 0 4px 0 0 var(--pop);
+    transition: transform 0.06s ease, box-shadow 0.06s ease;
+  }
+  .btn-pop:active:not(:disabled) {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 0 var(--pop);
+  }
+  .btn-pop-green {
+    --pop: #15803d;
+  }
+  .btn-pop-ghost {
+    --pop: #d5d1ea;
+  }
 }

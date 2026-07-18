@@ -72,7 +72,7 @@ export default function LoginPage() {
           type="button"
           onClick={login}
           disabled={!email.trim() || !password || loading}
-          className="mt-6 w-full rounded-md bg-brand px-4 py-2.5 font-semibold text-white transition hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-40"
+          className="mt-6 w-full rounded-2xl bg-brand px-4 py-3 font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-40"
         >
           {loading ? "Yoxlanılır..." : "Daxil ol"}
         </button>
