@@ -51,7 +51,7 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
 
 if (total === 0) {
   return (
-    <div className="text-center py-12 text-slate-300">
+    <div className="text-center py-12 text-muted">
       Bu dərs üçün hələ tapşırıq əlavə edilməyib.
     </div>
   );
