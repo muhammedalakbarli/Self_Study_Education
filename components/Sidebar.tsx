@@ -5,7 +5,16 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { House, Dumbbell, User, LayoutGrid, LogOut } from "lucide-react";
+import {
+  House,
+  Dumbbell,
+  User,
+  LayoutGrid,
+  LogOut,
+  Settings,
+  HelpCircle,
+  ChevronRight,
+} from "lucide-react";
 import Logo from "./Logo";
 import { signOut } from "@/lib/auth";
 
@@ -40,16 +49,34 @@ export default function Sidebar() {
         <nav className="mt-8 flex flex-col gap-1.5">
           {NAV.map(({ href, label, Icon, match }) => {
             const on = isActive(match);
+            const cls = `flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-bold transition ${
+              on ? "bg-brand/10 text-brand" : "text-muted hover:bg-panel-2 hover:text-fg"
+            }`;
+
+            // "Daha çoxu" — üzərinə gələndə yan flyout (Ayarlar, Kömək mərkəzi)
+            if (href === "/daha") {
+              return (
+                <div key={href} className="group relative">
+                  <Link href={href} className={`${cls} justify-between`}>
+                    <span className="flex items-center gap-3">
+                      <Icon size={22} strokeWidth={on ? 2.6 : 2.2} />
+                      {label}
+                    </span>
+                    <ChevronRight size={16} />
+                  </Link>
+                  {/* Flyout */}
+                  <div className="invisible absolute left-full top-0 z-40 pl-2 opacity-0 transition group-hover:visible group-hover:opacity-100">
+                    <div className="w-56 rounded-2xl border border-line bg-panel p-1.5 shadow-xl">
+                      <FlyoutLink href="/ayarlar" Icon={Settings} label="Ayarlar" />
+                      <FlyoutLink href="/komek" Icon={HelpCircle} label="Kömək mərkəzi" />
+                    </div>
+                  </div>
+                </div>
+              );
+            }
+
             return (
-              <Link
-                key={href}
-                href={href}
-                className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-bold transition ${
-                  on
-                    ? "bg-brand/10 text-brand"
-                    : "text-muted hover:bg-panel-2 hover:text-fg"
-                }`}
-              >
+              <Link key={href} href={href} className={cls}>
                 <Icon size={22} strokeWidth={on ? 2.6 : 2.2} />
                 {label}
               </Link>
@@ -86,5 +113,25 @@ export default function Sidebar() {
         })}
       </nav>
     </>
+  );
+}
+
+function FlyoutLink({
+  href,
+  Icon,
+  label,
+}: {
+  href: string;
+  Icon: React.ComponentType<{ size?: number }>;
+  label: string;
+}) {
+  return (
+    <Link
+      href={href}
+      className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-bold text-muted transition hover:bg-panel-2 hover:text-fg"
+    >
+      <Icon size={20} />
+      {label}
+    </Link>
   );
 }

@@ -89,3 +89,9 @@ h1, h2, h3 {
     animation: none;
   }
 }
+
+/* Ayarlardan animasiyalar söndürüləndə */
+.no-anim .ulduz-float,
+.no-anim .ulduz-wave {
+  animation: none !important;
+}
