@@ -6,6 +6,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { Target, Sparkles, GraduationCap } from "lucide-react";
 import { getCurrentUser } from "@/lib/auth";
 import { subjects } from "@/lib/content";
 import Logo from "@/components/Logo";
@@ -40,17 +41,17 @@ export default function LandingPage() {
 
   const features = [
     {
-      icon: "🎯",
+      Icon: Target,
       title: "Öz sürətinlə",
       body: "Hər şagird öz tempi ilə irəliləyir — bir dərs bitəndə növbəti açılır.",
     },
     {
-      icon: "⚡",
+      Icon: Sparkles,
       title: "Oyun kimi",
       body: "XP qazan, seriyanı qoru, layihələri tamamla — öyrənmək əyləncəli olur.",
     },
     {
-      icon: "📚",
+      Icon: GraduationCap,
       title: "Məktəb proqramı",
       body: "5-ci sinif kurikulumuna uyğun: hər mövzu izah + tapşırıqlarla.",
     },
@@ -126,8 +127,10 @@ export default function LandingPage() {
               key={f.title}
               className="rounded-2xl border border-line bg-panel p-6 text-left"
             >
-              <div className="text-3xl">{f.icon}</div>
-              <h3 className="mt-3 text-lg font-extrabold text-fg">{f.title}</h3>
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand/10 text-brand">
+                <f.Icon size={26} strokeWidth={2.2} />
+              </div>
+              <h3 className="mt-4 text-lg font-extrabold text-fg">{f.title}</h3>
               <p className="mt-1.5 text-sm leading-relaxed text-muted">{f.body}</p>
             </div>
           ))}
