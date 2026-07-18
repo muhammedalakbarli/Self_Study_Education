@@ -11,6 +11,7 @@ import { useAuthUser } from "@/lib/useAuthUser";
 import { projectDates } from "@/lib/dates";
 import LessonRunner from "@/components/lesson/LessonRunner";
 import LessonVisual from "@/components/LessonVisual";
+import { PageSkeleton } from "@/components/Skeleton";
 
 export default function LessonPage({
   params,
@@ -24,7 +25,7 @@ export default function LessonPage({
   const found = getLesson(id);
 
   if (!found) notFound();
-  if (!ready || !user) return null;
+  if (!ready || !user) return <PageSkeleton />;
 
   const { subject, lesson } = found;
   const index = orderedLessonIds(subject.slug).indexOf(lesson.id);

@@ -1,20 +1,17 @@
 "use client";
 
-// Giriş səhifəsi — açıq fonda mərkəzi kart, loqo,
-// email/parol ilə real Supabase girişi, qeydiyyat səhifəsinə keçid.
+// Landing (marketing) səhifəsi — məhsulu izah edir, sonra giriş/qeydiyyata yönləndirir.
+// Artıq daxil olmuş istifadəçi birbaşa dashboard-a keçir.
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { signInWithEmail, getCurrentUser } from "@/lib/auth";
+import { getCurrentUser } from "@/lib/auth";
+import { subjects } from "@/lib/content";
 import Logo from "@/components/Logo";
 
-export default function LoginPage() {
+export default function LandingPage() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getCurrentUser().then((u) => {
@@ -22,68 +19,163 @@ export default function LoginPage() {
     });
   }, [router]);
 
-  async function login() {
-    if (!email.trim() || !password) return;
-    setLoading(true);
-    setError("");
-    const res = await signInWithEmail(email.trim(), password);
-    setLoading(false);
-    if (!res.ok) {
-      setError(res.error || "Giriş alınmadı.");
-      return;
-    }
-    router.push("/dashboard");
-  }
+  const totalLessons = subjects.reduce(
+    (n, s) => n + s.units.reduce((m, u) => m + u.lessons.length, 0),
+    0,
+  );
+  const totalTasks = subjects.reduce(
+    (n, s) =>
+      n +
+      s.units.reduce(
+        (m, u) =>
+          m +
+          u.lessons.reduce(
+            (k, l) => k + l.tasks.length + (l.bonusTasks?.length ?? 0),
+            0,
+          ),
+        0,
+      ),
+    0,
+  );
+
+  const features = [
+    {
+      icon: "🎯",
+      title: "Öz sürətinlə",
+      body: "Hər şagird öz tempi ilə irəliləyir — bir dərs bitəndə növbəti açılır.",
+    },
+    {
+      icon: "⚡",
+      title: "Oyun kimi",
+      body: "XP qazan, seriyanı qoru, layihələri tamamla — öyrənmək əyləncəli olur.",
+    },
+    {
+      icon: "📚",
+      title: "Məktəb proqramı",
+      body: "5-ci sinif kurikulumuna uyğun: hər mövzu izah + tapşırıqlarla.",
+    },
+  ];
 
   return (
-    <main className="flex min-h-screen flex-1 items-center justify-center bg-[#f7f8fa] px-4">
-      <div className="w-full max-w-md rounded-xl border border-slate-200 bg-white px-8 py-10 shadow-sm">
-        <div className="flex justify-center">
-          <Logo size={64} />
+    <div className="min-h-screen bg-ink">
+      {/* Naviqasiya */}
+      <header className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
+        <div className="flex items-center gap-2.5">
+          <Logo size={36} />
+          <span className="text-lg font-extrabold text-fg">Bilik Yolu</span>
         </div>
-        <h1 className="mt-6 text-center text-xl font-bold text-slate-900">
-          Hesabına daxil ol
-        </h1>
-
-        <label className="mt-8 block text-sm font-bold text-slate-800">Email</label>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="mt-1.5 w-full rounded-md border border-slate-300 px-3 py-2 text-slate-900 outline-none focus:border-brand focus:ring-1 focus:ring-brand"
-        />
-
-        <label className="mt-4 block text-sm font-bold text-slate-800">Parol</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && login()}
-          className="mt-1.5 w-full rounded-md border border-slate-300 px-3 py-2 text-slate-900 outline-none focus:border-brand focus:ring-1 focus:ring-brand"
-        />
-
-        {error && (
-          <p className="mt-3 rounded-md bg-red-50 px-3 py-2 text-sm text-red-600">
-            {error}
-          </p>
-        )}
-
-        <button
-          type="button"
-          onClick={login}
-          disabled={!email.trim() || !password || loading}
-          className="mt-6 w-full rounded-2xl bg-brand px-4 py-3 font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-40"
+        <Link
+          href="/login"
+          className="rounded-2xl border-2 border-line px-4 py-2 text-sm font-bold text-fg btn-pop btn-pop-ghost hover:border-brand"
         >
-          {loading ? "Yoxlanılır..." : "Daxil ol"}
-        </button>
+          Daxil ol
+        </Link>
+      </header>
 
-        <p className="mt-6 text-center text-sm text-slate-600">
-          Hesabın yoxdur?{" "}
-          <Link href="/signup" className="font-semibold text-brand hover:underline">
-            Qeydiyyatdan keç
+      {/* Hero */}
+      <main className="mx-auto max-w-6xl px-5">
+        <section className="flex flex-col items-center py-14 text-center sm:py-20">
+          <span className="rounded-full bg-brand/10 px-4 py-1.5 text-sm font-bold text-brand">
+            Azərbaycan məktəbliləri üçün · 5-ci sinif
+          </span>
+          <h1 className="mt-6 max-w-3xl text-4xl font-extrabold leading-tight text-fg sm:text-6xl">
+            Öyrənməyi{" "}
+            <span className="text-brand">əyləncəyə</span> çevir
+          </h1>
+          <p className="mt-5 max-w-xl text-lg text-muted">
+            Riyaziyyat, Azərbaycan dili və İngilis dilini addım-addım, oyun kimi
+            öyrən. Pulsuz, sadə və maraqlı.
+          </p>
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+            <Link
+              href="/signup"
+              className="rounded-2xl bg-brand px-8 py-4 text-lg font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark"
+            >
+              Pulsuz başla
+            </Link>
+            <Link
+              href="/login"
+              className="rounded-2xl border-2 border-line bg-panel px-8 py-4 text-lg font-extrabold text-fg btn-pop btn-pop-ghost hover:border-brand"
+            >
+              Artıq hesabım var
+            </Link>
+          </div>
+
+          {/* Statistika */}
+          <div className="mt-14 grid w-full max-w-lg grid-cols-3 gap-4">
+            {[
+              { n: subjects.length, l: "fənn" },
+              { n: totalLessons, l: "dərs" },
+              { n: `${totalTasks}+`, l: "tapşırıq" },
+            ].map((s) => (
+              <div
+                key={s.l}
+                className="rounded-2xl border border-line bg-panel py-5"
+              >
+                <div className="text-3xl font-extrabold text-brand">{s.n}</div>
+                <div className="text-sm text-muted">{s.l}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Üstünlüklər */}
+        <section className="grid gap-5 py-8 sm:grid-cols-3">
+          {features.map((f) => (
+            <div
+              key={f.title}
+              className="rounded-2xl border border-line bg-panel p-6 text-left"
+            >
+              <div className="text-3xl">{f.icon}</div>
+              <h3 className="mt-3 text-lg font-extrabold text-fg">{f.title}</h3>
+              <p className="mt-1.5 text-sm leading-relaxed text-muted">{f.body}</p>
+            </div>
+          ))}
+        </section>
+
+        {/* Fənlər */}
+        <section className="py-12 text-center">
+          <h2 className="text-2xl font-extrabold text-fg">Fənlər</h2>
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
+            {subjects.map((s) => (
+              <div
+                key={s.slug}
+                className="flex items-center gap-3 rounded-2xl border border-line bg-panel px-5 py-3"
+              >
+                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand text-lg font-bold text-white">
+                  {s.icon}
+                </span>
+                <span className="font-bold text-fg">{s.name}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Son CTA */}
+        <section className="my-8 rounded-3xl bg-brand px-6 py-14 text-center">
+          <h2 className="text-3xl font-extrabold text-white">
+            Bu gün öyrənməyə başla
+          </h2>
+          <p className="mx-auto mt-3 max-w-md text-white/85">
+            Hesab yarat, ilk dərsini bitir və XP qazan. Tamamilə pulsuz.
+          </p>
+          <Link
+            href="/signup"
+            className="mt-8 inline-block rounded-2xl bg-white px-8 py-4 text-lg font-extrabold uppercase tracking-wide text-brand btn-pop [--pop:#c9c2f5] hover:bg-white/90"
+          >
+            Pulsuz başla
           </Link>
-        </p>
-      </div>
-    </main>
+        </section>
+      </main>
+
+      {/* Alt */}
+      <footer className="mx-auto max-w-6xl px-5 py-8 text-center text-sm text-muted">
+        <div className="flex items-center justify-center gap-2">
+          <Logo size={22} />
+          <span className="font-bold text-fg">Bilik Yolu</span>
+        </div>
+        <p className="mt-2">Azərbaycan məktəbliləri üçün interaktiv öyrənmə platforması</p>
+      </footer>
+    </div>
   );
 }

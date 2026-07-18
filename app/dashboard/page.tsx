@@ -12,6 +12,7 @@ import { displayName } from "@/lib/auth";
 import { projectDates } from "@/lib/dates";
 import RadialProgress from "@/components/RadialProgress";
 import LearningPath, { type PathNode } from "@/components/LearningPath";
+import { PageSkeleton } from "@/components/Skeleton";
 
 export default function DashboardPage() {
   const { user, ready } = useAuthUser();
@@ -47,7 +48,7 @@ export default function DashboardPage() {
     return { nodes, lessons, currentLesson, scorePct };
   }, [active, state]);
 
-  if (!ready || !state) return null;
+  if (!ready || !state) return <PageSkeleton />;
 
   // Radar üçün hər fənnin tamamlanma nisbəti
   const radarValues = subjects.map((s) => {
