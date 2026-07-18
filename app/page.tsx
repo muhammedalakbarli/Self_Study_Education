@@ -1,15 +1,16 @@
 "use client";
 
-// Landing (marketing) səhifəsi — məhsulu izah edir, sonra giriş/qeydiyyata yönləndirir.
-// Artıq daxil olmuş istifadəçi birbaşa dashboard-a keçir.
+// Landing (marketing) səhifəsi — Duolingo-dan ilham (iki-sütunlu hero + növbələşən
+// bölmələr), amma öz indigo brendimiz və Ulduz mascotu ilə.
 
-import { useEffect } from "react";
+import { useEffect, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Target, Sparkles, GraduationCap } from "lucide-react";
+import { Check } from "lucide-react";
 import { getCurrentUser } from "@/lib/auth";
 import { subjects } from "@/lib/content";
 import Logo from "@/components/Logo";
+import Mascot from "@/components/Mascot";
 
 export default function LandingPage() {
   const router = useRouter();
@@ -39,24 +40,6 @@ export default function LandingPage() {
     0,
   );
 
-  const features = [
-    {
-      Icon: Target,
-      title: "Öz sürətinlə",
-      body: "Hər şagird öz tempi ilə irəliləyir — bir dərs bitəndə növbəti açılır.",
-    },
-    {
-      Icon: Sparkles,
-      title: "Oyun kimi",
-      body: "XP qazan, seriyanı qoru, layihələri tamamla — öyrənmək əyləncəli olur.",
-    },
-    {
-      Icon: GraduationCap,
-      title: "Məktəb proqramı",
-      body: "5-ci sinif kurikulumuna uyğun: hər mövzu izah + tapşırıqlarla.",
-    },
-  ];
-
   return (
     <div className="min-h-screen bg-ink">
       {/* Naviqasiya */}
@@ -73,90 +56,96 @@ export default function LandingPage() {
         </Link>
       </header>
 
-      {/* Hero */}
       <main className="mx-auto max-w-6xl px-5">
-        <section className="flex flex-col items-center py-14 text-center sm:py-20">
-          <span className="rounded-full bg-brand/10 px-4 py-1.5 text-sm font-bold text-brand">
-            Azərbaycan məktəbliləri üçün · 5-ci sinif
-          </span>
-          <h1 className="mt-6 max-w-3xl text-4xl font-extrabold leading-tight text-fg sm:text-6xl">
-            Öyrənməyi{" "}
-            <span className="text-brand">əyləncəyə</span> çevir
-          </h1>
-          <p className="mt-5 max-w-xl text-lg text-muted">
-            Riyaziyyat, Azərbaycan dili və İngilis dilini addım-addım, oyun kimi
-            öyrən. Pulsuz, sadə və maraqlı.
-          </p>
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-            <Link
-              href="/signup"
-              className="rounded-2xl bg-brand px-8 py-4 text-lg font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark"
-            >
-              Pulsuz başla
-            </Link>
-            <Link
-              href="/login"
-              className="rounded-2xl border-2 border-line bg-panel px-8 py-4 text-lg font-extrabold text-fg btn-pop btn-pop-ghost hover:border-brand"
-            >
-              Artıq hesabım var
-            </Link>
+        {/* Hero — iki sütun */}
+        <section className="grid items-center gap-10 py-10 sm:py-16 lg:grid-cols-2">
+          {/* Ulduz */}
+          <div className="order-1 flex justify-center lg:order-2">
+            <div className="relative flex aspect-square w-64 items-center justify-center rounded-full bg-gradient-to-br from-brand/15 to-accent/20 sm:w-80">
+              <Mascot size={210} />
+              <span className="absolute left-2 top-6 rounded-2xl bg-accent px-3 py-1.5 text-sm font-extrabold text-white shadow-lg sm:left-0">
+                +10 XP
+              </span>
+              <span className="absolute bottom-8 right-1 rounded-2xl bg-brand px-3 py-1.5 text-sm font-extrabold text-white shadow-lg sm:right-0">
+                Afərin!
+              </span>
+            </div>
           </div>
 
-          {/* Statistika */}
-          <div className="mt-14 grid w-full max-w-lg grid-cols-3 gap-4">
-            {[
-              { n: subjects.length, l: "fənn" },
-              { n: totalLessons, l: "dərs" },
-              { n: `${totalTasks}+`, l: "tapşırıq" },
-            ].map((s) => (
-              <div
-                key={s.l}
-                className="rounded-2xl border border-line bg-panel py-5"
+          {/* Mətn + CTA */}
+          <div className="order-2 text-center lg:order-1 lg:text-left">
+            <span className="inline-block rounded-full bg-brand/10 px-4 py-1.5 text-sm font-bold text-brand">
+              Azərbaycan məktəbliləri üçün · 5-ci sinif
+            </span>
+            <h1 className="mt-5 text-4xl font-extrabold leading-tight text-fg sm:text-5xl lg:text-6xl">
+              Öyrənməyi <span className="text-brand">əyləncəyə</span> çevir
+            </h1>
+            <p className="mt-5 text-lg text-muted lg:max-w-md">
+              Riyaziyyat, Azərbaycan dili və İngilis dilini addım-addım, oyun kimi
+              öyrən. Pulsuz, sadə və maraqlı.
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
+              <Link
+                href="/signup"
+                className="rounded-2xl bg-brand px-8 py-4 text-lg font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark"
               >
-                <div className="text-3xl font-extrabold text-brand">{s.n}</div>
-                <div className="text-sm text-muted">{s.l}</div>
-              </div>
-            ))}
+                Pulsuz başla
+              </Link>
+              <Link
+                href="/login"
+                className="rounded-2xl border-2 border-line bg-panel px-8 py-4 text-lg font-extrabold text-fg btn-pop btn-pop-ghost hover:border-brand"
+              >
+                Artıq hesabım var
+              </Link>
+            </div>
           </div>
         </section>
 
-        {/* Üstünlüklər */}
-        <section className="grid gap-5 py-8 sm:grid-cols-3">
-          {features.map((f) => (
-            <div
-              key={f.title}
-              className="rounded-2xl border border-line bg-panel p-6 text-left"
-            >
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand/10 text-brand">
-                <f.Icon size={26} strokeWidth={2.2} />
-              </div>
-              <h3 className="mt-4 text-lg font-extrabold text-fg">{f.title}</h3>
-              <p className="mt-1.5 text-sm leading-relaxed text-muted">{f.body}</p>
+        {/* Statistika */}
+        <section className="grid grid-cols-3 gap-4 pb-6">
+          {[
+            { n: subjects.length, l: "fənn" },
+            { n: totalLessons, l: "dərs" },
+            { n: `${totalTasks}+`, l: "tapşırıq" },
+          ].map((s) => (
+            <div key={s.l} className="rounded-2xl border border-line bg-panel py-5 text-center">
+              <div className="text-3xl font-extrabold text-brand">{s.n}</div>
+              <div className="text-sm text-muted">{s.l}</div>
             </div>
           ))}
         </section>
 
-        {/* Fənlər */}
-        <section className="py-12 text-center">
-          <h2 className="text-2xl font-extrabold text-fg">Fənlər</h2>
-          <div className="mt-6 flex flex-wrap justify-center gap-3">
-            {subjects.map((s) => (
-              <div
-                key={s.slug}
-                className="flex items-center gap-3 rounded-2xl border border-line bg-panel px-5 py-3"
-              >
-                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand text-lg font-bold text-white">
-                  {s.icon}
-                </span>
-                <span className="font-bold text-fg">{s.name}</span>
-              </div>
-            ))}
-          </div>
+        {/* Niyə Bilik Yolu — növbələşən bölmələr */}
+        <section className="space-y-14 py-14 sm:space-y-20">
+          <Row
+            reverse={false}
+            tag="Oyun kimi"
+            title="Öyrənmək əyləncəli olsun"
+            body="Hər düzgün cavabda XP qazan, seriyanı qoru, dərsləri tamamla. Ulduz səni hər addımda ruhlandırır."
+            media={<GameMedia />}
+          />
+          <Row
+            reverse={true}
+            tag="Öz sürətinlə"
+            title="Addım-addım, tələsmədən"
+            body="Hər dərs bitəndə növbəti açılır. Öz tempinlə irəlilə — irəliləyişin avtomatik yadda qalır."
+            media={<PathMedia />}
+          />
+          <Row
+            reverse={false}
+            tag="Məktəb proqramı"
+            title="3 fənn, real kurikulum"
+            body="5-ci sinif proqramına uyğun: hər mövzu izah + tapşırıqlarla. Riyaziyyat, Azərbaycan dili və İngilis dili."
+            media={<SubjectsMedia />}
+          />
         </section>
 
         {/* Son CTA */}
         <section className="my-8 rounded-3xl bg-brand px-6 py-14 text-center">
-          <h2 className="text-3xl font-extrabold text-white">
+          <div className="flex justify-center">
+            <Mascot size={96} mood="celebrate" />
+          </div>
+          <h2 className="mt-4 text-3xl font-extrabold text-white">
             Bu gün öyrənməyə başla
           </h2>
           <p className="mx-auto mt-3 max-w-md text-white/85">
@@ -179,6 +168,106 @@ export default function LandingPage() {
         </div>
         <p className="mt-2">Azərbaycan məktəbliləri üçün interaktiv öyrənmə platforması</p>
       </footer>
+    </div>
+  );
+}
+
+// Növbələşən bölmə sətri (illüstrasiya + mətn)
+function Row({
+  media,
+  tag,
+  title,
+  body,
+  reverse,
+}: {
+  media: ReactNode;
+  tag: string;
+  title: string;
+  body: string;
+  reverse: boolean;
+}) {
+  return (
+    <div
+      className={`flex flex-col items-center gap-8 lg:gap-14 ${
+        reverse ? "lg:flex-row-reverse" : "lg:flex-row"
+      }`}
+    >
+      <div className="w-full lg:w-1/2">{media}</div>
+      <div className="w-full text-center lg:w-1/2 lg:text-left">
+        <span className="inline-block rounded-full bg-brand/10 px-3 py-1 text-sm font-bold text-brand">
+          {tag}
+        </span>
+        <h2 className="mt-3 text-2xl font-extrabold text-fg sm:text-3xl">{title}</h2>
+        <p className="mt-3 text-lg leading-relaxed text-muted">{body}</p>
+      </div>
+    </div>
+  );
+}
+
+// Panel: oyunlaşdırma
+function GameMedia() {
+  return (
+    <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-3xl border border-line bg-brand/5">
+      <Mascot size={150} mood="celebrate" />
+      <span className="absolute left-6 top-6 rounded-2xl bg-accent px-3 py-1.5 text-sm font-extrabold text-white shadow">
+        +10 XP
+      </span>
+      <span className="absolute bottom-6 right-6 rounded-2xl bg-brand px-3 py-1.5 text-sm font-extrabold text-white shadow">
+        Streak 5
+      </span>
+    </div>
+  );
+}
+
+// Panel: öyrənmə yolu (mini path)
+function PathMedia() {
+  const nodes = [
+    { done: true },
+    { done: true },
+    { done: false, current: true },
+    { done: false },
+  ];
+  return (
+    <div className="flex aspect-[4/3] items-center justify-center rounded-3xl border border-line bg-accent/10">
+      <div className="flex items-center">
+        {nodes.map((n, i) => (
+          <div key={i} className="flex items-center">
+            <div
+              className={`flex h-14 w-14 items-center justify-center rounded-full text-lg font-extrabold ${
+                n.done
+                  ? "bg-brand text-white"
+                  : n.current
+                    ? "bg-panel text-brand ring-4 ring-brand"
+                    : "bg-panel-2 text-muted ring-2 ring-line"
+              }`}
+            >
+              {n.done ? <Check size={22} strokeWidth={3} /> : i + 1}
+            </div>
+            {i < nodes.length - 1 && (
+              <div className={`h-1.5 w-8 ${n.done ? "bg-brand" : "bg-line"}`} />
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Panel: fənlər
+function SubjectsMedia() {
+  return (
+    <div className="flex aspect-[4/3] flex-col justify-center gap-3 rounded-3xl border border-line bg-brand/5 p-8">
+      {subjects.map((s) => (
+        <div
+          key={s.slug}
+          className="flex items-center gap-3 rounded-2xl border border-line bg-panel px-4 py-3"
+        >
+          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand text-lg font-bold text-white">
+            {s.icon}
+          </span>
+          <span className="font-bold text-fg">{s.name}</span>
+        </div>
+      ))}
     </div>
   );
 }

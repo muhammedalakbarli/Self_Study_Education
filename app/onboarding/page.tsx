@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { getCurrentUser, displayName } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/client";
 import Logo from "@/components/Logo";
+import Mascot from "@/components/Mascot";
 
 type Option = { value: string | number; label: string; note?: string };
 type Step = { key: string; q: string; options: Option[] };
@@ -143,10 +144,14 @@ export default function OnboardingPage() {
       {/* Sual */}
       <main className="mx-auto flex w-full max-w-xl flex-1 flex-col px-5 pb-8">
         {step === 0 && (
-          <p className="mt-4 text-center text-muted">
-            Xoş gəldin, <span className="font-bold text-fg">{name}</span>! Səni
-            daha yaxşı tanımaq üçün bir neçə sual.
-          </p>
+          <div className="mt-4 flex flex-col items-center">
+            <Mascot size={92} />
+            <p className="mt-3 text-center text-muted">
+              Salam, mən <span className="font-extrabold text-brand">Ulduz</span>! Xoş
+              gəldin, <span className="font-bold text-fg">{name}</span> — səni tanımaq
+              üçün bir neçə sual.
+            </p>
+          </div>
         )}
 
         <h1 className="mt-6 text-center text-2xl font-extrabold text-fg sm:text-3xl">

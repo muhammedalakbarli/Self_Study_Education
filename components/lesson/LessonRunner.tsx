@@ -11,6 +11,7 @@ import { gradeTask, type UserAnswer } from "@/lib/grading";
 import { completeLesson } from "@/lib/progress";
 import TaskInput from "@/components/tasks/TaskInput";
 import TaskFigure from "@/components/TaskFigure";
+import Mascot from "@/components/Mascot";
 
 interface Props {
   slug: string;
@@ -90,7 +91,10 @@ if (total === 0) {
   if (phase === "bonusPrompt") {
     return (
       <div className="mx-auto max-w-xl py-12 text-center">
-        <h1 className="text-2xl font-bold text-fg">Əsas hissə bitdi!</h1>
+        <div className="flex justify-center">
+          <Mascot size={92} mood="celebrate" />
+        </div>
+        <h1 className="mt-4 text-2xl font-bold text-fg">Əsas hissə bitdi!</h1>
         <p className="mt-2 text-muted">
           İndiyə qədər <b className="text-brand-soft">+{earnedXp} XP</b> qazandın.
         </p>
@@ -119,7 +123,10 @@ if (total === 0) {
   if (phase === "done") {
     return (
       <div className="mx-auto max-w-xl py-16 text-center">
-        <h1 className="text-2xl font-bold text-fg">Layihə tamamlandı!</h1>
+        <div className="flex justify-center">
+          <Mascot size={110} mood="celebrate" />
+        </div>
+        <h1 className="mt-4 text-2xl font-bold text-fg">Dərs tamamlandı!</h1>
         <div className="mt-6 inline-flex items-center gap-2 rounded-full bg-brand/15 px-5 py-2 text-lg font-semibold text-brand-soft">
           +{earnedXp} XP
         </div>
@@ -177,13 +184,16 @@ if (total === 0) {
 
       {checked && (
         <div
-          className={`mt-5 rounded-xl px-4 py-3 font-medium ${
+          className={`mt-5 flex items-center gap-3 rounded-xl px-4 py-3 font-medium ${
             lastCorrect
               ? "bg-emerald-500/15 text-emerald-600"
               : "bg-brand/15 text-brand-soft"
           }`}
         >
-          {lastCorrect ? "Doğru! Afərin." : "Səhv. Növbəti dəfə alınacaq!"}
+          <Mascot size={40} mood={lastCorrect ? "celebrate" : "sad"} />
+          <span>
+            {lastCorrect ? "Doğru! Afərin." : "Səhv. Növbəti dəfə alınacaq!"}
+          </span>
         </div>
       )}
 

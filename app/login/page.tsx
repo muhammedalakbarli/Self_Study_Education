@@ -10,6 +10,7 @@ import { Eye, EyeOff, Check } from "lucide-react";
 import { signInWithEmail, getCurrentUser } from "@/lib/auth";
 import Logo from "@/components/Logo";
 import GoogleButton from "@/components/GoogleButton";
+import Mascot from "@/components/Mascot";
 
 const PERKS = [
   "3 fənn üzrə 60+ interaktiv dərs",
@@ -56,6 +57,9 @@ export default function LoginPage() {
         </Link>
 
         <div>
+          <div className="mb-5">
+            <Mascot size={76} />
+          </div>
           <h2 className="max-w-sm text-4xl font-extrabold leading-tight">
             Öyrənməyə davam et
           </h2>

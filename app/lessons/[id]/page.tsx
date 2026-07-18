@@ -1,14 +1,13 @@
 "use client";
 
-// Layihə (project) səhifəsi:
-// şəkil → başlıq → başlama/son tarix → ətraflı qaydalar → tapşırıqlar (15 + 5 bonus).
+// Dərs səhifəsi: şəkil → başlıq → qaydalar → tapşırıqlar (15 + 5 bonus).
 
 import { use, useState } from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { X } from "lucide-react";
 import { getLesson, orderedLessonIds } from "@/lib/content";
 import { useAuthUser } from "@/lib/useAuthUser";
-import { projectDates } from "@/lib/dates";
 import LessonRunner from "@/components/lesson/LessonRunner";
 import LessonVisual from "@/components/LessonVisual";
 import { PageSkeleton } from "@/components/Skeleton";
@@ -29,25 +28,27 @@ export default function LessonPage({
 
   const { subject, lesson } = found;
   const index = orderedLessonIds(subject.slug).indexOf(lesson.id);
-  const dates = projectDates(Math.max(0, index));
   const bonusCount = lesson.bonusTasks?.length ?? 0;
 
   if (started) {
     return (
       <div className="min-h-screen bg-ink">
         <main className="mx-auto w-full max-w-xl px-4 py-8">
+          <div className="mb-4 flex items-center gap-3">
+            <Link
+              href={`/subjects/${subject.slug}`}
+              aria-label="Dərsdən çıx"
+              className="flex h-9 w-9 items-center justify-center rounded-full text-muted transition hover:bg-panel-2 hover:text-fg"
+            >
+              <X size={24} />
+            </Link>
+            <span className="text-sm font-bold text-muted">{lesson.title}</span>
+          </div>
           <LessonRunner slug={subject.slug} lesson={lesson} userId={user.id} />
         </main>
       </div>
     );
   }
-
-  const statusColor =
-    dates.status === "aktiv"
-      ? "text-emerald-600"
-      : dates.status === "gələcək"
-        ? "text-sky-600"
-        : "text-orange-600";
 
   return (
     <div className="min-h-screen bg-ink">
@@ -62,30 +63,13 @@ export default function LessonPage({
         <div className="mt-4 rounded-2xl border border-line bg-panel p-6">
           {/* Başlıq */}
           <div className="text-sm font-semibold text-brand">
-            {subject.name} · Layihə {index + 1}
+            {subject.name} · Dərs {index + 1}
           </div>
           <h1 className="mt-1 text-2xl font-bold text-fg">{lesson.title}</h1>
           <p className="mt-2 text-muted">{lesson.intro}</p>
 
           {/* Şəkil (qaydalardan əvvəl) */}
           <LessonVisual visual={lesson.visual} />
-
-          {/* Başlama / son tarix */}
-          <div className="mt-5 flex flex-wrap gap-3 text-sm">
-            <span className="rounded-lg bg-panel-2 px-3 py-1.5 text-muted">
-              Başlama: <b className="text-fg">{dates.startLabel}</b>
-            </span>
-            <span className="rounded-lg bg-panel-2 px-3 py-1.5 text-muted">
-              Son tarix: <b className="text-fg">{dates.deadlineLabel}</b>
-            </span>
-            <span className={`rounded-lg bg-panel-2 px-3 py-1.5 font-medium ${statusColor}`}>
-              {dates.status === "aktiv"
-                ? "Aktiv"
-                : dates.status === "gələcək"
-                  ? "Gələcək"
-                  : "Vaxtı keçib"}
-            </span>
-          </div>
 
           {/* Qaydalar (şəkil altında ətraflı) */}
           {lesson.sections && lesson.sections.length > 0 && (
@@ -118,7 +102,7 @@ export default function LessonPage({
             onClick={() => setStarted(true)}
             className="mt-4 w-full rounded-2xl bg-brand px-5 py-3.5 text-lg font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark"
           >
-            Layihəyə başla
+            Tapşırıqlara başla
           </button>
         </div>
       </main>
