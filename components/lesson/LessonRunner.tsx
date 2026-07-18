@@ -9,6 +9,7 @@ import Link from "next/link";
 import type { Lesson, Task } from "@/lib/types";
 import { gradeTask, type UserAnswer } from "@/lib/grading";
 import { completeLesson } from "@/lib/progress";
+import { addMistake, removeMistake } from "@/lib/mistakes";
 import TaskInput from "@/components/tasks/TaskInput";
 import TaskFigure from "@/components/TaskFigure";
 import Mascot from "@/components/Mascot";
@@ -47,6 +48,9 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
     if (result.correct) {
       setEarnedXp((x) => x + result.earnedXp);
       setCorrectCount((c) => c + 1);
+      removeMistake(task.id);
+    } else {
+      addMistake(task.id);
     }
   }
 
