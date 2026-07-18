@@ -53,3 +53,39 @@ h1, h2, h3 {
     --pop: #d5d1ea;
   }
 }
+
+/* Ulduz (mascot) animasiyaları — canlı hərəkət */
+@keyframes ulduz-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-9%) rotate(2deg);
+  }
+}
+@keyframes ulduz-wave {
+  0%,
+  100% {
+    transform: rotate(-8deg);
+  }
+  50% {
+    transform: rotate(22deg);
+  }
+}
+.ulduz-float {
+  display: inline-block;
+  transform-origin: center bottom;
+  animation: ulduz-float 2.6s ease-in-out infinite;
+}
+.ulduz-wave {
+  transform-box: fill-box;
+  transform-origin: 15% 92%;
+  animation: ulduz-wave 0.75s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ulduz-float,
+  .ulduz-wave {
+    animation: none;
+  }
+}
