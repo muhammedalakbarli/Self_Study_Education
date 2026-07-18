@@ -66,7 +66,7 @@ export default function SubjectPage({
             <section className="mt-6 rounded-2xl border border-line bg-panel p-5">
               <h2 className="text-lg font-bold text-fg">Öyrənmə yolu</h2>
               <p className="text-sm text-muted">
-                İlk layihə ən altdadır — yuxarı qalxdıqca yeni mövzular açılır.
+                İlk dərs ən altdadır — yuxarı qalxdıqca yeni mövzular açılır.
               </p>
 
               {/* Bölmələr siyahısı (orientasiya üçün) */}

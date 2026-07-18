@@ -121,7 +121,7 @@ export default function LandingPage() {
             reverse={false}
             tag="Oyun kimi"
             title="Öyrənmək əyləncəli olsun"
-            body="Hər düzgün cavabda XP qazan, seriyanı qoru, layihələri tamamla. Ulduz səni hər addımda ruhlandırır."
+            body="Hər düzgün cavabda XP qazan, seriyanı qoru, dərsləri tamamla. Ulduz səni hər addımda ruhlandırır."
             media={<GameMedia />}
           />
           <Row

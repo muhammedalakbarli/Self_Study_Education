@@ -126,7 +126,7 @@ if (total === 0) {
         <div className="flex justify-center">
           <Mascot size={110} mood="celebrate" />
         </div>
-        <h1 className="mt-4 text-2xl font-bold text-fg">Layihə tamamlandı!</h1>
+        <h1 className="mt-4 text-2xl font-bold text-fg">Dərs tamamlandı!</h1>
         <div className="mt-6 inline-flex items-center gap-2 rounded-full bg-brand/15 px-5 py-2 text-lg font-semibold text-brand-soft">
           +{earnedXp} XP
         </div>
