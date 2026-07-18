@@ -147,7 +147,7 @@ export default function OnboardingPage() {
           <div className="mt-4 flex flex-col items-center">
             <Mascot size={92} />
             <p className="mt-3 text-center text-muted">
-              Salam, mən <span className="font-extrabold text-brand">Bilo</span>! Xoş
+              Salam, mən <span className="font-extrabold text-brand">Ulduz</span>! Xoş
               gəldin, <span className="font-bold text-fg">{name}</span> — səni tanımaq
               üçün bir neçə sual.
             </p>

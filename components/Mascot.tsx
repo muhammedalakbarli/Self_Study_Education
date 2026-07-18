@@ -1,4 +1,4 @@
-// "Bilo" — Bilik Yolu-nun mascotu. Amber ulduz + dostyana üz (brend personajı).
+// "Ulduz" — Bilik Yolu-nun mascotu. Amber ulduz + dostyana üz (brend personajı).
 // mood: "happy" (default) | "celebrate" (gözlər qapalı sevinc).
 
 export default function Mascot({
@@ -19,7 +19,7 @@ export default function Mascot({
       viewBox="0 0 120 120"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      aria-label="Bilo"
+      aria-label="Ulduz"
       role="img"
     >
       {/* kiçik parıltı (brend detalı) */}
