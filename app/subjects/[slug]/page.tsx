@@ -10,6 +10,7 @@ import { loadProgress, isLessonLocked, type ProgressState } from "@/lib/progress
 import { useAuthUser } from "@/lib/useAuthUser";
 import { projectDates } from "@/lib/dates";
 import LearningPath, { type PathNode } from "@/components/LearningPath";
+import { PageSkeleton } from "@/components/Skeleton";
 
 export default function SubjectPage({
   params,
@@ -27,7 +28,7 @@ export default function SubjectPage({
   }, [user]);
 
   if (!subject) notFound();
-  if (!ready || !state) return null;
+  if (!ready || !state) return <PageSkeleton />;
 
   const completed = state.completedLessons;
 

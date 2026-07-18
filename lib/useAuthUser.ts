@@ -18,8 +18,8 @@ export function useAuthUser(): { user: User | null; ready: boolean } {
     // İlk yükləmə üçün mövcud sessiyanı oxu
     supabase.auth.getSession().then(({ data: { session } }) => {
       const u = session?.user ?? null;
-      if (!u) { 
-        router.replace("/"); 
+      if (!u) {
+        router.replace("/login");
         setReady(true);
         return; 
       }
@@ -33,8 +33,8 @@ export function useAuthUser(): { user: User | null; ready: boolean } {
       const u = session?.user ?? null;
       if (event === "SIGNED_OUT" || !u) {
         setUser(null); 
-        setReady(false); 
-        router.replace("/"); 
+        setReady(false);
+        router.replace("/login");
         return;
       }
       if (event === "SIGNED_IN" || event === "TOKEN_REFRESHED") {

@@ -16,8 +16,38 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Bilik Yolu — 5-ci sinif",
-  description: "Azərbaycan orta məktəb şagirdləri üçün interaktiv öyrənmə platforması",
+  metadataBase: new URL("https://self-study-education.vercel.app"),
+  title: {
+    default: "Bilik Yolu — 5-ci sinif üçün interaktiv öyrənmə",
+    template: "%s · Bilik Yolu",
+  },
+  description:
+    "Riyaziyyat, Azərbaycan dili və İngilis dilini oyun kimi öyrən. Azərbaycan məktəbliləri üçün pulsuz, interaktiv platforma.",
+  keywords: [
+    "təhsil",
+    "5-ci sinif",
+    "riyaziyyat",
+    "Azərbaycan dili",
+    "İngilis dili",
+    "onlayn öyrənmə",
+    "Bilik Yolu",
+  ],
+  applicationName: "Bilik Yolu",
+  openGraph: {
+    title: "Bilik Yolu — öyrənməyi əyləncəyə çevir",
+    description:
+      "5-ci sinif üçün Riyaziyyat, Azərbaycan dili və İngilis dili — oyun kimi, pulsuz.",
+    url: "/",
+    siteName: "Bilik Yolu",
+    locale: "az_AZ",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Bilik Yolu — öyrənməyi əyləncəyə çevir",
+    description:
+      "5-ci sinif üçün interaktiv öyrənmə platforması. Pulsuz və maraqlı.",
+  },
 };
 
 export default function RootLayout({
@@ -27,7 +57,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="az"
       className={`${nunito.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">

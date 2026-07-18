@@ -247,7 +247,7 @@ export default function SignupPage() {
         {/* Login linki */}
         <p className="mt-6 text-center text-sm text-slate-600">
           Artıq hesabın var?{" "}
-          <Link href="/" className="font-semibold text-brand hover:underline">
+          <Link href="/login" className="font-semibold text-brand hover:underline">
             Daxil ol
           </Link>
         </p>
