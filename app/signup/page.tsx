@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Eye, EyeOff, CheckCircle, XCircle } from "lucide-react";
 import Logo from "@/components/Logo";
+import { signUpWithEmail } from "@/lib/auth";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -53,11 +54,22 @@ export default function SignupPage() {
     setLoading(true);
     setError("");
 
-    // Simulyasiya: API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
+    // Real Supabase qeydiyyatı (ad + email + parol)
+    const res = await signUpWithEmail(fullName.trim(), email.trim(), password);
     setLoading(false);
-    // Uğurlu qeydiyyat
+
+    if (!res.ok) {
+      setError(res.error || "Qeydiyyat alınmadı. Yenidən cəhd et.");
+      return;
+    }
+
+    if (res.needsEmailConfirm) {
+      // Email təsdiqi aktivdirsə: girişə yönləndir.
+      router.push("/?confirm=1");
+      return;
+    }
+
+    // Uğurlu qeydiyyat — sessiya hazırdır.
     router.push("/dashboard");
   }
 
