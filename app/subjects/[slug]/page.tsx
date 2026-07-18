@@ -8,7 +8,6 @@ import Link from "next/link";
 import { getSubject } from "@/lib/content";
 import { loadProgress, isLessonLocked, type ProgressState } from "@/lib/progress";
 import { useAuthUser } from "@/lib/useAuthUser";
-import { projectDates } from "@/lib/dates";
 import LearningPath, { type PathNode } from "@/components/LearningPath";
 import { PageSkeleton } from "@/components/Skeleton";
 
@@ -52,7 +51,7 @@ export default function SubjectPage({
         {/* Bütün bölmələrin layihələri tək, birləşmiş yolda (aşağıdan yuxarıya) */}
         {(() => {
           const allLessons = subject.units.flatMap((u) => u.lessons);
-          const nodes: PathNode[] = allLessons.map((l, i) => {
+          const nodes: PathNode[] = allLessons.map((l) => {
             const locked = isLessonLocked(slug, l.id, completed);
             const done = completed.includes(l.id);
             return {
@@ -60,7 +59,6 @@ export default function SubjectPage({
               title: l.title,
               state: done ? "done" : locked ? "locked" : "current",
               href: `/lessons/${l.id}`,
-              deadline: projectDates(i).deadlineLabel,
             };
           });
 

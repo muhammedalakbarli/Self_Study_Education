@@ -20,7 +20,7 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Sidebar />
-      <div className="pl-16">{children}</div>
+      <div className="pb-20 lg:pb-0 lg:pl-56">{children}</div>
     </>
   );
 }
