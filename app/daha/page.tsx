@@ -63,7 +63,7 @@ export default function MorePage() {
         </h2>
         <div className="mt-2 overflow-hidden rounded-2xl border border-line bg-panel">
           <Row href="/ayarlar" Icon={Settings} label="Ayarlar" />
-          <Row href="/komek" Icon={HelpCircle} label="Kömək mərkəzi" />
+          <Row href="/yardim" Icon={HelpCircle} label="Yardım mərkəzi" />
         </div>
 
         <button

@@ -53,7 +53,7 @@ export default function Sidebar() {
               on ? "bg-brand/10 text-brand" : "text-muted hover:bg-panel-2 hover:text-fg"
             }`;
 
-            // "Daha çoxu" — üzərinə gələndə yan flyout (Ayarlar, Kömək mərkəzi)
+            // "Daha çoxu" — üzərinə gələndə yan flyout (Ayarlar, Yardım mərkəzi)
             if (href === "/daha") {
               return (
                 <div key={href} className="group relative">
@@ -68,7 +68,7 @@ export default function Sidebar() {
                   <div className="invisible absolute left-full top-0 z-40 pl-2 opacity-0 transition group-hover:visible group-hover:opacity-100">
                     <div className="w-56 rounded-2xl border border-line bg-panel p-1.5 shadow-xl">
                       <FlyoutLink href="/ayarlar" Icon={Settings} label="Ayarlar" />
-                      <FlyoutLink href="/komek" Icon={HelpCircle} label="Kömək mərkəzi" />
+                      <FlyoutLink href="/yardim" Icon={HelpCircle} label="Yardım mərkəzi" />
                     </div>
                   </div>
                 </div>

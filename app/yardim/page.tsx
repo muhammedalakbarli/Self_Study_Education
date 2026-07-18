@@ -1,6 +1,6 @@
 "use client";
 
-// Kömək mərkəzi — tez-tez verilən suallar.
+// Yardım mərkəzi — tez-tez verilən suallar.
 
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
@@ -43,7 +43,7 @@ export default function HelpPage() {
   return (
     <div className="min-h-screen bg-ink">
       <main className="mx-auto max-w-2xl px-4 py-6">
-        <h1 className="text-2xl font-bold text-fg">Kömək mərkəzi</h1>
+        <h1 className="text-2xl font-bold text-fg">Yardım mərkəzi</h1>
         <p className="mt-1 text-sm text-muted">Ən çox verilən suallar</p>
 
         <div className="mt-6 space-y-3">
