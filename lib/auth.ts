@@ -40,6 +40,19 @@ export async function signInWithEmail(
   return { ok: true };
 }
 
+// Google ilə giriş (OAuth). Brauzeri Google-a yönləndirir; qayıdış /auth/callback-ə.
+export async function signInWithGoogle(): Promise<AuthResult> {
+  const supabase = createClient();
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: `${window.location.origin}/auth/callback`,
+    },
+  });
+  if (error) return { ok: false, error: error.message };
+  return { ok: true };
+}
+
 // Çıxış.
 export async function signOut(): Promise<void> {
   const supabase = createClient();

@@ -9,6 +9,7 @@ import Link from "next/link";
 import { Eye, EyeOff, Check } from "lucide-react";
 import { signInWithEmail, getCurrentUser } from "@/lib/auth";
 import Logo from "@/components/Logo";
+import GoogleButton from "@/components/GoogleButton";
 
 const PERKS = [
   "3 fənn üzrə 60+ interaktiv dərs",
@@ -96,7 +97,17 @@ export default function LoginPage() {
             Davam etmək üçün hesabına daxil ol
           </p>
 
-          <div className="mt-8 space-y-4">
+          <div className="mt-8">
+            <GoogleButton label="Google ilə daxil ol" />
+          </div>
+
+          <div className="my-6 flex items-center gap-3">
+            <div className="h-px flex-1 bg-slate-200" />
+            <span className="text-xs font-medium text-slate-400">və ya</span>
+            <div className="h-px flex-1 bg-slate-200" />
+          </div>
+
+          <div className="space-y-4">
             <div>
               <label className="block text-sm font-bold text-slate-800">Email</label>
               <input
