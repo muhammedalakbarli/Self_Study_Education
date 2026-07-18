@@ -45,7 +45,7 @@ export default function Sidebar() {
           onClick={logout}
           title="Çıxış"
           aria-label="Çıxış"
-          className="text-[10px] text-muted hover:text-white"
+          className="text-[10px] text-muted hover:text-fg"
         >
           Çıxış
         </button>

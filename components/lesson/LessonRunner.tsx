@@ -1,6 +1,6 @@
 "use client";
 
-// Layihənin uçdan-uca axını (dark Holberton stili):
+// Layihənin uçdan-uca axını:
 // 15 əsas tapşırıq → bonus təklifi → 5 bonus → nəticə.
 // Bonus tapşırıqlarda əlavə XP qazanılır. Sonda qazanılan XP progress-ə yazılır.
 
@@ -90,11 +90,11 @@ if (total === 0) {
   if (phase === "bonusPrompt") {
     return (
       <div className="mx-auto max-w-xl py-12 text-center">
-        <h1 className="text-2xl font-bold text-white">Əsas hissə bitdi!</h1>
+        <h1 className="text-2xl font-bold text-fg">Əsas hissə bitdi!</h1>
         <p className="mt-2 text-muted">
           İndiyə qədər <b className="text-brand-soft">+{earnedXp} XP</b> qazandın.
         </p>
-        <p className="mt-4 text-slate-300">
+        <p className="mt-4 text-muted">
           {bonusTasks.length} bonus sual var — əlavə XP qazanmaq istəyirsən?
         </p>
         <div className="mt-6 flex justify-center gap-3">
@@ -106,7 +106,7 @@ if (total === 0) {
           </button>
           <button
             onClick={finishWithoutBonus}
-            className="rounded-lg border border-line px-5 py-3 font-medium text-slate-200 hover:border-slate-500"
+            className="rounded-lg border border-line px-5 py-3 font-medium text-fg hover:border-brand"
           >
             Bitir
           </button>
@@ -119,7 +119,7 @@ if (total === 0) {
   if (phase === "done") {
     return (
       <div className="mx-auto max-w-xl py-16 text-center">
-        <h1 className="text-2xl font-bold text-white">Layihə tamamlandı!</h1>
+        <h1 className="text-2xl font-bold text-fg">Layihə tamamlandı!</h1>
         <div className="mt-6 inline-flex items-center gap-2 rounded-full bg-brand/15 px-5 py-2 text-lg font-semibold text-brand-soft">
           +{earnedXp} XP
         </div>
@@ -132,7 +132,7 @@ if (total === 0) {
           </Link>
           <Link
             href="/dashboard"
-            className="rounded-lg border border-line px-5 py-3 font-medium text-slate-200 hover:border-slate-500"
+            className="rounded-lg border border-line px-5 py-3 font-medium text-fg hover:border-brand"
           >
             Ana səhifə
           </Link>
@@ -146,7 +146,7 @@ if (total === 0) {
     <div>
       <div className="mb-6 h-2.5 w-full overflow-hidden rounded-full bg-panel-2">
         <div
-          className={`h-full rounded-full transition-all ${inBonus ? "bg-amber-400" : "bg-brand"}`}
+          className={`h-full rounded-full transition-all ${inBonus ? "bg-accent" : "bg-brand"}`}
           style={{ width: `${progressPct}%` }}
         />
       </div>
@@ -156,13 +156,13 @@ if (total === 0) {
           {inBonus ? "Bonus" : "Tapşırıq"} {index + 1} / {total}
         </span>
         {inBonus && (
-          <span className="rounded-full bg-amber-400/15 px-2.5 py-0.5 text-amber-400">
+          <span className="rounded-full bg-accent/15 px-2.5 py-0.5 text-accent">
             Bonus
           </span>
         )}
       </div>
 
-      <h2 className="mt-2 text-xl font-semibold text-white">{task.prompt}</h2>
+      <h2 className="mt-2 text-xl font-semibold text-fg">{task.prompt}</h2>
 
       <TaskFigure figure={task.figure} />
 
@@ -179,7 +179,7 @@ if (total === 0) {
         <div
           className={`mt-5 rounded-xl px-4 py-3 font-medium ${
             lastCorrect
-              ? "bg-emerald-500/15 text-emerald-400"
+              ? "bg-emerald-500/15 text-emerald-600"
               : "bg-brand/15 text-brand-soft"
           }`}
         >

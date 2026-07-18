@@ -1,6 +1,6 @@
 "use client";
 
-// Giriş səhifəsi — Holberton üslubu: açıq fonda mərkəzi kart, loqo,
+// Giriş səhifəsi — açıq fonda mərkəzi kart, loqo,
 // email/parol ilə real Supabase girişi, qeydiyyat səhifəsinə keçid.
 
 import { useState, useEffect } from "react";

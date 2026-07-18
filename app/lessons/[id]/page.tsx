@@ -1,6 +1,6 @@
 "use client";
 
-// Layihə (project) səhifəsi — holberton3 üslubu:
+// Layihə (project) səhifəsi:
 // şəkil → başlıq → başlama/son tarix → ətraflı qaydalar → tapşırıqlar (15 + 5 bonus).
 
 import { use, useState } from "react";
@@ -43,17 +43,17 @@ export default function LessonPage({
 
   const statusColor =
     dates.status === "aktiv"
-      ? "text-emerald-400"
+      ? "text-emerald-600"
       : dates.status === "gələcək"
-        ? "text-sky-400"
-        : "text-orange-400";
+        ? "text-sky-600"
+        : "text-orange-600";
 
   return (
     <div className="min-h-screen bg-ink">
       <main className="mx-auto w-full max-w-2xl px-4 py-8">
         <Link
           href={`/subjects/${subject.slug}`}
-          className="text-sm text-muted hover:text-white"
+          className="text-sm text-muted hover:text-fg"
         >
           ← {subject.name}
         </Link>
@@ -63,19 +63,19 @@ export default function LessonPage({
           <div className="text-sm font-semibold text-brand">
             {subject.name} · Layihə {index + 1}
           </div>
-          <h1 className="mt-1 text-2xl font-bold text-white">{lesson.title}</h1>
-          <p className="mt-2 text-slate-300">{lesson.intro}</p>
+          <h1 className="mt-1 text-2xl font-bold text-fg">{lesson.title}</h1>
+          <p className="mt-2 text-muted">{lesson.intro}</p>
 
-          {/* Şəkil (holberton3: qaydalardan əvvəl) */}
+          {/* Şəkil (qaydalardan əvvəl) */}
           <LessonVisual visual={lesson.visual} />
 
           {/* Başlama / son tarix */}
           <div className="mt-5 flex flex-wrap gap-3 text-sm">
-            <span className="rounded-lg bg-panel-2 px-3 py-1.5 text-slate-300">
-              Başlama: <b className="text-white">{dates.startLabel}</b>
+            <span className="rounded-lg bg-panel-2 px-3 py-1.5 text-muted">
+              Başlama: <b className="text-fg">{dates.startLabel}</b>
             </span>
-            <span className="rounded-lg bg-panel-2 px-3 py-1.5 text-slate-300">
-              Son tarix: <b className="text-white">{dates.deadlineLabel}</b>
+            <span className="rounded-lg bg-panel-2 px-3 py-1.5 text-muted">
+              Son tarix: <b className="text-fg">{dates.deadlineLabel}</b>
             </span>
             <span className={`rounded-lg bg-panel-2 px-3 py-1.5 font-medium ${statusColor}`}>
               {dates.status === "aktiv"
@@ -86,23 +86,23 @@ export default function LessonPage({
             </span>
           </div>
 
-          {/* Qaydalar (holberton3: şəkil altında ətraflı) */}
+          {/* Qaydalar (şəkil altında ətraflı) */}
           {lesson.sections && lesson.sections.length > 0 && (
             <div className="mt-6 space-y-4">
-              <h2 className="text-lg font-bold text-white">Qaydalar</h2>
+              <h2 className="text-lg font-bold text-fg">Qaydalar</h2>
               {lesson.sections.map((s, i) => (
                 <div key={i}>
                   {s.heading && (
                     <h3 className="font-semibold text-brand-soft">{s.heading}</h3>
                   )}
-                  <p className="mt-1 leading-relaxed text-slate-300">{s.body}</p>
+                  <p className="mt-1 leading-relaxed text-fg">{s.body}</p>
                 </div>
               ))}
             </div>
           )}
 
           {/* Tapşırıqlar */}
-          <div className="mt-6 rounded-xl bg-panel-2 px-4 py-3 text-sm text-slate-300">
+          <div className="mt-6 rounded-xl bg-panel-2 px-4 py-3 text-sm text-muted">
             {lesson.tasks.length} tapşırıq
             {bonusCount > 0 && (
               <>

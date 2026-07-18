@@ -1,6 +1,6 @@
 "use client";
 
-// Tapşırıq tipini alıb uyğun giriş sahəsini göstərir (dark Holberton stili).
+// Tapşırıq tipini alıb uyğun giriş sahəsini göstərir.
 
 import type { Task } from "@/lib/types";
 import type { UserAnswer } from "@/lib/grading";
@@ -27,8 +27,8 @@ export default function TaskInput({ task, value, onChange, disabled }: Props) {
               className={`rounded-xl border px-4 py-3 text-left text-lg transition
                 ${
                   selected
-                    ? "border-brand bg-brand/10 font-medium text-white"
-                    : "border-line bg-panel-2 text-slate-200 hover:border-slate-500"
+                    ? "border-brand bg-brand/10 font-medium text-fg"
+                    : "border-line bg-panel-2 text-fg hover:border-brand"
                 }
                 ${disabled ? "cursor-not-allowed opacity-80" : "cursor-pointer"}`}
             >
@@ -48,7 +48,7 @@ export default function TaskInput({ task, value, onChange, disabled }: Props) {
       disabled={disabled}
       onChange={(e) => onChange(e.target.value)}
       placeholder="Cavabını yaz..."
-      className="w-full rounded-xl border border-line bg-panel-2 px-4 py-3 text-lg text-white
+      className="w-full rounded-xl border border-line bg-panel-2 px-4 py-3 text-lg text-fg
         placeholder:text-muted focus:border-brand focus:outline-none disabled:opacity-80"
     />
   );

@@ -1,7 +1,7 @@
-// Holberton-üslubu "öyrənmə yolu" — ilanvari (serpentine) şəbəkə, AŞAĞIDAN YUXARIYA.
+// "Bilik Yolu" öyrənmə xəritəsi — ilanvari (serpentine) şəbəkə, AŞAĞIDAN YUXARIYA.
 // İlk layihə ən altdadır; irəlilədikcə yol yuxarı doğru ilan kimi qıvrılır.
 // Bütün layihələr tək, birləşmiş yolda gedir. Hər düyün nömrəli bir layihədir:
-// tamamlanmış (dolu qırmızı), açıq (qırmızı halqa), kiliddə (boz).
+// tamamlanmış (dolu indigo), açıq (indigo halqa), kiliddə (boz).
 
 import Link from "next/link";
 
@@ -23,7 +23,7 @@ function Circle({ node, label }: { node: PathNode; label: number }) {
     node.state === "done"
       ? "bg-brand text-white ring-4 ring-brand/30"
       : node.state === "current"
-        ? "bg-panel text-brand ring-2 ring-brand shadow-[0_0_20px_rgba(224,20,63,0.4)]"
+        ? "bg-panel text-brand ring-2 ring-brand shadow-[0_0_20px_rgba(91,75,245,0.35)]"
         : "bg-panel-2 text-muted ring-1 ring-line";
 
   const circle = (
@@ -49,7 +49,7 @@ function Node({ node, label }: { node: PathNode; label: number }) {
       <Circle node={node} label={label} />
       <span
         className={`text-center text-xs leading-tight ${
-          node.state === "locked" ? "text-muted" : "text-white"
+          node.state === "locked" ? "text-muted" : "text-fg"
         }`}
       >
         {node.title}

@@ -1,4 +1,4 @@
-// Rəqəmləri 0-dan hədəf dəyərə qədər yumşaq canlandıran hook (Holberton üslubu).
+// Rəqəmləri 0-dan hədəf dəyərə qədər yumşaq canlandıran hook.
 // requestAnimationFrame + ease-out; hədəf dəyişəndə yenidən başlayır.
 
 import { useEffect, useState } from "react";
