@@ -1,6 +1,6 @@
 "use client";
 
-// Fənn səhifəsi (dark Holberton stili): hər bölmə üçün öyrənmə yolu (node path).
+// Fənn səhifəsi: hər bölmə üçün öyrənmə yolu (node path).
 
 import { use, useEffect, useState } from "react";
 import { notFound } from "next/navigation";
@@ -34,7 +34,7 @@ export default function SubjectPage({
   return (
     <div className="min-h-screen bg-ink">
       <main className="mx-auto max-w-4xl px-4 py-6">
-        <Link href="/dashboard" className="text-sm text-muted hover:text-white">
+        <Link href="/dashboard" className="text-sm text-muted hover:text-fg">
           ← Öyrənmə yolun
         </Link>
 
@@ -43,7 +43,7 @@ export default function SubjectPage({
             {subject.icon}
           </span>
           <div>
-            <h1 className="text-2xl font-bold text-white">{subject.name}</h1>
+            <h1 className="text-2xl font-bold text-fg">{subject.name}</h1>
             <p className="text-sm text-muted">{subject.grade}-ci sinif</p>
           </div>
         </div>
@@ -65,7 +65,7 @@ export default function SubjectPage({
 
           return (
             <section className="mt-6 rounded-2xl border border-line bg-panel p-5">
-              <h2 className="text-lg font-bold text-white">Öyrənmə yolu</h2>
+              <h2 className="text-lg font-bold text-fg">Öyrənmə yolu</h2>
               <p className="text-sm text-muted">
                 İlk layihə ən altdadır — yuxarı qalxdıqca yeni mövzular açılır.
               </p>
@@ -75,7 +75,7 @@ export default function SubjectPage({
                 {subject.units.map((u, i) => (
                   <li
                     key={u.id}
-                    className="rounded-full bg-panel-2 px-3 py-1 text-slate-300"
+                    className="rounded-full bg-panel-2 px-3 py-1 text-muted"
                   >
                     {i + 1}. {u.title}
                   </li>

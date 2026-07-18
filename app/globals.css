@@ -1,21 +1,25 @@
 @import "tailwindcss";
 
-/* Holberton-üslubu dizayn tokenləri */
+/* Bilik Yolu — işıqlı, dostyana dizayn tokenləri (indigo + isti amber) */
 @theme {
-  --color-brand: #e0143f; /* Holberton qırmızısı */
-  --color-brand-dark: #b8102f;
-  --color-brand-soft: #ff2d5e;
+  --color-brand: #5b4bf5; /* əsas indigo-bənövşəyi */
+  --color-brand-dark: #4636cf; /* hover */
+  --color-brand-soft: #5334cc; /* vurğu mətni (işıqlı fonda oxunaqlı) */
 
-  --color-ink: #131318; /* tətbiqin tünd fonu */
-  --color-panel: #1e1e26; /* kartlar */
-  --color-panel-2: #272730; /* iç panellər */
-  --color-line: #33333f; /* kənarlar */
-  --color-muted: #9a9aa8; /* ikinci dərəcəli mətn */
+  --color-accent: #ff9500; /* isti amber — XP/streak/vurğular */
+  --color-accent-soft: #ffb84d;
+
+  --color-ink: #f4f3fb; /* səhifə fonu (yumşaq lavanda-ağ) */
+  --color-panel: #ffffff; /* kartlar */
+  --color-panel-2: #efeefa; /* iç panellər (yumşaq indigo çaları) */
+  --color-line: #e5e2f4; /* kənarlar */
+  --color-muted: #6a687e; /* ikinci dərəcəli mətn */
+  --color-fg: #1c1a30; /* əsas mətn (tünd) */
 }
 
 :root {
-  --background: #131318;
-  --foreground: #f4f4f7;
+  --background: #f4f3fb;
+  --foreground: #1c1a30;
 }
 
 body {

@@ -1,6 +1,6 @@
 "use client";
 
-// Holberton-üslubu dashboard (holberton2.png): dark tema, fənn tab-ları,
+// Bilik Yolu dashboard: işıqlı tema, fənn tab-ları,
 // cari dərs / səviyyə (radar) / növbəti dərslər panelləri + score halqası və öyrənmə yolu.
 
 import { useEffect, useMemo, useState } from "react";
@@ -59,7 +59,7 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-ink">
       <main className="mx-auto max-w-5xl px-4 py-6">
-        <h1 className="text-2xl font-bold text-white">Öyrənmə yolun</h1>
+        <h1 className="text-2xl font-bold text-fg">Öyrənmə yolun</h1>
         <p className="text-sm text-muted">
           Salam, {displayName(user)} — davam edək
         </p>
@@ -75,7 +75,7 @@ export default function DashboardPage() {
                 className={`rounded-lg px-4 py-2 text-sm font-semibold transition ${
                   on
                     ? "bg-brand text-white"
-                    : "bg-panel text-slate-300 hover:bg-panel-2"
+                    : "bg-panel text-muted hover:bg-panel-2 border border-line"
                 }`}
               >
                 {s.name}
@@ -94,7 +94,7 @@ export default function DashboardPage() {
             <div className="mt-4 flex items-center gap-4">
               <RadialProgress value={scorePct} size={84} stroke={8} />
               <div>
-                <div className="font-semibold text-white">
+                <div className="font-semibold text-fg">
                   {currentLesson ? currentLesson.title : "Hamısı bitdi!"}
                 </div>
                 <div className="text-sm text-muted">{active.name}</div>
@@ -135,7 +135,7 @@ export default function DashboardPage() {
                   return (
                     <li key={l.id} className="flex items-center gap-3">
                       <span className="flex h-9 w-9 shrink-0 flex-col items-center justify-center rounded-lg bg-panel-2 leading-none">
-                        <span className="text-sm font-bold text-white">
+                        <span className="text-sm font-bold text-fg">
                           {d.deadline.getDate()}
                         </span>
                         <span className="text-[9px] text-muted">
@@ -143,7 +143,7 @@ export default function DashboardPage() {
                         </span>
                       </span>
                       <div className="min-w-0">
-                        <div className="truncate text-sm text-white">{l.title}</div>
+                        <div className="truncate text-sm text-fg">{l.title}</div>
                         <div className="text-[11px] text-muted">
                           son tarix: {d.deadlineLabel}
                         </div>
@@ -165,7 +165,7 @@ export default function DashboardPage() {
               <RadialProgress value={scorePct} size={110} label="nəticən" />
             </div>
             <div className="flex-1">
-              <h2 className="text-lg font-bold text-white">
+              <h2 className="text-lg font-bold text-fg">
                 {active.name} — öyrənmə yolu
               </h2>
               <p className="text-sm text-muted">
@@ -217,7 +217,7 @@ function SubjectRadar({ values, labels }: { values: number[]; labels: string[] }
           key={i}
           d={toPath(outer.map((p) => ({ x: c + (p.x - c) * r, y: c + (p.y - c) * r })))}
           fill="none"
-          stroke="#33333f"
+          stroke="#d9d5ec"
           strokeWidth="1"
         />
       ))}
@@ -231,7 +231,7 @@ function SubjectRadar({ values, labels }: { values: number[]; labels: string[] }
           key={i}
           x={c + 3}
           y={c - R * lvl.r}
-          fill="#6b6b78"
+          fill="#8b88a0"
           fontSize="8"
           dominantBaseline="middle"
         >
@@ -240,17 +240,17 @@ function SubjectRadar({ values, labels }: { values: number[]; labels: string[] }
       ))}
       {/* oxlar */}
       {outer.map((p, i) => (
-        <line key={i} x1={c} y1={c} x2={p.x} y2={p.y} stroke="#33333f" strokeWidth="1" />
+        <line key={i} x1={c} y1={c} x2={p.x} y2={p.y} stroke="#d9d5ec" strokeWidth="1" />
       ))}
       {/* data */}
-      <path d={toPath(dataPts)} fill="rgba(224,20,63,0.35)" stroke="#e0143f" strokeWidth="2" />
+      <path d={toPath(dataPts)} fill="rgba(91,75,245,0.28)" stroke="#5b4bf5" strokeWidth="2" />
       {/* etiketlər */}
       {outer.map((p, i) => (
         <text
           key={i}
           x={c + (p.x - c) * 1.28}
           y={c + (p.y - c) * 1.28}
-          fill="#9a9aa8"
+          fill="#6a687e"
           fontSize="9"
           textAnchor="middle"
           dominantBaseline="middle"

@@ -1,11 +1,11 @@
-// Holberton monoxrom palitrası: bütün fənlər eyni qırmızı vurğunu paylaşır,
-// fərqləndirmə ikon və başlıqla olur (Holberton dizaynına uyğun).
+// Monoxrom palitra: bütün fənlər eyni indigo vurğunu paylaşır,
+// fərqləndirmə ikon və başlıqla olur.
 
 export interface ColorClasses {
-  bg: string; // dolğun qırmızı
-  bgSoft: string; // tünd panel
-  text: string; // qırmızı mətn
-  border: string; // tünd kənar
+  bg: string; // dolğun indigo
+  bgSoft: string; // yumşaq panel
+  text: string; // indigo mətn
+  border: string; // kənar
   ring: string;
 }
 

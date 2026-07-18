@@ -46,7 +46,7 @@ export interface NumericTask extends TaskBase {
 
 export type Task = MultipleChoiceTask | FillBlankTask | NumericTask;
 
-// Layihə (project) səhifəsindəki qayda bölməsi (holberton3 üslubu)
+// Layihə (project) səhifəsindəki qayda bölməsi
 export interface RuleSection {
   heading?: string; // qalın alt başlıq
   body: string; // izah mətni (uşaq dilində)
@@ -58,7 +58,7 @@ export interface Lesson {
   title: string;
   intro: string; // qısa giriş cümləsi (uşaq dilində, sadə)
   visual?: string; // hero illüstrasiyanın açarı (bax LessonVisual)
-  sections?: RuleSection[]; // ətraflı qaydalar (holberton3: şəkil altında)
+  sections?: RuleSection[]; // ətraflı qaydalar (şəkil altında)
   tasks: Task[]; // 15 əsas tapşırıq
   bonusTasks?: Task[]; // 5 bonus tapşırıq
 }

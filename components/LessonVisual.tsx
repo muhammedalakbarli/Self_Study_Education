@@ -22,9 +22,9 @@ function FractionBar({ parts, filled }: { parts: number; filled: number }) {
 function Fraction({ top, bottom }: { top: number | string; bottom: number | string }) {
   return (
     <span className="inline-flex flex-col items-center leading-none">
-      <span className="px-2 font-bold text-white">{top}</span>
-      <span className="my-0.5 h-0.5 w-full bg-white" />
-      <span className="px-2 font-bold text-white">{bottom}</span>
+      <span className="px-2 font-bold text-fg">{top}</span>
+      <span className="my-0.5 h-0.5 w-full bg-fg" />
+      <span className="px-2 font-bold text-fg">{bottom}</span>
     </span>
   );
 }
@@ -35,7 +35,7 @@ function WordCard({ word, tag }: { word: string; tag?: string }) {
     <div className="overflow-hidden rounded-xl border border-line bg-panel-2 text-center">
       <div className="h-1.5 w-full bg-brand" />
       <div className="flex flex-col items-center gap-1 px-5 py-3">
-        <span className="text-lg font-semibold text-white">{word}</span>
+        <span className="text-lg font-semibold text-fg">{word}</span>
         {tag && <span className="text-xs text-brand-soft">{tag}</span>}
       </div>
     </div>
@@ -59,7 +59,7 @@ function Apple({ size = 60 }: { size?: number }) {
     <svg width={size} height={size} viewBox="0 0 48 48" fill="none" aria-hidden>
       <path
         d="M24 15c-4-6-15-4-15 7 0 10 8 17 15 17s15-7 15-17c0-11-11-13-15-7z"
-        fill="#e0143f"
+        fill="#5b4bf5"
       />
       <rect x="22.7" y="7" width="2.6" height="9" rx="1.3" fill="#7a4a2b" />
       <path d="M25 9c3-3 8-2 8-2s-1 6-8 4z" fill="#4caf50" />
@@ -105,8 +105,8 @@ export default function LessonVisual({ visual }: { visual?: string }) {
             </div>
           </div>
           <div className="mt-3 flex justify-around text-xs">
-            <span className="text-white">surət = götürülən hissə</span>
-            <span className="text-white">məxrəc = ümumi hissə</span>
+            <span className="text-fg">surət = götürülən hissə</span>
+            <span className="text-fg">məxrəc = ümumi hissə</span>
           </div>
         </Frame>
       );
@@ -116,7 +116,7 @@ export default function LessonVisual({ visual }: { visual?: string }) {
         <Frame>
           <div className="space-y-3">
             <div className="flex items-center gap-3">
-              <span className="w-10 text-white">
+              <span className="w-10 text-fg">
                 <Fraction top={5} bottom={8} />
               </span>
               <div className="flex-1">
@@ -125,7 +125,7 @@ export default function LessonVisual({ visual }: { visual?: string }) {
               <span className="font-semibold text-brand-soft">böyük</span>
             </div>
             <div className="flex items-center gap-3">
-              <span className="w-10 text-white">
+              <span className="w-10 text-fg">
                 <Fraction top={3} bottom={8} />
               </span>
               <div className="flex-1">
@@ -143,7 +143,7 @@ export default function LessonVisual({ visual }: { visual?: string }) {
     case "fraction-add":
       return (
         <Frame>
-          <div className="flex items-center justify-center gap-3 text-2xl text-white">
+          <div className="flex items-center justify-center gap-3 text-2xl text-fg">
             <div className="w-24">
               <FractionBar parts={7} filled={2} />
             </div>
@@ -192,14 +192,14 @@ export default function LessonVisual({ visual }: { visual?: string }) {
                 </div>
               ))}
               {["3", "2", "5", "4"].map((d, i) => (
-                <div key={i} className="py-3 text-2xl font-bold text-white">
+                <div key={i} className="py-3 text-2xl font-bold text-fg">
                   {d}
                 </div>
               ))}
             </div>
             <p className="mt-3 text-center text-sm text-muted">
-              3 254 = <b className="text-white">3</b> minlik, <b className="text-white">2</b> yüzlük,{" "}
-              <b className="text-white">5</b> onluq, <b className="text-white">4</b> təklik
+              3 254 = <b className="text-fg">3</b> minlik, <b className="text-fg">2</b> yüzlük,{" "}
+              <b className="text-fg">5</b> onluq, <b className="text-fg">4</b> təklik
             </p>
           </div>
         </Frame>
@@ -208,7 +208,7 @@ export default function LessonVisual({ visual }: { visual?: string }) {
     case "column-add":
       return (
         <Frame>
-          <div className="mx-auto w-fit font-mono text-2xl text-white">
+          <div className="mx-auto w-fit font-mono text-2xl text-fg">
             <div className="text-right">3 456</div>
             <div className="flex items-center justify-between gap-6">
               <span className="text-brand">+</span>
@@ -233,7 +233,7 @@ export default function LessonVisual({ visual }: { visual?: string }) {
           </div>
           <p className="mt-3 text-center text-sm text-muted">
             17 alma, 5 uşaq: hərəyə 3 (yaşıl) düşür,{" "}
-            <b className="text-white">2 (qırmızı)</b> artıq qalır → 17 : 5 = 3 (qalıq 2)
+            <b className="text-fg">2 (qırmızı)</b> artıq qalır → 17 : 5 = 3 (qalıq 2)
           </p>
         </Frame>
       );
@@ -241,7 +241,7 @@ export default function LessonVisual({ visual }: { visual?: string }) {
     case "order-ops":
       return (
         <Frame>
-          <div className="space-y-2 text-center text-lg text-white">
+          <div className="space-y-2 text-center text-lg text-fg">
             <div>
               2 + 3 × 4 = <b className="text-brand-soft">14</b>{" "}
               <span className="text-xs text-muted">(əvvəl vurma)</span>
@@ -265,14 +265,14 @@ export default function LessonVisual({ visual }: { visual?: string }) {
               <div className="text-xl">
                 <Fraction top={3} bottom={4} />
               </div>
-              <div className="mt-1 text-sm font-semibold text-white">Düzgün</div>
+              <div className="mt-1 text-sm font-semibold text-fg">Düzgün</div>
               <div className="text-xs text-muted">surət &lt; məxrəc</div>
             </div>
             <div className="rounded-xl border border-line bg-panel-2 p-3">
               <div className="text-xl">
                 <Fraction top={7} bottom={4} />
               </div>
-              <div className="mt-1 text-sm font-semibold text-white">Düzgün olmayan</div>
+              <div className="mt-1 text-sm font-semibold text-fg">Düzgün olmayan</div>
               <div className="text-xs text-muted">surət ≥ məxrəc</div>
             </div>
           </div>
@@ -282,7 +282,7 @@ export default function LessonVisual({ visual }: { visual?: string }) {
     case "mixed-number":
       return (
         <Frame>
-          <div className="flex items-center justify-center gap-3 text-2xl text-white">
+          <div className="flex items-center justify-center gap-3 text-2xl text-fg">
             <span className="font-bold">2</span>
             <Fraction top={1} bottom={3} />
             <span className="text-base text-muted">= 2 tam və 1/3</span>
@@ -300,12 +300,12 @@ export default function LessonVisual({ visual }: { visual?: string }) {
           <div className="grid grid-cols-2 gap-3 text-center">
             <div className="rounded-xl border border-line bg-panel-2 p-3">
               <div className="text-lg font-bold text-brand-soft">Saitlər (9)</div>
-              <div className="mt-1 text-white">a ı o u · e ə i ö ü</div>
+              <div className="mt-1 text-fg">a ı o u · e ə i ö ü</div>
               <div className="text-xs text-muted">sərbəst tələffüz</div>
             </div>
             <div className="rounded-xl border border-line bg-panel-2 p-3">
               <div className="text-lg font-bold text-brand-soft">Samitlər</div>
-              <div className="mt-1 text-white">b, c, d, m, s, t ...</div>
+              <div className="mt-1 text-fg">b, c, d, m, s, t ...</div>
               <div className="text-xs text-muted">maneə ilə tələffüz</div>
             </div>
           </div>
@@ -320,15 +320,15 @@ export default function LessonVisual({ visual }: { visual?: string }) {
         <Frame>
           <div className="flex flex-wrap justify-center gap-3 text-center text-sm">
             <div className="rounded-lg border border-line bg-panel-2 px-4 py-2">
-              <div className="font-semibold text-white">gözəl = qəşəng</div>
+              <div className="font-semibold text-fg">gözəl = qəşəng</div>
               <div className="text-xs text-brand-soft">sinonim (yaxın məna)</div>
             </div>
             <div className="rounded-lg border border-line bg-panel-2 px-4 py-2">
-              <div className="font-semibold text-white">böyük — kiçik</div>
+              <div className="font-semibold text-fg">böyük — kiçik</div>
               <div className="text-xs text-brand-soft">antonim (əks məna)</div>
             </div>
             <div className="rounded-lg border border-line bg-panel-2 px-4 py-2">
-              <div className="font-semibold text-white">üz / üz</div>
+              <div className="font-semibold text-fg">üz / üz</div>
               <div className="text-xs text-brand-soft">omonim (eyni yazılış)</div>
             </div>
           </div>
@@ -345,7 +345,7 @@ export default function LessonVisual({ visual }: { visual?: string }) {
             <WordCard word="kitab" tag="nə?" />
           </div>
           <p className="mt-3 text-center text-sm text-muted">
-            İsim = əşyanın adı. Canlılar — <b className="text-white">kim?</b>, cansızlar — <b className="text-white">nə?</b>
+            İsim = əşyanın adı. Canlılar — <b className="text-fg">kim?</b>, cansızlar — <b className="text-fg">nə?</b>
           </p>
         </Frame>
       );
@@ -359,7 +359,7 @@ export default function LessonVisual({ visual }: { visual?: string }) {
               {["qırmızı", "şirin", "yumru"].map((w) => (
                 <div
                   key={w}
-                  className="rounded-lg border border-brand bg-brand/10 px-4 py-1.5 font-semibold text-white"
+                  className="rounded-lg border border-brand bg-brand/10 px-4 py-1.5 font-semibold text-fg"
                 >
                   {w}
                 </div>
@@ -367,7 +367,7 @@ export default function LessonVisual({ visual }: { visual?: string }) {
             </div>
           </div>
           <p className="mt-3 text-center text-sm text-muted">
-            Sifət əşyanın <b className="text-white">necə</b> olduğunu bildirir
+            Sifət əşyanın <b className="text-fg">necə</b> olduğunu bildirir
           </p>
         </Frame>
       );
@@ -381,11 +381,11 @@ export default function LessonVisual({ visual }: { visual?: string }) {
             <WordCard word="gülmək" />
           </div>
           <div className="mt-4 flex items-center justify-between rounded-lg bg-panel-2 px-4 py-2 text-sm">
-            <span className="text-white">yazdı<br /><span className="text-xs text-muted">keçmiş</span></span>
+            <span className="text-fg">yazdı<br /><span className="text-xs text-muted">keçmiş</span></span>
             <span className="text-brand">→</span>
-            <span className="text-white">yazır<br /><span className="text-xs text-muted">indiki</span></span>
+            <span className="text-fg">yazır<br /><span className="text-xs text-muted">indiki</span></span>
             <span className="text-brand">→</span>
-            <span className="text-white">yazacaq<br /><span className="text-xs text-muted">gələcək</span></span>
+            <span className="text-fg">yazacaq<br /><span className="text-xs text-muted">gələcək</span></span>
           </div>
         </Frame>
       );
@@ -401,7 +401,7 @@ export default function LessonVisual({ visual }: { visual?: string }) {
               { p: "you / we / they", v: "are" },
             ].map((r) => (
               <div key={r.v} className="rounded-xl border border-line bg-panel-2 p-3">
-                <div className="text-sm text-white">{r.p}</div>
+                <div className="text-sm text-fg">{r.p}</div>
                 <div className="mt-1 text-lg font-bold text-brand-soft">{r.v}</div>
               </div>
             ))}
@@ -418,7 +418,7 @@ export default function LessonVisual({ visual }: { visual?: string }) {
           <div className="flex items-center justify-center gap-6 text-center">
             <div className="flex flex-col items-center">
               <Book />
-              <div className="mt-2 text-white">book</div>
+              <div className="mt-2 text-fg">book</div>
               <div className="text-xs text-muted">bir</div>
             </div>
             <div className="text-2xl font-bold text-brand">+s →</div>
@@ -428,14 +428,14 @@ export default function LessonVisual({ visual }: { visual?: string }) {
                 <div className="-ml-2 h-[46px] w-[22px] rounded-md bg-brand/60 ring-1 ring-brand" />
                 <div className="-ml-2 h-[46px] w-[22px] rounded-md bg-brand/80 ring-1 ring-brand" />
               </div>
-              <div className="mt-2 text-white">
+              <div className="mt-2 text-fg">
                 book<span className="text-brand-soft">s</span>
               </div>
               <div className="text-xs text-muted">çox</div>
             </div>
           </div>
           <p className="mt-3 text-center text-sm text-muted">
-            Çox olanda sonuna <b className="text-white">-s</b> əlavə edirik
+            Çox olanda sonuna <b className="text-fg">-s</b> əlavə edirik
           </p>
         </Frame>
       );
@@ -450,12 +450,12 @@ export default function LessonVisual({ visual }: { visual?: string }) {
                 <Dot tone="brand" />
                 <Dot tone="brand" />
               </div>
-              <div className="mt-2 text-sm font-semibold text-white">Countable</div>
+              <div className="mt-2 text-sm font-semibold text-fg">Countable</div>
               <div className="text-xs text-muted">sayıla bilən (two apples)</div>
             </div>
             <div className="rounded-xl border border-line bg-panel-2 p-3 text-center">
               <div className="mx-auto h-6 w-20 rounded-full bg-gradient-to-r from-sky-500/70 to-sky-400/40" />
-              <div className="mt-2 text-sm font-semibold text-white">Uncountable</div>
+              <div className="mt-2 text-sm font-semibold text-fg">Uncountable</div>
               <div className="text-xs text-muted">sayıla bilməyən (water, milk)</div>
             </div>
           </div>

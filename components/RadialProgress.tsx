@@ -1,6 +1,6 @@
 "use client";
 
-// Holberton-üslubu qırmızı dairəvi progress halqası (rəqəm count-up ilə canlanır).
+// İndigo dairəvi progress halqası (rəqəm count-up ilə canlanır).
 
 import { useCountUp } from "@/lib/useCountUp";
 
@@ -34,7 +34,7 @@ export default function RadialProgress({
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke="#33333f"
+          stroke="#e5e2f4"
           strokeWidth={stroke}
         />
         <circle
@@ -42,7 +42,7 @@ export default function RadialProgress({
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke="#e0143f"
+          stroke="#5b4bf5"
           strokeWidth={stroke}
           strokeLinecap="round"
           strokeDasharray={circumference}
@@ -51,7 +51,7 @@ export default function RadialProgress({
         />
       </svg>
       <div className="absolute flex flex-col items-center leading-none">
-        <span className="text-2xl font-bold text-white">{shown}%</span>
+        <span className="text-2xl font-bold text-fg">{shown}%</span>
         {label && <span className="mt-1 text-xs text-muted">{label}</span>}
       </div>
     </div>
