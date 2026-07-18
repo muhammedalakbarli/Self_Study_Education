@@ -115,7 +115,7 @@ export default function LessonPage({
           <button
             type="button"
             onClick={() => setStarted(true)}
-            className="mt-4 w-full rounded-lg bg-brand px-5 py-3 text-lg font-semibold text-white hover:bg-brand-dark"
+            className="mt-4 w-full rounded-2xl bg-brand px-5 py-3.5 text-lg font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark"
           >
             Layihəyə başla
           </button>
