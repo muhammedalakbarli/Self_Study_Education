@@ -9,6 +9,7 @@ import Link from "next/link";
 import { Eye, EyeOff, CheckCircle, XCircle, Check } from "lucide-react";
 import Logo from "@/components/Logo";
 import GoogleButton from "@/components/GoogleButton";
+import Mascot from "@/components/Mascot";
 import { signUpWithEmail } from "@/lib/auth";
 
 const PERKS = [
@@ -88,6 +89,9 @@ export default function SignupPage() {
         </Link>
 
         <div>
+          <div className="mb-5">
+            <Mascot size={76} mood="celebrate" />
+          </div>
           <h2 className="max-w-sm text-4xl font-extrabold leading-tight">
             Öyrənməyə bu gün başla
           </h2>

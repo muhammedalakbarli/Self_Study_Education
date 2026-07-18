@@ -1,12 +1,12 @@
 // "Ulduz" — Bilik Yolu-nun mascotu. Amber ulduz + dostyana üz (brend personajı).
-// mood: "happy" (default) | "celebrate" (gözlər qapalı sevinc).
+// mood: "happy" (default) | "celebrate" (sevinc) | "sad" (ruhlandıran).
 
 export default function Mascot({
   size = 120,
   mood = "happy",
 }: {
   size?: number;
-  mood?: "happy" | "celebrate";
+  mood?: "happy" | "celebrate" | "sad";
 }) {
   // 5-guşəli ulduz nöqtələri (mərkəz 60,60) — kənarlar stroke ilə yumrulanır.
   const star =
@@ -47,6 +47,18 @@ export default function Mascot({
           <path d="M66 54 q5 -6 10 0" stroke="#2a2340" strokeWidth="3.5" strokeLinecap="round" fill="none" />
           {/* geniş açıq təbəssüm */}
           <path d="M49 66 q11 12 22 0 q-11 6 -22 0 z" fill="#2a2340" />
+        </>
+      ) : mood === "sad" ? (
+        <>
+          {/* böyük gözlər (yumşaq, ruhlandıran) */}
+          <ellipse cx="49" cy="55" rx="6.5" ry="7.5" fill="#fff" />
+          <ellipse cx="71" cy="55" rx="6.5" ry="7.5" fill="#fff" />
+          <circle cx="50" cy="57" r="3.4" fill="#2a2340" />
+          <circle cx="72" cy="57" r="3.4" fill="#2a2340" />
+          <circle cx="48.5" cy="55" r="1.1" fill="#fff" />
+          <circle cx="70.5" cy="55" r="1.1" fill="#fff" />
+          {/* kiçik təəssüf ağzı */}
+          <path d="M51 71 q9 -6 18 0" stroke="#2a2340" strokeWidth="3.5" strokeLinecap="round" fill="none" />
         </>
       ) : (
         <>

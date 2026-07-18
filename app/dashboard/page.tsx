@@ -13,6 +13,7 @@ import { projectDates } from "@/lib/dates";
 import RadialProgress from "@/components/RadialProgress";
 import LearningPath, { type PathNode } from "@/components/LearningPath";
 import { PageSkeleton } from "@/components/Skeleton";
+import Mascot from "@/components/Mascot";
 
 export default function DashboardPage() {
   const { user, ready } = useAuthUser();
@@ -60,10 +61,15 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-ink">
       <main className="mx-auto max-w-5xl px-4 py-6">
-        <h1 className="text-2xl font-bold text-fg">Öyrənmə yolun</h1>
-        <p className="text-sm text-muted">
-          Salam, {displayName(user)} — davam edək
-        </p>
+        <div className="flex items-center gap-3">
+          <Mascot size={52} />
+          <div>
+            <h1 className="text-2xl font-bold text-fg">Öyrənmə yolun</h1>
+            <p className="text-sm text-muted">
+              Salam, {displayName(user)} — davam edək
+            </p>
+          </div>
+        </div>
 
         {/* Fənn tab-ları */}
         <div className="mt-5 flex flex-wrap gap-2">
