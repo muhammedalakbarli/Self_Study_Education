@@ -303,6 +303,33 @@ const DICT: Dict = {
     ru: "Открывай новые награды по мере прогресса",
   },
   "profile.logout": { az: "Hesabdan çıx", en: "Log out", ru: "Выйти из аккаунта" },
+  "profile.edit": { az: "Profili redaktə et", en: "Edit profile", ru: "Редактировать профиль" },
+  "profile.share": { az: "Profili paylaş", en: "Share profile", ru: "Поделиться профилем" },
+  "profile.copyLink": { az: "Linki kopyala", en: "Copy link", ru: "Копировать ссылку" },
+  "profile.copied": { az: "Kopyalandı!", en: "Copied!", ru: "Скопировано!" },
+  "profile.memberSince": { az: "Üzv: {d}", en: "Member since {d}", ru: "С нами с {d}" },
+  "profile.name": { az: "Ad", en: "Name", ru: "Имя" },
+  "profile.username": { az: "İstifadəçi adı", en: "Username", ru: "Имя пользователя" },
+  "profile.avatar": { az: "Avatar", en: "Avatar", ru: "Аватар" },
+  "profile.save": { az: "Yadda saxla", en: "Save", ru: "Сохранить" },
+  "profile.saved": { az: "Yadda saxlanıldı", en: "Saved", ru: "Сохранено" },
+  "profile.usernameTaken": {
+    az: "Bu istifadəçi adı tutulub",
+    en: "This username is taken",
+    ru: "Это имя пользователя занято",
+  },
+  "profile.usernameHint": {
+    az: "3-20 simvol: kiçik hərf, rəqəm, alt xətt (_)",
+    en: "3-20 chars: lowercase, digits, underscore (_)",
+    ru: "3-20 симв.: строчные, цифры, подчёркивание (_)",
+  },
+  "profile.monthly": { az: "Bu ayın nişanı", en: "This month's badge", ru: "Значок месяца" },
+  "profile.back": { az: "Geri", en: "Back", ru: "Назад" },
+  "profile.notFound": {
+    az: "Belə profil tapılmadı",
+    en: "Profile not found",
+    ru: "Профиль не найден",
+  },
 
   // Ayarlar
   "settings.title": { az: "Ayarlar", en: "Settings", ru: "Настройки" },
