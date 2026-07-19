@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 import type { Task, MultipleChoiceTask } from "@/lib/types";
 import { gradeTask, type UserAnswer } from "@/lib/grading";
+import { playCorrect, playWrong, playComplete } from "@/lib/sound";
 import TaskInput from "@/components/tasks/TaskInput";
 import TaskFigure from "@/components/TaskFigure";
 import Mascot from "@/components/Mascot";
@@ -46,6 +47,9 @@ function ReviewRunner({ tasks, title, onExit, onCorrect, onFinish }: Props) {
     if (r.correct) {
       setCorrect((c) => c + 1);
       onCorrect?.(task.id);
+      playCorrect();
+    } else {
+      playWrong();
     }
   }
 
@@ -55,6 +59,7 @@ function ReviewRunner({ tasks, title, onExit, onCorrect, onFinish }: Props) {
     if (index + 1 < total) setIndex((i) => i + 1);
     else {
       setDone(true);
+      playComplete();
       onFinish?.();
     }
   }
@@ -136,6 +141,7 @@ function SpeedRunner({ tasks, title, onExit, onFinish }: Props) {
     if (done) return;
     if (time <= 0) {
       setDone(true);
+      playComplete();
       onFinish?.();
       return;
     }
@@ -149,7 +155,12 @@ function SpeedRunner({ tasks, title, onExit, onFinish }: Props) {
     if (picked !== null || done) return;
     const r = gradeTask(task, idx);
     setPicked(idx);
-    if (r.correct) setCorrect((c) => c + 1);
+    if (r.correct) {
+      setCorrect((c) => c + 1);
+      playCorrect();
+    } else {
+      playWrong();
+    }
     setAnswered((a) => a + 1);
     setTimeout(() => {
       setPicked(null);

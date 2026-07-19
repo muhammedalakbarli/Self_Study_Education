@@ -127,6 +127,80 @@ const DICT: Dict = {
     ru: "Интерактивная платформа обучения для школьников Азербайджана",
   },
 
+  // Səviyyə (level)
+  "level.label": { az: "Səviyyə", en: "Level", ru: "Уровень" },
+  "level.beginner": { az: "Başlanğıc", en: "Beginner", ru: "Новичок" },
+  "level.explorer": { az: "Kəşfiyyatçı", en: "Explorer", ru: "Исследователь" },
+  "level.knower": { az: "Bilici", en: "Scholar", ru: "Знаток" },
+  "level.master": { az: "Usta", en: "Master", ru: "Мастер" },
+  "level.legend": { az: "Əfsanə", en: "Legend", ru: "Легенда" },
+
+  // Gündəlik questlər ({n} → hədəf)
+  "quest.title": { az: "Gündəlik hədəflər", en: "Daily goals", ru: "Ежедневные цели" },
+  "quest.xp": { az: "{n} XP qazan", en: "Earn {n} XP", ru: "Заработай {n} XP" },
+  "quest.correct": {
+    az: "{n} düzgün cavab",
+    en: "{n} correct answers",
+    ru: "{n} верных ответов",
+  },
+  "quest.lessons": { az: "{n} dərs bitir", en: "Finish {n} lessons", ru: "Заверши {n} уроков" },
+  "quest.allDone": {
+    az: "Bütün gündəlik hədəflər tamamlandı!",
+    en: "All daily goals done!",
+    ru: "Все ежедневные цели выполнены!",
+  },
+
+  // Achievements (pilləli nişanlar)
+  "ach.title": { az: "Nişanlar", en: "Badges", ru: "Награды" },
+  "ach.xp": { az: "XP kolleksiyaçısı", en: "XP collector", ru: "Коллекционер XP" },
+  "ach.streak": { az: "Alov", en: "Flame", ru: "Пламя" },
+  "ach.lessons": { az: "Zəhmətkeş", en: "Hard worker", ru: "Труженик" },
+  "ach.level": { az: "Səviyyə ustası", en: "Level master", ru: "Мастер уровней" },
+
+  // Dərs sonu bayramı (celebration)
+  "cel.done": { az: "Dərs tamamlandı!", en: "Lesson complete!", ru: "Урок пройден!" },
+  "cel.xp": { az: "Qazanılan XP", en: "XP earned", ru: "Заработано XP" },
+  "cel.accuracy": { az: "Dəqiqlik", en: "Accuracy", ru: "Точность" },
+  "cel.combo": { az: "Ən yaxşı seriya", en: "Best combo", ru: "Лучшее комбо" },
+  "cel.levelUp": { az: "Yeni səviyyə!", en: "Level up!", ru: "Новый уровень!" },
+
+  // Dərs axını (runner chrome)
+  "run.check": { az: "Yoxla", en: "Check", ru: "Проверить" },
+  "run.next": { az: "Növbəti", en: "Next", ru: "Далее" },
+  "run.continue": { az: "Davam et", en: "Continue", ru: "Продолжить" },
+  "run.finish": { az: "Bitir", en: "Finish", ru: "Готово" },
+  "run.task": { az: "Tapşırıq", en: "Task", ru: "Задание" },
+  "run.bonus": { az: "Bonus", en: "Bonus", ru: "Бонус" },
+  "run.correct": { az: "Doğru! Afərin.", en: "Correct! Well done.", ru: "Верно! Молодец." },
+  "run.wrong": {
+    az: "Səhv. Növbəti dəfə alınacaq!",
+    en: "Wrong. You'll get it next time!",
+    ru: "Неверно. В следующий раз получится!",
+  },
+  "run.mainDone": {
+    az: "Əsas hissə bitdi!",
+    en: "Main part done!",
+    ru: "Основная часть пройдена!",
+  },
+  "run.earnedSoFar": {
+    az: "İndiyə qədər {n} XP qazandın.",
+    en: "You've earned {n} XP so far.",
+    ru: "Ты заработал {n} XP.",
+  },
+  "run.bonusOffer": {
+    az: "{n} bonus sual var — əlavə XP qazanmaq istəyirsən?",
+    en: "There are {n} bonus questions — want extra XP?",
+    ru: "Есть {n} бонусных вопросов — хочешь дополнительный XP?",
+  },
+  "run.startBonus": { az: "Bonusa başla", en: "Start bonus", ru: "Начать бонус" },
+  "run.backToPath": { az: "Yola qayıt", en: "Back to path", ru: "Вернуться к пути" },
+  "run.home": { az: "Ana səhifə", en: "Home", ru: "Главная" },
+  "run.noTasks": {
+    az: "Bu dərs üçün hələ tapşırıq əlavə edilməyib.",
+    en: "No tasks yet for this lesson.",
+    ru: "Для этого урока пока нет заданий.",
+  },
+
   // Ortaq statistikalar
   "stat.xp": { az: "XP", en: "XP", ru: "XP" },
   "stat.streak": { az: "gün seriya", en: "day streak", ru: "дней подряд" },

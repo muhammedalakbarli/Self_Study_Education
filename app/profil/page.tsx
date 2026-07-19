@@ -9,8 +9,6 @@ import {
   Flame,
   CircleCheck,
   LogOut,
-  Footprints,
-  Rocket,
   Crown,
   type LucideIcon,
 } from "lucide-react";
@@ -19,8 +17,24 @@ import { loadProgress, type ProgressState } from "@/lib/progress";
 import { displayName, signOut } from "@/lib/auth";
 import { subjects } from "@/lib/content";
 import { useT } from "@/lib/i18n";
+import { levelFromXp } from "@/lib/levels";
+import { computeAchievements, type AchievementKind } from "@/lib/achievements";
 import { PageSkeleton } from "@/components/Skeleton";
 import Mascot from "@/components/Mascot";
+
+const ACH_ICON: Record<AchievementKind, LucideIcon> = {
+  xp: Star,
+  streak: Flame,
+  lessons: CircleCheck,
+  level: Crown,
+};
+const TIER_RING = ["ring-line", "ring-amber-700/50", "ring-slate-400/60", "ring-yellow-500/70"];
+const TIER_TINT = [
+  "bg-panel-2 text-muted/50",
+  "bg-amber-700/10 text-amber-700",
+  "bg-slate-400/15 text-slate-500",
+  "bg-yellow-500/15 text-yellow-600",
+];
 
 export default function ProfilePage() {
   const { user, ready } = useAuthUser();
@@ -34,20 +48,8 @@ export default function ProfilePage() {
 
   if (!ready || !user || !state) return <PageSkeleton />;
 
-  // Ən azı bir fənn tam bitibmi (nişan üçün)?
-  const anySubjectDone = subjects.some((s) => {
-    const ls = s.units.flatMap((u) => u.lessons);
-    return ls.length > 0 && ls.every((l) => state.completedLessons.includes(l.id));
-  });
-
-  const badges: { Icon: LucideIcon; title: string; earned: boolean }[] = [
-    { Icon: Footprints, title: "İlk addım", earned: state.completedLessons.length >= 1 },
-    { Icon: CircleCheck, title: "5 dərs", earned: state.completedLessons.length >= 5 },
-    { Icon: Star, title: "100 XP", earned: state.totalXp >= 100 },
-    { Icon: Flame, title: "3 gün seriya", earned: state.streakDays >= 3 },
-    { Icon: Rocket, title: "7 gün seriya", earned: state.streakDays >= 7 },
-    { Icon: Crown, title: "Fənn ustası", earned: anySubjectDone },
-  ];
+  const lv = levelFromXp(state.totalXp);
+  const achievements = computeAchievements(state);
 
   async function logout() {
     await signOut();
@@ -64,6 +66,24 @@ export default function ProfilePage() {
             {displayName(user)}
           </h1>
           <p className="text-sm text-muted">{user.email}</p>
+
+          {/* Səviyyə */}
+          <div className="mt-4 w-full max-w-xs">
+            <div className="flex items-center justify-between text-sm">
+              <span className="font-extrabold text-brand">
+                {t("level.label")} {lv.level} · {t(lv.titleKey)}
+              </span>
+              <span className="text-xs text-muted">
+                {lv.xpInLevel}/{lv.xpForNext} XP
+              </span>
+            </div>
+            <div className="mt-1.5 h-2.5 overflow-hidden rounded-full bg-panel-2">
+              <div
+                className="h-full rounded-full bg-accent transition-all"
+                style={{ width: `${lv.progress * 100}%` }}
+              />
+            </div>
+          </div>
         </div>
 
         {/* Statistika */}
@@ -73,35 +93,40 @@ export default function ProfilePage() {
           <Stat Icon={CircleCheck} value={state.completedLessons.length} label={t("stat.completed")} color="text-brand" />
         </div>
 
-        {/* Nişanlar (achievements) */}
+        {/* Nişanlar (pilləli achievements) */}
         <div className="mt-4 rounded-2xl border border-line bg-panel p-5">
           <h2 className="text-lg font-bold text-fg">{t("profile.badges")}</h2>
           <p className="text-sm text-muted">{t("profile.badgesHint")}</p>
-          <div className="mt-4 grid grid-cols-3 gap-3 sm:grid-cols-6">
-            {badges.map((b) => (
-              <div
-                key={b.title}
-                className="flex flex-col items-center gap-2 text-center"
-                title={b.title}
-              >
-                <span
-                  className={`flex h-16 w-16 items-center justify-center rounded-2xl transition ${
-                    b.earned
-                      ? "bg-accent/15 text-accent ring-2 ring-accent/40"
-                      : "bg-panel-2 text-muted/50 ring-1 ring-line"
-                  }`}
-                >
-                  <b.Icon size={28} strokeWidth={2.4} />
-                </span>
-                <span
-                  className={`text-[11px] leading-tight ${
-                    b.earned ? "font-semibold text-fg" : "text-muted"
-                  }`}
-                >
-                  {b.title}
-                </span>
-              </div>
-            ))}
+          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+            {achievements.map((a) => {
+              const Icon = ACH_ICON[a.kind];
+              return (
+                <div key={a.id} className="flex items-center gap-3">
+                  <span
+                    className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl ring-2 ${TIER_TINT[a.tier]} ${TIER_RING[a.tier]}`}
+                  >
+                    <Icon size={26} strokeWidth={2.4} />
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="truncate font-bold text-fg">{t(a.titleKey)}</span>
+                      <span className="shrink-0 text-xs font-bold text-muted">
+                        {a.tier}/3
+                      </span>
+                    </div>
+                    <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-panel-2">
+                      <div
+                        className="h-full rounded-full bg-accent transition-all"
+                        style={{ width: `${a.progress * 100}%` }}
+                      />
+                    </div>
+                    <div className="mt-1 text-[11px] text-muted">
+                      {a.nextGoal === null ? `${a.value}` : `${a.value}/${a.nextGoal}`}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
 

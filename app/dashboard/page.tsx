@@ -11,7 +11,14 @@ import { loadProgress, isLessonLocked, type ProgressState } from "@/lib/progress
 import { useAuthUser } from "@/lib/useAuthUser";
 import { displayName } from "@/lib/auth";
 import { useT } from "@/lib/i18n";
-import { isDailyDone } from "@/lib/daily";
+import { levelFromXp } from "@/lib/levels";
+import {
+  syncQuestRewards,
+  todaysQuests,
+  questValue,
+  isQuestDone,
+  type QuestState,
+} from "@/lib/quests";
 import RadialProgress from "@/components/RadialProgress";
 import LearningPath, { type PathNode } from "@/components/LearningPath";
 import { PageSkeleton } from "@/components/Skeleton";
@@ -21,10 +28,24 @@ export default function DashboardPage() {
   const { user, ready } = useAuthUser();
   const [state, setState] = useState<ProgressState | null>(null);
   const [activeSlug, setActiveSlug] = useState(subjects[0].slug);
+  const [quests, setQuests] = useState<QuestState | null>(null);
   const t = useT();
 
   useEffect(() => {
     if (user) loadProgress(user.id).then(setState);
+  }, [user]);
+
+  // Gündəlik questlər: tamamlananların mükafatını ver + cari halı yüklə.
+  // Mükafat XP verildikdən sonra statistikanı yenidən yüklə (dərhal əks olunsun).
+  useEffect(() => {
+    if (!user) return;
+    syncQuestRewards(user.id)
+      .then((qs) => {
+        setQuests(qs);
+        return loadProgress(user.id);
+      })
+      .then((p) => setState(p))
+      .catch(() => {});
   }, [user]);
 
   const active = subjects.find((s) => s.slug === activeSlug)!;
@@ -88,18 +109,45 @@ export default function DashboardPage() {
           />
         </div>
 
-        {/* Gündəlik challenge banneri */}
-        {!isDailyDone(user?.user_metadata) && (
-          <Link
-            href="/praktika"
-            className="mt-4 flex items-center justify-between gap-3 rounded-2xl border-2 border-brand/30 bg-brand/10 px-5 py-3.5 transition hover:bg-brand/15"
-          >
-            <span className="font-bold text-brand">{t("dash.dailyBanner")}</span>
-            <span className="text-sm font-extrabold uppercase tracking-wide text-brand">
-              {t("dash.start")} →
-            </span>
-          </Link>
-        )}
+        {/* Səviyyə + gündəlik questlər */}
+        <div className="mt-4 rounded-2xl border border-line bg-panel p-5">
+          <LevelBar xp={state.totalXp} t={t} />
+          {quests && (
+            <div className="mt-5 space-y-3">
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-extrabold text-fg">{t("quest.title")}</span>
+              </div>
+              {todaysQuests(quests.date).map((q) => {
+                const val = questValue(quests, q.kind);
+                const done = isQuestDone(quests, q);
+                const label = t(q.labelKey).replace("{n}", String(q.goal));
+                return (
+                  <div key={q.id} className="flex items-center gap-3">
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between text-sm">
+                        <span className={done ? "font-bold text-emerald-600" : "font-semibold text-fg"}>
+                          {label}
+                        </span>
+                        <span className="text-xs text-muted">
+                          {Math.min(val, q.goal)}/{q.goal}
+                        </span>
+                      </div>
+                      <div className="mt-1.5 h-2.5 overflow-hidden rounded-full bg-panel-2">
+                        <div
+                          className={`h-full rounded-full transition-all ${done ? "bg-emerald-500" : "bg-brand"}`}
+                          style={{ width: `${Math.min((val / q.goal) * 100, 100)}%` }}
+                        />
+                      </div>
+                    </div>
+                    <span className="w-14 shrink-0 text-right text-xs font-bold text-accent">
+                      +{q.rewardXp} XP
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
 
         {/* Fənn tab-ları */}
         <div className="mt-6 flex flex-wrap gap-2">
@@ -150,6 +198,36 @@ export default function DashboardPage() {
           </div>
         </div>
       </main>
+    </div>
+  );
+}
+
+function LevelBar({ xp, t }: { xp: number; t: (k: string) => string }) {
+  const lv = levelFromXp(xp);
+  return (
+    <div>
+      <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-brand text-lg font-extrabold text-white">
+            {lv.level}
+          </span>
+          <div>
+            <div className="text-sm font-extrabold text-fg">
+              {t("level.label")} {lv.level}
+            </div>
+            <div className="text-xs text-muted">{t(lv.titleKey)}</div>
+          </div>
+        </div>
+        <span className="text-xs text-muted">
+          {lv.xpInLevel}/{lv.xpForNext} XP
+        </span>
+      </div>
+      <div className="mt-2 h-2.5 overflow-hidden rounded-full bg-panel-2">
+        <div
+          className="h-full rounded-full bg-accent transition-all"
+          style={{ width: `${lv.progress * 100}%` }}
+        />
+      </div>
     </div>
   );
 }
