@@ -6,13 +6,18 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
+import { X } from "lucide-react";
 import type { Lesson, Task } from "@/lib/types";
+import ResultSheet from "@/components/lesson/ResultSheet";
 import { gradeTask, type UserAnswer } from "@/lib/grading";
 import { completeLesson, loadProgress } from "@/lib/progress";
 import { addMistake, removeMistake } from "@/lib/mistakes";
 import { bumpQuest, bumpQuests } from "@/lib/quests";
+import { addWeeklyXp } from "@/lib/leaderboard";
 import { levelFromXp } from "@/lib/levels";
-import { playCorrect, playWrong, playComplete, playLevelUp } from "@/lib/sound";
+import { playCorrect, playWrong, playComplete, playLevelUp, playCombo } from "@/lib/sound";
+import { vibrateCorrect, vibrateWrong, vibrateCelebrate } from "@/lib/haptics";
 import { useCountUp } from "@/lib/useCountUp";
 import { useT } from "@/lib/i18n";
 import TaskInput from "@/components/tasks/TaskInput";
@@ -77,11 +82,14 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
       removeMistake(task.id);
       bumpQuest("correct", 1);
       playCorrect();
+      if (nextCombo >= 2) playCombo(nextCombo);
+      vibrateCorrect();
     } else {
       setCombo(0);
       setComboBonus(0);
       addMistake(task.id);
       playWrong();
+      vibrateWrong();
     }
   }
 
@@ -92,6 +100,7 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
   function finishLesson(finalXp: number) {
     completeLesson(userId, lesson.id, finalXp).catch(() => {});
     bumpQuests({ xp: finalXp, lessons: 1 });
+    addWeeklyXp(finalXp);
     const up =
       startXp !== null &&
       levelFromXp(startXp).level < levelFromXp(startXp + finalXp).level;
@@ -172,88 +181,116 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
     );
   }
 
-  // ── Tapşırıq (main və ya bonus) ──
+  // ── Tapşırıq (main və ya bonus) — immersiv tam-ekran ──
+  const ctaText =
+    index + 1 < total ? t("run.next") : inBonus ? t("run.finish") : t("run.continue");
+
   return (
-    <div>
-      <div className="mb-6 h-2.5 w-full overflow-hidden rounded-full bg-panel-2">
-        <div
-          className={`h-full rounded-full transition-all ${inBonus ? "bg-accent" : "bg-brand"}`}
-          style={{ width: `${progressPct}%` }}
-        />
+    <div className="flex min-h-screen flex-col bg-ink">
+      {/* Yuxarı bar: X + qalın progress + combo */}
+      <div className="mx-auto flex w-full max-w-xl items-center gap-4 px-4 pt-5">
+        <Link
+          href={`/subjects/${slug}`}
+          aria-label="Çıx"
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-muted transition hover:bg-panel-2 hover:text-fg"
+        >
+          <X size={26} />
+        </Link>
+        <div className="h-4 flex-1 overflow-hidden rounded-full bg-panel-2">
+          <motion.div
+            className={`h-full origin-left rounded-full ${inBonus ? "bg-accent" : "bg-brand"}`}
+            initial={false}
+            animate={{ scaleX: Math.max(progressPct / 100, 0.02) }}
+            transition={{ type: "spring", stiffness: 260, damping: 26 }}
+            style={{ width: "100%" }}
+          />
+        </div>
+        <AnimatePresence>
+          {combo >= 2 && !checked && (
+            <motion.span
+              key={combo}
+              initial={{ scale: 0.4, opacity: 0 }}
+              animate={{ scale: [1.35, 1], opacity: 1 }}
+              exit={{ scale: 0.6, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 500, damping: 18 }}
+              className="shrink-0 rounded-full bg-orange-500/15 px-2.5 py-1 text-sm font-extrabold text-orange-500"
+            >
+              🔥 {combo}
+            </motion.span>
+          )}
+        </AnimatePresence>
       </div>
 
-      <div className="flex items-center justify-between text-sm font-medium text-muted">
-        <span>
+      {/* Sual sahəsi */}
+      <div className="mx-auto w-full max-w-xl flex-1 px-4 pt-8 pb-44">
+        <div className="flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-muted">
           {inBonus ? t("run.bonus") : t("run.task")} {index + 1} / {total}
-        </span>
-        <div className="flex items-center gap-2">
-          {combo >= 2 && !checked && (
-            <span className="rounded-full bg-orange-500/15 px-2.5 py-0.5 font-bold text-orange-500">
-              🔥 {combo}
-            </span>
-          )}
           {inBonus && (
             <span className="rounded-full bg-accent/15 px-2.5 py-0.5 text-accent">
               {t("run.bonus")}
             </span>
           )}
         </div>
-      </div>
-
-      <h2 className="mt-2 text-xl font-semibold text-fg">{task.prompt}</h2>
-
-      <TaskFigure figure={task.figure} />
-
-      <div className="mt-6">
-        <TaskInput
-          task={task}
-          value={answer}
-          onChange={(v) => setAnswer(v)}
-          disabled={checked}
-        />
-      </div>
-
-      {checked && (
-        <div
-          className={`mt-5 flex items-center gap-3 rounded-xl px-4 py-3 font-medium ${
-            lastCorrect
-              ? "bg-emerald-500/15 text-emerald-600"
-              : "bg-brand/15 text-brand-soft"
-          }`}
-        >
-          <Mascot size={40} mood={lastCorrect ? "celebrate" : "sad"} />
-          <span className="flex-1">{lastCorrect ? t("run.correct") : t("run.wrong")}</span>
-          {comboBonus > 0 && (
-            <span className="rounded-full bg-orange-500/15 px-3 py-1 text-sm font-extrabold text-orange-500">
-              🔥 +{comboBonus} XP
-            </span>
-          )}
+        <h2 className="mt-3 text-2xl font-bold text-fg">{task.prompt}</h2>
+        <TaskFigure figure={task.figure} />
+        <div className="mt-7">
+          <TaskInput
+            task={task}
+            value={answer}
+            onChange={(v) => setAnswer(v)}
+            disabled={checked}
+            reveal={checked}
+          />
         </div>
-      )}
-
-      <div className="mt-6">
-        {!checked ? (
-          <button
-            type="button"
-            onClick={handleCheck}
-            disabled={answer === null || answer === ""}
-            className="w-full rounded-2xl bg-brand px-5 py-3.5 text-lg font-extrabold uppercase tracking-wide text-white btn-pop
-              hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-40"
-          >
-            {t("run.check")}
-          </button>
-        ) : (
-          <button
-            type="button"
-            onClick={advance}
-            className="w-full rounded-2xl bg-emerald-500 px-5 py-3.5 text-lg font-extrabold uppercase tracking-wide text-white btn-pop btn-pop-green hover:bg-emerald-600"
-          >
-            {index + 1 < total ? t("run.next") : inBonus ? t("run.finish") : t("run.continue")}
-          </button>
-        )}
       </div>
+
+      {/* Aşağı YOXLA çubuğu */}
+      <AnimatePresence>
+        {!checked && (
+          <motion.div
+            key="checkbar"
+            initial={{ y: "100%" }}
+            animate={{ y: 0 }}
+            exit={{ y: "100%" }}
+            transition={{ type: "spring", stiffness: 340, damping: 34 }}
+            className="fixed inset-x-0 bottom-0 z-30 border-t-2 border-line bg-panel"
+          >
+            <div className="mx-auto max-w-xl px-4 py-4">
+              <button
+                type="button"
+                onClick={handleCheck}
+                disabled={answer === null || answer === ""}
+                className="w-full rounded-2xl bg-brand px-5 py-3.5 text-lg font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                {t("run.check")}
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Nəticə lövhəsi */}
+      <AnimatePresence>
+        {checked && (
+          <ResultSheet
+            key="sheet"
+            correct={lastCorrect}
+            correctText={correctAnswerText(task)}
+            comboBonus={comboBonus}
+            ctaLabel={ctaText}
+            onContinue={advance}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
+}
+
+// Tapşırığın düzgün cavabını mətn kimi qaytarır (nəticə lövhəsi üçün).
+function correctAnswerText(task: Task): string {
+  if (task.type === "multiple_choice") return task.options[task.correctIndex];
+  if (task.type === "numeric") return String(task.answer);
+  return task.accepted[0] ?? "";
 }
 
 // ── Bayram ekranı ──
@@ -275,26 +312,54 @@ function DoneScreen({
   const t = useT();
   const xp = useCountUp(earnedXp, 900);
 
+  useEffect(() => {
+    vibrateCelebrate();
+  }, []);
+
   return (
     <div className="mx-auto max-w-xl py-14 text-center">
       <Confetti />
-      <div className="flex justify-center">
-        <Mascot size={110} mood="celebrate" />
-      </div>
+      <motion.div
+        className="flex justify-center"
+        initial={{ scale: 0.3, rotate: -20, opacity: 0 }}
+        animate={{ scale: 1, rotate: 0, opacity: 1 }}
+        transition={{ type: "spring", stiffness: 240, damping: 12 }}
+      >
+        <motion.div animate={{ y: [0, -16, 0] }} transition={{ duration: 0.8, delay: 0.3 }}>
+          <Mascot size={110} mood="celebrate" />
+        </motion.div>
+      </motion.div>
 
       {leveledUp && (
-        <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-accent/15 px-4 py-1.5 text-sm font-extrabold uppercase tracking-wide text-accent">
+        <motion.div
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: [0, 1.25, 1], opacity: 1 }}
+          transition={{ delay: 0.35, duration: 0.5, ease: "easeOut" }}
+          className="mt-4 inline-flex items-center gap-2 rounded-full bg-accent/15 px-4 py-1.5 text-sm font-extrabold uppercase tracking-wide text-accent"
+        >
           ⭐ {t("cel.levelUp")} — {t("level.label")} {newLevel}
-        </div>
+        </motion.div>
       )}
 
-      <h1 className="mt-4 text-2xl font-bold text-fg">{t("cel.done")}</h1>
+      <motion.h1
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.15 }}
+        className="mt-4 text-2xl font-bold text-fg"
+      >
+        {t("cel.done")}
+      </motion.h1>
 
-      <div className="mt-6 grid grid-cols-3 gap-3">
+      <motion.div
+        className="mt-6 grid grid-cols-3 gap-3"
+        initial="hidden"
+        animate="show"
+        variants={{ show: { transition: { staggerChildren: 0.12, delayChildren: 0.3 } } }}
+      >
         <Stat value={`+${xp}`} label={t("cel.xp")} tone="text-accent" />
         <Stat value={`${accuracy}%`} label={t("cel.accuracy")} tone="text-emerald-500" />
         <Stat value={`🔥 ${bestCombo}`} label={t("cel.combo")} tone="text-orange-500" />
-      </div>
+      </motion.div>
 
       <div className="mt-8 flex justify-center gap-3">
         <Link
@@ -316,9 +381,15 @@ function DoneScreen({
 
 function Stat({ value, label, tone }: { value: string; label: string; tone: string }) {
   return (
-    <div className="rounded-2xl border border-line bg-panel px-3 py-4">
+    <motion.div
+      variants={{
+        hidden: { opacity: 0, y: 24, scale: 0.8 },
+        show: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", stiffness: 320, damping: 18 } },
+      }}
+      className="rounded-2xl border border-line bg-panel px-3 py-4"
+    >
       <div className={`text-xl font-extrabold ${tone}`}>{value}</div>
       <div className="mt-0.5 text-[11px] text-muted">{label}</div>
-    </div>
+    </motion.div>
   );
 }

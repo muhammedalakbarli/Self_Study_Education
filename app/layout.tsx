@@ -1,13 +1,20 @@
 import type { Metadata } from "next";
-import { Nunito, Geist_Mono } from "next/font/google";
+import { Nunito, Baloo_2, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import AppChrome from "@/components/AppChrome";
 
-// Yumşaq, yuvarlaq, dostyana şrift — uşaq-yönümlü oyunbaz görünüş üçün.
+// Gövdə şrifti — yumşaq, oxunaqlı.
 const nunito = Nunito({
   variable: "--font-nunito",
   subsets: ["latin", "latin-ext"],
   weight: ["400", "600", "700", "800", "900"],
+});
+
+// Başlıq şrifti — şişkin, ağır, yuvarlaq (Feather hissi). Azərbaycan hərflərini (ə, ç, ş, ğ, ı) dəstəkləyir.
+const baloo = Baloo_2({
+  variable: "--font-display",
+  subsets: ["latin", "latin-ext"],
+  weight: ["500", "600", "700", "800"],
 });
 
 const geistMono = Geist_Mono({
@@ -58,7 +65,7 @@ export default function RootLayout({
   return (
     <html
       lang="az"
-      className={`${nunito.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${nunito.variable} ${baloo.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <AppChrome>{children}</AppChrome>

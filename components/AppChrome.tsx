@@ -2,33 +2,45 @@
 
 // Tətbiq çərçivəsi: giriş səhifəsində (/) sadəcə uşaqları göstərir;
 // digər bütün səhifələrdə solda sabit Sidebar + sol boşluqlu əsas sahə.
+// MotionConfig: Ayarlar "animations" söndürülübsə framer-motion animasiyaları da dayanır.
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { MotionConfig } from "framer-motion";
 import Sidebar from "./Sidebar";
 import { loadPrefs, applyPrefs } from "@/lib/prefs";
 
 export default function AppChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const [animEnabled, setAnimEnabled] = useState(true);
 
   // İstifadəçi tərcihlərini (animasiya və s.) tətbiq et.
   useEffect(() => {
-    applyPrefs(loadPrefs());
-  }, []);
+    const p = loadPrefs();
+    applyPrefs(p);
+    setAnimEnabled(p.animations);
+  }, [pathname]);
 
-  // Giriş və qeydiyyat səhifələrində sidebar göstərilmir.
+  // Giriş, qeydiyyat və immersiv dərs ekranında sidebar göstərilmir.
   const bare =
     pathname === "/" ||
     pathname === "/login" ||
     pathname === "/signup" ||
-    pathname === "/onboarding";
+    pathname === "/onboarding" ||
+    pathname.startsWith("/lessons/");
 
-  if (bare) return <>{children}</>;
-
-  return (
+  const body = bare ? (
+    <>{children}</>
+  ) : (
     <>
       <Sidebar />
       <div className="pb-20 lg:pb-0 lg:pl-56">{children}</div>
     </>
+  );
+
+  // animasiya söndürülübsə "always" (framer-motion son halı dərhal tətbiq edir),
+  // əks halda "user" (yalnız prefers-reduced-motion olanlarda azaldır).
+  return (
+    <MotionConfig reducedMotion={animEnabled ? "user" : "always"}>{body}</MotionConfig>
   );
 }

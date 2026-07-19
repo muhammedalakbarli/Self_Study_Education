@@ -23,6 +23,7 @@ import RadialProgress from "@/components/RadialProgress";
 import LearningPath, { type PathNode } from "@/components/LearningPath";
 import { PageSkeleton } from "@/components/Skeleton";
 import Mascot from "@/components/Mascot";
+import SpeechBubble from "@/components/SpeechBubble";
 
 export default function DashboardPage() {
   const { user, ready } = useAuthUser();
@@ -81,16 +82,14 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-ink">
       <main className="mx-auto max-w-4xl px-4 py-6">
-        {/* Salamlama */}
-        <div className="flex items-center gap-3">
-          <Mascot size={52} />
-          <div>
-            <h1 className="text-2xl font-bold text-fg">{t("dash.title")}</h1>
-            <p className="text-sm text-muted">
-              {t("dash.greeting")}, {displayName(user)} — {t("dash.continue")}
-            </p>
-          </div>
+        {/* Salamlama — Ulduz + danışıq balonu */}
+        <div className="flex items-end gap-3">
+          <Mascot size={72} />
+          <SpeechBubble className="mb-2 flex-1 font-semibold" tail="left">
+            {t("dash.greeting")}, {displayName(user)}! {t("dash.continue")} 🌟
+          </SpeechBubble>
         </div>
+        <h1 className="mt-4 text-3xl font-bold text-fg">{t("dash.title")}</h1>
 
         {/* Statistika zolağı */}
         <div className="mt-5 grid grid-cols-3 gap-3">

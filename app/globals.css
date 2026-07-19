@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* dark: variantı OS deyil, bizim html.dark sinfimizə bağlansın (Ayarlar → tünd rejim) */
+@custom-variant dark (&:where(html.dark, html.dark *));
+
 /* Bilik Yolu — işıqlı, dostyana dizayn tokenləri (indigo + isti amber) */
 @theme {
   --color-brand: #5b4bf5; /* əsas indigo-bənövşəyi */
@@ -15,6 +18,18 @@
   --color-line: #e5e2f4; /* kənarlar */
   --color-muted: #6a687e; /* ikinci dərəcəli mətn */
   --color-fg: #1c1a30; /* əsas mətn (tünd) */
+
+  /* Vəziyyət və fənn rəngləri (doymuş, oynaq) */
+  --color-success: #22c55e;
+  --color-success-dark: #15803d;
+  --color-danger: #ef4444;
+  --color-danger-dark: #b91c1c;
+  --color-sky: #38bdf8;
+
+  /* Fənn rəng kodu */
+  --color-subj-math: #5b4bf5; /* Riyaziyyat — indigo */
+  --color-subj-az: #ff5d73; /* Azərbaycan dili — mərcan */
+  --color-subj-en: #22c55e; /* İngilis dili — yaşıl */
 }
 
 :root {
@@ -42,10 +57,14 @@ body {
   font-family: var(--font-nunito), "Segoe UI", system-ui, sans-serif;
 }
 
-/* Başlıqlar qalın və oynaq (dostyana görünüş) */
+/* Başlıqlar — şişkin, ultra-yuvarlaq display font (Duolingo "Feather" hissi) */
 h1, h2, h3 {
-  font-weight: 800;
-  letter-spacing: -0.01em;
+  font-family: var(--font-display), var(--font-nunito), system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+.font-display {
+  font-family: var(--font-display), var(--font-nunito), system-ui, sans-serif;
 }
 
 /* Duolingo-vari "basılan" 3D düymə effekti (öz indigo rəngimizlə).
@@ -53,18 +72,62 @@ h1, h2, h3 {
 @layer components {
   .btn-pop {
     --pop: var(--color-brand-dark);
-    box-shadow: 0 4px 0 0 var(--pop);
+    box-shadow: 0 5px 0 0 var(--pop);
     transition: transform 0.06s ease, box-shadow 0.06s ease;
   }
   .btn-pop:active:not(:disabled) {
-    transform: translateY(3px);
+    transform: translateY(4px);
     box-shadow: 0 1px 0 0 var(--pop);
   }
   .btn-pop-green {
-    --pop: #15803d;
+    --pop: var(--color-success-dark);
+  }
+  .btn-pop-red {
+    --pop: var(--color-danger-dark);
   }
   .btn-pop-ghost {
     --pop: #d5d1ea;
+  }
+
+  /* Böyük 3D cavab plitəsi (Duolingo answer tile) */
+  .tile {
+    --pop: var(--color-line);
+    border: 2px solid var(--color-line);
+    background: var(--color-panel);
+    border-radius: 1rem;
+    box-shadow: 0 4px 0 0 var(--pop);
+    transition: transform 0.06s ease, box-shadow 0.06s ease, border-color 0.12s ease,
+      background-color 0.12s ease;
+  }
+  .tile:active:not(:disabled) {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 0 var(--pop);
+  }
+  .tile-selected {
+    --pop: var(--color-brand);
+    border-color: var(--color-brand);
+    background: color-mix(in srgb, var(--color-brand) 10%, var(--color-panel));
+    color: var(--color-brand);
+  }
+  .tile-correct {
+    --pop: var(--color-success-dark);
+    border-color: var(--color-success);
+    background: color-mix(in srgb, var(--color-success) 14%, var(--color-panel));
+    color: var(--color-success-dark);
+  }
+  .tile-wrong {
+    --pop: var(--color-danger-dark);
+    border-color: var(--color-danger);
+    background: color-mix(in srgb, var(--color-danger) 12%, var(--color-panel));
+    color: var(--color-danger-dark);
+  }
+
+  /* "Basılan" kart */
+  .card-pop {
+    border: 2px solid var(--color-line);
+    background: var(--color-panel);
+    border-radius: 1.25rem;
+    box-shadow: 0 4px 0 0 var(--color-line);
   }
 }
 

@@ -4,6 +4,7 @@
 
 import { createClient } from "./supabase/client";
 import { addXp } from "./progress";
+import { addWeeklyXp } from "./leaderboard";
 import { todayKey } from "./daily";
 
 export type QuestKind = "xp" | "lessons" | "correct";
@@ -134,7 +135,10 @@ export async function syncQuestRewards(userId: string): Promise<QuestState> {
       }
     }
     if (changed) {
-      if (reward > 0) await addXp(userId, reward).catch(() => {});
+      if (reward > 0) {
+        await addXp(userId, reward).catch(() => {});
+        await addWeeklyXp(reward);
+      }
       await writeState(s);
     }
     result = s;
