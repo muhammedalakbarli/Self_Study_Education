@@ -91,5 +91,44 @@ export function playLevelUp() {
     [523, 659, 784, 1047, 1319].forEach((f, i) =>
       tone(ac, f, i * 0.1, 0.22, "square", 0.1),
     );
+    tone(ac, 1568, 0.5, 0.4, "triangle", 0.12); // final parıltı
+  });
+}
+
+// Variant seçiləndə yumşaq "tık".
+export function playSelect() {
+  const ac = audioCtx();
+  play(() => {
+    if (!ac) return;
+    tone(ac, 520, 0, 0.05, "sine", 0.06);
+  });
+}
+
+// Combo artdıqca yüksələn "blip" (səviyyəyə görə tezlik).
+export function playCombo(level = 1) {
+  const ac = audioCtx();
+  play(() => {
+    if (!ac) return;
+    const base = 660 + Math.min(level, 8) * 60;
+    tone(ac, base, 0, 0.1, "triangle", 0.1);
+    tone(ac, base * 1.5, 0.06, 0.12, "sine", 0.08);
+  });
+}
+
+// Streak/quest mükafatı — qısa "coin/sparkle".
+export function playStreak() {
+  const ac = audioCtx();
+  play(() => {
+    if (!ac) return;
+    [784, 1047, 1319].forEach((f, i) => tone(ac, f, i * 0.07, 0.14, "triangle", 0.1));
+  });
+}
+
+export function playQuest() {
+  const ac = audioCtx();
+  play(() => {
+    if (!ac) return;
+    tone(ac, 880, 0, 0.08, "square", 0.09);
+    tone(ac, 1318, 0.07, 0.16, "triangle", 0.1);
   });
 }

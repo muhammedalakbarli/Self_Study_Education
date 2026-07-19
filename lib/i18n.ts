@@ -21,6 +21,7 @@ const DICT: Dict = {
   // Naviqasiya (sidebar) — bütün səhifələrdə görünür
   "nav.learn": { az: "Öyrən", en: "Learn", ru: "Учёба" },
   "nav.practice": { az: "Praktika et", en: "Practice", ru: "Практика" },
+  "nav.league": { az: "Liqa", en: "League", ru: "Лига" },
   "nav.profile": { az: "Profil", en: "Profile", ru: "Профиль" },
   "nav.more": { az: "Daha çoxu", en: "More", ru: "Ещё" },
   "nav.settings": { az: "Ayarlar", en: "Settings", ru: "Настройки" },
@@ -127,6 +128,38 @@ const DICT: Dict = {
     ru: "Интерактивная платформа обучения для школьников Азербайджана",
   },
 
+  // Həftəlik liqa
+  "league.title": { az: "Liqa", en: "Leaderboard", ru: "Рейтинг" },
+  "league.subtitle": {
+    az: "Ən çox XP toplayanlar",
+    en: "Top XP earners",
+    ru: "Лидеры по XP",
+  },
+  "league.overall": {
+    az: "Ümumi sıralama · bütün istifadəçilər",
+    en: "Overall ranking · all users",
+    ru: "Общий рейтинг · все пользователи",
+  },
+  "league.empty": {
+    az: "Bu həftə hələ heç kim XP qazanmayıb — birinci ol!",
+    en: "No XP earned this week yet — be the first!",
+    ru: "На этой неделе ещё нет XP — стань первым!",
+  },
+  "league.you": { az: "Sən", en: "You", ru: "Ты" },
+  "league.thisWeek": { az: "Bu həftə", en: "This week", ru: "На этой неделе" },
+  "league.tier.bronze": { az: "Bürünc liqa", en: "Bronze league", ru: "Бронзовая лига" },
+  "league.tier.silver": { az: "Gümüş liqa", en: "Silver league", ru: "Серебряная лига" },
+  "league.tier.gold": { az: "Qızıl liqa", en: "Gold league", ru: "Золотая лига" },
+  "league.tier.platinum": { az: "Platin liqa", en: "Platinum league", ru: "Платиновая лига" },
+  "league.tier.diamond": { az: "Almaz liqa", en: "Diamond league", ru: "Алмазная лига" },
+  "league.compete": {
+    az: "Bu həftə top 5 növbəti liqaya keçir",
+    en: "Top 5 advance to the next league this week",
+    ru: "Топ-5 проходят в следующую лигу на этой неделе",
+  },
+  "league.promoZone": { az: "Yüksəliş zonası", en: "Promotion zone", ru: "Зона повышения" },
+  "league.demoZone": { az: "Enmə zonası", en: "Demotion zone", ru: "Зона понижения" },
+
   // Səviyyə (level)
   "level.label": { az: "Səviyyə", en: "Level", ru: "Уровень" },
   "level.beginner": { az: "Başlanğıc", en: "Beginner", ru: "Новичок" },
@@ -159,6 +192,8 @@ const DICT: Dict = {
 
   // Dərs sonu bayramı (celebration)
   "cel.done": { az: "Dərs tamamlandı!", en: "Lesson complete!", ru: "Урок пройден!" },
+  "cel.great": { az: "Əla!", en: "Great!", ru: "Отлично!" },
+  "cel.answerWas": { az: "Düzgün cavab:", en: "Correct answer:", ru: "Правильный ответ:" },
   "cel.xp": { az: "Qazanılan XP", en: "XP earned", ru: "Заработано XP" },
   "cel.accuracy": { az: "Dəqiqlik", en: "Accuracy", ru: "Точность" },
   "cel.combo": { az: "Ən yaxşı seriya", en: "Best combo", ru: "Лучшее комбо" },

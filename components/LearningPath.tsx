@@ -4,6 +4,7 @@
 // "BAŞLA" balonu), kiliddə (boz 🔒). Bölmə başında rəngli banner, kənarda Ulduz.
 
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { Star, Check, Lock } from "lucide-react";
 import Mascot from "@/components/Mascot";
 import { useT } from "@/lib/i18n";
@@ -35,22 +36,28 @@ function NodeButton({ node }: { node: PathNode }) {
       : "bg-panel-2 text-muted/60 ring-1 ring-line";
 
   const inner = (
-    <div
-      className={`flex h-[62px] w-[62px] items-center justify-center rounded-full ${cls}`}
+    <motion.div
+      whileTap={node.state !== "locked" ? { scale: 0.9, y: 2 } : undefined}
+      whileHover={node.state !== "locked" ? { y: -3 } : undefined}
+      animate={
+        isCurrent
+          ? { boxShadow: ["0 0 0 0 rgba(91,75,245,0.5)", "0 0 0 12px rgba(91,75,245,0)"] }
+          : undefined
+      }
+      transition={isCurrent ? { duration: 1.6, repeat: Infinity } : { type: "spring", stiffness: 500, damping: 18 }}
+      className={`flex h-[74px] w-[74px] items-center justify-center rounded-full ${cls}`}
     >
       <Icon
-        size={26}
+        size={32}
         strokeWidth={3}
         {...(isCurrent ? { fill: "currentColor" } : {})}
       />
-    </div>
+    </motion.div>
   );
 
   const button =
     node.href && node.state !== "locked" ? (
-      <Link href={node.href} className="transition hover:-translate-y-0.5">
-        {inner}
-      </Link>
+      <Link href={node.href}>{inner}</Link>
     ) : (
       inner
     );

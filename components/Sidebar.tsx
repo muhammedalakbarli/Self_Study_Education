@@ -8,6 +8,7 @@ import { usePathname, useRouter } from "next/navigation";
 import {
   House,
   Dumbbell,
+  Trophy,
   User,
   LayoutGrid,
   LogOut,
@@ -22,6 +23,7 @@ import { useT } from "@/lib/i18n";
 const NAV = [
   { href: "/dashboard", key: "nav.learn", Icon: House, match: ["/dashboard", "/subjects", "/lessons"] },
   { href: "/praktika", key: "nav.practice", Icon: Dumbbell, match: ["/praktika"] },
+  { href: "/liqa", key: "nav.league", Icon: Trophy, match: ["/liqa"] },
   { href: "/profil", key: "nav.profile", Icon: User, match: ["/profil"] },
   { href: "/daha", key: "nav.more", Icon: LayoutGrid, match: ["/daha"] },
 ];

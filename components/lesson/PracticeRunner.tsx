@@ -4,6 +4,7 @@
 // review: adi (Yoxla → Növbəti) · timed: sürət raundu (60 san, tıkla-keç).
 
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import type { Task, MultipleChoiceTask } from "@/lib/types";
 import { gradeTask, type UserAnswer } from "@/lib/grading";
@@ -86,19 +87,31 @@ function ReviewRunner({ tasks, title, onExit, onCorrect, onFinish }: Props) {
       <TaskFigure figure={task.figure} />
 
       <div className="mt-6">
-        <TaskInput task={task} value={answer} onChange={setAnswer} disabled={checked} />
+        <TaskInput task={task} value={answer} onChange={setAnswer} disabled={checked} reveal={checked} />
       </div>
 
-      {checked && (
-        <div
-          className={`mt-5 flex items-center gap-3 rounded-xl px-4 py-3 font-medium ${
-            lastCorrect ? "bg-emerald-500/15 text-emerald-600" : "bg-brand/15 text-brand-soft"
-          }`}
-        >
-          <Mascot size={40} mood={lastCorrect ? "celebrate" : "sad"} />
-          <span>{lastCorrect ? "Doğru! Afərin." : "Səhv. Növbəti dəfə alınacaq!"}</span>
-        </div>
-      )}
+      <AnimatePresence>
+        {checked && (
+          <motion.div
+            key="pfeedback"
+            initial={{ opacity: 0, y: 14, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 10 }}
+            transition={{ type: "spring", stiffness: 380, damping: 26 }}
+            className={`mt-5 flex items-center gap-3 rounded-xl px-4 py-3 font-medium ${
+              lastCorrect ? "bg-emerald-500/15 text-emerald-600" : "bg-red-500/12 text-red-500"
+            }`}
+          >
+            <motion.div
+              animate={lastCorrect ? { y: [0, -12, 0] } : { x: [0, -7, 7, -5, 5, 0] }}
+              transition={{ duration: lastCorrect ? 0.55 : 0.45 }}
+            >
+              <Mascot size={40} mood={lastCorrect ? "celebrate" : "sad"} animate={false} />
+            </motion.div>
+            <span>{lastCorrect ? "Doğru! Afərin." : "Səhv. Növbəti dəfə alınacaq!"}</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <div className="mt-6">
         {!checked ? (
