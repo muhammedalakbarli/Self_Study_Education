@@ -1,6 +1,7 @@
 // İstifadəçi tərcihləri (localStorage). Animasiyalar tərcihi bütün app-a tətbiq olunur.
 
 export type DarkMode = "system" | "light" | "dark";
+export type Lang = "az" | "en" | "ru";
 
 export interface Prefs {
   sound: boolean;
@@ -8,6 +9,7 @@ export interface Prefs {
   motivational: boolean;
   listening: boolean;
   darkMode: DarkMode;
+  lang: Lang;
 }
 
 export const DEFAULT_PREFS: Prefs = {
@@ -16,6 +18,7 @@ export const DEFAULT_PREFS: Prefs = {
   motivational: true,
   listening: true,
   darkMode: "system",
+  lang: "az",
 };
 
 const KEY = "bilik-prefs";
@@ -35,8 +38,15 @@ export function savePrefs(p: Prefs) {
   applyPrefs(p);
 }
 
-// Tərcihləri DOM-a tətbiq et (hazırda: animasiyaları söndürmək).
+// Tərcihləri DOM-a tətbiq et: animasiyalar + tünd rejim.
 export function applyPrefs(p: Prefs) {
   if (typeof document === "undefined") return;
-  document.documentElement.classList.toggle("no-anim", !p.animations);
+  const root = document.documentElement;
+  root.classList.toggle("no-anim", !p.animations);
+
+  const prefersDark =
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const dark = p.darkMode === "dark" || (p.darkMode === "system" && prefersDark);
+  root.classList.toggle("dark", dark);
 }

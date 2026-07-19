@@ -17,17 +17,19 @@ import {
 } from "lucide-react";
 import Logo from "./Logo";
 import { signOut } from "@/lib/auth";
+import { useT } from "@/lib/i18n";
 
 const NAV = [
-  { href: "/dashboard", label: "Öyrən", Icon: House, match: ["/dashboard", "/subjects", "/lessons"] },
-  { href: "/praktika", label: "Praktika et", Icon: Dumbbell, match: ["/praktika"] },
-  { href: "/profil", label: "Profil", Icon: User, match: ["/profil"] },
-  { href: "/daha", label: "Daha çoxu", Icon: LayoutGrid, match: ["/daha"] },
+  { href: "/dashboard", key: "nav.learn", Icon: House, match: ["/dashboard", "/subjects", "/lessons"] },
+  { href: "/praktika", key: "nav.practice", Icon: Dumbbell, match: ["/praktika"] },
+  { href: "/profil", key: "nav.profile", Icon: User, match: ["/profil"] },
+  { href: "/daha", key: "nav.more", Icon: LayoutGrid, match: ["/daha"] },
 ];
 
 export default function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
+  const t = useT();
 
   const isActive = (match: string[]) =>
     match.some((m) => pathname === m || pathname.startsWith(m + "/"));
@@ -47,7 +49,8 @@ export default function Sidebar() {
         </Link>
 
         <nav className="mt-8 flex flex-col gap-1.5">
-          {NAV.map(({ href, label, Icon, match }) => {
+          {NAV.map(({ href, key, Icon, match }) => {
+            const label = t(key);
             const on = isActive(match);
             const cls = `flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-bold transition ${
               on ? "bg-brand/10 text-brand" : "text-muted hover:bg-panel-2 hover:text-fg"
@@ -67,8 +70,8 @@ export default function Sidebar() {
                   {/* Flyout */}
                   <div className="invisible absolute left-full top-0 z-40 pl-2 opacity-0 transition group-hover:visible group-hover:opacity-100">
                     <div className="w-56 rounded-2xl border border-line bg-panel p-1.5 shadow-xl">
-                      <FlyoutLink href="/ayarlar" Icon={Settings} label="Ayarlar" />
-                      <FlyoutLink href="/yardim" Icon={HelpCircle} label="Yardım mərkəzi" />
+                      <FlyoutLink href="/ayarlar" Icon={Settings} label={t("nav.settings")} />
+                      <FlyoutLink href="/yardim" Icon={HelpCircle} label={t("nav.help")} />
                     </div>
                   </div>
                 </div>
@@ -90,13 +93,13 @@ export default function Sidebar() {
           className="mt-auto flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-bold text-muted transition hover:bg-panel-2 hover:text-fg"
         >
           <LogOut size={20} strokeWidth={2.2} />
-          Çıxış
+          {t("nav.logout")}
         </button>
       </aside>
 
       {/* Mobil — alt panel */}
       <nav className="fixed inset-x-0 bottom-0 z-30 flex justify-around border-t border-line bg-panel py-1.5 lg:hidden">
-        {NAV.map(({ href, label, Icon, match }) => {
+        {NAV.map(({ href, key, Icon, match }) => {
           const on = isActive(match);
           return (
             <Link
@@ -107,7 +110,7 @@ export default function Sidebar() {
               }`}
             >
               <Icon size={22} strokeWidth={on ? 2.6 : 2.2} />
-              {label}
+              {t(key)}
             </Link>
           );
         })}

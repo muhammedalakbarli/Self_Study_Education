@@ -22,6 +22,20 @@
   --foreground: #1c1a30;
 }
 
+/* Tünd rejim — eyni token-ləri tünd dəyərlərlə əvəz edir (Ayarlar → Görünüş).
+   html.dark (yüksək spesifiklik) ki Tailwind-in :root theme-ni üstələsin. */
+html.dark {
+  --color-ink: #14121e; /* səhifə fonu */
+  --color-panel: #1e1b2e; /* kartlar */
+  --color-panel-2: #2a2640; /* iç panellər */
+  --color-line: #322e4a; /* kənarlar */
+  --color-muted: #a6a3bd; /* ikinci dərəcəli mətn */
+  --color-fg: #f3f2fb; /* əsas mətn (açıq) */
+  --color-brand-soft: #b3a7ff; /* tünd fonda oxunaqlı vurğu */
+  --background: #14121e;
+  --foreground: #f3f2fb;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

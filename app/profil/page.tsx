@@ -1,34 +1,32 @@
 "use client";
 
-// Profil: mascot + ad/email, statistika, onboarding məlumatları, fənn üzrə irəliləyiş.
+// Profil: mascot + ad/email, statistika, fənn üzrə irəliləyiş, nişanlar (achievements).
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Star, Flame, CircleCheck, LogOut } from "lucide-react";
+import {
+  Star,
+  Flame,
+  CircleCheck,
+  LogOut,
+  Footprints,
+  Rocket,
+  Crown,
+  type LucideIcon,
+} from "lucide-react";
 import { useAuthUser } from "@/lib/useAuthUser";
 import { loadProgress, type ProgressState } from "@/lib/progress";
 import { displayName, signOut } from "@/lib/auth";
 import { subjects } from "@/lib/content";
+import { useT } from "@/lib/i18n";
 import { PageSkeleton } from "@/components/Skeleton";
 import Mascot from "@/components/Mascot";
-
-const GOAL_LABEL: Record<string, string> = {
-  "5": "Rahat · 5 dəq/gün",
-  "10": "Normal · 10 dəq/gün",
-  "15": "Ciddi · 15 dəq/gün",
-  "20": "İntensiv · 20 dəq/gün",
-};
-const FOCUS_LABEL: Record<string, string> = {
-  riyaziyyat: "Riyaziyyat",
-  "azerbaycan-dili": "Azərbaycan dili",
-  "ingilis-dili": "İngilis dili",
-  hamisi: "Hamısı",
-};
 
 export default function ProfilePage() {
   const { user, ready } = useAuthUser();
   const router = useRouter();
   const [state, setState] = useState<ProgressState | null>(null);
+  const t = useT();
 
   useEffect(() => {
     if (user) loadProgress(user.id).then(setState);
@@ -36,16 +34,19 @@ export default function ProfilePage() {
 
   if (!ready || !user || !state) return <PageSkeleton />;
 
-  const meta = user.user_metadata ?? {};
-  const grade = meta.grade ? `${meta.grade}-ci sinif` : "—";
-  const goal = meta.goal ? GOAL_LABEL[String(meta.goal)] ?? "—" : "—";
-  const focus = meta.focus ? FOCUS_LABEL[String(meta.focus)] ?? "—" : "—";
+  // Ən azı bir fənn tam bitibmi (nişan üçün)?
+  const anySubjectDone = subjects.some((s) => {
+    const ls = s.units.flatMap((u) => u.lessons);
+    return ls.length > 0 && ls.every((l) => state.completedLessons.includes(l.id));
+  });
 
-  const info = [
-    { k: "Sinif", v: grade },
-    { k: "Gündəlik hədəf", v: goal },
-    { k: "Fokus", v: focus },
-    { k: "Email", v: user.email ?? "—" },
+  const badges: { Icon: LucideIcon; title: string; earned: boolean }[] = [
+    { Icon: Footprints, title: "İlk addım", earned: state.completedLessons.length >= 1 },
+    { Icon: CircleCheck, title: "5 dərs", earned: state.completedLessons.length >= 5 },
+    { Icon: Star, title: "100 XP", earned: state.totalXp >= 100 },
+    { Icon: Flame, title: "3 gün seriya", earned: state.streakDays >= 3 },
+    { Icon: Rocket, title: "7 gün seriya", earned: state.streakDays >= 7 },
+    { Icon: Crown, title: "Fənn ustası", earned: anySubjectDone },
   ];
 
   async function logout() {
@@ -67,14 +68,46 @@ export default function ProfilePage() {
 
         {/* Statistika */}
         <div className="mt-4 grid grid-cols-3 gap-3">
-          <Stat Icon={Star} value={state.totalXp} label="XP" color="text-accent" />
-          <Stat Icon={Flame} value={state.streakDays} label="gün seriya" color="text-orange-500" />
-          <Stat Icon={CircleCheck} value={state.completedLessons.length} label="tamamlandı" color="text-brand" />
+          <Stat Icon={Star} value={state.totalXp} label={t("stat.xp")} color="text-accent" />
+          <Stat Icon={Flame} value={state.streakDays} label={t("stat.streak")} color="text-orange-500" />
+          <Stat Icon={CircleCheck} value={state.completedLessons.length} label={t("stat.completed")} color="text-brand" />
+        </div>
+
+        {/* Nişanlar (achievements) */}
+        <div className="mt-4 rounded-2xl border border-line bg-panel p-5">
+          <h2 className="text-lg font-bold text-fg">{t("profile.badges")}</h2>
+          <p className="text-sm text-muted">{t("profile.badgesHint")}</p>
+          <div className="mt-4 grid grid-cols-3 gap-3 sm:grid-cols-6">
+            {badges.map((b) => (
+              <div
+                key={b.title}
+                className="flex flex-col items-center gap-2 text-center"
+                title={b.title}
+              >
+                <span
+                  className={`flex h-16 w-16 items-center justify-center rounded-2xl transition ${
+                    b.earned
+                      ? "bg-accent/15 text-accent ring-2 ring-accent/40"
+                      : "bg-panel-2 text-muted/50 ring-1 ring-line"
+                  }`}
+                >
+                  <b.Icon size={28} strokeWidth={2.4} />
+                </span>
+                <span
+                  className={`text-[11px] leading-tight ${
+                    b.earned ? "font-semibold text-fg" : "text-muted"
+                  }`}
+                >
+                  {b.title}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Fənn üzrə irəliləyiş */}
         <div className="mt-4 rounded-2xl border border-line bg-panel p-5">
-          <h2 className="text-lg font-bold text-fg">Fənlər üzrə irəliləyiş</h2>
+          <h2 className="text-lg font-bold text-fg">{t("profile.progress")}</h2>
           <div className="mt-4 space-y-4">
             {subjects.map((s) => {
               const ls = s.units.flatMap((u) => u.lessons);
@@ -83,7 +116,7 @@ export default function ProfilePage() {
               return (
                 <div key={s.slug}>
                   <div className="flex justify-between text-sm font-semibold">
-                    <span className="text-fg">{s.name}</span>
+                    <span className="text-fg">{t(`subject.${s.slug}`)}</span>
                     <span className="text-muted">
                       {done}/{ls.length}
                     </span>
@@ -100,25 +133,12 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        {/* Məlumat */}
-        <div className="mt-4 rounded-2xl border border-line bg-panel p-5">
-          <h2 className="text-lg font-bold text-fg">Haqqında</h2>
-          <dl className="mt-3 divide-y divide-line">
-            {info.map((row) => (
-              <div key={row.k} className="flex justify-between py-2.5 text-sm">
-                <dt className="text-muted">{row.k}</dt>
-                <dd className="font-semibold text-fg">{row.v}</dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-
         <button
           type="button"
           onClick={logout}
           className="mt-4 flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-line bg-panel px-5 py-3 font-bold text-fg btn-pop btn-pop-ghost hover:border-brand"
         >
-          <LogOut size={18} /> Hesabdan çıx
+          <LogOut size={18} /> {t("profile.logout")}
         </button>
       </main>
     </div>

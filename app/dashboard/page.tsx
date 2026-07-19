@@ -10,6 +10,7 @@ import { subjects } from "@/lib/content";
 import { loadProgress, isLessonLocked, type ProgressState } from "@/lib/progress";
 import { useAuthUser } from "@/lib/useAuthUser";
 import { displayName } from "@/lib/auth";
+import { useT } from "@/lib/i18n";
 import { isDailyDone } from "@/lib/daily";
 import RadialProgress from "@/components/RadialProgress";
 import LearningPath, { type PathNode } from "@/components/LearningPath";
@@ -20,6 +21,7 @@ export default function DashboardPage() {
   const { user, ready } = useAuthUser();
   const [state, setState] = useState<ProgressState | null>(null);
   const [activeSlug, setActiveSlug] = useState(subjects[0].slug);
+  const t = useT();
 
   useEffect(() => {
     if (user) loadProgress(user.id).then(setState);
@@ -62,26 +64,26 @@ export default function DashboardPage() {
         <div className="flex items-center gap-3">
           <Mascot size={52} />
           <div>
-            <h1 className="text-2xl font-bold text-fg">Öyrən</h1>
+            <h1 className="text-2xl font-bold text-fg">{t("dash.title")}</h1>
             <p className="text-sm text-muted">
-              Salam, {displayName(user)} — davam edək
+              {t("dash.greeting")}, {displayName(user)} — {t("dash.continue")}
             </p>
           </div>
         </div>
 
         {/* Statistika zolağı */}
         <div className="mt-5 grid grid-cols-3 gap-3">
-          <StatChip Icon={Star} value={state.totalXp} label="XP" color="text-accent" />
+          <StatChip Icon={Star} value={state.totalXp} label={t("stat.xp")} color="text-accent" />
           <StatChip
             Icon={Flame}
             value={state.streakDays}
-            label="gün seriya"
+            label={t("stat.streak")}
             color="text-orange-500"
           />
           <StatChip
             Icon={CircleCheck}
             value={totalCompleted}
-            label="tamamlandı"
+            label={t("stat.completed")}
             color="text-brand"
           />
         </div>
@@ -92,11 +94,9 @@ export default function DashboardPage() {
             href="/praktika"
             className="mt-4 flex items-center justify-between gap-3 rounded-2xl border-2 border-brand/30 bg-brand/10 px-5 py-3.5 transition hover:bg-brand/15"
           >
-            <span className="font-bold text-brand">
-              Gündəlik challenge səni gözləyir — 5 tapşırıq
-            </span>
+            <span className="font-bold text-brand">{t("dash.dailyBanner")}</span>
             <span className="text-sm font-extrabold uppercase tracking-wide text-brand">
-              Başla →
+              {t("dash.start")} →
             </span>
           </Link>
         )}
@@ -115,7 +115,7 @@ export default function DashboardPage() {
                     : "border-2 border-line bg-panel text-muted hover:bg-panel-2"
                 }`}
               >
-                {s.name}
+                {t(`subject.${s.slug}`)}
               </button>
             );
           })}
@@ -127,11 +127,11 @@ export default function DashboardPage() {
             <div className="flex items-center gap-4">
               <RadialProgress value={scorePct} size={72} stroke={7} />
               <div>
-                <h2 className="text-lg font-bold text-fg">{active.name}</h2>
+                <h2 className="text-lg font-bold text-fg">{t(`subject.${active.slug}`)}</h2>
                 <p className="text-sm text-muted">
                   {currentLesson
-                    ? `Növbəti: ${currentLesson.title}`
-                    : "Bütün dərslər bitdi!"}
+                    ? `${t("dash.next")}: ${currentLesson.title}`
+                    : t("dash.allDone")}
                 </p>
               </div>
             </div>
@@ -140,7 +140,7 @@ export default function DashboardPage() {
                 href={`/lessons/${currentLesson.id}`}
                 className="rounded-2xl bg-brand px-5 py-2.5 text-sm font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark"
               >
-                Davam et
+                {t("dash.resume")}
               </Link>
             )}
           </div>

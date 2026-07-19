@@ -8,6 +8,7 @@ import Link from "next/link";
 import { getSubject } from "@/lib/content";
 import { loadProgress, isLessonLocked, type ProgressState } from "@/lib/progress";
 import { useAuthUser } from "@/lib/useAuthUser";
+import { useT } from "@/lib/i18n";
 import LearningPath, { type PathNode } from "@/components/LearningPath";
 import { PageSkeleton } from "@/components/Skeleton";
 
@@ -19,6 +20,7 @@ export default function SubjectPage({
   const { slug } = use(params);
   const { user, ready } = useAuthUser();
   const [state, setState] = useState<ProgressState | null>(null);
+  const t = useT();
 
   const subject = getSubject(slug);
 
@@ -43,7 +45,7 @@ export default function SubjectPage({
             {subject.icon}
           </span>
           <div>
-            <h1 className="text-2xl font-bold text-fg">{subject.name}</h1>
+            <h1 className="text-2xl font-bold text-fg">{t(`subject.${subject.slug}`)}</h1>
             <p className="text-sm text-muted">{subject.grade}-ci sinif</p>
           </div>
         </div>
