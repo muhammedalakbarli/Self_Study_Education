@@ -15,6 +15,7 @@ import { completeLesson, loadProgress } from "@/lib/progress";
 import { addMistake, removeMistake } from "@/lib/mistakes";
 import { bumpQuest, bumpQuests } from "@/lib/quests";
 import { addWeeklyXp } from "@/lib/leaderboard";
+import { addMonthlyXp } from "@/lib/monthly";
 import { levelFromXp } from "@/lib/levels";
 import { playCorrect, playWrong, playComplete, playLevelUp, playCombo } from "@/lib/sound";
 import { vibrateCorrect, vibrateWrong, vibrateCelebrate } from "@/lib/haptics";
@@ -101,6 +102,7 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
     completeLesson(userId, lesson.id, finalXp).catch(() => {});
     bumpQuests({ xp: finalXp, lessons: 1 });
     addWeeklyXp(finalXp);
+    addMonthlyXp(finalXp);
     const up =
       startXp !== null &&
       levelFromXp(startXp).level < levelFromXp(startXp + finalXp).level;

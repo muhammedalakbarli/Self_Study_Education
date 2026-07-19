@@ -59,6 +59,25 @@ export async function addWeeklyXp(amount: number): Promise<void> {
   }
 }
 
+// Öz liqa pilləm (0-4). Sətir yoxdursa 0 (Bürünc).
+export async function loadMyLeagueTier(): Promise<number> {
+  try {
+    const supabase = createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) return 0;
+    const { data } = await supabase
+      .from("league")
+      .select("tier")
+      .eq("user_id", user.id)
+      .maybeSingle();
+    return data?.tier ?? 0;
+  } catch {
+    return 0;
+  }
+}
+
 // Çağıranın liqa kohortu (eyni pillə, həftəlik XP üzrə, max 15).
 export async function loadCohort(): Promise<CohortRow[]> {
   try {
