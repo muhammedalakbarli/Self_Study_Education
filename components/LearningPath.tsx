@@ -1,9 +1,11 @@
-// "Bilik Yolu" öyrənmə xəritəsi — ilanvari (serpentine) şəbəkə, AŞAĞIDAN YUXARIYA.
-// İlk layihə ən altdadır; irəlilədikcə yol yuxarı doğru ilan kimi qıvrılır.
-// Bütün layihələr tək, birləşmiş yolda gedir. Hər düyün nömrəli bir layihədir:
-// tamamlanmış (dolu indigo), açıq (indigo halqa), kiliddə (boz).
+// "Bilik Yolu" öyrənmə xəritəsi — Duolingo-üslubu tək sütunlu, sinus-zigzaq yol.
+// Yuxarıdan-aşağı: 1-ci dərs yuxarıda, aşağı endikcə yeni mövzular açılır.
+// Hər düyün 3D basılan dairə düymədir: tamamlanmış (yaşıl ✓), açıq (brand ⭐ +
+// "BAŞLA" balonu), kiliddə (boz 🔒). Bölmə başında rəngli banner, kənarda Ulduz.
 
 import Link from "next/link";
+import { Star, Check, Lock } from "lucide-react";
+import Mascot from "@/components/Mascot";
 
 export type NodeState = "done" | "current" | "locked";
 
@@ -12,122 +14,127 @@ export interface PathNode {
   title: string;
   state: NodeState;
   href?: string;
-  deadline?: string; // son tarix etiketi
+  unitTitle?: string; // dolu isə bu düyündən əvvəl bölmə banneri göstərilir
 }
 
-const PER_ROW = 4;
+// Sola-sağa yumşaq sürüşmə (px) — sinus dalğası ilə.
+const AMPLITUDE = 90;
+const offsetAt = (i: number) => Math.round(Math.sin(i * 0.8) * AMPLITUDE);
 
-// Layihə düyünü: sıra nömrəsi + vəziyyətə görə halqa/dolğu.
-function Circle({ node, label }: { node: PathNode; label: number }) {
-  const cls =
-    node.state === "done"
-      ? "bg-brand text-white ring-4 ring-brand/30"
-      : node.state === "current"
-        ? "bg-panel text-brand ring-2 ring-brand shadow-[0_0_20px_rgba(91,75,245,0.35)]"
-        : "bg-panel-2 text-muted ring-1 ring-line";
+function NodeButton({ node }: { node: PathNode }) {
+  const isDone = node.state === "done";
+  const isCurrent = node.state === "current";
+  const Icon = isDone ? Check : isCurrent ? Star : Lock;
 
-  const circle = (
+  const cls = isDone
+    ? "bg-emerald-500 text-white btn-pop btn-pop-green"
+    : isCurrent
+      ? "bg-brand text-white btn-pop"
+      : "bg-panel-2 text-muted/60 ring-1 ring-line";
+
+  const inner = (
     <div
-      className={`flex h-16 w-16 items-center justify-center rounded-full text-xl font-bold transition ${cls}`}
+      className={`flex h-[62px] w-[62px] items-center justify-center rounded-full ${cls}`}
     >
-      {label}
+      <Icon
+        size={26}
+        strokeWidth={3}
+        {...(isCurrent ? { fill: "currentColor" } : {})}
+      />
     </div>
   );
 
-  return node.href && node.state !== "locked" ? (
-    <Link href={node.href} className="transition hover:scale-105">
-      {circle}
-    </Link>
-  ) : (
-    circle
-  );
-}
+  const button =
+    node.href && node.state !== "locked" ? (
+      <Link href={node.href} className="transition hover:-translate-y-0.5">
+        {inner}
+      </Link>
+    ) : (
+      inner
+    );
 
-function Node({ node, label }: { node: PathNode; label: number }) {
   return (
-    <div className="flex w-24 shrink-0 flex-col items-center gap-1.5">
-      <Circle node={node} label={label} />
+    <div className="relative flex flex-col items-center">
+      {/* Cari dərsin üstündə tullanan "BAŞLA" balonu */}
+      {isCurrent && (
+        <div className="path-bounce absolute -top-12 z-10 flex flex-col items-center">
+          <span className="rounded-xl border-2 border-line bg-panel px-3 py-1 text-xs font-extrabold uppercase tracking-wide text-brand shadow-sm">
+            Başla
+          </span>
+          <span className="-mt-[3px] h-3 w-3 rotate-45 border-b-2 border-r-2 border-line bg-panel" />
+        </div>
+      )}
+      {button}
       <span
-        className={`text-center text-xs leading-tight ${
-          node.state === "locked" ? "text-muted" : "text-fg"
+        className={`mt-2 max-w-[120px] text-center text-xs leading-tight ${
+          node.state === "locked" ? "text-muted" : "font-semibold text-fg"
         }`}
       >
         {node.title}
       </span>
-      {node.deadline && (
-        <span className="text-[10px] text-muted">son: {node.deadline}</span>
-      )}
+    </div>
+  );
+}
+
+// Bölmə başlığı banneri (rəngli lent).
+function UnitBanner({ title, index }: { title: string; index: number }) {
+  return (
+    <div className="my-4 w-full max-w-md">
+      <div className="flex items-center gap-3 rounded-2xl bg-brand px-5 py-3 text-white shadow-sm">
+        <span className="text-xs font-extrabold uppercase tracking-widest text-white/70">
+          {index}
+        </span>
+        <span className="h-5 w-px bg-white/30" />
+        <span className="text-sm font-extrabold">{title}</span>
+      </div>
     </div>
   );
 }
 
 export default function LearningPath({ nodes }: { nodes: PathNode[] }) {
-  // Düyünləri sətirlərə böl: rows[0] = ilk layihələr (ən altda göstəriləcək).
-  const rows: PathNode[][] = [];
-  for (let i = 0; i < nodes.length; i += PER_ROW) {
-    rows.push(nodes.slice(i, i + PER_ROW));
-  }
-
-  // Yuxarıdan-aşağı render (ən üstdə sonuncu sətir): sətirləri tərsinə gəzirik.
-  const rendered = [...rows].reverse();
+  let unitCount = 0;
 
   return (
-    <div className="overflow-x-auto">
-      {/* Qutu məzmun eninə sabitlənir ki, birləşdirici xətlər düz düyünlərə düşsün */}
-      <div className="mx-auto flex w-fit flex-col">
-        {rendered.map((row, ri) => {
-        const rowIndex = rows.length - 1 - ri; // orijinal (məntiqi) sıra
-        const reverse = rowIndex % 2 === 1; // tək sətirlər sağdan-sola axır
-        const baseIndex = rowIndex * PER_ROW;
-        const hasConnectorAbove = rowIndex < rows.length - 1;
-        // Dönüş tərəfi: cüt sətir sağda bitir (yuxarı sağdan qalxır), tək sətir solda.
-        const connectorOnRight = rowIndex % 2 === 0;
-        // Növbəti (yuxarıdakı) sətir tam açılıbsa xətt qırmızı olur.
-        const nextRowDone =
-          rowIndex + 1 < rows.length &&
-          rows[rowIndex + 1].every((n) => n.state === "done");
+    <div className="flex flex-col items-center py-2">
+      {nodes.map((node, i) => {
+        const offset = offsetAt(i);
+        // Bölmə banneri düyünlərdən müstəqil, tam mərkəzdə göstərilir.
+        const banner = node.unitTitle ? (
+          <UnitBanner
+            key={`u-${node.id}`}
+            title={node.unitTitle}
+            index={++unitCount}
+          />
+        ) : null;
+
+        // Ulduz-u aralıqlarda, düyünün əks tərəfində göstər.
+        const showMascot = i > 0 && i % 6 === 3 && node.state !== "current";
+        const mascotSide = offset >= 0 ? -1 : 1; // düyün sağdadırsa Ulduz solda
+        // Cari düyünün üstündə "BAŞLA" balonu üçün əlavə yer aç (banner ilə kəsişməsin).
+        const extraTop = node.state === "current" ? "pt-10" : "";
 
         return (
-          <div key={rowIndex}>
-            {/* Bu sətirlə yuxarıdakı sətir arasında şaquli birləşdirici */}
-            {hasConnectorAbove && (
-              <div
-                className={`flex ${connectorOnRight ? "justify-end" : "justify-start"}`}
-              >
-                <div className="w-24">
-                  <div
-                    className={`mx-auto h-8 w-1 rounded-full ${
-                      nextRowDone ? "bg-brand" : "bg-line"
-                    }`}
-                  />
-                </div>
-              </div>
-            )}
-
-            {/* Düyün sətri */}
+          <div key={node.id} className="flex w-full flex-col items-center">
+            {banner}
             <div
-              className={`flex items-start ${reverse ? "flex-row-reverse" : ""}`}
+              className={`relative flex items-center justify-center py-3 ${extraTop}`}
+              style={{ transform: `translateX(${offset}px)` }}
             >
-              {row.map((node, i) => (
+              {showMascot && (
                 <div
-                  key={node.id}
-                  className={`flex items-start ${reverse ? "flex-row-reverse" : ""}`}
+                  className="pointer-events-none absolute top-1/2 z-10 -translate-y-1/2"
+                  style={{
+                    [mascotSide < 0 ? "right" : "left"]: "104px",
+                  }}
                 >
-                  <Node node={node} label={baseIndex + i + 1} />
-                  {i < row.length - 1 && (
-                    <div
-                      className={`mt-[30px] h-1 w-8 shrink-0 rounded-full ${
-                        node.state === "done" ? "bg-brand" : "bg-line"
-                      }`}
-                    />
-                  )}
+                  <Mascot size={66} />
                 </div>
-              ))}
+              )}
+              <NodeButton node={node} />
             </div>
-            </div>
-          );
-        })}
-      </div>
+          </div>
+        );
+      })}
     </div>
   );
 }

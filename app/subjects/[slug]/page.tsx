@@ -48,40 +48,30 @@ export default function SubjectPage({
           </div>
         </div>
 
-        {/* Bütün bölmələrin layihələri tək, birləşmiş yolda (aşağıdan yuxarıya) */}
+        {/* Bütün bölmələrin dərsləri tək, birləşmiş yolda (yuxarıdan aşağıya) */}
         {(() => {
-          const allLessons = subject.units.flatMap((u) => u.lessons);
-          const nodes: PathNode[] = allLessons.map((l) => {
-            const locked = isLessonLocked(slug, l.id, completed);
-            const done = completed.includes(l.id);
-            return {
-              id: l.id,
-              title: l.title,
-              state: done ? "done" : locked ? "locked" : "current",
-              href: `/lessons/${l.id}`,
-            };
-          });
+          const nodes: PathNode[] = subject.units.flatMap((u) =>
+            u.lessons.map((l, li) => {
+              const locked = isLessonLocked(slug, l.id, completed);
+              const done = completed.includes(l.id);
+              return {
+                id: l.id,
+                title: l.title,
+                state: done ? "done" : locked ? "locked" : "current",
+                href: `/lessons/${l.id}`,
+                unitTitle: li === 0 ? u.title : undefined,
+              };
+            }),
+          );
 
           return (
             <section className="mt-6 rounded-2xl border border-line bg-panel p-5">
               <h2 className="text-lg font-bold text-fg">Öyrənmə yolu</h2>
               <p className="text-sm text-muted">
-                İlk dərs ən altdadır — yuxarı qalxdıqca yeni mövzular açılır.
+                Yuxarıdan başla — aşağı endikcə yeni mövzular açılır.
               </p>
 
-              {/* Bölmələr siyahısı (orientasiya üçün) */}
-              <ul className="mt-3 flex flex-wrap gap-2 text-xs">
-                {subject.units.map((u, i) => (
-                  <li
-                    key={u.id}
-                    className="rounded-full bg-panel-2 px-3 py-1 text-muted"
-                  >
-                    {i + 1}. {u.title}
-                  </li>
-                ))}
-              </ul>
-
-              <div className="mt-6">
+              <div className="mt-4">
                 <LearningPath nodes={nodes} />
               </div>
             </section>

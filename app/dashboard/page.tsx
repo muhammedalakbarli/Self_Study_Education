@@ -30,16 +30,19 @@ export default function DashboardPage() {
   const { nodes, currentLesson, scorePct } = useMemo(() => {
     const completed = state?.completedLessons ?? [];
     const lessons = active.units.flatMap((u) => u.lessons);
-    const nodes: PathNode[] = lessons.map((l) => {
-      const locked = isLessonLocked(active.slug, l.id, completed);
-      const done = completed.includes(l.id);
-      return {
-        id: l.id,
-        title: l.title,
-        state: done ? "done" : locked ? "locked" : "current",
-        href: `/lessons/${l.id}`,
-      };
-    });
+    const nodes: PathNode[] = active.units.flatMap((u) =>
+      u.lessons.map((l, li) => {
+        const locked = isLessonLocked(active.slug, l.id, completed);
+        const done = completed.includes(l.id);
+        return {
+          id: l.id,
+          title: l.title,
+          state: done ? "done" : locked ? "locked" : "current",
+          href: `/lessons/${l.id}`,
+          unitTitle: li === 0 ? u.title : undefined,
+        };
+      }),
+    );
     const currentLesson = lessons.find((l) => !completed.includes(l.id)) ?? null;
     const doneCount = lessons.filter((l) => completed.includes(l.id)).length;
     const scorePct = lessons.length
