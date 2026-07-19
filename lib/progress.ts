@@ -103,6 +103,26 @@ export async function completeLesson(
   );
 }
 
+// Statistikaya əlavə XP yaz (məs. gündəlik quest mükafatı) — streak-ə toxunmadan.
+export async function addXp(userId: string, amount: number): Promise<void> {
+  if (!amount) return;
+  const supabase = createClient();
+  const { data: cur } = await supabase
+    .from("user_stats")
+    .select("total_xp, streak_days, last_active_date")
+    .eq("user_id", userId)
+    .maybeSingle();
+  await supabase.from("user_stats").upsert(
+    {
+      user_id: userId,
+      total_xp: (cur?.total_xp ?? 0) + amount,
+      streak_days: cur?.streak_days ?? 0,
+      last_active_date: cur?.last_active_date ?? todayStr(),
+    },
+    { onConflict: "user_id" },
+  );
+}
+
 // Dərs kiliddədirmi? Fəndəki əvvəlki dərs tamamlanmayıbsa kiliddədir (ilk dərs həmişə açıqdır).
 export function isLessonLocked(
   slug: string,
