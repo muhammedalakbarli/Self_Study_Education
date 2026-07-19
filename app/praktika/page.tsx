@@ -4,19 +4,21 @@
 // İstənilən tapşırıq dəstini PracticeRunner ilə həll etdirir (dərsi tamamlamır).
 
 import { useEffect, useMemo, useState } from "react";
-import { AlertCircle, Shuffle, Timer, ChevronRight } from "lucide-react";
+import { AlertCircle, Shuffle, Timer, ChevronRight, Check } from "lucide-react";
 import { useAuthUser } from "@/lib/useAuthUser";
 import { loadProgress, type ProgressState } from "@/lib/progress";
-import { subjects, getTaskById } from "@/lib/content";
+import { subjects, getTaskById, getAllTasks } from "@/lib/content";
 import { loadMistakes, removeMistake } from "@/lib/mistakes";
+import { isDailyDone, markDailyDone } from "@/lib/daily";
 import type { Task } from "@/lib/types";
 import { PageSkeleton } from "@/components/Skeleton";
 import PracticeRunner from "@/components/lesson/PracticeRunner";
+import Mascot from "@/components/Mascot";
 
 const shuffle = <T,>(a: T[]): T[] => [...a].sort(() => Math.random() - 0.5);
 const sample = <T,>(a: T[], n: number): T[] => shuffle(a).slice(0, n);
 
-type Session = { tasks: Task[]; title: string; timed?: boolean };
+type Session = { tasks: Task[]; title: string; timed?: boolean; daily?: boolean };
 
 export default function PracticePage() {
   const { user, ready } = useAuthUser();
@@ -24,13 +26,17 @@ export default function PracticePage() {
   const [mistakes, setMistakes] = useState<string[]>([]);
   const [activeSlug, setActiveSlug] = useState(subjects[0].slug);
   const [session, setSession] = useState<Session | null>(null);
+  const [dailyDone, setDailyDone] = useState(false);
 
   useEffect(() => {
     if (user) loadProgress(user.id).then(setState);
   }, [user]);
   useEffect(() => {
-    setMistakes(loadMistakes());
+    loadMistakes().then(setMistakes);
   }, []);
+  useEffect(() => {
+    if (user) setDailyDone(isDailyDone(user.user_metadata));
+  }, [user]);
 
   const completedTasks = useMemo(() => {
     const done = state?.completedLessons ?? [];
@@ -60,9 +66,17 @@ export default function PracticePage() {
             timed={session.timed}
             onExit={() => {
               setSession(null);
-              setMistakes(loadMistakes());
+              loadMistakes().then(setMistakes);
             }}
             onCorrect={(id) => removeMistake(id)}
+            onFinish={
+              session.daily
+                ? () => {
+                    markDailyDone();
+                    setDailyDone(true);
+                  }
+                : undefined
+            }
           />
         </main>
       </div>
@@ -71,6 +85,11 @@ export default function PracticePage() {
 
   const active = subjects.find((s) => s.slug === activeSlug)!;
   const speedPool = completedTasks.filter((t) => t.type === "multiple_choice");
+  const dailyPool = completedTasks.length >= 5 ? completedTasks : getAllTasks();
+
+  function startDaily() {
+    setSession({ tasks: sample(dailyPool, 5), title: "Gündəlik challenge", daily: true });
+  }
 
   return (
     <div className="min-h-screen bg-ink">
@@ -79,6 +98,32 @@ export default function PracticePage() {
         <p className="mt-1 text-sm text-muted">
           Biliyini möhkəmləndir — səhvlərini düzəlt, təkrar et, yarış.
         </p>
+
+        {/* Gündəlik challenge */}
+        <div className="mt-6 flex items-center gap-4 rounded-3xl bg-brand p-5 text-white">
+          <Mascot size={64} mood={dailyDone ? "celebrate" : "happy"} />
+          <div className="flex-1">
+            <div className="text-lg font-extrabold">Gündəlik challenge</div>
+            <div className="text-sm text-white/85">
+              {dailyDone
+                ? "Bu gün tamamlandı — sabah yenə!"
+                : "5 tapşırıq həll et, formada qal."}
+            </div>
+          </div>
+          {dailyDone ? (
+            <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/20">
+              <Check size={24} strokeWidth={3} />
+            </span>
+          ) : (
+            <button
+              type="button"
+              onClick={startDaily}
+              className="rounded-2xl bg-white px-5 py-2.5 font-extrabold uppercase tracking-wide text-brand btn-pop [--pop:#c9c2f5] hover:bg-white/90"
+            >
+              Başla
+            </button>
+          )}
+        </div>
 
         {/* Rejim kartları */}
         <div className="mt-6 grid gap-3 sm:grid-cols-2">

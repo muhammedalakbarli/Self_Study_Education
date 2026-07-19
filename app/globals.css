@@ -90,8 +90,28 @@ h1, h2, h3 {
   }
 }
 
+/* Öyrənmə yolu — cari dərsin üstündəki "BAŞLA" balonu tullanır */
+@keyframes path-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+.path-bounce {
+  animation: path-bounce 1.3s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .path-bounce {
+    animation: none;
+  }
+}
+
 /* Ayarlardan animasiyalar söndürüləndə */
 .no-anim .ulduz-float,
-.no-anim .ulduz-wave {
+.no-anim .ulduz-wave,
+.no-anim .path-bounce {
   animation: none !important;
 }

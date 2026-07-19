@@ -1,25 +1,45 @@
-// Səhv edilən tapşırıqların id-lərini yadda saxlayır (localStorage) — Praktika "Səhvlər" üçün.
+// Səhv edilən tapşırıqların id-ləri — Supabase user_metadata-da (hər cihazda qalır).
+// Praktika "Səhvlər üzərində iş" bölməsi üçün.
 
-const KEY = "bilik-mistakes";
+import { createClient } from "./supabase/client";
 
-export function loadMistakes(): string[] {
-  if (typeof window === "undefined") return [];
+async function readMistakes(): Promise<string[]> {
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  const list = user?.user_metadata?.mistakes;
+  return Array.isArray(list) ? (list as string[]) : [];
+}
+
+export async function loadMistakes(): Promise<string[]> {
   try {
-    return JSON.parse(localStorage.getItem(KEY) || "[]");
+    return await readMistakes();
   } catch {
     return [];
   }
 }
 
-export function addMistake(taskId: string) {
-  if (typeof window === "undefined") return;
-  const set = new Set(loadMistakes());
-  set.add(taskId);
-  localStorage.setItem(KEY, JSON.stringify([...set]));
+export async function addMistake(taskId: string): Promise<void> {
+  try {
+    const cur = await readMistakes();
+    if (cur.includes(taskId)) return;
+    const supabase = createClient();
+    await supabase.auth.updateUser({ data: { mistakes: [...cur, taskId] } });
+  } catch {
+    // sükutla ötür — səhv qeydi kritik deyil
+  }
 }
 
-export function removeMistake(taskId: string) {
-  if (typeof window === "undefined") return;
-  const next = loadMistakes().filter((id) => id !== taskId);
-  localStorage.setItem(KEY, JSON.stringify(next));
+export async function removeMistake(taskId: string): Promise<void> {
+  try {
+    const cur = await readMistakes();
+    if (!cur.includes(taskId)) return;
+    const supabase = createClient();
+    await supabase.auth.updateUser({
+      data: { mistakes: cur.filter((id) => id !== taskId) },
+    });
+  } catch {
+    // sükutla ötür
+  }
 }
