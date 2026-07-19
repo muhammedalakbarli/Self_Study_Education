@@ -4,6 +4,7 @@
 // top 5 növbəti liqaya keçir (yüksəliş zonası), kohort böyükdürsə alt 5 düşür (enmə zonası).
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { Trophy, ChevronUp, ChevronDown } from "lucide-react";
 import { useAuthUser } from "@/lib/useAuthUser";
 import {
@@ -17,6 +18,7 @@ import { useT } from "@/lib/i18n";
 import { PageSkeleton } from "@/components/Skeleton";
 import Mascot from "@/components/Mascot";
 import RankBadge from "@/components/RankBadge";
+import Avatar from "@/components/Avatar";
 
 export default function LeaguePage() {
   const { user, ready } = useAuthUser();
@@ -133,10 +135,11 @@ function Row({
         ? "bg-red-500/15"
         : "bg-panel";
   const meRing = row.isMe ? "ring-2 ring-inset ring-brand/60" : "";
-  return (
-    <div
-      className={`flex items-center gap-3 border-b border-line px-4 py-3.5 last:border-b-0 ${zoneBg} ${meRing}`}
-    >
+  const cls = `flex items-center gap-3 border-b border-line px-4 py-3.5 last:border-b-0 transition ${zoneBg} ${meRing}`;
+  const href = row.isMe ? "/profil" : `/u/${row.username || row.userId}`;
+
+  const inner = (
+    <>
       <span className="flex w-8 shrink-0 justify-center">
         {rank <= 3 ? (
           <RankBadge rank={rank as 1 | 2 | 3} size={34} />
@@ -144,9 +147,7 @@ function Row({
           <span className="text-sm font-bold text-muted">{rank}</span>
         )}
       </span>
-      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-panel-2 text-sm font-extrabold text-brand">
-        {(row.name || "?").charAt(0).toUpperCase()}
-      </span>
+      <Avatar config={row.avatar} seed={row.username || row.name} size={36} />
       <span className="flex-1 truncate font-bold text-fg">
         {row.name}
         {row.isMe && (
@@ -156,6 +157,14 @@ function Row({
         )}
       </span>
       <span className="shrink-0 font-extrabold text-accent">{row.weeklyXp} XP</span>
-    </div>
+    </>
+  );
+
+  return href ? (
+    <Link href={href} className={`${cls} hover:brightness-95`}>
+      {inner}
+    </Link>
+  ) : (
+    <div className={cls}>{inner}</div>
   );
 }

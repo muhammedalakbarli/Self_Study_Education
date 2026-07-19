@@ -87,32 +87,42 @@ export async function updateProfile(p: {
 }
 
 export interface PublicProfile {
+  id: string;
   name: string;
-  username: string;
+  username: string | null;
   avatar: AvatarConfig | null;
   createdAt: string | null;
   totalXp: number;
   streakDays: number;
   tier: number;
+  followers: number;
+  following: number;
+  amFollowing: boolean;
 }
 
-export async function getPublicProfile(username: string): Promise<PublicProfile | null> {
+// key = username və ya user_id (uuid) — hər ikisi ilə açılır.
+export async function getPublicProfile(key: string): Promise<PublicProfile | null> {
   try {
     const supabase = createClient();
-    const { data } = await supabase.rpc("get_public_profile", { p_username: username });
+    const { data } = await supabase.rpc("get_public_profile", { p_key: key });
     const row = (Array.isArray(data) ? data[0] : data) as
       | {
+          id: string;
           name: string;
-          username: string;
+          username: string | null;
           avatar: AvatarConfig | null;
           created_at: string | null;
           total_xp: number;
           streak_days: number;
           tier: number;
+          followers: number;
+          following: number;
+          am_following: boolean;
         }
       | undefined;
     if (!row) return null;
     return {
+      id: row.id,
       name: row.name,
       username: row.username,
       avatar: row.avatar,
@@ -120,6 +130,9 @@ export async function getPublicProfile(username: string): Promise<PublicProfile 
       totalXp: row.total_xp,
       streakDays: row.streak_days,
       tier: row.tier,
+      followers: row.followers ?? 0,
+      following: row.following ?? 0,
+      amFollowing: row.am_following ?? false,
     };
   } catch {
     return null;

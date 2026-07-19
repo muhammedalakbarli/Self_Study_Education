@@ -8,14 +8,22 @@ import { QRCodeSVG } from "qrcode.react";
 import { Share2, Copy, Check } from "lucide-react";
 import { useT } from "@/lib/i18n";
 
-export default function ShareProfile({ username }: { username: string | null }) {
+export default function ShareProfile({
+  username,
+  path = "u",
+  labelKey = "profile.share",
+}: {
+  username: string | null;
+  path?: string;
+  labelKey?: string;
+}) {
   const t = useT();
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
 
   const url =
     username && typeof window !== "undefined"
-      ? `${window.location.origin}/u/${username}`
+      ? `${window.location.origin}/${path}/${username}`
       : "";
 
   async function copy() {
@@ -43,7 +51,7 @@ export default function ShareProfile({ username }: { username: string | null }) 
         href="/profil/redakte"
         className="flex items-center justify-center gap-2 rounded-2xl border-2 border-line bg-panel px-5 py-3 font-bold text-fg btn-pop btn-pop-ghost hover:border-brand"
       >
-        <Share2 size={18} /> {t("profile.share")}
+        <Share2 size={18} /> {t(labelKey)}
       </Link>
     );
   }
@@ -55,7 +63,7 @@ export default function ShareProfile({ username }: { username: string | null }) 
         onClick={() => setOpen((o) => !o)}
         className="flex w-full items-center justify-center gap-2 rounded-2xl bg-brand px-5 py-3 font-bold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark"
       >
-        <Share2 size={18} /> {t("profile.share")}
+        <Share2 size={18} /> {t(labelKey)}
       </button>
 
       {open && (

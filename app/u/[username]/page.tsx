@@ -4,8 +4,10 @@
 
 import { use, useEffect, useState } from "react";
 import Link from "next/link";
-import { Star, Flame, Crown, type LucideIcon } from "lucide-react";
-import { getPublicProfile, memberDate, type PublicProfile } from "@/lib/profileApi";
+import { Star, Flame, Crown, UserPlus, Check, type LucideIcon } from "lucide-react";
+import { getPublicProfile, loadProfileRow, memberDate, type PublicProfile } from "@/lib/profileApi";
+import { followUser, unfollowUser } from "@/lib/follows";
+import { useAuthUser } from "@/lib/useAuthUser";
 import { levelFromXp } from "@/lib/levels";
 import { computeAchievements, type AchievementKind } from "@/lib/achievements";
 import { TIER_KEYS } from "@/lib/leaderboard";
@@ -28,14 +30,45 @@ export default function PublicProfilePage({
   params: Promise<{ username: string }>;
 }) {
   const { username } = use(params);
+  const uname = decodeURIComponent(username);
   const t = useT();
+  const { user, ready } = useAuthUser();
   const [p, setP] = useState<PublicProfile | null | undefined>(undefined);
+  const [myId, setMyId] = useState<string | null>(null);
+  const [following, setFollowing] = useState(false);
+  const [followers, setFollowers] = useState(0);
+  const [busy, setBusy] = useState(false);
 
   useEffect(() => {
-    getPublicProfile(decodeURIComponent(username)).then(setP);
-  }, [username]);
+    getPublicProfile(uname).then((pr) => {
+      setP(pr);
+      if (pr) {
+        setFollowing(pr.amFollowing);
+        setFollowers(pr.followers);
+      }
+    });
+  }, [uname]);
+  useEffect(() => {
+    if (user) loadProfileRow().then((pr) => setMyId(pr?.id ?? null));
+  }, [user]);
 
-  if (p === undefined) return <PageSkeleton />;
+  if (p === undefined || !ready) return <PageSkeleton />;
+
+  const isSelf = !!p && !!myId && p.id === myId;
+
+  async function toggleFollow() {
+    if (!p || busy) return;
+    setBusy(true);
+    const next = !following;
+    setFollowing(next);
+    setFollowers((c) => c + (next ? 1 : -1));
+    const ok = next ? await followUser(p.id) : await unfollowUser(p.id);
+    if (!ok) {
+      setFollowing(!next);
+      setFollowers((c) => c + (next ? -1 : 1));
+    }
+    setBusy(false);
+  }
 
   if (p === null) {
     return (
@@ -67,15 +100,45 @@ export default function PublicProfilePage({
 
         {/* Kimlik */}
         <div className="mt-6 flex flex-col items-center rounded-3xl border border-line bg-panel p-8 text-center">
-          <Avatar config={p.avatar} seed={p.username} size={104} />
+          <Avatar config={p.avatar} seed={p.username || p.id} size={104} />
           <h1 className="mt-3 text-2xl font-bold text-fg">{p.name}</h1>
-          <p className="text-sm font-bold text-muted">@{p.username}</p>
+          {p.username && <p className="text-sm font-bold text-muted">@{p.username}</p>}
           <p className="mt-1 text-xs text-muted">
             {t("profile.memberSince").replace("{d}", memberDate(p.createdAt))}
           </p>
           <div className="mt-3 rounded-full bg-brand/10 px-4 py-1 text-sm font-extrabold text-brand">
             {t("level.label")} {lv.level} · {t(TIER_KEYS[Math.min(p.tier, 4)])}
           </div>
+
+          {/* İzləyici / izlənilən sayı */}
+          <div className="mt-4 flex items-center gap-6">
+            <div className="text-center">
+              <div className="text-lg font-extrabold text-fg">{followers}</div>
+              <div className="text-[11px] text-muted">{t("follow.followers")}</div>
+            </div>
+            <div className="h-8 w-px bg-line" />
+            <div className="text-center">
+              <div className="text-lg font-extrabold text-fg">{p.following}</div>
+              <div className="text-[11px] text-muted">{t("follow.followingCount")}</div>
+            </div>
+          </div>
+
+          {/* İzlə / İzlənilir */}
+          {user && !isSelf && (
+            <button
+              type="button"
+              onClick={toggleFollow}
+              disabled={busy}
+              className={`mt-4 inline-flex items-center gap-2 rounded-2xl px-6 py-2.5 font-extrabold uppercase tracking-wide btn-pop disabled:opacity-50 ${
+                following
+                  ? "border-2 border-line bg-panel text-fg btn-pop-ghost hover:border-brand"
+                  : "bg-brand text-white hover:bg-brand-dark"
+              }`}
+            >
+              {following ? <Check size={18} /> : <UserPlus size={18} />}
+              {following ? t("follow.following") : t("follow.follow")}
+            </button>
+          )}
         </div>
 
         {/* Statistika */}

@@ -331,6 +331,40 @@ const DICT: Dict = {
     ru: "Профиль не найден",
   },
 
+  // Dostlar
+  "friends.title": { az: "Dostlar", en: "Friends", ru: "Друзья" },
+  "friends.invite": { az: "Dostunu dəvət et", en: "Invite a friend", ru: "Пригласи друга" },
+  "friends.none": {
+    az: "Hələ dostun yoxdur — dəvət et!",
+    en: "No friends yet — invite one!",
+    ru: "Пока нет друзей — пригласи!",
+  },
+  "friends.add": { az: "Dost əlavə et", en: "Add friend", ru: "Добавить друга" },
+  "friends.added": { az: "Dost əlavə olundu!", en: "Friend added!", ru: "Друг добавлен!" },
+  "friends.friendStreak": { az: "birgə seriya", en: "friend streak", ru: "совместная серия" },
+  "friends.inviteText": {
+    az: "{n} səni dost olmağa dəvət edir",
+    en: "{n} invites you to be friends",
+    ru: "{n} приглашает вас в друзья",
+  },
+  "friends.loginToAdd": {
+    az: "Dost olmaq üçün giriş et",
+    en: "Log in to add as a friend",
+    ru: "Войди, чтобы добавить в друзья",
+  },
+  "friends.login": { az: "Giriş et", en: "Log in", ru: "Войти" },
+  "friends.ownLink": {
+    az: "Bu sənin öz dəvət linkindir",
+    en: "This is your own invite link",
+    ru: "Это твоя ссылка-приглашение",
+  },
+  "friends.toProfile": { az: "Profilə keç", en: "Go to profile", ru: "В профиль" },
+  "friends.already": { az: "Dostunuz", en: "Your friend", ru: "В друзьях" },
+  "follow.follow": { az: "İzlə", en: "Follow", ru: "Подписаться" },
+  "follow.following": { az: "İzlənilir", en: "Following", ru: "Вы подписаны" },
+  "follow.followers": { az: "izləyici", en: "followers", ru: "подписчиков" },
+  "follow.followingCount": { az: "izlənilən", en: "following", ru: "подписки" },
+
   // Ayarlar
   "settings.title": { az: "Ayarlar", en: "Settings", ru: "Настройки" },
   "settings.subtitle": { az: "Tərcihlər", en: "Preferences", ru: "Предпочтения" },
