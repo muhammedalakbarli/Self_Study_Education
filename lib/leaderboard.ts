@@ -22,6 +22,8 @@ export interface LeaderRow {
 export interface CohortRow {
   userId: string;
   name: string;
+  username: string | null;
+  avatar: import("@/components/Avatar").AvatarConfig | null;
   weeklyXp: number;
   tier: number;
   isMe: boolean;
@@ -87,6 +89,8 @@ export async function loadCohort(): Promise<CohortRow[]> {
       (data ?? []) as {
         user_id: string;
         name: string;
+        username: string | null;
+        avatar: import("@/components/Avatar").AvatarConfig | null;
         weekly_xp: number;
         tier: number;
         is_me: boolean;
@@ -94,6 +98,8 @@ export async function loadCohort(): Promise<CohortRow[]> {
     ).map((r) => ({
       userId: r.user_id,
       name: r.name,
+      username: r.username,
+      avatar: r.avatar,
       weeklyXp: r.weekly_xp,
       tier: r.tier,
       isMe: r.is_me,

@@ -24,8 +24,9 @@ import { useT } from "@/lib/i18n";
 import { levelFromXp } from "@/lib/levels";
 import { computeAchievements, type AchievementKind } from "@/lib/achievements";
 import { loadMyLeagueTier, TIER_KEYS } from "@/lib/leaderboard";
-import { loadProfileRow, memberDate, type ProfileRow } from "@/lib/profileApi";
+import { loadProfileRow, getPublicProfile, memberDate, type ProfileRow } from "@/lib/profileApi";
 import { loadMonthly, monthlyBadgeTier } from "@/lib/monthly";
+import { getFriends, type FriendRow } from "@/lib/friends";
 import { PageSkeleton } from "@/components/Skeleton";
 import Avatar from "@/components/Avatar";
 import OrderBadge from "@/components/OrderBadge";
@@ -45,12 +46,21 @@ export default function ProfilePage() {
   const [state, setState] = useState<ProgressState | null>(null);
   const [profile, setProfile] = useState<ProfileRow | null>(null);
   const [tier, setTier] = useState(0);
+  const [friends, setFriends] = useState<FriendRow[]>([]);
+  const [social, setSocial] = useState({ followers: 0, following: 0 });
 
   useEffect(() => {
     if (!user) return;
     loadProgress(user.id).then(setState);
-    loadProfileRow().then(setProfile);
+    loadProfileRow().then((pr) => {
+      setProfile(pr);
+      if (pr)
+        getPublicProfile(pr.id).then((pp) => {
+          if (pp) setSocial({ followers: pp.followers, following: pp.following });
+        });
+    });
     loadMyLeagueTier().then(setTier);
+    getFriends().then(setFriends);
   }, [user]);
 
   if (!ready || !user || !state || !profile) return <PageSkeleton />;
@@ -78,6 +88,18 @@ export default function ProfilePage() {
             <CalendarDays size={14} />
             {t("profile.memberSince").replace("{d}", memberDate(profile.createdAt))}
           </p>
+
+          {/* İzləyici / izlənilən */}
+          <div className="mt-3 flex items-center gap-5">
+            <span className="text-sm">
+              <b className="font-extrabold text-fg">{social.followers}</b>{" "}
+              <span className="text-muted">{t("follow.followers")}</span>
+            </span>
+            <span className="text-sm">
+              <b className="font-extrabold text-fg">{social.following}</b>{" "}
+              <span className="text-muted">{t("follow.followingCount")}</span>
+            </span>
+          </div>
 
           {/* Səviyyə */}
           <div className="mt-4 w-full max-w-xs">
@@ -121,6 +143,42 @@ export default function ProfilePage() {
         {/* Paylaş */}
         <div className="mt-4">
           <ShareProfile username={profile.username} />
+        </div>
+
+        {/* Dostlar */}
+        <div className="mt-4 rounded-2xl border border-line bg-panel p-5">
+          <h2 className="text-lg font-bold text-fg">{t("friends.title")}</h2>
+          {friends.length === 0 ? (
+            <p className="mt-2 text-sm text-muted">{t("friends.none")}</p>
+          ) : (
+            <div className="mt-3 space-y-2">
+              {friends.map((f) => (
+                <Link
+                  key={f.friendId}
+                  href={`/u/${f.username || f.friendId}`}
+                  className="flex items-center gap-3 rounded-2xl border border-line px-3 py-2.5 transition hover:bg-panel-2"
+                >
+                  <Avatar config={f.avatar} seed={f.username || f.name} size={40} />
+                  <span className="min-w-0 flex-1 truncate font-bold text-fg">{f.name}</span>
+                  {f.friendStreak > 0 && (
+                    <span className="flex items-center gap-1 rounded-full bg-orange-500/15 px-2.5 py-1 text-xs font-extrabold text-orange-500">
+                      <Flame size={14} /> {f.friendStreak}
+                    </span>
+                  )}
+                  <span className="flex items-center gap-1 text-xs font-bold text-muted">
+                    <Star size={13} className="text-accent" /> {f.totalXp}
+                  </span>
+                </Link>
+              ))}
+            </div>
+          )}
+          <div className="mt-4">
+            <ShareProfile
+              username={profile.username}
+              path="dost"
+              labelKey="friends.invite"
+            />
+          </div>
         </div>
 
         {/* Nişanlar (medal/orden) */}
