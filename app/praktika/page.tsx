@@ -10,6 +10,7 @@ import { loadProgress, type ProgressState } from "@/lib/progress";
 import { subjects, getTaskById, getAllTasks } from "@/lib/content";
 import { loadMistakes, removeMistake } from "@/lib/mistakes";
 import { isDailyDone, markDailyDone } from "@/lib/daily";
+import { useT } from "@/lib/i18n";
 import type { Task } from "@/lib/types";
 import { PageSkeleton } from "@/components/Skeleton";
 import PracticeRunner from "@/components/lesson/PracticeRunner";
@@ -27,6 +28,7 @@ export default function PracticePage() {
   const [activeSlug, setActiveSlug] = useState(subjects[0].slug);
   const [session, setSession] = useState<Session | null>(null);
   const [dailyDone, setDailyDone] = useState(false);
+  const t = useT();
 
   useEffect(() => {
     if (user) loadProgress(user.id).then(setState);
@@ -88,26 +90,22 @@ export default function PracticePage() {
   const dailyPool = completedTasks.length >= 5 ? completedTasks : getAllTasks();
 
   function startDaily() {
-    setSession({ tasks: sample(dailyPool, 5), title: "Gündəlik challenge", daily: true });
+    setSession({ tasks: sample(dailyPool, 5), title: t("practice.daily"), daily: true });
   }
 
   return (
     <div className="min-h-screen bg-ink">
       <main className="mx-auto max-w-3xl px-4 py-6">
-        <h1 className="text-2xl font-bold text-fg">Praktika et</h1>
-        <p className="mt-1 text-sm text-muted">
-          Biliyini möhkəmləndir — səhvlərini düzəlt, təkrar et, yarış.
-        </p>
+        <h1 className="text-2xl font-bold text-fg">{t("practice.title")}</h1>
+        <p className="mt-1 text-sm text-muted">{t("practice.subtitle")}</p>
 
         {/* Gündəlik challenge */}
         <div className="mt-6 flex items-center gap-4 rounded-3xl bg-brand p-5 text-white">
           <Mascot size={64} mood={dailyDone ? "celebrate" : "happy"} />
           <div className="flex-1">
-            <div className="text-lg font-extrabold">Gündəlik challenge</div>
+            <div className="text-lg font-extrabold">{t("practice.daily")}</div>
             <div className="text-sm text-white/85">
-              {dailyDone
-                ? "Bu gün tamamlandı — sabah yenə!"
-                : "5 tapşırıq həll et, formada qal."}
+              {dailyDone ? t("practice.dailyDone") : t("practice.dailyDesc")}
             </div>
           </div>
           {dailyDone ? (
@@ -120,7 +118,7 @@ export default function PracticePage() {
               onClick={startDaily}
               className="rounded-2xl bg-white px-5 py-2.5 font-extrabold uppercase tracking-wide text-brand btn-pop [--pop:#c9c2f5] hover:bg-white/90"
             >
-              Başla
+              {t("dash.start")}
             </button>
           )}
         </div>
@@ -130,41 +128,41 @@ export default function PracticePage() {
           <ModeCard
             Icon={AlertCircle}
             tint="text-orange-500"
-            title="Səhvlər üzərində iş"
+            title={t("practice.mistakes")}
             desc={
               mistakeTasks.length > 0
-                ? `${mistakeTasks.length} səhv tapşırıq səni gözləyir`
-                : "Səhvin yoxdur — əla!"
+                ? `${mistakeTasks.length} ${t("practice.tasks")}`
+                : t("practice.noMistakes")
             }
             disabled={mistakeTasks.length === 0}
             onClick={() =>
-              setSession({ tasks: shuffle(mistakeTasks), title: "Səhvlər" })
+              setSession({ tasks: shuffle(mistakeTasks), title: t("practice.mistakes") })
             }
           />
           <ModeCard
             Icon={Shuffle}
             tint="text-brand"
-            title="Qarışıq praktika"
-            desc="Tamamladığın dərslərdən 10 təsadüfi tapşırıq"
+            title={t("practice.mixed")}
+            desc={t("practice.mixedDesc")}
             disabled={completedTasks.length === 0}
             onClick={() =>
-              setSession({ tasks: sample(completedTasks, 10), title: "Qarışıq praktika" })
+              setSession({ tasks: sample(completedTasks, 10), title: t("practice.mixed") })
             }
           />
           <ModeCard
             Icon={Timer}
             tint="text-emerald-500"
-            title="Sürət raundu"
-            desc="60 saniyədə neçə düzgün cavab?"
+            title={t("practice.speed")}
+            desc={t("practice.speedDesc")}
             disabled={speedPool.length === 0}
             onClick={() =>
-              setSession({ tasks: speedPool, title: "Sürət raundu", timed: true })
+              setSession({ tasks: speedPool, title: t("practice.speed"), timed: true })
             }
           />
         </div>
 
         {/* Bölmə üzrə praktika */}
-        <h2 className="mt-8 text-lg font-bold text-fg">Bölmə üzrə praktika</h2>
+        <h2 className="mt-8 text-lg font-bold text-fg">{t("practice.byUnit")}</h2>
         <div className="mt-3 flex flex-wrap gap-2">
           {subjects.map((s) => {
             const on = s.slug === activeSlug;
@@ -178,7 +176,7 @@ export default function PracticePage() {
                     : "border-2 border-line bg-panel text-muted hover:bg-panel-2"
                 }`}
               >
-                {s.name}
+                {t(`subject.${s.slug}`)}
               </button>
             );
           })}
@@ -194,12 +192,14 @@ export default function PracticePage() {
               <button
                 key={u.id}
                 onClick={() =>
-                  setSession({ tasks: sample(unitTasks, 10), title: u.title })
+                  setSession({ tasks: sample(unitTasks, 10), title: t(`unit.${u.id}`) })
                 }
                 className="flex w-full items-center gap-3 border-b border-line px-4 py-3.5 text-left transition last:border-b-0 hover:bg-panel-2"
               >
-                <span className="flex-1 font-bold text-fg">{u.title}</span>
-                <span className="text-xs text-muted">{unitTasks.length} tapşırıq</span>
+                <span className="flex-1 font-bold text-fg">{t(`unit.${u.id}`)}</span>
+                <span className="text-xs text-muted">
+                  {unitTasks.length} {t("practice.tasks")}
+                </span>
                 <ChevronRight size={18} className="text-muted" />
               </button>
             );

@@ -6,6 +6,7 @@
 import Link from "next/link";
 import { Star, Check, Lock } from "lucide-react";
 import Mascot from "@/components/Mascot";
+import { useT } from "@/lib/i18n";
 
 export type NodeState = "done" | "current" | "locked";
 
@@ -22,6 +23,7 @@ const AMPLITUDE = 90;
 const offsetAt = (i: number) => Math.round(Math.sin(i * 0.8) * AMPLITUDE);
 
 function NodeButton({ node }: { node: PathNode }) {
+  const t = useT();
   const isDone = node.state === "done";
   const isCurrent = node.state === "current";
   const Icon = isDone ? Check : isCurrent ? Star : Lock;
@@ -59,7 +61,7 @@ function NodeButton({ node }: { node: PathNode }) {
       {isCurrent && (
         <div className="path-bounce absolute -top-12 z-10 flex flex-col items-center">
           <span className="rounded-xl border-2 border-line bg-panel px-3 py-1 text-xs font-extrabold uppercase tracking-wide text-brand shadow-sm">
-            Başla
+            {t("dash.start")}
           </span>
           <span className="-mt-[3px] h-3 w-3 rotate-45 border-b-2 border-r-2 border-line bg-panel" />
         </div>

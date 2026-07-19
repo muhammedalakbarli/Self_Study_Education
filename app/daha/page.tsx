@@ -8,12 +8,14 @@ import { BookOpen, User, Dumbbell, LogOut, ChevronRight, Settings, HelpCircle } 
 import { useAuthUser } from "@/lib/useAuthUser";
 import { signOut } from "@/lib/auth";
 import { subjects } from "@/lib/content";
+import { useT } from "@/lib/i18n";
 import { PageSkeleton } from "@/components/Skeleton";
 import Logo from "@/components/Logo";
 
 export default function MorePage() {
   const { user, ready } = useAuthUser();
   const router = useRouter();
+  const t = useT();
 
   if (!ready || !user) return <PageSkeleton />;
 
@@ -25,11 +27,11 @@ export default function MorePage() {
   return (
     <div className="min-h-screen bg-ink">
       <main className="mx-auto max-w-2xl px-4 py-6">
-        <h1 className="text-2xl font-bold text-fg">Daha çoxu</h1>
+        <h1 className="text-2xl font-bold text-fg">{t("nav.more")}</h1>
 
         {/* Fənlər */}
         <h2 className="mt-6 text-xs font-bold uppercase tracking-wide text-muted">
-          Fənlər
+          {t("more.subjects")}
         </h2>
         <div className="mt-2 overflow-hidden rounded-2xl border border-line bg-panel">
           {subjects.map((s) => (
@@ -41,7 +43,7 @@ export default function MorePage() {
               <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand text-sm font-bold text-white">
                 {s.icon}
               </span>
-              <span className="flex-1 font-bold text-fg">{s.name}</span>
+              <span className="flex-1 font-bold text-fg">{t(`subject.${s.slug}`)}</span>
               <ChevronRight size={18} className="text-muted" />
             </Link>
           ))}
@@ -49,21 +51,21 @@ export default function MorePage() {
 
         {/* Hesab */}
         <h2 className="mt-6 text-xs font-bold uppercase tracking-wide text-muted">
-          Hesab
+          {t("more.account")}
         </h2>
         <div className="mt-2 overflow-hidden rounded-2xl border border-line bg-panel">
-          <Row href="/profil" Icon={User} label="Profil" />
-          <Row href="/praktika" Icon={Dumbbell} label="Praktika et" />
-          <Row href="/dashboard" Icon={BookOpen} label="Öyrən" />
+          <Row href="/profil" Icon={User} label={t("nav.profile")} />
+          <Row href="/praktika" Icon={Dumbbell} label={t("nav.practice")} />
+          <Row href="/dashboard" Icon={BookOpen} label={t("nav.learn")} />
         </div>
 
         {/* Tənzimləmə */}
         <h2 className="mt-6 text-xs font-bold uppercase tracking-wide text-muted">
-          Tənzimləmə
+          {t("more.config")}
         </h2>
         <div className="mt-2 overflow-hidden rounded-2xl border border-line bg-panel">
-          <Row href="/ayarlar" Icon={Settings} label="Ayarlar" />
-          <Row href="/yardim" Icon={HelpCircle} label="Yardım mərkəzi" />
+          <Row href="/ayarlar" Icon={Settings} label={t("nav.settings")} />
+          <Row href="/yardim" Icon={HelpCircle} label={t("nav.help")} />
         </div>
 
         <button
@@ -71,14 +73,14 @@ export default function MorePage() {
           onClick={logout}
           className="mt-4 flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-line bg-panel px-5 py-3 font-bold text-fg btn-pop btn-pop-ghost hover:border-brand"
         >
-          <LogOut size={18} /> Hesabdan çıx
+          <LogOut size={18} /> {t("profile.logout")}
         </button>
 
         {/* Alt */}
         <div className="mt-10 flex flex-col items-center gap-1.5 text-center text-xs text-muted">
           <Logo size={24} />
           <span className="font-bold text-fg">Bilik Yolu</span>
-          <span>Azərbaycan məktəbliləri üçün interaktiv öyrənmə platforması</span>
+          <span>{t("more.tagline")}</span>
         </div>
       </main>
     </div>
