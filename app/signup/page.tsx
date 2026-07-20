@@ -11,15 +11,11 @@ import Logo from "@/components/Logo";
 import GoogleButton from "@/components/GoogleButton";
 import Mascot from "@/components/Mascot";
 import { signUpWithEmail } from "@/lib/auth";
-
-const PERKS = [
-  "Pulsuz — kart və ödəniş yoxdur",
-  "3 fənn: Riyaziyyat, Azərbaycan dili, İngilis dili",
-  "İrəliləyişin hər cihazda yadda qalır",
-];
+import { useT } from "@/lib/i18n";
 
 export default function SignupPage() {
   const router = useRouter();
+  const t = useT();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -41,20 +37,21 @@ export default function SignupPage() {
 
   const passwordStrength = getPasswordStrength(password);
   const doPasswordsMatch = password === confirmPassword && password.length > 0;
+  const PERKS = [t("auth.signup.perk1"), t("auth.signup.perk2"), t("auth.signup.perk3")];
 
   async function handleSignup(e: React.FormEvent) {
     e.preventDefault();
 
     if (!fullName.trim() || !email.trim() || !password) {
-      setError("Bütün sahələri doldurun.");
+      setError(t("auth.err.allFields"));
       return;
     }
     if (password !== confirmPassword) {
-      setError("Şifrələr uyğun gəlmir.");
+      setError(t("auth.err.passMismatch"));
       return;
     }
     if (password.length < 6) {
-      setError("Şifrə ən az 6 simvol olmalıdır.");
+      setError(t("auth.err.passShort"));
       return;
     }
 
@@ -66,7 +63,7 @@ export default function SignupPage() {
     setLoading(false);
 
     if (!res.ok) {
-      setError(res.error || "Qeydiyyat alınmadı. Yenidən cəhd et.");
+      setError(res.error || t("auth.err.signupFailed"));
       return;
     }
     if (res.needsEmailConfirm) {
@@ -81,7 +78,7 @@ export default function SignupPage() {
     <div className="flex min-h-screen flex-1">
       {/* Sol brend paneli (yalnız böyük ekranda) */}
       <aside className="hidden w-1/2 flex-col justify-between bg-gradient-to-br from-brand to-brand-dark p-12 text-white lg:flex">
-        <Link href="/" className="flex items-center gap-2.5" aria-label="Ana səhifə">
+        <Link href="/" className="flex items-center gap-2.5" aria-label={t("auth.homeAria")}>
           <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white">
             <Logo size={26} />
           </span>
@@ -93,11 +90,9 @@ export default function SignupPage() {
             <Mascot size={76} mood="celebrate" />
           </div>
           <h2 className="max-w-sm text-4xl font-extrabold leading-tight">
-            Öyrənməyə bu gün başla
+            {t("auth.signup.brandHeading")}
           </h2>
-          <p className="mt-3 max-w-sm text-white/80">
-            Hesab yarat, ilk dərsini bitir və XP qazan.
-          </p>
+          <p className="mt-3 max-w-sm text-white/80">{t("auth.signup.brandSub")}</p>
           <ul className="mt-8 space-y-3">
             {PERKS.map((p) => (
               <li key={p} className="flex items-center gap-3">
@@ -110,9 +105,7 @@ export default function SignupPage() {
           </ul>
         </div>
 
-        <p className="text-sm text-white/60">
-          Azərbaycan məktəbliləri üçün interaktiv öyrənmə platforması
-        </p>
+        <p className="text-sm text-white/60">{t("auth.tagline")}</p>
       </aside>
 
       {/* Sağ forma */}
@@ -122,42 +115,42 @@ export default function SignupPage() {
           <Link
             href="/"
             className="mb-8 flex items-center justify-center gap-2 lg:hidden"
-            aria-label="Ana səhifə"
+            aria-label={t("auth.homeAria")}
           >
             <Logo size={40} />
             <span className="text-xl font-extrabold text-fg">Bilik Yolu</span>
           </Link>
 
-          <h1 className="text-2xl font-extrabold text-slate-900">Yeni hesab yarat</h1>
-          <p className="mt-1 text-sm text-slate-500">Bir neçə saniyə çəkir</p>
+          <h1 className="text-2xl font-extrabold text-slate-900">{t("auth.signup.title")}</h1>
+          <p className="mt-1 text-sm text-slate-500">{t("auth.signup.subtitle")}</p>
 
           <div className="mt-8">
-            <GoogleButton label="Google ilə qeydiyyat" />
+            <GoogleButton label={t("auth.signup.google")} />
           </div>
 
           <div className="my-6 flex items-center gap-3">
             <div className="h-px flex-1 bg-slate-200" />
-            <span className="text-xs font-medium text-slate-400">və ya</span>
+            <span className="text-xs font-medium text-slate-400">{t("auth.or")}</span>
             <div className="h-px flex-1 bg-slate-200" />
           </div>
 
           <form onSubmit={handleSignup} className="space-y-4">
             {/* Ad və Soyad */}
             <div>
-              <label className="block text-sm font-bold text-slate-800">Ad və Soyad</label>
+              <label className="block text-sm font-bold text-slate-800">{t("auth.signup.name")}</label>
               <input
                 type="text"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 className="mt-1.5 w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-slate-900 outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20"
-                placeholder="Adınız və soyadınız"
+                placeholder={t("auth.signup.namePlaceholder")}
                 disabled={loading}
               />
             </div>
 
             {/* Email */}
             <div>
-              <label className="block text-sm font-bold text-slate-800">Email</label>
+              <label className="block text-sm font-bold text-slate-800">{t("auth.email")}</label>
               <input
                 type="email"
                 value={email}
@@ -170,20 +163,20 @@ export default function SignupPage() {
 
             {/* Şifrə */}
             <div>
-              <label className="block text-sm font-bold text-slate-800">Şifrə</label>
+              <label className="block text-sm font-bold text-slate-800">{t("auth.signup.password")}</label>
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="mt-1.5 w-full rounded-xl border border-slate-300 px-3.5 py-2.5 pr-10 text-slate-900 outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20"
-                  placeholder="Ən az 6 simvol"
+                  placeholder={t("auth.signup.passwordPlaceholder")}
                   disabled={loading}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  aria-label={showPassword ? "Parolu gizlət" : "Parolu göstər"}
+                  aria-label={showPassword ? t("auth.hidePass") : t("auth.showPass")}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
                 >
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -210,10 +203,10 @@ export default function SignupPage() {
                     ))}
                   </div>
                   <p className="mt-1 text-xs text-slate-500">
-                    {passwordStrength <= 1 && "Zəif"}
-                    {passwordStrength === 2 && "Orta"}
-                    {passwordStrength === 3 && "Yaxşı"}
-                    {passwordStrength === 4 && "Güclü"}
+                    {passwordStrength <= 1 && t("auth.strength.weak")}
+                    {passwordStrength === 2 && t("auth.strength.fair")}
+                    {passwordStrength === 3 && t("auth.strength.good")}
+                    {passwordStrength === 4 && t("auth.strength.strong")}
                   </p>
                 </div>
               )}
@@ -222,7 +215,7 @@ export default function SignupPage() {
             {/* Şifrə təkrar */}
             <div>
               <label className="block text-sm font-bold text-slate-800">
-                Şifrəni təkrar daxil et
+                {t("auth.signup.confirm")}
               </label>
               <div className="relative">
                 <input
@@ -230,13 +223,13 @@ export default function SignupPage() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   className="mt-1.5 w-full rounded-xl border border-slate-300 px-3.5 py-2.5 pr-10 text-slate-900 outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20"
-                  placeholder="Şifrəni təkrar yazın"
+                  placeholder={t("auth.signup.confirmPlaceholder")}
                   disabled={loading}
                 />
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  aria-label={showConfirmPassword ? "Parolu gizlət" : "Parolu göstər"}
+                  aria-label={showConfirmPassword ? t("auth.hidePass") : t("auth.showPass")}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
                 >
                   {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -252,11 +245,11 @@ export default function SignupPage() {
                 >
                   {doPasswordsMatch ? (
                     <>
-                      <CheckCircle size={14} /> Şifrələr uyğundur
+                      <CheckCircle size={14} /> {t("auth.signup.match")}
                     </>
                   ) : (
                     <>
-                      <XCircle size={14} /> Şifrələr uyğun gəlmir
+                      <XCircle size={14} /> {t("auth.err.passMismatch")}
                     </>
                   )}
                 </p>
@@ -294,19 +287,19 @@ export default function SignupPage() {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                   </svg>
-                  Qeydiyyat aparılır...
+                  {t("auth.signup.loading")}
                 </span>
               ) : (
-                "Qeydiyyatdan keç"
+                t("auth.signup.submit")
               )}
             </button>
           </form>
 
           {/* Login linki */}
           <p className="mt-8 text-center text-sm text-slate-600">
-            Artıq hesabın var?{" "}
+            {t("auth.signup.haveAccount")}{" "}
             <Link href="/login" className="font-bold text-brand hover:underline">
-              Daxil ol
+              {t("auth.signup.loginLink")}
             </Link>
           </p>
         </div>

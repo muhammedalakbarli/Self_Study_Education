@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getCurrentUser, displayName } from "./auth";
+import { displayName } from "./auth";
 import { ensureProfile } from "./progress";
 import { createClient } from "./supabase/client";
 import type { User } from "@supabase/supabase-js";
@@ -45,6 +45,7 @@ export function useAuthUser(): { user: User | null; ready: boolean } {
       if (event === "SIGNED_IN" || event === "TOKEN_REFRESHED") {
         if (!u.user_metadata?.onboarded) {
           router.replace("/onboarding");
+          setReady(true);
           return;
         }
         ensureProfile(u.id, displayName(u)).catch(() => {});

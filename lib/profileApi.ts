@@ -1,6 +1,7 @@
 // Profil kimliyi — profiles cədvəli (name, username, avatar) + public profil RPC.
 
 import { createClient } from "./supabase/client";
+import { getLang, type Lang } from "./i18n";
 import type { AvatarConfig } from "@/components/Avatar";
 
 export interface ProfileRow {
@@ -15,17 +16,27 @@ export function validUsername(u: string): boolean {
   return /^[a-z0-9_]{3,20}$/.test(u);
 }
 
-const AZ_MONTHS = [
-  "Yanvar", "Fevral", "Mart", "Aprel", "May", "İyun",
-  "İyul", "Avqust", "Sentyabr", "Oktyabr", "Noyabr", "Dekabr",
-];
+const MONTHS: Record<Lang, string[]> = {
+  az: [
+    "Yanvar", "Fevral", "Mart", "Aprel", "May", "İyun",
+    "İyul", "Avqust", "Sentyabr", "Oktyabr", "Noyabr", "Dekabr",
+  ],
+  en: [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December",
+  ],
+  ru: [
+    "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь",
+    "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь",
+  ],
+};
 
-// Üzvlük tarixi — "İyul 2026" (AZ ay adı).
-export function memberDate(iso: string | null): string {
+// Üzvlük tarixi — "İyul 2026" (interfeys dilinə görə ay adı).
+export function memberDate(iso: string | null, lang: Lang = getLang()): string {
   if (!iso) return "—";
   const d = new Date(iso);
   if (isNaN(d.getTime())) return "—";
-  return `${AZ_MONTHS[d.getMonth()]} ${d.getFullYear()}`;
+  return `${MONTHS[lang][d.getMonth()]} ${d.getFullYear()}`;
 }
 
 export async function loadProfileRow(): Promise<ProfileRow | null> {
