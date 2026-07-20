@@ -8,13 +8,22 @@
 alter table lessons add column if not exists visual text;
 alter table lessons add column if not exists sections jsonb;
 
--- 2. Admin bayrağı.
-alter table profiles add column if not exists is_admin boolean not null default false;
+-- 2. Admin cədvəli — AYRI cədvəl (profiles-də DEYİL), çünki istifadəçi öz profiles
+--    sətrini yaza bilir → orada is_admin olsaydı özünü admin edərdi (privilege escalation).
+--    admins cədvəlində istifadəçi yazı siyasəti YOXDUR → yalnız SQL Editor/service_role yaza bilər.
+create table if not exists admins (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  created_at timestamptz not null default now()
+);
+alter table admins enable row level security;
+drop policy if exists "read own admin" on admins;
+create policy "read own admin" on admins for select using (auth.uid() = user_id);
+-- (insert/update/delete siyasəti yoxdur → istifadəçi özünü admin edə bilmir)
 
--- 3. Admin yoxlaması (RLS siyasətlərində istifadə üçün — RLS-i keçmək lazım deyil).
+-- 3. Admin yoxlaması (RLS siyasətlərində və client-də istifadə üçün).
 create or replace function is_admin()
 returns boolean language sql stable security definer set search_path = public as $$
-  select coalesce((select p.is_admin from profiles p where p.id = auth.uid()), false);
+  select exists (select 1 from admins a where a.user_id = auth.uid());
 $$;
 grant execute on function is_admin() to authenticated;
 
@@ -32,8 +41,8 @@ begin
   end loop;
 end $$;
 
--- 5. Öz hesabını admin et (öz istifadəçi id-ni yaz və ya email ilə).
---    Supabase SQL Editor-da bunu ayrıca işə sal:
+-- 5. Öz hesabını admin et — Supabase SQL Editor-da bunu AYRICA işə sal:
 --
---    update profiles set is_admin = true
---    where id = (select id from auth.users where email = 'm.alakbarli2007@gmail.com');
+--    insert into admins (user_id)
+--    select id from auth.users where email = 'm.alakbarli2007@gmail.com'
+--    on conflict do nothing;

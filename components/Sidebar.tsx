@@ -4,6 +4,7 @@
 // Bölmələr: Öyrən · Praktika et · Profil · Daha çoxu.
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import {
   House,
@@ -15,9 +16,11 @@ import {
   Settings,
   HelpCircle,
   ChevronRight,
+  ShieldCheck,
 } from "lucide-react";
 import Logo from "./Logo";
 import { signOut } from "@/lib/auth";
+import { checkIsAdmin } from "@/lib/adminApi";
 import { useT } from "@/lib/i18n";
 
 const NAV = [
@@ -32,6 +35,11 @@ export default function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
   const t = useT();
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    checkIsAdmin().then(setIsAdmin);
+  }, []);
 
   const isActive = (match: string[]) =>
     match.some((m) => pathname === m || pathname.startsWith(m + "/"));
@@ -74,6 +82,9 @@ export default function Sidebar() {
                     <div className="w-56 rounded-2xl border border-line bg-panel p-1.5 shadow-xl">
                       <FlyoutLink href="/ayarlar" Icon={Settings} label={t("nav.settings")} />
                       <FlyoutLink href="/yardim" Icon={HelpCircle} label={t("nav.help")} />
+                      {isAdmin && (
+                        <FlyoutLink href="/admin" Icon={ShieldCheck} label="Admin" />
+                      )}
                     </div>
                   </div>
                 </div>

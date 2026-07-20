@@ -1,0 +1,592 @@
+"use client";
+
+// Admin paneli — məzmun idarəetməsi (fənn → bölmə → dərs → tapşırıq CRUD).
+// Yalnız is_admin() olan istifadəçi girə bilir (əks halda /dashboard-a yönlənir).
+// Yazılar RLS ilə qorunur; oxuma fetchContentTree ilə.
+
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { Plus, Pencil, Trash2, ChevronRight, ArrowLeft } from "lucide-react";
+import { useAuthUser } from "@/lib/useAuthUser";
+import { fetchContentTree } from "@/lib/content/db";
+import {
+  checkIsAdmin,
+  genId,
+  upsertSubject,
+  deleteSubject,
+  upsertUnit,
+  deleteUnit,
+  upsertLesson,
+  deleteLesson,
+  upsertTask,
+  deleteTask,
+  type TaskForm,
+} from "@/lib/adminApi";
+import type { Subject, Unit, Lesson, Task, TaskType, RuleSection } from "@/lib/types";
+import { PageSkeleton } from "@/components/Skeleton";
+
+type Editing =
+  | { kind: "subject"; mode: "new" | "edit"; data: Partial<Subject> }
+  | { kind: "unit"; mode: "new" | "edit"; data: Partial<Unit> }
+  | { kind: "lesson"; mode: "new" | "edit"; data: Partial<Lesson> }
+  | { kind: "task"; mode: "new" | "edit"; data: Partial<TaskForm> }
+  | null;
+
+export default function AdminPage() {
+  const router = useRouter();
+  const { user, ready } = useAuthUser();
+  const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
+  const [tree, setTree] = useState<Subject[] | undefined>(undefined); // undefined = hələ yüklənməyib
+  const [sel, setSel] = useState<{ s?: string; u?: string; l?: string }>({});
+  const [editing, setEditing] = useState<Editing>(null);
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState("");
+
+  useEffect(() => {
+    if (user) checkIsAdmin().then(setIsAdmin);
+  }, [user]);
+  useEffect(() => {
+    fetchContentTree().then((t) => setTree(t ?? []));
+  }, []);
+  useEffect(() => {
+    if (isAdmin === false) router.replace("/dashboard");
+  }, [isAdmin, router]);
+
+  async function reload() {
+    setTree((await fetchContentTree()) ?? []);
+  }
+
+  if (!ready || !user || isAdmin !== true || tree === undefined) return <PageSkeleton />;
+
+  const subjects = tree;
+  const subj = subjects.find((s) => s.slug === sel.s);
+  const unit = subj?.units.find((u) => u.id === sel.u);
+  const lesson = unit?.lessons.find((l) => l.id === sel.l);
+
+  async function run(fn: () => Promise<{ ok: boolean; error?: string }>) {
+    setBusy(true);
+    setErr("");
+    const r = await fn();
+    setBusy(false);
+    if (!r.ok) {
+      setErr(r.error || "Xəta");
+      return false;
+    }
+    await reload();
+    setEditing(null);
+    return true;
+  }
+
+  // ── Silmə (təsdiqlə) ──
+  async function del(kind: string, id: string, cascadeWarn?: string) {
+    if (!confirm(`Silinsin? ${cascadeWarn ?? ""}`)) return;
+    if (kind === "subject") await run(() => deleteSubject(id));
+    else if (kind === "unit") await run(() => deleteUnit(id));
+    else if (kind === "lesson") await run(() => deleteLesson(id));
+    else if (kind === "task") await run(() => deleteTask(id));
+  }
+
+  return (
+    <div className="min-h-screen bg-ink">
+      <main className="mx-auto max-w-3xl px-4 py-6">
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl font-bold text-fg">Admin · Məzmun</h1>
+          <Link href="/dashboard" className="text-sm text-muted hover:text-fg">
+            ← Panelə qayıt
+          </Link>
+        </div>
+
+        {/* Breadcrumb */}
+        <div className="mt-3 flex flex-wrap items-center gap-1 text-sm text-muted">
+          <button className="hover:text-fg" onClick={() => setSel({})}>
+            Fənlər
+          </button>
+          {subj && (
+            <>
+              <ChevronRight size={14} />
+              <button className="hover:text-fg" onClick={() => setSel({ s: subj.slug })}>
+                {subj.icon} {subj.name}
+              </button>
+            </>
+          )}
+          {unit && (
+            <>
+              <ChevronRight size={14} />
+              <button className="hover:text-fg" onClick={() => setSel({ s: subj!.slug, u: unit.id })}>
+                {unit.title}
+              </button>
+            </>
+          )}
+          {lesson && (
+            <>
+              <ChevronRight size={14} />
+              <span className="text-fg">{lesson.title}</span>
+            </>
+          )}
+        </div>
+
+        {err && (
+          <p className="mt-3 rounded-xl bg-red-500/10 px-3 py-2 text-sm font-medium text-red-500">
+            {err}
+          </p>
+        )}
+
+        <div className="mt-4 space-y-3">
+          {/* LEVEL: Fənlər */}
+          {!subj &&
+            subjects.map((s) => (
+              <Row
+                key={s.slug}
+                title={`${s.icon} ${s.name}`}
+                sub={`${s.units.length} bölmə · ${s.grade}-ci sinif`}
+                onOpen={() => setSel({ s: s.slug })}
+                onEdit={() => setEditing({ kind: "subject", mode: "edit", data: s })}
+                onDelete={() => del("subject", s.slug, "Bütün bölmə/dərs/tapşırıqları da silinəcək.")}
+              />
+            ))}
+          {!subj && (
+            <AddBtn label="Fənn əlavə et" onClick={() => setEditing({ kind: "subject", mode: "new", data: {} })} />
+          )}
+
+          {/* LEVEL: Bölmələr */}
+          {subj &&
+            !unit &&
+            subj.units.map((u) => (
+              <Row
+                key={u.id}
+                title={u.title}
+                sub={`${u.lessons.length} dərs`}
+                onOpen={() => setSel({ s: subj.slug, u: u.id })}
+                onEdit={() => setEditing({ kind: "unit", mode: "edit", data: u })}
+                onDelete={() => del("unit", u.id, "Dərslər və tapşırıqlar da silinəcək.")}
+              />
+            ))}
+          {subj && !unit && (
+            <AddBtn label="Bölmə əlavə et" onClick={() => setEditing({ kind: "unit", mode: "new", data: {} })} />
+          )}
+
+          {/* LEVEL: Dərslər */}
+          {unit &&
+            !lesson &&
+            unit.lessons.map((l) => (
+              <Row
+                key={l.id}
+                title={l.title}
+                sub={`${l.tasks.length} tapşırıq${l.bonusTasks?.length ? ` + ${l.bonusTasks.length} bonus` : ""}`}
+                onOpen={() => setSel({ s: subj!.slug, u: unit.id, l: l.id })}
+                onEdit={() => setEditing({ kind: "lesson", mode: "edit", data: l })}
+                onDelete={() => del("lesson", l.id, "İstifadəçilərin bu dərsdəki proqresi də silinəcək!")}
+              />
+            ))}
+          {unit && !lesson && (
+            <AddBtn label="Dərs əlavə et" onClick={() => setEditing({ kind: "lesson", mode: "new", data: {} })} />
+          )}
+
+          {/* LEVEL: Tapşırıqlar */}
+          {lesson && (
+            <>
+              {taskList(lesson).map(({ t, bonus }) => (
+                <Row
+                  key={t.id}
+                  title={`${bonus ? "★ " : ""}${t.prompt}`}
+                  sub={`${t.type} · ${t.xp} XP`}
+                  onEdit={() =>
+                    setEditing({ kind: "task", mode: "edit", data: taskToForm(t, bonus, lesson) })
+                  }
+                  onDelete={() => del("task", t.id)}
+                />
+              ))}
+              <AddBtn
+                label="Tapşırıq əlavə et"
+                onClick={() => setEditing({ kind: "task", mode: "new", data: { type: "multiple_choice" } })}
+              />
+            </>
+          )}
+        </div>
+      </main>
+
+      {/* Redaktə/əlavə formu */}
+      {editing && (
+        <EditForm
+          editing={editing}
+          busy={busy}
+          onCancel={() => setEditing(null)}
+          onSave={(data) => saveEditing(editing, data, { subj, unit, lesson }, run)}
+        />
+      )}
+    </div>
+  );
+}
+
+// ── Tapşırıq siyahısı (əsas + bonus) ──
+function taskList(l: Lesson): { t: Task; bonus: boolean }[] {
+  return [
+    ...l.tasks.map((t) => ({ t, bonus: false })),
+    ...(l.bonusTasks ?? []).map((t) => ({ t, bonus: true })),
+  ];
+}
+
+function taskToForm(t: Task, bonus: boolean, l: Lesson): Partial<TaskForm> {
+  const base: Partial<TaskForm> = {
+    id: t.id,
+    lesson_id: l.id,
+    type: t.type,
+    prompt: t.prompt,
+    xp: t.xp,
+    bonus,
+    figure: t.figure,
+  };
+  if (t.type === "multiple_choice") return { ...base, options: t.options, correctIndex: t.correctIndex };
+  if (t.type === "fill_blank") return { ...base, accepted: t.accepted };
+  return { ...base, answer: t.answer, tolerance: t.tolerance };
+}
+
+// ── Saxlama (form → upsert) ──
+async function saveEditing(
+  editing: NonNullable<Editing>,
+  data: Record<string, unknown>,
+  ctx: { subj?: Subject; unit?: Unit; lesson?: Lesson },
+  run: (fn: () => Promise<{ ok: boolean; error?: string }>) => Promise<boolean>,
+) {
+  const { subj, unit, lesson } = ctx;
+  if (editing.kind === "subject") {
+    const d = data as Partial<Subject>;
+    await run(() =>
+      upsertSubject({
+        id: (d.slug || "").trim(),
+        name: (d.name || "").trim(),
+        grade: Number(d.grade) || 5,
+        icon: (d.icon || "").trim(),
+        color: (d.color || "").trim(),
+        sort_order: editing.mode === "edit" ? 0 : 0,
+      }),
+    );
+  } else if (editing.kind === "unit" && subj) {
+    const d = data as Partial<Unit>;
+    const id = editing.mode === "edit" ? (d.id as string) : genId(`${subj.slug}-u`);
+    await run(() =>
+      upsertUnit({
+        id,
+        subject_id: subj.slug,
+        title: (d.title || "").trim(),
+        description: (d.description || "").trim(),
+        sort_order: editing.mode === "edit" ? subj.units.findIndex((u) => u.id === id) : subj.units.length,
+      }),
+    );
+  } else if (editing.kind === "lesson" && unit && subj) {
+    const d = data as Partial<Lesson>;
+    const id = editing.mode === "edit" ? (d.id as string) : genId(`${unit.id}-l`);
+    await run(() =>
+      upsertLesson({
+        id,
+        unit_id: unit.id,
+        title: (d.title || "").trim(),
+        intro: (d.intro || "").trim(),
+        visual: (d.visual as string) || null,
+        sections: (d.sections as RuleSection[])?.length ? (d.sections as RuleSection[]) : null,
+        sort_order: editing.mode === "edit" ? unit.lessons.findIndex((l) => l.id === id) : unit.lessons.length,
+      }),
+    );
+  } else if (editing.kind === "task" && lesson) {
+    const d = data as Partial<TaskForm>;
+    const id = editing.mode === "edit" ? (d.id as string) : genId(`${lesson.id}-t`);
+    const combined = taskList(lesson);
+    const idx = editing.mode === "edit" ? combined.findIndex((x) => x.t.id === id) : combined.length;
+    await run(() =>
+      upsertTask({
+        id,
+        lesson_id: lesson.id,
+        type: d.type as TaskType,
+        prompt: (d.prompt || "").trim(),
+        xp: Number(d.xp) || 10,
+        bonus: !!d.bonus,
+        sort_order: idx < 0 ? combined.length : idx,
+        options: d.options,
+        correctIndex: d.correctIndex,
+        accepted: d.accepted,
+        answer: d.answer,
+        tolerance: d.tolerance,
+        figure: d.figure,
+      }),
+    );
+  }
+}
+
+// ── Kiçik UI komponentləri ──
+function Row({
+  title,
+  sub,
+  onOpen,
+  onEdit,
+  onDelete,
+}: {
+  title: string;
+  sub: string;
+  onOpen?: () => void;
+  onEdit: () => void;
+  onDelete: () => void;
+}) {
+  return (
+    <div className="flex items-center gap-3 rounded-2xl border border-line bg-panel px-4 py-3">
+      <div className="min-w-0 flex-1">
+        <div className="truncate font-bold text-fg">{title}</div>
+        <div className="text-xs text-muted">{sub}</div>
+      </div>
+      {onOpen && (
+        <button onClick={onOpen} className="rounded-lg px-2 py-1 text-sm font-bold text-brand hover:bg-panel-2">
+          Aç
+        </button>
+      )}
+      <button onClick={onEdit} aria-label="Redaktə" className="rounded-lg p-2 text-muted hover:bg-panel-2 hover:text-fg">
+        <Pencil size={16} />
+      </button>
+      <button onClick={onDelete} aria-label="Sil" className="rounded-lg p-2 text-red-500 hover:bg-red-500/10">
+        <Trash2 size={16} />
+      </button>
+    </div>
+  );
+}
+
+function AddBtn({ label, onClick }: { label: string; onClick: () => void }) {
+  return (
+    <button
+      onClick={onClick}
+      className="flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-line px-4 py-3 font-bold text-muted hover:border-brand hover:text-brand"
+    >
+      <Plus size={18} /> {label}
+    </button>
+  );
+}
+
+// ── Redaktə formu (modal) ──
+function EditForm({
+  editing,
+  busy,
+  onCancel,
+  onSave,
+}: {
+  editing: NonNullable<Editing>;
+  busy: boolean;
+  onCancel: () => void;
+  onSave: (data: Record<string, unknown>) => void;
+}) {
+  const [form, setForm] = useState<Record<string, unknown>>({ ...editing.data });
+  const set = (k: string, v: unknown) => setForm((f) => ({ ...f, [k]: v }));
+
+  const titleMap = { subject: "Fənn", unit: "Bölmə", lesson: "Dərs", task: "Tapşırıq" };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 p-0 sm:items-center sm:p-4" onClick={onCancel}>
+      <div
+        className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-t-3xl bg-panel p-5 sm:rounded-3xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <h2 className="text-lg font-bold text-fg">
+          {editing.mode === "new" ? "Yeni" : "Redaktə"} · {titleMap[editing.kind]}
+        </h2>
+
+        <div className="mt-4 space-y-3">
+          {editing.kind === "subject" && (
+            <>
+              {editing.mode === "new" && (
+                <Field label="Slug (id, məs. 'fizika')" value={form.slug} onChange={(v) => set("slug", v)} />
+              )}
+              <Field label="Ad" value={form.name} onChange={(v) => set("name", v)} />
+              <Field label="İkon (emoji)" value={form.icon} onChange={(v) => set("icon", v)} />
+              <Field label="Rəng (tailwind ton, məs. 'sky')" value={form.color} onChange={(v) => set("color", v)} />
+              <Field label="Sinif" type="number" value={form.grade ?? 5} onChange={(v) => set("grade", v)} />
+            </>
+          )}
+
+          {editing.kind === "unit" && (
+            <>
+              <Field label="Başlıq" value={form.title} onChange={(v) => set("title", v)} />
+              <Field label="Təsvir" value={form.description} onChange={(v) => set("description", v)} textarea />
+            </>
+          )}
+
+          {editing.kind === "lesson" && (
+            <>
+              <Field label="Başlıq" value={form.title} onChange={(v) => set("title", v)} />
+              <Field label="Giriş (intro)" value={form.intro} onChange={(v) => set("intro", v)} textarea />
+              <Field label="Şəkil açarı (visual, məs. 'place-value')" value={form.visual} onChange={(v) => set("visual", v)} />
+              <SectionsEditor value={(form.sections as RuleSection[]) ?? []} onChange={(v) => set("sections", v)} />
+            </>
+          )}
+
+          {editing.kind === "task" && (
+            <TaskFields form={form} set={set} />
+          )}
+        </div>
+
+        <div className="mt-5 flex gap-2">
+          <button
+            disabled={busy}
+            onClick={() => onSave(form)}
+            className="flex-1 rounded-2xl bg-brand px-5 py-3 font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark disabled:opacity-50"
+          >
+            {busy ? "..." : "Yadda saxla"}
+          </button>
+          <button onClick={onCancel} className="rounded-2xl border-2 border-line px-5 py-3 font-bold text-fg hover:border-brand">
+            Ləğv et
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function TaskFields({
+  form,
+  set,
+}: {
+  form: Record<string, unknown>;
+  set: (k: string, v: unknown) => void;
+}) {
+  const type = (form.type as TaskType) ?? "multiple_choice";
+  const options = (form.options as string[]) ?? ["", "", "", ""];
+  return (
+    <>
+      <label className="block text-sm font-bold text-fg">Tip</label>
+      <select
+        value={type}
+        onChange={(e) => set("type", e.target.value)}
+        className="w-full rounded-xl border-2 border-line bg-panel-2 px-3 py-2 text-fg"
+      >
+        <option value="multiple_choice">Çoxseçimli</option>
+        <option value="fill_blank">Boşluq doldurma</option>
+        <option value="numeric">Rəqəm</option>
+      </select>
+
+      <Field label="Sual (prompt)" value={form.prompt} onChange={(v) => set("prompt", v)} textarea />
+
+      {type === "multiple_choice" && (
+        <>
+          <label className="block text-sm font-bold text-fg">Variantlar (düzgünü seç)</label>
+          {options.map((opt, i) => (
+            <div key={i} className="flex items-center gap-2">
+              <input
+                type="radio"
+                name="correct"
+                checked={(form.correctIndex ?? 0) === i}
+                onChange={() => set("correctIndex", i)}
+              />
+              <input
+                value={opt}
+                onChange={(e) => {
+                  const next = [...options];
+                  next[i] = e.target.value;
+                  set("options", next);
+                }}
+                className="flex-1 rounded-xl border-2 border-line bg-panel-2 px-3 py-2 text-fg"
+              />
+            </div>
+          ))}
+        </>
+      )}
+
+      {type === "fill_blank" && (
+        <Field
+          label="Qəbul olunan cavablar (vergüllə)"
+          value={(form.accepted as string[])?.join(", ") ?? ""}
+          onChange={(v) => set("accepted", v.split(",").map((s) => s.trim()).filter(Boolean))}
+        />
+      )}
+
+      {type === "numeric" && (
+        <>
+          <Field label="Cavab (rəqəm)" type="number" value={form.answer ?? 0} onChange={(v) => set("answer", Number(v))} />
+          <Field label="Tolerans (istəyə bağlı)" type="number" value={form.tolerance ?? ""} onChange={(v) => set("tolerance", v === "" ? undefined : Number(v))} />
+        </>
+      )}
+
+      <Field label="XP" type="number" value={form.xp ?? 10} onChange={(v) => set("xp", Number(v))} />
+      <label className="flex items-center gap-2 text-sm font-bold text-fg">
+        <input type="checkbox" checked={!!form.bonus} onChange={(e) => set("bonus", e.target.checked)} />
+        Bonus tapşırıq
+      </label>
+    </>
+  );
+}
+
+function SectionsEditor({
+  value,
+  onChange,
+}: {
+  value: RuleSection[];
+  onChange: (v: RuleSection[]) => void;
+}) {
+  return (
+    <div>
+      <label className="block text-sm font-bold text-fg">Qayda bölmələri</label>
+      {value.map((s, i) => (
+        <div key={i} className="mt-2 space-y-1 rounded-xl border border-line p-2">
+          <input
+            placeholder="Alt başlıq"
+            value={s.heading ?? ""}
+            onChange={(e) => {
+              const n = [...value];
+              n[i] = { ...n[i], heading: e.target.value };
+              onChange(n);
+            }}
+            className="w-full rounded-lg border border-line bg-panel-2 px-2 py-1 text-sm text-fg"
+          />
+          <textarea
+            placeholder="Mətn"
+            value={s.body}
+            onChange={(e) => {
+              const n = [...value];
+              n[i] = { ...n[i], body: e.target.value };
+              onChange(n);
+            }}
+            className="w-full rounded-lg border border-line bg-panel-2 px-2 py-1 text-sm text-fg"
+          />
+          <button onClick={() => onChange(value.filter((_, j) => j !== i))} className="text-xs text-red-500">
+            Bölməni sil
+          </button>
+        </div>
+      ))}
+      <button
+        onClick={() => onChange([...value, { heading: "", body: "" }])}
+        className="mt-2 text-sm font-bold text-brand"
+      >
+        + Bölmə əlavə et
+      </button>
+    </div>
+  );
+}
+
+function Field({
+  label,
+  value,
+  onChange,
+  type = "text",
+  textarea = false,
+}: {
+  label: string;
+  value: unknown;
+  onChange: (v: string) => void;
+  type?: string;
+  textarea?: boolean;
+}) {
+  return (
+    <div>
+      <label className="block text-sm font-bold text-fg">{label}</label>
+      {textarea ? (
+        <textarea
+          value={(value as string) ?? ""}
+          onChange={(e) => onChange(e.target.value)}
+          className="mt-1 w-full rounded-xl border-2 border-line bg-panel-2 px-3 py-2 text-fg"
+        />
+      ) : (
+        <input
+          type={type}
+          value={(value as string) ?? ""}
+          onChange={(e) => onChange(e.target.value)}
+          className="mt-1 w-full rounded-xl border-2 border-line bg-panel-2 px-3 py-2 text-fg"
+        />
+      )}
+    </div>
+  );
+}
