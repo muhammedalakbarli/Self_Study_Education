@@ -3,7 +3,7 @@
 // Praktika runner — istənilən tapşırıq siyahısını həll etdirir (dərsi tamamlamır).
 // review: adi (Yoxla → Növbəti) · timed: sürət raundu (60 san, tıkla-keç).
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import type { Task, MultipleChoiceTask } from "@/lib/types";
@@ -29,7 +29,7 @@ export default function PracticeRunner(props: Props) {
 }
 
 // ── Adi praktika ──────────────────────────────────────────────
-function ReviewRunner({ tasks, title, onExit, onCorrect, onFinish }: Props) {
+function ReviewRunner({ tasks, onExit, onCorrect, onFinish }: Props) {
   const [index, setIndex] = useState(0);
   const [answer, setAnswer] = useState<UserAnswer | null>(null);
   const [checked, setChecked] = useState(false);
@@ -78,7 +78,7 @@ function ReviewRunner({ tasks, title, onExit, onCorrect, onFinish }: Props) {
 
   return (
     <div>
-      <Header progress={(index / total) * 100} title={title} onExit={onExit} />
+      <Header progress={(index / total) * 100} onExit={onExit} />
 
       <div className="mt-4 text-sm font-medium text-muted">
         Sual {index + 1} / {total}
@@ -138,7 +138,7 @@ function ReviewRunner({ tasks, title, onExit, onCorrect, onFinish }: Props) {
 }
 
 // ── Sürət raundu ──────────────────────────────────────────────
-function SpeedRunner({ tasks, title, onExit, onFinish }: Props) {
+function SpeedRunner({ tasks, onExit, onFinish }: Props) {
   const DURATION = 60;
   const mc = tasks.filter((t): t is MultipleChoiceTask => t.type === "multiple_choice");
 
@@ -149,18 +149,22 @@ function SpeedRunner({ tasks, title, onExit, onFinish }: Props) {
   const [i, setI] = useState(0);
   const [picked, setPicked] = useState<number | null>(null);
   const [done, setDone] = useState(false);
+  const finishedRef = useRef(false);
 
+  // Saniyəlik geri sayım — tək interval (0-da dayanır).
   useEffect(() => {
-    if (done) return;
-    if (time <= 0) {
-      setDone(true);
-      playComplete();
-      onFinish?.();
-      return;
-    }
-    const t = setTimeout(() => setTime((x) => x - 1), 1000);
-    return () => clearTimeout(t);
-  }, [time, done]);
+    const id = setInterval(() => setTime((x) => (x > 0 ? x - 1 : 0)), 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  // Vaxt bitəndə bir dəfə tamamla — finishedRef ikiqat finish-i qapadır.
+  useEffect(() => {
+    if (time > 0 || finishedRef.current) return;
+    finishedRef.current = true;
+    setDone(true);
+    playComplete();
+    onFinish?.();
+  }, [time, onFinish]);
 
   const task = order[i];
 
@@ -186,6 +190,7 @@ function SpeedRunner({ tasks, title, onExit, onFinish }: Props) {
   }
 
   function restart() {
+    finishedRef.current = false;
     setTime(DURATION);
     setCorrect(0);
     setAnswered(0);
@@ -245,11 +250,9 @@ function SpeedRunner({ tasks, title, onExit, onFinish }: Props) {
 // ── Ortaq başlıq (X + progress) ──
 function Header({
   progress,
-  title,
   onExit,
 }: {
   progress: number;
-  title: string;
   onExit: () => void;
 }) {
   return (

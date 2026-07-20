@@ -4,7 +4,7 @@
 // Dil `bilik-prefs` (localStorage) içində saxlanılır; dəyişəndə səhifə yenilənir.
 // Qeyd: dərs məzmunu (suallar/variantlar) 5-ci sinif kurikulumu olduğu üçün AZ qalır.
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import type { Lang } from "./prefs";
 
 export type { Lang };
@@ -405,6 +405,261 @@ const DICT: Dict = {
     en: "Interface language",
     ru: "Язык интерфейса",
   },
+
+  // ── Landing (ana səhifə) ──
+  "home.login": { az: "Daxil ol", en: "Sign in", ru: "Войти" },
+  "home.badge": {
+    az: "Azərbaycan məktəbliləri üçün · 5-ci sinif",
+    en: "For Azerbaijani students · 5th grade",
+    ru: "Для школьников Азербайджана · 5 класс",
+  },
+  "home.hero1": { az: "Öyrənməyi ", en: "Make learning ", ru: "Преврати учёбу в " },
+  "home.hero2": { az: "əyləncəyə", en: "fun", ru: "игру" },
+  "home.hero3": { az: " çevir", en: "", ru: "" },
+  "home.heroBody": {
+    az: "Riyaziyyat, Azərbaycan dili və İngilis dilini addım-addım, oyun kimi öyrən. Pulsuz, sadə və maraqlı.",
+    en: "Learn Math, Azerbaijani and English step by step, like a game. Free, simple and fun.",
+    ru: "Учите математику, азербайджанский и английский шаг за шагом, как в игре. Бесплатно, просто и увлекательно.",
+  },
+  "home.ctaStart": { az: "Pulsuz başla", en: "Start free", ru: "Начать бесплатно" },
+  "home.haveAccount": {
+    az: "Artıq hesabım var",
+    en: "I already have an account",
+    ru: "У меня уже есть аккаунт",
+  },
+  "home.aferin": { az: "Afərin!", en: "Well done!", ru: "Молодец!" },
+  "home.stat.subjects": { az: "fənn", en: "subjects", ru: "предметы" },
+  "home.stat.lessons": { az: "dərs", en: "lessons", ru: "уроки" },
+  "home.stat.tasks": { az: "tapşırıq", en: "tasks", ru: "задания" },
+  "home.streakBadge": { az: "Seriya 5", en: "Streak 5", ru: "Серия 5" },
+
+  "home.r1.tag": { az: "Oyun kimi", en: "Like a game", ru: "Как игра" },
+  "home.r1.title": {
+    az: "Öyrənmək əyləncəli olsun",
+    en: "Make learning enjoyable",
+    ru: "Пусть учёба будет в удовольствие",
+  },
+  "home.r1.body": {
+    az: "Hər düzgün cavabda XP qazan, seriyanı qoru, dərsləri tamamla. Ulduz səni hər addımda ruhlandırır.",
+    en: "Earn XP for every correct answer, keep your streak, complete lessons. Ulduz cheers you on at every step.",
+    ru: "Получай XP за каждый правильный ответ, береги серию, завершай уроки. Улдуз подбадривает тебя на каждом шагу.",
+  },
+  "home.r2.tag": { az: "Öz sürətinlə", en: "At your own pace", ru: "В своём темпе" },
+  "home.r2.title": {
+    az: "Addım-addım, tələsmədən",
+    en: "Step by step, no rush",
+    ru: "Шаг за шагом, без спешки",
+  },
+  "home.r2.body": {
+    az: "Hər dərs bitəndə növbəti açılır. Öz tempinlə irəlilə — irəliləyişin avtomatik yadda qalır.",
+    en: "Each lesson unlocks the next. Move at your own pace — your progress is saved automatically.",
+    ru: "Каждый урок открывает следующий. Двигайся в своём темпе — прогресс сохраняется автоматически.",
+  },
+  "home.r3.tag": { az: "Məktəb proqramı", en: "School curriculum", ru: "Школьная программа" },
+  "home.r3.title": {
+    az: "3 fənn, real kurikulum",
+    en: "3 subjects, real curriculum",
+    ru: "3 предмета, реальная программа",
+  },
+  "home.r3.body": {
+    az: "5-ci sinif proqramına uyğun: hər mövzu izah + tapşırıqlarla. Riyaziyyat, Azərbaycan dili və İngilis dili.",
+    en: "Aligned with the 5th-grade program: each topic with an explanation + exercises. Math, Azerbaijani and English.",
+    ru: "По программе 5 класса: каждая тема с объяснением и заданиями. Математика, азербайджанский и английский.",
+  },
+  "home.finalTitle": {
+    az: "Bu gün öyrənməyə başla",
+    en: "Start learning today",
+    ru: "Начните учиться сегодня",
+  },
+  "home.finalBody": {
+    az: "Hesab yarat, ilk dərsini bitir və XP qazan. Tamamilə pulsuz.",
+    en: "Create an account, finish your first lesson and earn XP. Completely free.",
+    ru: "Создайте аккаунт, завершите первый урок и получите XP. Совершенно бесплатно.",
+  },
+
+  // ── Giriş / Qeydiyyat (auth) ──
+  "auth.or": { az: "və ya", en: "or", ru: "или" },
+  "auth.email": { az: "Email", en: "Email", ru: "Эл. почта" },
+  "auth.password": { az: "Parol", en: "Password", ru: "Пароль" },
+  "auth.checking": { az: "Yoxlanılır...", en: "Checking...", ru: "Проверка..." },
+  "auth.homeAria": { az: "Ana səhifə", en: "Home", ru: "Главная" },
+  "auth.showPass": { az: "Parolu göstər", en: "Show password", ru: "Показать пароль" },
+  "auth.hidePass": { az: "Parolu gizlət", en: "Hide password", ru: "Скрыть пароль" },
+  "auth.tagline": {
+    az: "Azərbaycan məktəbliləri üçün interaktiv öyrənmə platforması",
+    en: "An interactive learning platform for Azerbaijani students",
+    ru: "Интерактивная платформа обучения для школьников Азербайджана",
+  },
+  "common.user": { az: "İstifadəçi", en: "User", ru: "Пользователь" },
+
+  // Giriş
+  "auth.login.title": { az: "Xoş gəldin", en: "Welcome back", ru: "С возвращением" },
+  "auth.login.subtitle": {
+    az: "Davam etmək üçün hesabına daxil ol",
+    en: "Sign in to continue",
+    ru: "Войдите, чтобы продолжить",
+  },
+  "auth.login.google": {
+    az: "Google ilə daxil ol",
+    en: "Continue with Google",
+    ru: "Войти через Google",
+  },
+  "auth.login.submit": { az: "Daxil ol", en: "Sign in", ru: "Войти" },
+  "auth.login.passwordPlaceholder": { az: "Parolun", en: "Your password", ru: "Ваш пароль" },
+  "auth.login.brandHeading": {
+    az: "Öyrənməyə davam et",
+    en: "Keep learning",
+    ru: "Продолжайте учиться",
+  },
+  "auth.login.brandSub": {
+    az: "Hesabına daxil ol və qaldığın yerdən davam et.",
+    en: "Sign in and pick up where you left off.",
+    ru: "Войдите и продолжите с того места, где остановились.",
+  },
+  "auth.login.noAccount": {
+    az: "Hesabın yoxdur?",
+    en: "Don't have an account?",
+    ru: "Нет аккаунта?",
+  },
+  "auth.login.signupLink": {
+    az: "Qeydiyyatdan keç",
+    en: "Sign up",
+    ru: "Зарегистрироваться",
+  },
+  "auth.login.perk1": {
+    az: "3 fənn üzrə 60+ interaktiv dərs",
+    en: "60+ interactive lessons in 3 subjects",
+    ru: "60+ интерактивных уроков по 3 предметам",
+  },
+  "auth.login.perk2": {
+    az: "Öz sürətinlə, oyun kimi öyrənmə",
+    en: "Learn at your own pace, like a game",
+    ru: "Учитесь в своём темпе, как в игре",
+  },
+  "auth.login.perk3": {
+    az: "İrəliləyişin avtomatik yadda saxlanılır",
+    en: "Your progress is saved automatically",
+    ru: "Ваш прогресс сохраняется автоматически",
+  },
+
+  // Qeydiyyat
+  "auth.signup.title": {
+    az: "Yeni hesab yarat",
+    en: "Create your account",
+    ru: "Создайте аккаунт",
+  },
+  "auth.signup.subtitle": {
+    az: "Bir neçə saniyə çəkir",
+    en: "Takes a few seconds",
+    ru: "Займёт несколько секунд",
+  },
+  "auth.signup.google": {
+    az: "Google ilə qeydiyyat",
+    en: "Sign up with Google",
+    ru: "Регистрация через Google",
+  },
+  "auth.signup.submit": { az: "Qeydiyyatdan keç", en: "Sign up", ru: "Зарегистрироваться" },
+  "auth.signup.loading": {
+    az: "Qeydiyyat aparılır...",
+    en: "Signing up...",
+    ru: "Регистрация...",
+  },
+  "auth.signup.brandHeading": {
+    az: "Öyrənməyə bu gün başla",
+    en: "Start learning today",
+    ru: "Начните учиться сегодня",
+  },
+  "auth.signup.brandSub": {
+    az: "Hesab yarat, ilk dərsini bitir və XP qazan.",
+    en: "Create an account, finish your first lesson and earn XP.",
+    ru: "Создайте аккаунт, завершите первый урок и получите XP.",
+  },
+  "auth.signup.haveAccount": {
+    az: "Artıq hesabın var?",
+    en: "Already have an account?",
+    ru: "Уже есть аккаунт?",
+  },
+  "auth.signup.loginLink": { az: "Daxil ol", en: "Sign in", ru: "Войти" },
+  "auth.signup.name": { az: "Ad və Soyad", en: "Full name", ru: "Имя и фамилия" },
+  "auth.signup.namePlaceholder": {
+    az: "Adınız və soyadınız",
+    en: "Your first and last name",
+    ru: "Ваши имя и фамилия",
+  },
+  "auth.signup.password": { az: "Şifrə", en: "Password", ru: "Пароль" },
+  "auth.signup.passwordPlaceholder": {
+    az: "Ən az 6 simvol",
+    en: "At least 6 characters",
+    ru: "Минимум 6 символов",
+  },
+  "auth.signup.confirm": {
+    az: "Şifrəni təkrar daxil et",
+    en: "Confirm password",
+    ru: "Повторите пароль",
+  },
+  "auth.signup.confirmPlaceholder": {
+    az: "Şifrəni təkrar yazın",
+    en: "Re-enter your password",
+    ru: "Введите пароль ещё раз",
+  },
+  "auth.signup.match": {
+    az: "Şifrələr uyğundur",
+    en: "Passwords match",
+    ru: "Пароли совпадают",
+  },
+  "auth.signup.perk1": {
+    az: "Pulsuz — kart və ödəniş yoxdur",
+    en: "Free — no card, no payment",
+    ru: "Бесплатно — без карты и оплаты",
+  },
+  "auth.signup.perk2": {
+    az: "3 fənn: Riyaziyyat, Azərbaycan dili, İngilis dili",
+    en: "3 subjects: Math, Azerbaijani, English",
+    ru: "3 предмета: математика, азербайджанский, английский",
+  },
+  "auth.signup.perk3": {
+    az: "İrəliləyişin hər cihazda yadda qalır",
+    en: "Your progress is saved on every device",
+    ru: "Ваш прогресс сохраняется на всех устройствах",
+  },
+
+  // Şifrə gücü
+  "auth.strength.weak": { az: "Zəif", en: "Weak", ru: "Слабый" },
+  "auth.strength.fair": { az: "Orta", en: "Fair", ru: "Средний" },
+  "auth.strength.good": { az: "Yaxşı", en: "Good", ru: "Хороший" },
+  "auth.strength.strong": { az: "Güclü", en: "Strong", ru: "Сильный" },
+
+  // Xətalar
+  "auth.err.invalid": {
+    az: "Email və ya parol yanlışdır.",
+    en: "Email or password is incorrect.",
+    ru: "Неверный эл. адрес или пароль.",
+  },
+  "auth.err.allFields": {
+    az: "Bütün sahələri doldurun.",
+    en: "Please fill in all fields.",
+    ru: "Заполните все поля.",
+  },
+  "auth.err.passMismatch": {
+    az: "Şifrələr uyğun gəlmir.",
+    en: "Passwords do not match.",
+    ru: "Пароли не совпадают.",
+  },
+  "auth.err.passShort": {
+    az: "Şifrə ən az 6 simvol olmalıdır.",
+    en: "Password must be at least 6 characters.",
+    ru: "Пароль должен быть не менее 6 символов.",
+  },
+  "auth.err.signupFailed": {
+    az: "Qeydiyyat alınmadı. Yenidən cəhd et.",
+    en: "Sign-up failed. Please try again.",
+    ru: "Регистрация не удалась. Попробуйте снова.",
+  },
+  "auth.err.oauth": {
+    az: "Google ilə giriş alınmadı. Yenidən cəhd et.",
+    en: "Google sign-in failed. Please try again.",
+    ru: "Не удалось войти через Google. Попробуйте снова.",
+  },
 };
 
 export function getLang(): Lang {
@@ -421,11 +676,21 @@ export function t(key: string, lang: Lang = getLang()): string {
   return DICT[key]?.[lang] ?? DICT[key]?.az ?? key;
 }
 
-// Hydration-təhlükəsiz: server və ilk render "az", mount-dan sonra real dil.
+// Hydration-təhlükəsiz: server və hidrasiya "az", sonra real dil.
+// useSyncExternalStore hidrasiya uyğunsuzluğu vermədən localStorage dilini oxuyur
+// və "bilik-lang" / storage hadisələrində yenilənir.
+function subscribeLang(cb: () => void): () => void {
+  if (typeof window === "undefined") return () => {};
+  window.addEventListener("storage", cb);
+  window.addEventListener("bilik-lang", cb);
+  return () => {
+    window.removeEventListener("storage", cb);
+    window.removeEventListener("bilik-lang", cb);
+  };
+}
+
 export function useLang(): Lang {
-  const [lang, setLang] = useState<Lang>("az");
-  useEffect(() => setLang(getLang()), []);
-  return lang;
+  return useSyncExternalStore(subscribeLang, getLang, () => "az" as Lang);
 }
 
 export function useT(): (key: string) => string {

@@ -19,15 +19,6 @@ const emptyState: ProgressState = {
   completedLessons: [],
 };
 
-function todayStr(): string {
-  return new Date().toISOString().slice(0, 10);
-}
-
-function daysBetween(a: string, b: string): number {
-  const ms = new Date(b).getTime() - new Date(a).getTime();
-  return Math.round(ms / (1000 * 60 * 60 * 24));
-}
-
 // Profil sətrini yaradır (user_progress/user_stats ona FK ilə bağlıdır).
 // İlk girişdə çağırılır; varsa toxunmur.
 export async function ensureProfile(userId: string, name: string): Promise<void> {
@@ -74,53 +65,17 @@ export async function completeLesson(
       { onConflict: "user_id,lesson_id" },
     );
 
-  // Statistikanı oxu-dəyiş-yaz (XP topla, streak-i günə görə yenilə).
-  const { data: cur } = await supabase
-    .from("user_stats")
-    .select("total_xp, streak_days, last_active_date")
-    .eq("user_id", userId)
-    .maybeSingle();
-
-  const today = todayStr();
-  const last = cur?.last_active_date ?? null;
-  let streak = cur?.streak_days ?? 0;
-  if (last === today) {
-    // eyni gün — dəyişmir
-  } else if (last && daysBetween(last, today) === 1) {
-    streak += 1;
-  } else {
-    streak = 1;
-  }
-
-  await supabase.from("user_stats").upsert(
-    {
-      user_id: userId,
-      total_xp: (cur?.total_xp ?? 0) + earnedXp,
-      streak_days: streak,
-      last_active_date: today,
-    },
-    { onConflict: "user_id" },
-  );
+  // XP + streak-i atomik server RPC ilə yenilə (oxu-dəyiş-yaz race yoxdur; streak
+  // günü Asia/Baku vaxtı ilə serverdə hesablanır). Bax 0011 migration.
+  await supabase.rpc("add_user_xp", { p_amount: earnedXp, p_touch_streak: true });
 }
 
 // Statistikaya əlavə XP yaz (məs. gündəlik quest mükafatı) — streak-ə toxunmadan.
-export async function addXp(userId: string, amount: number): Promise<void> {
+// userId artıq lazım deyil (RPC auth.uid() işlədir), imza uyğunluq üçün saxlanılır.
+export async function addXp(_userId: string, amount: number): Promise<void> {
   if (!amount) return;
   const supabase = createClient();
-  const { data: cur } = await supabase
-    .from("user_stats")
-    .select("total_xp, streak_days, last_active_date")
-    .eq("user_id", userId)
-    .maybeSingle();
-  await supabase.from("user_stats").upsert(
-    {
-      user_id: userId,
-      total_xp: (cur?.total_xp ?? 0) + amount,
-      streak_days: cur?.streak_days ?? 0,
-      last_active_date: cur?.last_active_date ?? todayStr(),
-    },
-    { onConflict: "user_id" },
-  );
+  await supabase.rpc("add_user_xp", { p_amount: amount, p_touch_streak: false });
 }
 
 // Dərs kiliddədirmi? Fəndəki əvvəlki dərs tamamlanmayıbsa kiliddədir (ilk dərs həmişə açıqdır).

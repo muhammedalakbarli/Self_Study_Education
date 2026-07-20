@@ -8,28 +8,32 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Eye, EyeOff, Check } from "lucide-react";
 import { signInWithEmail, getCurrentUser } from "@/lib/auth";
+import { useT } from "@/lib/i18n";
 import Logo from "@/components/Logo";
 import GoogleButton from "@/components/GoogleButton";
 import Mascot from "@/components/Mascot";
 
-const PERKS = [
-  "3 fənn üzrə 60+ interaktiv dərs",
-  "Öz sürətinlə, oyun kimi öyrənmə",
-  "İrəliləyişin avtomatik yadda saxlanılır",
-];
-
 export default function LoginPage() {
   const router = useRouter();
+  const t = useT();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const PERKS = [t("auth.login.perk1"), t("auth.login.perk2"), t("auth.login.perk3")];
+
   useEffect(() => {
     getCurrentUser().then((u) => {
       if (u) router.replace("/dashboard");
     });
+    // Google OAuth callback xətası olubsa göstər (bax auth/callback route).
+    if (new URLSearchParams(window.location.search).get("error") === "oauth") {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setError(t("auth.err.oauth"));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
 
   async function login() {
@@ -39,7 +43,7 @@ export default function LoginPage() {
     const res = await signInWithEmail(email.trim(), password);
     setLoading(false);
     if (!res.ok) {
-      setError(res.error || "Email və ya parol yanlışdır.");
+      setError(res.error || t("auth.err.invalid"));
       return;
     }
     router.push("/dashboard");
@@ -49,7 +53,7 @@ export default function LoginPage() {
     <div className="flex min-h-screen flex-1">
       {/* Sol brend paneli (yalnız böyük ekranda) */}
       <aside className="hidden w-1/2 flex-col justify-between bg-gradient-to-br from-brand to-brand-dark p-12 text-white lg:flex">
-        <Link href="/" className="flex items-center gap-2.5" aria-label="Ana səhifə">
+        <Link href="/" className="flex items-center gap-2.5" aria-label={t("auth.homeAria")}>
           <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white">
             <Logo size={26} />
           </span>
@@ -61,11 +65,9 @@ export default function LoginPage() {
             <Mascot size={76} />
           </div>
           <h2 className="max-w-sm text-4xl font-extrabold leading-tight">
-            Öyrənməyə davam et
+            {t("auth.login.brandHeading")}
           </h2>
-          <p className="mt-3 max-w-sm text-white/80">
-            Hesabına daxil ol və qaldığın yerdən davam et.
-          </p>
+          <p className="mt-3 max-w-sm text-white/80">{t("auth.login.brandSub")}</p>
           <ul className="mt-8 space-y-3">
             {PERKS.map((p) => (
               <li key={p} className="flex items-center gap-3">
@@ -78,9 +80,7 @@ export default function LoginPage() {
           </ul>
         </div>
 
-        <p className="text-sm text-white/60">
-          Azərbaycan məktəbliləri üçün interaktiv öyrənmə platforması
-        </p>
+        <p className="text-sm text-white/60">{t("auth.tagline")}</p>
       </aside>
 
       {/* Sağ forma */}
@@ -90,30 +90,28 @@ export default function LoginPage() {
           <Link
             href="/"
             className="mb-8 flex items-center justify-center gap-2 lg:hidden"
-            aria-label="Ana səhifə"
+            aria-label={t("auth.homeAria")}
           >
             <Logo size={40} />
             <span className="text-xl font-extrabold text-fg">Bilik Yolu</span>
           </Link>
 
-          <h1 className="text-2xl font-extrabold text-slate-900">Xoş gəldin</h1>
-          <p className="mt-1 text-sm text-slate-500">
-            Davam etmək üçün hesabına daxil ol
-          </p>
+          <h1 className="text-2xl font-extrabold text-slate-900">{t("auth.login.title")}</h1>
+          <p className="mt-1 text-sm text-slate-500">{t("auth.login.subtitle")}</p>
 
           <div className="mt-8">
-            <GoogleButton label="Google ilə daxil ol" />
+            <GoogleButton label={t("auth.login.google")} />
           </div>
 
           <div className="my-6 flex items-center gap-3">
             <div className="h-px flex-1 bg-slate-200" />
-            <span className="text-xs font-medium text-slate-400">və ya</span>
+            <span className="text-xs font-medium text-slate-400">{t("auth.or")}</span>
             <div className="h-px flex-1 bg-slate-200" />
           </div>
 
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-bold text-slate-800">Email</label>
+              <label className="block text-sm font-bold text-slate-800">{t("auth.email")}</label>
               <input
                 type="email"
                 value={email}
@@ -126,21 +124,21 @@ export default function LoginPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-bold text-slate-800">Parol</label>
+              <label className="block text-sm font-bold text-slate-800">{t("auth.password")}</label>
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && login()}
-                  placeholder="Parolun"
+                  placeholder={t("auth.login.passwordPlaceholder")}
                   disabled={loading}
                   className="mt-1.5 w-full rounded-xl border border-slate-300 px-3.5 py-2.5 pr-10 text-slate-900 outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  aria-label={showPassword ? "Parolu gizlət" : "Parolu göstər"}
+                  aria-label={showPassword ? t("auth.hidePass") : t("auth.showPass")}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
                 >
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -171,18 +169,18 @@ export default function LoginPage() {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                   </svg>
-                  Yoxlanılır...
+                  {t("auth.checking")}
                 </span>
               ) : (
-                "Daxil ol"
+                t("auth.login.submit")
               )}
             </button>
           </div>
 
           <p className="mt-8 text-center text-sm text-slate-600">
-            Hesabın yoxdur?{" "}
+            {t("auth.login.noAccount")}{" "}
             <Link href="/signup" className="font-bold text-brand hover:underline">
-              Qeydiyyatdan keç
+              {t("auth.login.signupLink")}
             </Link>
           </p>
         </div>

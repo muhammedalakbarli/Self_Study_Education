@@ -9,11 +9,14 @@ import Link from "next/link";
 import { Check } from "lucide-react";
 import { getCurrentUser } from "@/lib/auth";
 import { subjects } from "@/lib/content";
+import { useT } from "@/lib/i18n";
 import Logo from "@/components/Logo";
 import Mascot from "@/components/Mascot";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 export default function LandingPage() {
   const router = useRouter();
+  const t = useT();
 
   useEffect(() => {
     getCurrentUser().then((u) => {
@@ -48,12 +51,15 @@ export default function LandingPage() {
           <Logo size={36} />
           <span className="text-lg font-extrabold text-fg">Bilik Yolu</span>
         </div>
-        <Link
-          href="/login"
-          className="rounded-2xl border-2 border-line px-4 py-2 text-sm font-bold text-fg btn-pop btn-pop-ghost hover:border-brand"
-        >
-          Daxil ol
-        </Link>
+        <div className="flex items-center gap-2.5">
+          <LanguageSwitcher />
+          <Link
+            href="/login"
+            className="rounded-2xl border-2 border-line px-4 py-2 text-sm font-bold text-fg btn-pop btn-pop-ghost hover:border-brand"
+          >
+            {t("home.login")}
+          </Link>
+        </div>
       </header>
 
       <main className="mx-auto max-w-6xl px-5">
@@ -67,7 +73,7 @@ export default function LandingPage() {
                 +10 XP
               </span>
               <span className="absolute bottom-8 right-1 rounded-2xl bg-brand px-3 py-1.5 text-sm font-extrabold text-white shadow-lg sm:right-0">
-                Afərin!
+                {t("home.aferin")}
               </span>
             </div>
           </div>
@@ -75,27 +81,26 @@ export default function LandingPage() {
           {/* Mətn + CTA */}
           <div className="order-2 text-center lg:order-1 lg:text-left">
             <span className="inline-block rounded-full bg-brand/10 px-4 py-1.5 text-sm font-bold text-brand">
-              Azərbaycan məktəbliləri üçün · 5-ci sinif
+              {t("home.badge")}
             </span>
             <h1 className="mt-5 text-4xl font-extrabold leading-tight text-fg sm:text-5xl lg:text-6xl">
-              Öyrənməyi <span className="text-brand">əyləncəyə</span> çevir
+              {t("home.hero1")}
+              <span className="text-brand">{t("home.hero2")}</span>
+              {t("home.hero3")}
             </h1>
-            <p className="mt-5 text-lg text-muted lg:max-w-md">
-              Riyaziyyat, Azərbaycan dili və İngilis dilini addım-addım, oyun kimi
-              öyrən. Pulsuz, sadə və maraqlı.
-            </p>
+            <p className="mt-5 text-lg text-muted lg:max-w-md">{t("home.heroBody")}</p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
               <Link
                 href="/signup"
                 className="rounded-2xl bg-brand px-8 py-4 text-lg font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark"
               >
-                Pulsuz başla
+                {t("home.ctaStart")}
               </Link>
               <Link
                 href="/login"
                 className="rounded-2xl border-2 border-line bg-panel px-8 py-4 text-lg font-extrabold text-fg btn-pop btn-pop-ghost hover:border-brand"
               >
-                Artıq hesabım var
+                {t("home.haveAccount")}
               </Link>
             </div>
           </div>
@@ -104,9 +109,9 @@ export default function LandingPage() {
         {/* Statistika */}
         <section className="grid grid-cols-3 gap-4 pb-6">
           {[
-            { n: subjects.length, l: "fənn" },
-            { n: totalLessons, l: "dərs" },
-            { n: `${totalTasks}+`, l: "tapşırıq" },
+            { n: subjects.length, l: t("home.stat.subjects") },
+            { n: totalLessons, l: t("home.stat.lessons") },
+            { n: `${totalTasks}+`, l: t("home.stat.tasks") },
           ].map((s) => (
             <div key={s.l} className="rounded-2xl border border-line bg-panel py-5 text-center">
               <div className="text-3xl font-extrabold text-brand">{s.n}</div>
@@ -119,23 +124,23 @@ export default function LandingPage() {
         <section className="space-y-14 py-14 sm:space-y-20">
           <Row
             reverse={false}
-            tag="Oyun kimi"
-            title="Öyrənmək əyləncəli olsun"
-            body="Hər düzgün cavabda XP qazan, seriyanı qoru, dərsləri tamamla. Ulduz səni hər addımda ruhlandırır."
+            tag={t("home.r1.tag")}
+            title={t("home.r1.title")}
+            body={t("home.r1.body")}
             media={<GameMedia />}
           />
           <Row
             reverse={true}
-            tag="Öz sürətinlə"
-            title="Addım-addım, tələsmədən"
-            body="Hər dərs bitəndə növbəti açılır. Öz tempinlə irəlilə — irəliləyişin avtomatik yadda qalır."
+            tag={t("home.r2.tag")}
+            title={t("home.r2.title")}
+            body={t("home.r2.body")}
             media={<PathMedia />}
           />
           <Row
             reverse={false}
-            tag="Məktəb proqramı"
-            title="3 fənn, real kurikulum"
-            body="5-ci sinif proqramına uyğun: hər mövzu izah + tapşırıqlarla. Riyaziyyat, Azərbaycan dili və İngilis dili."
+            tag={t("home.r3.tag")}
+            title={t("home.r3.title")}
+            body={t("home.r3.body")}
             media={<SubjectsMedia />}
           />
         </section>
@@ -145,17 +150,13 @@ export default function LandingPage() {
           <div className="flex justify-center">
             <Mascot size={96} mood="celebrate" />
           </div>
-          <h2 className="mt-4 text-3xl font-extrabold text-white">
-            Bu gün öyrənməyə başla
-          </h2>
-          <p className="mx-auto mt-3 max-w-md text-white/85">
-            Hesab yarat, ilk dərsini bitir və XP qazan. Tamamilə pulsuz.
-          </p>
+          <h2 className="mt-4 text-3xl font-extrabold text-white">{t("home.finalTitle")}</h2>
+          <p className="mx-auto mt-3 max-w-md text-white/85">{t("home.finalBody")}</p>
           <Link
             href="/signup"
             className="mt-8 inline-block rounded-2xl bg-white px-8 py-4 text-lg font-extrabold uppercase tracking-wide text-brand btn-pop [--pop:#c9c2f5] hover:bg-white/90"
           >
-            Pulsuz başla
+            {t("home.ctaStart")}
           </Link>
         </section>
       </main>
@@ -166,7 +167,7 @@ export default function LandingPage() {
           <Logo size={22} />
           <span className="font-bold text-fg">Bilik Yolu</span>
         </div>
-        <p className="mt-2">Azərbaycan məktəbliləri üçün interaktiv öyrənmə platforması</p>
+        <p className="mt-2">{t("auth.tagline")}</p>
       </footer>
     </div>
   );
@@ -206,6 +207,7 @@ function Row({
 
 // Panel: oyunlaşdırma
 function GameMedia() {
+  const t = useT();
   return (
     <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-3xl border border-line bg-brand/5">
       <Mascot size={150} mood="celebrate" />
@@ -213,7 +215,7 @@ function GameMedia() {
         +10 XP
       </span>
       <span className="absolute bottom-6 right-6 rounded-2xl bg-brand px-3 py-1.5 text-sm font-extrabold text-white shadow">
-        Streak 5
+        {t("home.streakBadge")}
       </span>
     </div>
   );

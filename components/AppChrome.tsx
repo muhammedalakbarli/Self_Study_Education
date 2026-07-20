@@ -18,6 +18,7 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const p = loadPrefs();
     applyPrefs(p);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setAnimEnabled(p.animations);
   }, [pathname]);
 

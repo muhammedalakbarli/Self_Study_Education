@@ -23,6 +23,8 @@ export default function SettingsPage() {
   const t = useT();
 
   useEffect(() => {
+    // Hidrasiya-təhlükəsiz: localStorage tərcihlərini mount-dan sonra oxu.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setPrefs(loadPrefs());
   }, []);
 
