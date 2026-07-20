@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Check } from "lucide-react";
 import { getCurrentUser } from "@/lib/auth";
-import { subjects } from "@/lib/content";
+import { useContent } from "@/components/ContentProvider";
 import { useT } from "@/lib/i18n";
 import Logo from "@/components/Logo";
 import Mascot from "@/components/Mascot";
@@ -17,6 +17,7 @@ import LanguageSwitcher from "@/components/LanguageSwitcher";
 export default function LandingPage() {
   const router = useRouter();
   const t = useT();
+  const { subjects } = useContent();
 
   useEffect(() => {
     getCurrentUser().then((u) => {
@@ -257,6 +258,7 @@ function PathMedia() {
 
 // Panel: fənlər
 function SubjectsMedia() {
+  const { subjects } = useContent();
   return (
     <div className="flex aspect-[4/3] flex-col justify-center gap-3 rounded-3xl border border-line bg-brand/5 p-8">
       {subjects.map((s) => (

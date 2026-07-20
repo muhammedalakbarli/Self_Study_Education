@@ -7,7 +7,7 @@ import { useEffect, useMemo, useState } from "react";
 import { AlertCircle, Shuffle, Timer, ChevronRight, Check } from "lucide-react";
 import { useAuthUser } from "@/lib/useAuthUser";
 import { loadProgress, type ProgressState } from "@/lib/progress";
-import { subjects, getTaskById, getAllTasks } from "@/lib/content";
+import { useContent } from "@/components/ContentProvider";
 import { loadMistakes, removeMistake } from "@/lib/mistakes";
 import { isDailyDone, markDailyDone } from "@/lib/daily";
 import { useT } from "@/lib/i18n";
@@ -23,6 +23,7 @@ type Session = { tasks: Task[]; title: string; timed?: boolean; daily?: boolean 
 
 export default function PracticePage() {
   const { user, ready } = useAuthUser();
+  const { subjects, getTaskById, getAllTasks } = useContent();
   const [state, setState] = useState<ProgressState | null>(null);
   const [mistakes, setMistakes] = useState<string[]>([]);
   const [activeSlug, setActiveSlug] = useState(subjects[0].slug);
@@ -50,11 +51,11 @@ export default function PracticePage() {
           .flatMap((l) => [...l.tasks, ...(l.bonusTasks ?? [])]),
       ),
     );
-  }, [state]);
+  }, [state, subjects]);
 
   const mistakeTasks = useMemo(
     () => mistakes.map(getTaskById).filter((t): t is Task => !!t),
-    [mistakes],
+    [mistakes, getTaskById],
   );
 
   if (!ready || !state) return <PageSkeleton />;

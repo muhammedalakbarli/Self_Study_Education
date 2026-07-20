@@ -5,7 +5,7 @@
 import { use, useEffect, useState } from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getSubject } from "@/lib/content";
+import { useContent } from "@/components/ContentProvider";
 import { loadProgress, isLessonLocked, type ProgressState } from "@/lib/progress";
 import { useAuthUser } from "@/lib/useAuthUser";
 import { useT } from "@/lib/i18n";
@@ -19,6 +19,7 @@ export default function SubjectPage({
 }) {
   const { slug } = use(params);
   const { user, ready } = useAuthUser();
+  const { getSubject, loading } = useContent();
   const [state, setState] = useState<ProgressState | null>(null);
   const t = useT();
 
@@ -28,10 +29,12 @@ export default function SubjectPage({
     if (user) loadProgress(user.id).then(setState);
   }, [user]);
 
+  if (!subject && loading) return <PageSkeleton />;
   if (!subject) notFound();
   if (!ready || !state) return <PageSkeleton />;
 
   const completed = state.completedLessons;
+  const order = subject.units.flatMap((u) => u.lessons.map((l) => l.id));
 
   return (
     <div className="min-h-screen bg-ink">
@@ -54,7 +57,7 @@ export default function SubjectPage({
         {(() => {
           const nodes: PathNode[] = subject.units.flatMap((u) =>
             u.lessons.map((l, li) => {
-              const locked = isLessonLocked(slug, l.id, completed);
+              const locked = isLessonLocked(order, l.id, completed);
               const done = completed.includes(l.id);
               return {
                 id: l.id,

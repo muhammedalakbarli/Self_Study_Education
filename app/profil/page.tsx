@@ -19,7 +19,7 @@ import {
 import { useAuthUser } from "@/lib/useAuthUser";
 import { loadProgress, type ProgressState } from "@/lib/progress";
 import { signOut } from "@/lib/auth";
-import { subjects } from "@/lib/content";
+import { useContent } from "@/components/ContentProvider";
 import { useT } from "@/lib/i18n";
 import { levelFromXp } from "@/lib/levels";
 import { computeAchievements, type AchievementKind } from "@/lib/achievements";
@@ -43,6 +43,7 @@ export default function ProfilePage() {
   const { user, ready } = useAuthUser();
   const router = useRouter();
   const t = useT();
+  const { subjects } = useContent();
   const [state, setState] = useState<ProgressState | null>(null);
   const [profile, setProfile] = useState<ProfileRow | null>(null);
   const [tier, setTier] = useState(0);

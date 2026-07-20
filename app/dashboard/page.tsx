@@ -6,7 +6,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { Star, Flame, CircleCheck } from "lucide-react";
-import { subjects } from "@/lib/content";
+import { useContent } from "@/components/ContentProvider";
 import { loadProgress, isLessonLocked, type ProgressState } from "@/lib/progress";
 import { useAuthUser } from "@/lib/useAuthUser";
 import { displayName } from "@/lib/auth";
@@ -27,6 +27,7 @@ import SpeechBubble from "@/components/SpeechBubble";
 
 export default function DashboardPage() {
   const { user, ready } = useAuthUser();
+  const { subjects } = useContent();
   const [state, setState] = useState<ProgressState | null>(null);
   const [activeSlug, setActiveSlug] = useState(subjects[0].slug);
   const [quests, setQuests] = useState<QuestState | null>(null);
@@ -54,9 +55,10 @@ export default function DashboardPage() {
   const { nodes, currentLesson, scorePct } = useMemo(() => {
     const completed = state?.completedLessons ?? [];
     const lessons = active.units.flatMap((u) => u.lessons);
+    const order = lessons.map((l) => l.id);
     const nodes: PathNode[] = active.units.flatMap((u) =>
       u.lessons.map((l, li) => {
-        const locked = isLessonLocked(active.slug, l.id, completed);
+        const locked = isLessonLocked(order, l.id, completed);
         const done = completed.includes(l.id);
         return {
           id: l.id,

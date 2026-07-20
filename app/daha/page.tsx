@@ -7,13 +7,14 @@ import { useRouter } from "next/navigation";
 import { BookOpen, User, Dumbbell, LogOut, ChevronRight, Settings, HelpCircle } from "lucide-react";
 import { useAuthUser } from "@/lib/useAuthUser";
 import { signOut } from "@/lib/auth";
-import { subjects } from "@/lib/content";
+import { useContent } from "@/components/ContentProvider";
 import { useT } from "@/lib/i18n";
 import { PageSkeleton } from "@/components/Skeleton";
 import Logo from "@/components/Logo";
 
 export default function MorePage() {
   const { user, ready } = useAuthUser();
+  const { subjects } = useContent();
   const router = useRouter();
   const t = useT();
 
