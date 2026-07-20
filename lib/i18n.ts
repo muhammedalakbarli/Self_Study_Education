@@ -406,6 +406,77 @@ const DICT: Dict = {
     ru: "Язык интерфейса",
   },
 
+  // ── Landing (ana səhifə) ──
+  "home.login": { az: "Daxil ol", en: "Sign in", ru: "Войти" },
+  "home.badge": {
+    az: "Azərbaycan məktəbliləri üçün · 5-ci sinif",
+    en: "For Azerbaijani students · 5th grade",
+    ru: "Для школьников Азербайджана · 5 класс",
+  },
+  "home.hero1": { az: "Öyrənməyi ", en: "Make learning ", ru: "Преврати учёбу в " },
+  "home.hero2": { az: "əyləncəyə", en: "fun", ru: "игру" },
+  "home.hero3": { az: " çevir", en: "", ru: "" },
+  "home.heroBody": {
+    az: "Riyaziyyat, Azərbaycan dili və İngilis dilini addım-addım, oyun kimi öyrən. Pulsuz, sadə və maraqlı.",
+    en: "Learn Math, Azerbaijani and English step by step, like a game. Free, simple and fun.",
+    ru: "Учите математику, азербайджанский и английский шаг за шагом, как в игре. Бесплатно, просто и увлекательно.",
+  },
+  "home.ctaStart": { az: "Pulsuz başla", en: "Start free", ru: "Начать бесплатно" },
+  "home.haveAccount": {
+    az: "Artıq hesabım var",
+    en: "I already have an account",
+    ru: "У меня уже есть аккаунт",
+  },
+  "home.aferin": { az: "Afərin!", en: "Well done!", ru: "Молодец!" },
+  "home.stat.subjects": { az: "fənn", en: "subjects", ru: "предметы" },
+  "home.stat.lessons": { az: "dərs", en: "lessons", ru: "уроки" },
+  "home.stat.tasks": { az: "tapşırıq", en: "tasks", ru: "задания" },
+  "home.streakBadge": { az: "Seriya 5", en: "Streak 5", ru: "Серия 5" },
+
+  "home.r1.tag": { az: "Oyun kimi", en: "Like a game", ru: "Как игра" },
+  "home.r1.title": {
+    az: "Öyrənmək əyləncəli olsun",
+    en: "Make learning enjoyable",
+    ru: "Пусть учёба будет в удовольствие",
+  },
+  "home.r1.body": {
+    az: "Hər düzgün cavabda XP qazan, seriyanı qoru, dərsləri tamamla. Ulduz səni hər addımda ruhlandırır.",
+    en: "Earn XP for every correct answer, keep your streak, complete lessons. Ulduz cheers you on at every step.",
+    ru: "Получай XP за каждый правильный ответ, береги серию, завершай уроки. Улдуз подбадривает тебя на каждом шагу.",
+  },
+  "home.r2.tag": { az: "Öz sürətinlə", en: "At your own pace", ru: "В своём темпе" },
+  "home.r2.title": {
+    az: "Addım-addım, tələsmədən",
+    en: "Step by step, no rush",
+    ru: "Шаг за шагом, без спешки",
+  },
+  "home.r2.body": {
+    az: "Hər dərs bitəndə növbəti açılır. Öz tempinlə irəlilə — irəliləyişin avtomatik yadda qalır.",
+    en: "Each lesson unlocks the next. Move at your own pace — your progress is saved automatically.",
+    ru: "Каждый урок открывает следующий. Двигайся в своём темпе — прогресс сохраняется автоматически.",
+  },
+  "home.r3.tag": { az: "Məktəb proqramı", en: "School curriculum", ru: "Школьная программа" },
+  "home.r3.title": {
+    az: "3 fənn, real kurikulum",
+    en: "3 subjects, real curriculum",
+    ru: "3 предмета, реальная программа",
+  },
+  "home.r3.body": {
+    az: "5-ci sinif proqramına uyğun: hər mövzu izah + tapşırıqlarla. Riyaziyyat, Azərbaycan dili və İngilis dili.",
+    en: "Aligned with the 5th-grade program: each topic with an explanation + exercises. Math, Azerbaijani and English.",
+    ru: "По программе 5 класса: каждая тема с объяснением и заданиями. Математика, азербайджанский и английский.",
+  },
+  "home.finalTitle": {
+    az: "Bu gün öyrənməyə başla",
+    en: "Start learning today",
+    ru: "Начните учиться сегодня",
+  },
+  "home.finalBody": {
+    az: "Hesab yarat, ilk dərsini bitir və XP qazan. Tamamilə pulsuz.",
+    en: "Create an account, finish your first lesson and earn XP. Completely free.",
+    ru: "Создайте аккаунт, завершите первый урок и получите XP. Совершенно бесплатно.",
+  },
+
   // ── Giriş / Qeydiyyat (auth) ──
   "auth.or": { az: "və ya", en: "or", ru: "или" },
   "auth.email": { az: "Email", en: "Email", ru: "Эл. почта" },
