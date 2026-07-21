@@ -198,6 +198,7 @@ const DICT: Dict = {
   "cel.accuracy": { az: "Dəqiqlik", en: "Accuracy", ru: "Точность" },
   "cel.combo": { az: "Ən yaxşı seriya", en: "Best combo", ru: "Лучшее комбо" },
   "cel.levelUp": { az: "Yeni səviyyə!", en: "Level up!", ru: "Новый уровень!" },
+  "cel.perfect": { az: "Qüsursuz dərs!", en: "Perfect lesson!", ru: "Идеальный урок!" },
 
   // Dərs axını (runner chrome)
   "run.check": { az: "Yoxla", en: "Check", ru: "Проверить" },
