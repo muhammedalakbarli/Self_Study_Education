@@ -2,6 +2,7 @@
 // DB boşdursa/xəta olsa null qaytarır → ContentProvider TS seed-ə fallback edir.
 
 import { createClient } from "../supabase/client";
+import { subjects as seedSubjects } from "./index";
 import type {
   Subject,
   Unit,
@@ -10,6 +11,13 @@ import type {
   TaskFigure,
   RuleSection,
 } from "../types";
+
+// TS seed-dən dərs id → {sections, visual, intro} xəritəsi.
+// DB-də bu sahələr boş qalırsa (seed onları yazmayıbsa) buradan doldururuq —
+// beləcə qaydalar/şəkillər həmişə görünür (məzmun DB-də olsa da).
+const seedLessonById = new Map<string, Lesson>();
+for (const s of seedSubjects)
+  for (const u of s.units) for (const l of u.lessons) seedLessonById.set(l.id, l);
 
 interface SubjectRow {
   id: string;
@@ -117,12 +125,14 @@ export async function fetchContentTree(): Promise<Subject[] | null> {
     const lessonsByUnit = new Map<string, Lesson[]>();
     for (const row of lessonRows) {
       const t = tasksByLesson.get(row.id) ?? { main: [], bonus: [] };
+      const seed = seedLessonById.get(row.id); // DB-də boş sahələr üçün ehtiyat
       const lesson: Lesson = {
         id: row.id,
         title: row.title,
-        intro: row.intro ?? "",
-        visual: row.visual ?? undefined,
-        sections: row.sections ?? undefined,
+        intro: row.intro ?? seed?.intro ?? "",
+        visual: row.visual ?? seed?.visual,
+        sections:
+          row.sections && row.sections.length ? row.sections : seed?.sections,
         tasks: t.main,
         bonusTasks: t.bonus.length ? t.bonus : undefined,
       };

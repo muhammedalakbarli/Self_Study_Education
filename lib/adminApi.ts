@@ -143,3 +143,21 @@ export function deleteTask(id: string): Promise<Res> {
   const sb = createClient();
   return write(() => sb.from("tasks").delete().eq("id", id));
 }
+
+// ── Sıralama ──
+// Verilmiş sıra üzrə hər sətrin sort_order-ini yenilə (0..n-1).
+export async function reorderLevel(
+  table: "subjects" | "units" | "lessons" | "tasks",
+  ids: string[],
+): Promise<Res> {
+  try {
+    const sb = createClient();
+    for (let i = 0; i < ids.length; i++) {
+      const { error } = await sb.from(table).update({ sort_order: i }).eq("id", ids[i]);
+      if (error) return { ok: false, error: error.message };
+    }
+    return { ok: true };
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : "error" };
+  }
+}

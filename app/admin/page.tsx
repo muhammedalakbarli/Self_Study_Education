@@ -7,7 +7,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Plus, Pencil, Trash2, ChevronRight, ArrowLeft } from "lucide-react";
+import { Plus, Pencil, Trash2, ChevronRight, ChevronUp, ChevronDown } from "lucide-react";
 import { useAuthUser } from "@/lib/useAuthUser";
 import { fetchContentTree } from "@/lib/content/db";
 import {
@@ -21,6 +21,7 @@ import {
   deleteLesson,
   upsertTask,
   deleteTask,
+  reorderLevel,
   type TaskForm,
 } from "@/lib/adminApi";
 import type { Subject, Unit, Lesson, Task, TaskType, RuleSection } from "@/lib/types";
@@ -87,6 +88,20 @@ export default function AdminPage() {
     else if (kind === "task") await run(() => deleteTask(id));
   }
 
+  // ── Sıralama (yuxarı/aşağı) ──
+  async function move(
+    table: "subjects" | "units" | "lessons" | "tasks",
+    ids: string[],
+    index: number,
+    dir: -1 | 1,
+  ) {
+    const j = index + dir;
+    if (j < 0 || j >= ids.length) return;
+    const next = [...ids];
+    [next[index], next[j]] = [next[j], next[index]];
+    await run(() => reorderLevel(table, next));
+  }
+
   return (
     <div className="min-h-screen bg-ink">
       <main className="mx-auto max-w-3xl px-4 py-6">
@@ -135,7 +150,7 @@ export default function AdminPage() {
         <div className="mt-4 space-y-3">
           {/* LEVEL: Fənlər */}
           {!subj &&
-            subjects.map((s) => (
+            subjects.map((s, i) => (
               <Row
                 key={s.slug}
                 title={`${s.icon} ${s.name}`}
@@ -143,6 +158,10 @@ export default function AdminPage() {
                 onOpen={() => setSel({ s: s.slug })}
                 onEdit={() => setEditing({ kind: "subject", mode: "edit", data: s })}
                 onDelete={() => del("subject", s.slug, "Bütün bölmə/dərs/tapşırıqları da silinəcək.")}
+                onUp={() => move("subjects", subjects.map((x) => x.slug), i, -1)}
+                onDown={() => move("subjects", subjects.map((x) => x.slug), i, 1)}
+                first={i === 0}
+                last={i === subjects.length - 1}
               />
             ))}
           {!subj && (
@@ -152,7 +171,7 @@ export default function AdminPage() {
           {/* LEVEL: Bölmələr */}
           {subj &&
             !unit &&
-            subj.units.map((u) => (
+            subj.units.map((u, i) => (
               <Row
                 key={u.id}
                 title={u.title}
@@ -160,6 +179,10 @@ export default function AdminPage() {
                 onOpen={() => setSel({ s: subj.slug, u: u.id })}
                 onEdit={() => setEditing({ kind: "unit", mode: "edit", data: u })}
                 onDelete={() => del("unit", u.id, "Dərslər və tapşırıqlar da silinəcək.")}
+                onUp={() => move("units", subj.units.map((x) => x.id), i, -1)}
+                onDown={() => move("units", subj.units.map((x) => x.id), i, 1)}
+                first={i === 0}
+                last={i === subj.units.length - 1}
               />
             ))}
           {subj && !unit && (
@@ -169,7 +192,7 @@ export default function AdminPage() {
           {/* LEVEL: Dərslər */}
           {unit &&
             !lesson &&
-            unit.lessons.map((l) => (
+            unit.lessons.map((l, i) => (
               <Row
                 key={l.id}
                 title={l.title}
@@ -177,6 +200,10 @@ export default function AdminPage() {
                 onOpen={() => setSel({ s: subj!.slug, u: unit.id, l: l.id })}
                 onEdit={() => setEditing({ kind: "lesson", mode: "edit", data: l })}
                 onDelete={() => del("lesson", l.id, "İstifadəçilərin bu dərsdəki proqresi də silinəcək!")}
+                onUp={() => move("lessons", unit.lessons.map((x) => x.id), i, -1)}
+                onDown={() => move("lessons", unit.lessons.map((x) => x.id), i, 1)}
+                first={i === 0}
+                last={i === unit.lessons.length - 1}
               />
             ))}
           {unit && !lesson && (
@@ -186,7 +213,7 @@ export default function AdminPage() {
           {/* LEVEL: Tapşırıqlar */}
           {lesson && (
             <>
-              {taskList(lesson).map(({ t, bonus }) => (
+              {taskList(lesson).map(({ t, bonus }, i, arr) => (
                 <Row
                   key={t.id}
                   title={`${bonus ? "★ " : ""}${t.prompt}`}
@@ -195,6 +222,10 @@ export default function AdminPage() {
                     setEditing({ kind: "task", mode: "edit", data: taskToForm(t, bonus, lesson) })
                   }
                   onDelete={() => del("task", t.id)}
+                  onUp={() => move("tasks", arr.map((x) => x.t.id), i, -1)}
+                  onDown={() => move("tasks", arr.map((x) => x.t.id), i, 1)}
+                  first={i === 0}
+                  last={i === arr.length - 1}
                 />
               ))}
               <AddBtn
@@ -320,15 +351,42 @@ function Row({
   onOpen,
   onEdit,
   onDelete,
+  onUp,
+  onDown,
+  first,
+  last,
 }: {
   title: string;
   sub: string;
   onOpen?: () => void;
   onEdit: () => void;
   onDelete: () => void;
+  onUp?: () => void;
+  onDown?: () => void;
+  first?: boolean;
+  last?: boolean;
 }) {
   return (
-    <div className="flex items-center gap-3 rounded-2xl border border-line bg-panel px-4 py-3">
+    <div className="flex items-center gap-2 rounded-2xl border border-line bg-panel px-4 py-3">
+      {/* Sıralama oxları */}
+      <div className="flex flex-col">
+        <button
+          onClick={onUp}
+          disabled={first}
+          aria-label="Yuxarı"
+          className="text-muted hover:text-fg disabled:opacity-25"
+        >
+          <ChevronUp size={16} />
+        </button>
+        <button
+          onClick={onDown}
+          disabled={last}
+          aria-label="Aşağı"
+          className="text-muted hover:text-fg disabled:opacity-25"
+        >
+          <ChevronDown size={16} />
+        </button>
+      </div>
       <div className="min-w-0 flex-1">
         <div className="truncate font-bold text-fg">{title}</div>
         <div className="text-xs text-muted">{sub}</div>
@@ -372,9 +430,46 @@ function EditForm({
   onSave: (data: Record<string, unknown>) => void;
 }) {
   const [form, setForm] = useState<Record<string, unknown>>({ ...editing.data });
+  const [formErr, setFormErr] = useState("");
   const set = (k: string, v: unknown) => setForm((f) => ({ ...f, [k]: v }));
 
   const titleMap = { subject: "Fənn", unit: "Bölmə", lesson: "Dərs", task: "Tapşırıq" };
+
+  // Sadə validasiya — boş/yarımçıq məzmun DB-yə getməsin.
+  function validate(): string | null {
+    const s = (k: string) => String(form[k] ?? "").trim();
+    if (editing.kind === "subject") {
+      if (editing.mode === "new" && !/^[a-z0-9-]{2,}$/.test(s("slug")))
+        return "Slug yalnız kiçik hərf/rəqəm/tire olmalıdır (ən az 2 simvol)";
+      if (!s("name")) return "Ad boş ola bilməz";
+      if (!s("icon")) return "İkon boş ola bilməz";
+    }
+    if (editing.kind === "unit" && !s("title")) return "Başlıq boş ola bilməz";
+    if (editing.kind === "lesson" && !s("title")) return "Başlıq boş ola bilməz";
+    if (editing.kind === "task") {
+      if (!s("prompt")) return "Sual boş ola bilməz";
+      const type = form.type as TaskType;
+      if (type === "multiple_choice") {
+        const opts = ((form.options as string[]) ?? []).filter((o) => o.trim());
+        if (opts.length < 2) return "Ən azı 2 dolu variant lazımdır";
+        const ci = (form.correctIndex as number) ?? 0;
+        if (!((form.options as string[]) ?? [])[ci]?.trim()) return "Düzgün variant boş ola bilməz";
+      }
+      if (type === "fill_blank" && !((form.accepted as string[]) ?? []).length)
+        return "Ən azı 1 qəbul olunan cavab lazımdır";
+      if (type === "numeric" && form.answer === undefined) return "Cavab rəqəmi lazımdır";
+    }
+    return null;
+  }
+
+  function submit() {
+    const e = validate();
+    if (e) {
+      setFormErr(e);
+      return;
+    }
+    onSave(form);
+  }
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 p-0 sm:items-center sm:p-4" onClick={onCancel}>
@@ -420,10 +515,16 @@ function EditForm({
           )}
         </div>
 
+        {formErr && (
+          <p className="mt-3 rounded-xl bg-red-500/10 px-3 py-2 text-sm font-medium text-red-500">
+            {formErr}
+          </p>
+        )}
+
         <div className="mt-5 flex gap-2">
           <button
             disabled={busy}
-            onClick={() => onSave(form)}
+            onClick={submit}
             className="flex-1 rounded-2xl bg-brand px-5 py-3 font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark disabled:opacity-50"
           >
             {busy ? "..." : "Yadda saxla"}

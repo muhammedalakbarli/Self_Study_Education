@@ -18,7 +18,7 @@ import { addWeeklyXp } from "@/lib/leaderboard";
 import { addMonthlyXp } from "@/lib/monthly";
 import { touchFriendStreaks } from "@/lib/friends";
 import { levelFromXp } from "@/lib/levels";
-import { playCorrect, playWrong, playComplete, playLevelUp, playCombo } from "@/lib/sound";
+import { playCorrect, playWrong, playComplete, playLevelUp, playCombo, playStreak } from "@/lib/sound";
 import { vibrateCorrect, vibrateWrong, vibrateCelebrate } from "@/lib/haptics";
 import { useCountUp } from "@/lib/useCountUp";
 import { useT } from "@/lib/i18n";
@@ -192,6 +192,24 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
 
   return (
     <div className="flex min-h-screen flex-col bg-ink">
+      {/* Cavab flaşı — bütün ekran qısa yaşıl/qırmızı parıltı */}
+      <AnimatePresence>
+        {checked && (
+          <motion.div
+            key={`flash-${answered}`}
+            initial={{ opacity: 0.55 }}
+            animate={{ opacity: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className={`pointer-events-none fixed inset-0 z-20 ${
+              lastCorrect
+                ? "bg-[radial-gradient(circle_at_50%_60%,rgba(16,185,129,0.35),transparent_70%)]"
+                : "bg-[radial-gradient(circle_at_50%_60%,rgba(239,68,68,0.28),transparent_70%)]"
+            }`}
+          />
+        )}
+      </AnimatePresence>
+
       {/* Yuxarı bar: X + qalın progress + combo */}
       <div className="mx-auto flex w-full max-w-xl items-center gap-4 px-4 pt-5">
         <Link
@@ -316,10 +334,12 @@ function DoneScreen({
 }) {
   const t = useT();
   const xp = useCountUp(earnedXp, 900);
+  const perfect = accuracy === 100;
 
   useEffect(() => {
     vibrateCelebrate();
-  }, []);
+    if (perfect) setTimeout(() => playStreak(), 550); // qüsursuz → əlavə parıltı səsi
+  }, [perfect]);
 
   return (
     <div className="mx-auto max-w-xl py-14 text-center">
@@ -334,6 +354,17 @@ function DoneScreen({
           <Mascot size={110} mood="celebrate" />
         </motion.div>
       </motion.div>
+
+      {perfect && (
+        <motion.div
+          initial={{ scale: 0, opacity: 0, y: 8 }}
+          animate={{ scale: 1, opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, type: "spring", stiffness: 300, damping: 14 }}
+          className="mt-4 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-amber-400 to-yellow-500 px-4 py-1.5 text-sm font-extrabold uppercase tracking-wide text-amber-950 shadow-lg shadow-amber-500/30"
+        >
+          ✨ {t("cel.perfect")} ✨
+        </motion.div>
+      )}
 
       {leveledUp && (
         <motion.div
