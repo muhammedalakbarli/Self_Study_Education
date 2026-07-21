@@ -3,7 +3,6 @@
 // Bütün yazılar autentifikasiya olunmuş client ilə gedir (RLS: yalnız öz sətirləri).
 
 import { createClient } from "./supabase/client";
-import { orderedLessonIds } from "./content";
 
 export interface ProgressState {
   totalXp: number;
@@ -79,12 +78,12 @@ export async function addXp(_userId: string, amount: number): Promise<void> {
 }
 
 // Dərs kiliddədirmi? Fəndəki əvvəlki dərs tamamlanmayıbsa kiliddədir (ilk dərs həmişə açıqdır).
+// `order` — fəndəki dərs id-lərinin sırası (useContent().orderedLessonIds(slug)-dən).
 export function isLessonLocked(
-  slug: string,
+  order: string[],
   lessonId: string,
   completed: string[],
 ): boolean {
-  const order = orderedLessonIds(slug);
   const index = order.indexOf(lessonId);
   if (index <= 0) return false;
   const prev = order[index - 1];

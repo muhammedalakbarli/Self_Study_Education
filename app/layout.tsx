@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Nunito, Baloo_2, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import AppChrome from "@/components/AppChrome";
+import { ContentProvider } from "@/components/ContentProvider";
 
 // Gövdə şrifti — yumşaq, oxunaqlı.
 const nunito = Nunito({
@@ -68,7 +69,9 @@ export default function RootLayout({
       className={`${nunito.variable} ${baloo.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <AppChrome>{children}</AppChrome>
+        <ContentProvider>
+          <AppChrome>{children}</AppChrome>
+        </ContentProvider>
       </body>
     </html>
   );

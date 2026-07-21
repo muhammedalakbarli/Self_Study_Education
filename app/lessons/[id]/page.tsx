@@ -6,7 +6,7 @@ import { use, useState } from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { X } from "lucide-react";
-import { getLesson, orderedLessonIds } from "@/lib/content";
+import { useContent } from "@/components/ContentProvider";
 import { useAuthUser } from "@/lib/useAuthUser";
 import { useT } from "@/lib/i18n";
 import LessonRunner from "@/components/lesson/LessonRunner";
@@ -22,11 +22,14 @@ export default function LessonPage({
 }) {
   const { id } = use(params);
   const { user, ready } = useAuthUser();
+  const { getLesson, orderedLessonIds, loading } = useContent();
   const [started, setStarted] = useState(false);
   const t = useT();
 
   const found = getLesson(id);
 
+  // DB hələ yüklənirsə (seed-də olmayan yeni dərs ola bilər) 404 vermə, gözlə.
+  if (!found && loading) return <PageSkeleton />;
   if (!found) notFound();
   if (!ready || !user) return <PageSkeleton />;
 

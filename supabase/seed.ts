@@ -102,6 +102,8 @@ async function main() {
           unit_id: u.id,
           title: l.title,
           intro: l.intro ?? null,
+          visual: l.visual ?? null,
+          sections: l.sections ?? null,
           sort_order: li,
         });
         const all = [
