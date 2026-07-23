@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Nunito, Baloo_2, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import AppChrome from "@/components/AppChrome";
 import { ContentProvider } from "@/components/ContentProvider";
+import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
 
 // Gövdə şrifti — yumşaq, oxunaqlı.
 const nunito = Nunito({
@@ -41,6 +42,15 @@ export const metadata: Metadata = {
     "Bilik Yolu",
   ],
   applicationName: "Bilik Yolu",
+  // PWA: iOS ana ekranda tam ekran açılış + toxunma ikonu.
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Bilik Yolu",
+  },
+  icons: {
+    apple: "/apple-touch-icon.png",
+  },
   openGraph: {
     title: "Bilik Yolu — öyrənməyi əyləncəyə çevir",
     description:
@@ -58,6 +68,11 @@ export const metadata: Metadata = {
   },
 };
 
+// Mobil brauzer üst zolağının rəngi (brend narıncı).
+export const viewport: Viewport = {
+  themeColor: "#ff9500",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -72,6 +87,7 @@ export default function RootLayout({
         <ContentProvider>
           <AppChrome>{children}</AppChrome>
         </ContentProvider>
+        <ServiceWorkerRegister />
       </body>
     </html>
   );
