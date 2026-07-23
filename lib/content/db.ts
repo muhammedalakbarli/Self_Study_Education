@@ -3,6 +3,7 @@
 
 import { createClient } from "../supabase/client";
 import { subjects as seedSubjects } from "./index";
+import type { SupabaseClient } from "@supabase/supabase-js";
 import type {
   Subject,
   Unit,
@@ -93,9 +94,16 @@ function parseTask(row: TaskRow): { task: Task; bonus: boolean } {
 }
 
 // Bütün məzmunu bir dəfə çəkib ağac qur. Boş/xəta → null (fallback siqnalı).
+// Brauzer client ilə (ContentProvider bunu çağırır).
 export async function fetchContentTree(): Promise<Subject[] | null> {
+  return fetchContentTreeWith(createClient());
+}
+
+// Eyni məntiq, amma verilmiş client ilə — server (route handler) tərəf üçün.
+export async function fetchContentTreeWith(
+  supabase: SupabaseClient,
+): Promise<Subject[] | null> {
   try {
-    const supabase = createClient();
     const [subsRes, unitsRes, lessonsRes, tasksRes] = await Promise.all([
       supabase.from("subjects").select("*").order("sort_order"),
       supabase.from("units").select("*").order("sort_order"),
