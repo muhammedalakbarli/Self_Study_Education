@@ -93,7 +93,7 @@ export default function LoginPage() {
             aria-label={t("auth.homeAria")}
           >
             <Logo size={40} />
-            <span className="text-xl font-extrabold text-fg">Bilik Yolu</span>
+            <span className="text-xl font-extrabold text-slate-900">Bilik Yolu</span>
           </Link>
 
           <h1 className="text-2xl font-extrabold text-slate-900">{t("auth.login.title")}</h1>
