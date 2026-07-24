@@ -15,6 +15,7 @@ import TaskInput from "@/components/tasks/TaskInput";
 import TaskFigure from "@/components/TaskFigure";
 import Mascot from "@/components/Mascot";
 import Confetti from "@/components/Confetti";
+import QuestionFeedback from "@/components/lesson/QuestionFeedback";
 
 const shuffle = <T,>(a: T[]): T[] => [...a].sort(() => Math.random() - 0.5);
 
@@ -131,6 +132,8 @@ function ReviewRunner({ tasks, onExit, onCorrect, onFinish }: Props) {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {checked && <QuestionFeedback key={task.id} taskId={task.id} />}
 
       <div className="mt-6">
         {!checked ? (
