@@ -64,6 +64,11 @@ const DICT: Dict = {
     en: "Data presentation and probability",
     ru: "Представление данных и вероятность",
   },
+  "unit.ry-divis": {
+    az: "Bölünmə əlamətləri və ədədlər",
+    en: "Divisibility rules and numbers",
+    ru: "Признаки делимости и числа",
+  },
   "unit.az-grammar": {
     az: "Dil qaydaları (Qrammatika)",
     en: "Language rules (Grammar)",
