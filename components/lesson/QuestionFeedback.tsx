@@ -38,7 +38,10 @@ export default function QuestionFeedback({ taskId }: { taskId: string }) {
   // Göndərildi → sadə təşəkkür.
   if (sent) {
     return (
-      <div className="mt-3 flex items-center gap-2 text-sm font-medium text-emerald-600">
+      <div
+        data-feedback
+        className="mt-3 flex items-center gap-2 text-sm font-medium text-emerald-600"
+      >
         <Check size={16} strokeWidth={3} /> Təşəkkürlər! Rəyin bizə çatdı.
       </div>
     );
@@ -48,6 +51,7 @@ export default function QuestionFeedback({ taskId }: { taskId: string }) {
     return (
       <button
         type="button"
+        data-feedback
         onClick={() => setOpen(true)}
         className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-muted transition hover:text-fg"
       >
@@ -59,6 +63,7 @@ export default function QuestionFeedback({ taskId }: { taskId: string }) {
   return (
     <AnimatePresence>
       <motion.div
+        data-feedback
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         className="mt-3 rounded-2xl border border-line bg-panel p-4"

@@ -4,7 +4,7 @@
 // Gamification: dərs içi combo (ard-arda düzgün → bonus XP), səs effektləri,
 // dərs sonu bayramı (konfetti + XP count-up + statistika + level-up).
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
@@ -94,6 +94,27 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
       vibrateWrong();
     }
   }
+
+  // Enter → "Yoxla" (bütün sual tipləri). Yalnız cavab mərhələsində;
+  // preventDefault fokuslu düymənin ikinci dəfə işləməsini bağlayır.
+  const onEnterRef = useRef<(e: KeyboardEvent) => void>(() => {});
+  useEffect(() => {
+    onEnterRef.current = (e) => {
+      if (phase !== "main" && phase !== "bonus") return;
+      const el = e.target as HTMLElement | null;
+      if (el?.closest("[data-feedback]")) return;
+      e.preventDefault();
+      if (checked) advance();
+      else handleCheck();
+    };
+  });
+  useEffect(() => {
+    const h = (e: KeyboardEvent) => {
+      if (e.key === "Enter") onEnterRef.current(e);
+    };
+    window.addEventListener("keydown", h);
+    return () => window.removeEventListener("keydown", h);
+  }, []);
 
   if (total === 0) {
     return <div className="py-12 text-center text-muted">{t("run.noTasks")}</div>;
