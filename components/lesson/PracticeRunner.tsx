@@ -8,10 +8,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import type { Task, MultipleChoiceTask } from "@/lib/types";
 import { gradeTask, type UserAnswer } from "@/lib/grading";
-import { playCorrect, playWrong, playComplete } from "@/lib/sound";
+import { playCorrect, playWrong, playComplete, playStreak } from "@/lib/sound";
+import { vibrateCelebrate } from "@/lib/haptics";
+import { useCountUp } from "@/lib/useCountUp";
 import TaskInput from "@/components/tasks/TaskInput";
 import TaskFigure from "@/components/TaskFigure";
 import Mascot from "@/components/Mascot";
+import Confetti from "@/components/Confetti";
 
 const shuffle = <T,>(a: T[]): T[] => [...a].sort(() => Math.random() - 0.5);
 
@@ -35,6 +38,8 @@ function ReviewRunner({ tasks, onExit, onCorrect, onFinish }: Props) {
   const [checked, setChecked] = useState(false);
   const [lastCorrect, setLastCorrect] = useState(false);
   const [correct, setCorrect] = useState(0);
+  const [streak, setStreak] = useState(0);
+  const [bestStreak, setBestStreak] = useState(0);
   const [done, setDone] = useState(false);
 
   const task = tasks[index];
@@ -47,9 +52,13 @@ function ReviewRunner({ tasks, onExit, onCorrect, onFinish }: Props) {
     setLastCorrect(r.correct);
     if (r.correct) {
       setCorrect((c) => c + 1);
+      const n = streak + 1;
+      setStreak(n);
+      setBestStreak((b) => Math.max(b, n));
       onCorrect?.(task.id);
       playCorrect();
     } else {
+      setStreak(0);
       playWrong();
     }
   }
@@ -68,13 +77,23 @@ function ReviewRunner({ tasks, onExit, onCorrect, onFinish }: Props) {
   function restart() {
     setIndex(0);
     setCorrect(0);
+    setStreak(0);
+    setBestStreak(0);
     setAnswer(null);
     setChecked(false);
     setDone(false);
   }
 
   if (done)
-    return <Result correct={correct} total={total} onExit={onExit} onRestart={restart} />;
+    return (
+      <Result
+        correct={correct}
+        total={total}
+        bestStreak={bestStreak}
+        onExit={onExit}
+        onRestart={restart}
+      />
+    );
 
   return (
     <div>
@@ -145,6 +164,8 @@ function SpeedRunner({ tasks, onExit, onFinish }: Props) {
   const [time, setTime] = useState(DURATION);
   const [correct, setCorrect] = useState(0);
   const [answered, setAnswered] = useState(0);
+  const [streak, setStreak] = useState(0);
+  const [bestStreak, setBestStreak] = useState(0);
   const [order, setOrder] = useState<MultipleChoiceTask[]>(() => shuffle(mc));
   const [i, setI] = useState(0);
   const [picked, setPicked] = useState<number | null>(null);
@@ -174,8 +195,12 @@ function SpeedRunner({ tasks, onExit, onFinish }: Props) {
     setPicked(idx);
     if (r.correct) {
       setCorrect((c) => c + 1);
+      const n = streak + 1;
+      setStreak(n);
+      setBestStreak((b) => Math.max(b, n));
       playCorrect();
     } else {
+      setStreak(0);
       playWrong();
     }
     setAnswered((a) => a + 1);
@@ -194,6 +219,8 @@ function SpeedRunner({ tasks, onExit, onFinish }: Props) {
     setTime(DURATION);
     setCorrect(0);
     setAnswered(0);
+    setStreak(0);
+    setBestStreak(0);
     setOrder(shuffle(mc));
     setI(0);
     setPicked(null);
@@ -202,7 +229,14 @@ function SpeedRunner({ tasks, onExit, onFinish }: Props) {
 
   if (done)
     return (
-      <Result correct={correct} total={answered} timed onExit={onExit} onRestart={restart} />
+      <Result
+        correct={correct}
+        total={answered}
+        bestStreak={bestStreak}
+        timed
+        onExit={onExit}
+        onRestart={restart}
+      />
     );
 
   return (
@@ -275,31 +309,95 @@ function Header({
   );
 }
 
-// ── Nəticə ──
+// ── Nəticə (Duolingo üslubu bayram ekranı) ──
 function Result({
   correct,
   total,
+  bestStreak,
   timed,
   onExit,
   onRestart,
 }: {
   correct: number;
   total: number;
+  bestStreak: number;
   timed?: boolean;
   onExit: () => void;
   onRestart: () => void;
 }) {
+  const accuracy = total ? Math.round((correct / total) * 100) : 0;
+  const perfect = total > 0 && accuracy === 100;
+  const shownCorrect = useCountUp(correct, 800);
+  const shownAcc = useCountUp(accuracy, 900);
+
+  useEffect(() => {
+    vibrateCelebrate();
+    if (perfect) setTimeout(() => playStreak(), 550); // qüsursuz → əlavə parıltı səsi
+  }, [perfect]);
+
+  // Performansa görə başlıq + alt mesaj + maskot əhvalı.
+  const tier =
+    perfect
+      ? { title: "Qüsursuz!", sub: "Bir dənə də səhv yoxdur 🏆", mood: "celebrate" as const }
+      : accuracy >= 80
+        ? { title: "Möhtəşəm!", sub: "Əla nəticə, davam et!", mood: "celebrate" as const }
+        : accuracy >= 50
+          ? { title: "Afərin!", sub: "Yaxşı gedir — bir az da məşq!", mood: "happy" as const }
+          : { title: "Davam et!", sub: "Hər məşq səni gücləndirir 💪", mood: "happy" as const };
+
   return (
-    <div className="mx-auto max-w-xl py-12 text-center">
-      <div className="flex justify-center">
-        <Mascot size={110} mood="celebrate" />
-      </div>
-      <h1 className="mt-4 text-2xl font-bold text-fg">
-        {timed ? "Vaxt bitdi!" : "Praktika bitdi!"}
-      </h1>
-      <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-brand/15 px-5 py-2 text-lg font-semibold text-brand-soft">
-        {correct} / {total} düzgün
-      </div>
+    <div className="mx-auto max-w-xl py-14 text-center">
+      <Confetti />
+      <motion.div
+        className="flex justify-center"
+        initial={{ scale: 0.3, rotate: -20, opacity: 0 }}
+        animate={{ scale: 1, rotate: 0, opacity: 1 }}
+        transition={{ type: "spring", stiffness: 240, damping: 12 }}
+      >
+        <motion.div animate={{ y: [0, -16, 0] }} transition={{ duration: 0.8, delay: 0.3 }}>
+          <Mascot size={110} mood={tier.mood} />
+        </motion.div>
+      </motion.div>
+
+      {perfect && (
+        <motion.div
+          initial={{ scale: 0, opacity: 0, y: 8 }}
+          animate={{ scale: 1, opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, type: "spring", stiffness: 300, damping: 14 }}
+          className="mt-4 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-amber-400 to-yellow-500 px-4 py-1.5 text-sm font-extrabold uppercase tracking-wide text-amber-950 shadow-lg shadow-amber-500/30"
+        >
+          ✨ Qüsursuz ✨
+        </motion.div>
+      )}
+
+      <motion.h1
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.15 }}
+        className="mt-4 text-2xl font-bold text-fg"
+      >
+        {timed ? "Vaxt bitdi!" : tier.title}
+      </motion.h1>
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.25 }}
+        className="mt-1 text-muted"
+      >
+        {tier.sub}
+      </motion.p>
+
+      <motion.div
+        className="mt-6 grid grid-cols-3 gap-3"
+        initial="hidden"
+        animate="show"
+        variants={{ show: { transition: { staggerChildren: 0.12, delayChildren: 0.3 } } }}
+      >
+        <Stat value={`${shownCorrect}/${total}`} label="Düzgün" tone="text-brand-soft" />
+        <Stat value={`${shownAcc}%`} label="Dəqiqlik" tone="text-emerald-500" />
+        <Stat value={`🔥 ${bestStreak}`} label="Ən yaxşı seriya" tone="text-orange-500" />
+      </motion.div>
+
       <div className="mt-8 flex justify-center gap-3">
         <button
           type="button"
@@ -317,5 +415,25 @@ function Result({
         </button>
       </div>
     </div>
+  );
+}
+
+function Stat({ value, label, tone }: { value: string; label: string; tone: string }) {
+  return (
+    <motion.div
+      variants={{
+        hidden: { opacity: 0, y: 24, scale: 0.8 },
+        show: {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          transition: { type: "spring", stiffness: 320, damping: 18 },
+        },
+      }}
+      className="rounded-2xl border border-line bg-panel px-3 py-4"
+    >
+      <div className={`text-xl font-extrabold ${tone}`}>{value}</div>
+      <div className="mt-0.5 text-[11px] text-muted">{label}</div>
+    </motion.div>
   );
 }
