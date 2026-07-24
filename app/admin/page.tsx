@@ -107,9 +107,14 @@ export default function AdminPage() {
       <main className="mx-auto max-w-3xl px-4 py-6">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-bold text-fg">Admin · Məzmun</h1>
-          <Link href="/dashboard" className="text-sm text-muted hover:text-fg">
-            ← Panelə qayıt
-          </Link>
+          <div className="flex items-center gap-4">
+            <Link href="/admin/feedback" className="text-sm font-semibold text-brand hover:underline">
+              Rəylər
+            </Link>
+            <Link href="/dashboard" className="text-sm text-muted hover:text-fg">
+              ← Panelə qayıt
+            </Link>
+          </div>
         </div>
 
         {/* Breadcrumb */}

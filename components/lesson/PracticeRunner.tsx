@@ -15,6 +15,7 @@ import TaskInput from "@/components/tasks/TaskInput";
 import TaskFigure from "@/components/TaskFigure";
 import Mascot from "@/components/Mascot";
 import Confetti from "@/components/Confetti";
+import QuestionFeedback from "@/components/lesson/QuestionFeedback";
 
 const shuffle = <T,>(a: T[]): T[] => [...a].sort(() => Math.random() - 0.5);
 
@@ -84,6 +85,28 @@ function ReviewRunner({ tasks, onExit, onCorrect, onFinish }: Props) {
     setDone(false);
   }
 
+  // Enter → "Yoxla" (bütün sual tipləri: seçim + yazı).
+  // preventDefault fokuslu düymənin ikinci dəfə işləməsinin qarşısını alır;
+  // rəy (textarea) daxilində Enter toxunulmaz qalır.
+  const onEnterRef = useRef<(e: KeyboardEvent) => void>(() => {});
+  useEffect(() => {
+    onEnterRef.current = (e) => {
+      if (done) return;
+      const el = e.target as HTMLElement | null;
+      if (el?.closest("[data-feedback]")) return; // rəy formunda Enter sərbəst
+      e.preventDefault();
+      if (checked) next();
+      else check();
+    };
+  });
+  useEffect(() => {
+    const h = (e: KeyboardEvent) => {
+      if (e.key === "Enter") onEnterRef.current(e);
+    };
+    window.addEventListener("keydown", h);
+    return () => window.removeEventListener("keydown", h);
+  }, []);
+
   if (done)
     return (
       <Result
@@ -131,6 +154,8 @@ function ReviewRunner({ tasks, onExit, onCorrect, onFinish }: Props) {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {checked && <QuestionFeedback key={task.id} taskId={task.id} />}
 
       <div className="mt-6">
         {!checked ? (
