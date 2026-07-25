@@ -69,6 +69,11 @@ const DICT: Dict = {
     en: "Divisibility rules and numbers",
     ru: "Признаки делимости и числа",
   },
+  "unit.az-parts-of-speech": {
+    az: "Nitq hissələri",
+    en: "Parts of speech",
+    ru: "Части речи",
+  },
   "unit.az-grammar": {
     az: "Dil qaydaları (Qrammatika)",
     en: "Language rules (Grammar)",
