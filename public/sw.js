@@ -5,7 +5,7 @@
 //   - Naviqasiya (səhifə): əvvəlcə şəbəkə, offline olsa keşdən/ana səhifədən.
 //   - Statik fayllar (_next/static, şəkil, şrift): stale-while-revalidate.
 
-const CACHE = "bilik-yolu-v1";
+const CACHE = "bilik-yolu-v2";
 const OFFLINE_URL = "/";
 
 // Şəbəkə çatmayanda göstəriləcək minimal offline HTML.
@@ -18,9 +18,14 @@ h1{font-size:20px;margin:16px 0 8px}p{color:#6b6880;max-width:280px}</style></he
 <body><div style="font-size:56px">⭐</div><h1>İnternet bağlantısı yoxdur</h1>
 <p>Bilik Yolu-nu işlətmək üçün internetə qoşul. Bağlantı bərpa olunanda səhifəni yenilə.</p></body></html>`;
 
+// Səhifə "Yenilə" deyəndə gözləyən SW-i dərhal aktiv et (yeni versiyaya keç).
+self.addEventListener("message", (event) => {
+  if (event.data && event.data.type === "SKIP_WAITING") self.skipWaiting();
+});
+
 self.addEventListener("install", (event) => {
-  // Yeni SW-i dərhal aktiv et.
-  self.skipWaiting();
+  // skipWaiting-i BURADA çağırmırıq — yeni SW gözləyir ki, istifadəçi
+  // "Yenilə" düyməsi ilə təsdiqləsin (səhifə ortasında məcburi yeniləmə olmasın).
   event.waitUntil(
     caches.open(CACHE).then((cache) =>
       cache.put(
