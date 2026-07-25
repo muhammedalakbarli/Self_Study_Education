@@ -687,6 +687,12 @@ export function t(key: string, lang: Lang = getLang()): string {
   return DICT[key]?.[lang] ?? DICT[key]?.az ?? key;
 }
 
+// Açar sözlükdə varmı? Naməlum id-lər (məs. admin paneldən yaradılmış bölmələr)
+// üçün xam açar əvəzinə DB başlığına düşmək qərarında istifadə olunur.
+export function hasKey(key: string): boolean {
+  return key in DICT;
+}
+
 // Hydration-təhlükəsiz: server və hidrasiya "az", sonra real dil.
 // useSyncExternalStore hidrasiya uyğunsuzluğu vermədən localStorage dilini oxuyur
 // və "bilik-lang" / storage hadisələrində yenilənir.
