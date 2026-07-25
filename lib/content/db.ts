@@ -104,11 +104,13 @@ export async function fetchContentTreeWith(
   supabase: SupabaseClient,
 ): Promise<Subject[] | null> {
   try {
+    // İkinci açar (id) — eyni sort_order-lu sətirlərdə sıra sabit qalsın
+    // (məs. admin paneldən yaradılıb təsadüfən eyni sort_order almış bölmələr).
     const [subsRes, unitsRes, lessonsRes, tasksRes] = await Promise.all([
-      supabase.from("subjects").select("*").order("sort_order"),
-      supabase.from("units").select("*").order("sort_order"),
-      supabase.from("lessons").select("*").order("sort_order"),
-      supabase.from("tasks").select("*").order("sort_order"),
+      supabase.from("subjects").select("*").order("sort_order").order("id"),
+      supabase.from("units").select("*").order("sort_order").order("id"),
+      supabase.from("lessons").select("*").order("sort_order").order("id"),
+      supabase.from("tasks").select("*").order("sort_order").order("id"),
     ]);
 
     const subs = subsRes.data as SubjectRow[] | null;

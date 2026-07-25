@@ -10,7 +10,7 @@ import { loadProgress, type ProgressState } from "@/lib/progress";
 import { useContent } from "@/components/ContentProvider";
 import { loadMistakes, removeMistake } from "@/lib/mistakes";
 import { isDailyDone, markDailyDone } from "@/lib/daily";
-import { useT } from "@/lib/i18n";
+import { useT, hasKey } from "@/lib/i18n";
 import type { Task } from "@/lib/types";
 import { PageSkeleton } from "@/components/Skeleton";
 import PracticeRunner from "@/components/lesson/PracticeRunner";
@@ -190,15 +190,16 @@ export default function PracticePage() {
               ...l.tasks,
               ...(l.bonusTasks ?? []),
             ]);
+            // İ18n açarı varsa tərcümə, yoxsa DB başlığı (admin paneldən yaradılan
+            // bölmələr üçün xam "unit.<id>" göstərilməsin).
+            const unitName = hasKey(`unit.${u.id}`) ? t(`unit.${u.id}`) : u.title;
             return (
               <button
                 key={u.id}
-                onClick={() =>
-                  setSession({ tasks: sample(unitTasks, 10), title: t(`unit.${u.id}`) })
-                }
+                onClick={() => setSession({ tasks: sample(unitTasks, 10), title: unitName })}
                 className="flex w-full items-center gap-3 border-b border-line px-4 py-3.5 text-left transition last:border-b-0 hover:bg-panel-2"
               >
-                <span className="flex-1 font-bold text-fg">{t(`unit.${u.id}`)}</span>
+                <span className="flex-1 font-bold text-fg">{unitName}</span>
                 <span className="text-xs text-muted">
                   {unitTasks.length} {t("practice.tasks")}
                 </span>
