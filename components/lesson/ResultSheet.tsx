@@ -6,6 +6,7 @@
 import { motion } from "framer-motion";
 import { Check, X } from "lucide-react";
 import Mascot from "@/components/Mascot";
+import QuestionFeedback from "@/components/lesson/QuestionFeedback";
 import { useT } from "@/lib/i18n";
 
 interface Props {
@@ -13,6 +14,7 @@ interface Props {
   correctText?: string; // səhv olduqda düzgün cavab
   comboBonus?: number;
   ctaLabel: string;
+  taskId: string; // sualla bağlı rəy üçün
   onContinue: () => void;
 }
 
@@ -21,6 +23,7 @@ export default function ResultSheet({
   correctText,
   comboBonus = 0,
   ctaLabel,
+  taskId,
   onContinue,
 }: Props) {
   const t = useT();
@@ -37,7 +40,8 @@ export default function ResultSheet({
           : "border-red-400/40 bg-red-50 dark:bg-red-500/10"
       }`}
     >
-      <div className="mx-auto flex max-w-xl flex-col gap-4 px-4 py-5 sm:flex-row sm:items-center">
+      <div className="mx-auto max-w-xl px-4 py-5">
+       <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
         <motion.div
           initial={{ scale: 0.5, rotate: correct ? -12 : 0 }}
           animate={
@@ -87,6 +91,9 @@ export default function ResultSheet({
         >
           {ctaLabel}
         </button>
+       </div>
+
+        <QuestionFeedback key={taskId} taskId={taskId} />
       </div>
     </motion.div>
   );

@@ -322,6 +322,7 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
             correctText={correctAnswerText(task)}
             comboBonus={comboBonus}
             ctaLabel={ctaText}
+            taskId={task.id}
             onContinue={advance}
           />
         )}
