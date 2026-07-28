@@ -13,6 +13,181 @@ export const english: Subject = {
   color: "violet",
   units: [
     // ═══════════════════════════════════════════════════════════════
+    // 1-Cİ DÖVR — PRESENT SIMPLE (Qayda → Lüğət → Dinləmə → Oxu → Yazı)
+    // Hər bölmə bir bacarıqdır; hamısı eyni "gündəlik fellər" lüğəti ilə bağlıdır.
+    // ═══════════════════════════════════════════════════════════════
+    {
+      id: "en-c1-grammar",
+      title: "Qayda: Present Simple",
+      description: "İndiki sadə zaman — hər gün təkrarlanan işlər. Qaydanı oxu, sonra məşq et.",
+      lessons: [
+        {
+          id: "ps-rule",
+          title: "Present Simple qaydası",
+          intro: "Present Simple hər gün təkrarlanan işləri bildirir. Gəl qaydanı öyrənək!",
+          sections: [
+            { heading: "Present Simple nədir?", body: "Hər gün, həmişə və ya adətən təkrarlanan işləri bildirir: I go to school every day. (Mən hər gün məktəbə gedirəm.)" },
+            { heading: "he / she / it → felə -s", body: "O (he/she/it) ilə felin sonuna -s əlavə olunur: She reads. He plays. Amma I/you/we/they ilə fel dəyişmir: I read, they play." },
+            { heading: "Sual və inkar: do / does", body: "Sual: Do you like tea? Does she go? İnkar: I don't eat meat. He doesn't play. (he/she/it → does/doesn't.)" },
+          ],
+          tasks: [
+            { id: "ps-rule-t1", type: "multiple_choice", prompt: "'I ___ to school every day.'", options: ["go", "goes", "going", "went"], correctIndex: 0, xp: 10 },
+            { id: "ps-rule-t2", type: "multiple_choice", prompt: "'She ___ a book.' (read)", options: ["read", "reads", "reading", "readed"], correctIndex: 1, xp: 10 },
+            { id: "ps-rule-t3", type: "multiple_choice", prompt: "'He ___ football.' (play)", options: ["play", "plays", "playing", "played"], correctIndex: 1, xp: 10 },
+            { id: "ps-rule-t4", type: "multiple_choice", prompt: "'They ___ water.' (drink)", options: ["drink", "drinks", "drinking", "drank"], correctIndex: 0, xp: 10 },
+            { id: "ps-rule-t5", type: "fill_blank", prompt: "'She (watch) TV.' — düzgün formanı yaz.", accepted: ["watches"], xp: 10 },
+            { id: "ps-rule-t6", type: "multiple_choice", prompt: "he / she / it ilə felə hansı şəkilçi əlavə olunur?", options: ["-s", "-ed", "-ing", "heç nə"], correctIndex: 0, xp: 10 },
+            { id: "ps-rule-t7", type: "multiple_choice", prompt: "'We ___ breakfast every morning.' (eat)", options: ["eat", "eats", "eating", "ate"], correctIndex: 0, xp: 10 },
+            { id: "ps-rule-t8", type: "multiple_choice", prompt: "İnkar: 'He ___ like milk.'", options: ["don't", "doesn't", "isn't", "not"], correctIndex: 1, xp: 10 },
+            { id: "ps-rule-t9", type: "multiple_choice", prompt: "Sual: '___ you play football?'", options: ["Do", "Does", "Are", "Is"], correctIndex: 0, xp: 10 },
+            { id: "ps-rule-t10", type: "multiple_choice", prompt: "Sual: '___ she read books?'", options: ["Do", "Does", "Is", "Are"], correctIndex: 1, xp: 10 },
+            { id: "ps-rule-t11", type: "multiple_choice", prompt: "'My father ___ every day.' (work)", options: ["work", "works", "working", "worked"], correctIndex: 1, xp: 10 },
+            { id: "ps-rule-t12", type: "multiple_choice", prompt: "'I ___ apples.' (like)", options: ["like", "likes", "liking", "liked"], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "ps-rule-b1", type: "multiple_choice", prompt: "'The sun ___ in the east.' (fakt, rise)", options: ["rise", "rises", "rising", "rose"], correctIndex: 1, xp: 15 },
+            { id: "ps-rule-b2", type: "fill_blank", prompt: "'He (go) to school.' — düzgün formanı yaz.", accepted: ["goes"], xp: 15 },
+            { id: "ps-rule-b3", type: "multiple_choice", prompt: "Hansı cümlə düzgündür?", options: ["She go home.", "She goes home.", "She going home.", "She gone home."], correctIndex: 1, xp: 15 },
+            { id: "ps-rule-b4", type: "multiple_choice", prompt: "'Cats ___ milk.' (drink)", options: ["drink", "drinks", "drinking", "drank"], correctIndex: 0, xp: 15 },
+          ],
+        },
+      ],
+    },
+    {
+      id: "en-c1-vocab",
+      title: "Lüğət: Gündəlik fellər",
+      description: "8 yeni fel — eyni sözləri müxtəlif cümlələrdə təkrar-təkrar işlət.",
+      lessons: [
+        {
+          id: "ps-vocab",
+          title: "Gündəlik fellər (8 söz)",
+          intro: "Bu gün 8 yeni fel öyrənəcəyik və onları cümlələrdə işlədəcəyik.",
+          sections: [
+            { heading: "Yeni sözlər (8 fel)", body: "get up — durmaq/qalxmaq · go — getmək · eat — yemək · drink — içmək · read — oxumaq · play — oynamaq · watch — baxmaq · like — sevmək" },
+            { heading: "Məsləhət", body: "Hər sözü bir cümlədə xatırla: I eat breakfast. She reads a book. Sözü cümlə ilə öyrənmək daha asandır." },
+          ],
+          tasks: [
+            { id: "ps-vocab-t1", type: "multiple_choice", prompt: "'eat' sözünün mənası nədir?", options: ["içmək", "yemək", "oxumaq", "getmək"], correctIndex: 1, xp: 10 },
+            { id: "ps-vocab-t2", type: "multiple_choice", prompt: "'read' sözünün mənası?", options: ["oynamaq", "oxumaq", "baxmaq", "durmaq"], correctIndex: 1, xp: 10 },
+            { id: "ps-vocab-t3", type: "multiple_choice", prompt: "'play' sözünün mənası?", options: ["oynamaq", "yemək", "içmək", "sevmək"], correctIndex: 0, xp: 10 },
+            { id: "ps-vocab-t4", type: "multiple_choice", prompt: "'drink' sözünün mənası?", options: ["baxmaq", "içmək", "getmək", "oxumaq"], correctIndex: 1, xp: 10 },
+            { id: "ps-vocab-t5", type: "multiple_choice", prompt: "'watch' sözünün mənası?", options: ["baxmaq", "durmaq", "yemək", "oynamaq"], correctIndex: 0, xp: 10 },
+            { id: "ps-vocab-t6", type: "multiple_choice", prompt: "'go' sözünün mənası?", options: ["getmək", "gəlmək", "durmaq", "içmək"], correctIndex: 0, xp: 10 },
+            { id: "ps-vocab-t7", type: "fill_blank", prompt: "'getmək' ingiliscə necə yazılır?", accepted: ["go"], xp: 10 },
+            { id: "ps-vocab-t8", type: "fill_blank", prompt: "'oxumaq' ingiliscə necə yazılır?", accepted: ["read"], xp: 10 },
+            { id: "ps-vocab-t9", type: "multiple_choice", prompt: "'I ___ water.' (içmək)", options: ["drink", "eat", "read", "play"], correctIndex: 0, xp: 10 },
+            { id: "ps-vocab-t10", type: "multiple_choice", prompt: "'She ___ a book.' (oxumaq)", options: ["reads", "eats", "plays", "drinks"], correctIndex: 0, xp: 10 },
+            { id: "ps-vocab-t11", type: "multiple_choice", prompt: "'They ___ football.' (oynamaq)", options: ["play", "watch", "drink", "go"], correctIndex: 0, xp: 10 },
+            { id: "ps-vocab-t12", type: "fill_blank", prompt: "'I ___ TV in the evening.' (baxmaq — düzgün feli yaz)", accepted: ["watch"], xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "ps-vocab-b1", type: "multiple_choice", prompt: "'get up' nə deməkdir?", options: ["yatmaq", "durmaq / qalxmaq", "oturmaq", "qaçmaq"], correctIndex: 1, xp: 15 },
+            { id: "ps-vocab-b2", type: "multiple_choice", prompt: "'like' nə deməkdir?", options: ["sevmək", "sevməmək", "bilmək", "istəmək"], correctIndex: 0, xp: 15 },
+            { id: "ps-vocab-b3", type: "multiple_choice", prompt: "'We ___ breakfast.' (yemək)", options: ["eat", "drink", "read", "watch"], correctIndex: 0, xp: 15 },
+            { id: "ps-vocab-b4", type: "fill_blank", prompt: "'oynamaq' ingiliscə necə yazılır?", accepted: ["play"], xp: 15 },
+          ],
+        },
+      ],
+    },
+    {
+      id: "en-c1-listening",
+      title: "Dinləmə: Present Simple",
+      description: "Present Simple cümlələrini qulaqla tanı — dinlə və düzgün mənanı seç.",
+      lessons: [
+        {
+          id: "ps-listen",
+          title: "Dinlə və seç: cümlələr",
+          intro: "Cümləni dinlə və düzgün cavabı seç.",
+          sections: [
+            { heading: "Necə işləyir?", body: "«Dinlə» düyməsinə bas, cümləni eşit və düzgün variantı seç. İstədiyin qədər təkrar dinlə." },
+          ],
+          tasks: [
+            { id: "ps-listen-t1", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I eat breakfast.", options: ["Mən səhər yeməyi yeyirəm.", "Mən su içirəm.", "Mən kitab oxuyuram.", "Mən televizora baxıram."], correctIndex: 0, xp: 10 },
+            { id: "ps-listen-t2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She reads a book.", options: ["O futbol oynayır.", "O kitab oxuyur.", "O su içir.", "O məktəbə gedir."], correctIndex: 1, xp: 10 },
+            { id: "ps-listen-t3", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "He plays football.", options: ["O televizora baxır.", "O yemək yeyir.", "O futbol oynayır.", "O durur."], correctIndex: 2, xp: 10 },
+            { id: "ps-listen-t4", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "We drink water.", options: ["Biz su içirik.", "Biz yemək yeyirik.", "Biz oynayırıq.", "Biz oxuyuruq."], correctIndex: 0, xp: 10 },
+            { id: "ps-listen-t5", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "They go to school.", options: ["Onlar evə gedir.", "Onlar məktəbə gedir.", "Onlar oynayır.", "Onlar yatır."], correctIndex: 1, xp: 10 },
+            { id: "ps-listen-t6", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I watch TV.", options: ["Mən televizora baxıram.", "Mən kitab oxuyuram.", "Mən su içirəm.", "Mən qaçıram."], correctIndex: 0, xp: 10 },
+            { id: "ps-listen-t7", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She likes apples.", options: ["O almanı sevmir.", "O alma yeyir.", "O almanı sevir.", "O alma alır."], correctIndex: 2, xp: 10 },
+            { id: "ps-listen-t8", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "He gets up at seven.", options: ["O saat yeddidə durur.", "O saat yeddidə yatır.", "O saat səkkizdə durur.", "O saat altıda gəlir."], correctIndex: 0, xp: 10 },
+            { id: "ps-listen-t9", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "We eat lunch at school.", options: ["Biz evdə nahar edirik.", "Biz məktəbdə nahar edirik.", "Biz məktəbdə oynayırıq.", "Biz nahar etmirik."], correctIndex: 1, xp: 10 },
+            { id: "ps-listen-t10", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "You read every day.", options: ["Sən hər gün oxuyursan.", "Sən heç oxumursan.", "Sən hər gün oynayırsan.", "Sən bəzən oxuyursan."], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "ps-listen-b1", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "The cat drinks milk.", options: ["Pişik su içir.", "Pişik süd içir.", "Pişik yemək yeyir.", "İt süd içir."], correctIndex: 1, xp: 15 },
+            { id: "ps-listen-b2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "My mother watches TV in the evening.", options: ["Anam səhər televizora baxır.", "Anam axşam televizora baxır.", "Anam axşam kitab oxuyur.", "Atam axşam televizora baxır."], correctIndex: 1, xp: 15 },
+            { id: "ps-listen-b3", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Do you like football?", options: ["Sən futbol oynayırsan?", "Sən futbolu sevirsən?", "Sən futbola baxırsan?", "Sən futbol bilirsən?"], correctIndex: 1, xp: 15 },
+          ],
+        },
+      ],
+    },
+    {
+      id: "en-c1-reading",
+      title: "Oxu: Mənim günüm",
+      description: "Qısa mətni oxu və suallara cavab ver (Present Simple).",
+      lessons: [
+        {
+          id: "ps-read",
+          title: "Reading: My day",
+          intro: "Qısa mətni oxu və suallara cavab ver.",
+          sections: [
+            { heading: "Read the text (Mətni oxu)", body: "This is Leyla. She is eleven years old. Every day she gets up at seven o'clock. She eats breakfast and drinks milk. Then she goes to school. At school she reads books and plays with her friends. In the evening she watches TV. She likes her day." },
+            { heading: "İpucu", body: "Sualı oxu, cavabı mətndə tap. Lazım olsa mətnə yenidən bax." },
+          ],
+          tasks: [
+            { id: "ps-read-t1", type: "multiple_choice", prompt: "How old is Leyla?", options: ["ten", "eleven", "twelve", "nine"], correctIndex: 1, xp: 10 },
+            { id: "ps-read-t2", type: "multiple_choice", prompt: "What time does Leyla get up?", options: ["six o'clock", "seven o'clock", "eight o'clock", "nine o'clock"], correctIndex: 1, xp: 10 },
+            { id: "ps-read-t3", type: "multiple_choice", prompt: "What does Leyla drink?", options: ["water", "juice", "milk", "tea"], correctIndex: 2, xp: 10 },
+            { id: "ps-read-t4", type: "multiple_choice", prompt: "Where does she go every day?", options: ["to the park", "to school", "to work", "home"], correctIndex: 1, xp: 10 },
+            { id: "ps-read-t5", type: "multiple_choice", prompt: "What does she do at school?", options: ["sleeps", "reads and plays", "cooks", "watches TV"], correctIndex: 1, xp: 10 },
+            { id: "ps-read-t6", type: "multiple_choice", prompt: "What does Leyla do in the evening?", options: ["reads books", "watches TV", "plays football", "goes to school"], correctIndex: 1, xp: 10 },
+            { id: "ps-read-t7", type: "fill_blank", prompt: "'She eats breakfast and ___ milk.' (mətndən sözü yaz)", accepted: ["drinks"], xp: 10 },
+            { id: "ps-read-t8", type: "multiple_choice", prompt: "Does Leyla like her day?", options: ["Yes, she does.", "No, she doesn't.", "We don't know.", "She is sad."], correctIndex: 0, xp: 10 },
+            { id: "ps-read-t9", type: "multiple_choice", prompt: "'She gets up at seven o'clock.' — bu nə vaxtdır?", options: ["səhər", "gecə", "günorta", "axşam"], correctIndex: 0, xp: 10 },
+            { id: "ps-read-t10", type: "multiple_choice", prompt: "Mətn kimin haqqındadır?", options: ["Tom", "Leyla", "Anna", "Ali"], correctIndex: 1, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "ps-read-b1", type: "multiple_choice", prompt: "'Every day' nə deməkdir?", options: ["hər gün", "bəzən", "heç vaxt", "dünən"], correctIndex: 0, xp: 15 },
+            { id: "ps-read-b2", type: "fill_blank", prompt: "'Leyla ___ books at school.' (oxuyur — mətndən)", accepted: ["reads"], xp: 15 },
+            { id: "ps-read-b3", type: "multiple_choice", prompt: "'She plays with her ___.'", options: ["books", "friends", "cat", "food"], correctIndex: 1, xp: 15 },
+          ],
+        },
+      ],
+    },
+    {
+      id: "en-c1-writing",
+      title: "Yazı: Present Simple",
+      description: "Sözlərdən düzgün Present Simple cümləsi qur.",
+      lessons: [
+        {
+          id: "ps-write",
+          title: "Cümlə qur: Present Simple",
+          intro: "Sözləri düzgün sıraya düz və Present Simple cümləsi qur.",
+          sections: [
+            { heading: "Necə işləyir?", body: "Sözlərə sıra ilə bas — cümlə yuxarıda düzələcək. İngilis cümləsi: kim → nə edir → nəyi. he/she ilə felə -s yadında olsun!" },
+          ],
+          tasks: [
+            { id: "ps-write-t1", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["I", "eat", "breakfast"], answer: "I eat breakfast", translation: "Mən səhər yeməyi yeyirəm.", xp: 10 },
+            { id: "ps-write-t2", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["She", "reads", "a", "book"], answer: "She reads a book", translation: "O kitab oxuyur.", xp: 10 },
+            { id: "ps-write-t3", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["He", "plays", "football"], answer: "He plays football", translation: "O futbol oynayır.", xp: 10 },
+            { id: "ps-write-t4", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["We", "drink", "water"], answer: "We drink water", translation: "Biz su içirik.", xp: 10 },
+            { id: "ps-write-t5", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["They", "go", "to", "school"], answer: "They go to school", translation: "Onlar məktəbə gedir.", xp: 10 },
+            { id: "ps-write-t6", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["I", "watch", "TV"], answer: "I watch TV", translation: "Mən televizora baxıram.", xp: 10 },
+            { id: "ps-write-t7", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["She", "likes", "apples"], answer: "She likes apples", translation: "O almanı sevir.", xp: 10 },
+            { id: "ps-write-t8", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["He", "gets", "up", "early"], answer: "He gets up early", translation: "O tez durur.", xp: 10 },
+            { id: "ps-write-t9", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["We", "read", "every", "day"], answer: "We read every day", translation: "Biz hər gün oxuyuruq.", xp: 10 },
+            { id: "ps-write-t10", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["My", "mother", "watches", "TV"], answer: "My mother watches TV", translation: "Anam televizora baxır.", xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "ps-write-b1", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["Do", "you", "like", "football"], answer: "Do you like football", translation: "Sən futbolu sevirsən?", xp: 15 },
+            { id: "ps-write-b2", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["He", "does", "not", "eat", "meat"], answer: "He does not eat meat", translation: "O ət yemir.", xp: 15 },
+            { id: "ps-write-b3", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["She", "plays", "with", "her", "friends"], answer: "She plays with her friends", translation: "O dostları ilə oynayır.", xp: 15 },
+          ],
+        },
+      ],
+    },
+
+    // ═══════════════════════════════════════════════════════════════
     // BÖLMƏ 1 — QRAMMATİKA (Grammar)
     // ═══════════════════════════════════════════════════════════════
     {
