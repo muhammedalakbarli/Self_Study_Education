@@ -275,6 +275,10 @@ function taskToForm(t: Task, bonus: boolean, l: Lesson): Partial<TaskForm> {
   };
   if (t.type === "multiple_choice") return { ...base, options: t.options, correctIndex: t.correctIndex };
   if (t.type === "fill_blank") return { ...base, accepted: t.accepted };
+  if (t.type === "word_order")
+    return { ...base, words: t.words, sentence: t.answer, translation: t.translation };
+  if (t.type === "listening")
+    return { ...base, audioText: t.audioText, options: t.options, correctIndex: t.correctIndex };
   return { ...base, answer: t.answer, tolerance: t.tolerance };
 }
 
@@ -343,6 +347,10 @@ async function saveEditing(
         accepted: d.accepted,
         answer: d.answer,
         tolerance: d.tolerance,
+        words: d.words,
+        sentence: d.sentence,
+        translation: d.translation,
+        audioText: d.audioText,
         figure: d.figure,
       }),
     );
@@ -463,6 +471,18 @@ function EditForm({
       if (type === "fill_blank" && !((form.accepted as string[]) ?? []).length)
         return "Ən azı 1 qəbul olunan cavab lazımdır";
       if (type === "numeric" && form.answer === undefined) return "Cavab rəqəmi lazımdır";
+      if (type === "word_order") {
+        if (((form.words as string[]) ?? []).filter((w) => w.trim()).length < 2)
+          return "Ən azı 2 söz lazımdır";
+        if (!((form.sentence as string) ?? "").trim()) return "Düzgün cümlə boş ola bilməz";
+      }
+      if (type === "listening") {
+        if (!((form.audioText as string) ?? "").trim()) return "Səsləndiriləcək mətn lazımdır";
+        const opts = ((form.options as string[]) ?? []).filter((o) => o.trim());
+        if (opts.length < 2) return "Ən azı 2 dolu variant lazımdır";
+        const ci = (form.correctIndex as number) ?? 0;
+        if (!((form.options as string[]) ?? [])[ci]?.trim()) return "Düzgün variant boş ola bilməz";
+      }
     }
     return null;
   }
@@ -563,11 +583,21 @@ function TaskFields({
         <option value="multiple_choice">Çoxseçimli</option>
         <option value="fill_blank">Boşluq doldurma</option>
         <option value="numeric">Rəqəm</option>
+        <option value="listening">Dinləmə (dinlə-seç)</option>
+        <option value="word_order">Cümlə quran</option>
       </select>
 
       <Field label="Sual (prompt)" value={form.prompt} onChange={(v) => set("prompt", v)} textarea />
 
-      {type === "multiple_choice" && (
+      {type === "listening" && (
+        <Field
+          label="Səsləndiriləcək İngilis mətni"
+          value={(form.audioText as string) ?? ""}
+          onChange={(v) => set("audioText", v)}
+        />
+      )}
+
+      {(type === "multiple_choice" || type === "listening") && (
         <>
           <label className="block text-sm font-bold text-fg">Variantlar (düzgünü seç)</label>
           {options.map((opt, i) => (
@@ -604,6 +634,26 @@ function TaskFields({
         <>
           <Field label="Cavab (rəqəm)" type="number" value={form.answer ?? 0} onChange={(v) => set("answer", Number(v))} />
           <Field label="Tolerans (istəyə bağlı)" type="number" value={form.tolerance ?? ""} onChange={(v) => set("tolerance", v === "" ? undefined : Number(v))} />
+        </>
+      )}
+
+      {type === "word_order" && (
+        <>
+          <Field
+            label="Sözlər (vergüllə — qarışıq söz bankı)"
+            value={(form.words as string[])?.join(", ") ?? ""}
+            onChange={(v) => set("words", v.split(",").map((s) => s.trim()).filter(Boolean))}
+          />
+          <Field
+            label="Düzgün cümlə"
+            value={(form.sentence as string) ?? ""}
+            onChange={(v) => set("sentence", v)}
+          />
+          <Field
+            label="Tərcümə (istəyə bağlı ipucu)"
+            value={(form.translation as string) ?? ""}
+            onChange={(v) => set("translation", v)}
+          />
         </>
       )}
 

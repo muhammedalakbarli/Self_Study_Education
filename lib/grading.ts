@@ -16,6 +16,16 @@ function normalizeText(value: string): string {
   return value.trim().toLocaleLowerCase("az").replace(/\s+/g, " ");
 }
 
+// Cümlə müqayisəsi — söz sırasını qoruyur, amma durğu işarələrini və hərf
+// böyüklüyünü nəzərə almır (İngilis cümlə qurma məşqi üçün).
+function normalizeSentence(value: string): string {
+  return value
+    .trim()
+    .toLowerCase()
+    .replace(/[.,!?;:]/g, "")
+    .replace(/\s+/g, " ");
+}
+
 export function gradeTask(task: Task, answer: UserAnswer): GradeResult {
   let correct = false;
 
@@ -38,6 +48,14 @@ export function gradeTask(task: Task, answer: UserAnswer): GradeResult {
       }
       break;
     }
+
+    case "word_order":
+      correct = normalizeSentence(String(answer)) === normalizeSentence(task.answer);
+      break;
+
+    case "listening":
+      correct = Number(answer) === task.correctIndex;
+      break;
   }
 
   return { correct, earnedXp: correct ? task.xp : 0 };

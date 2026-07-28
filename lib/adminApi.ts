@@ -103,6 +103,10 @@ export interface TaskForm {
   accepted?: string[];
   answer?: number;
   tolerance?: number;
+  words?: string[]; // word_order: söz bankı
+  sentence?: string; // word_order: düzgün cümlə
+  translation?: string; // word_order: azərbaycanca ipucu (istəyə bağlı)
+  audioText?: string; // listening: səsləndiriləcək İngilis mətni
   figure?: Task["figure"];
 }
 
@@ -115,6 +119,14 @@ export function buildTaskData(f: TaskForm): Record<string, unknown> {
     d.correctIndex = f.correctIndex ?? 0;
   } else if (f.type === "fill_blank") {
     d.accepted = f.accepted ?? [];
+  } else if (f.type === "word_order") {
+    d.words = f.words ?? [];
+    d.answer = f.sentence ?? "";
+    if (f.translation && f.translation.trim()) d.translation = f.translation.trim();
+  } else if (f.type === "listening") {
+    d.audioText = f.audioText ?? "";
+    d.options = f.options ?? [];
+    d.correctIndex = f.correctIndex ?? 0;
   } else {
     d.answer = f.answer ?? 0;
     if (f.tolerance !== undefined) d.tolerance = f.tolerance;

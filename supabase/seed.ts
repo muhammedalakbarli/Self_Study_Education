@@ -51,6 +51,14 @@ function taskData(task: Task, bonus: boolean): Record<string, unknown> {
   } else if (task.type === "numeric") {
     d.answer = task.answer;
     if (task.tolerance !== undefined) d.tolerance = task.tolerance;
+  } else if (task.type === "word_order") {
+    d.words = task.words;
+    d.answer = task.answer;
+    if (task.translation !== undefined) d.translation = task.translation;
+  } else if (task.type === "listening") {
+    d.audioText = task.audioText;
+    d.options = task.options;
+    d.correctIndex = task.correctIndex;
   }
   return d;
 }
