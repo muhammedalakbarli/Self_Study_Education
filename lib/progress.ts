@@ -69,6 +69,22 @@ export async function loadProgress(userId: string): Promise<ProgressState> {
   };
 }
 
+// Aktiv günlər — istifadəçinin dərs tamamladığı tarixlər (Asia/Baku, "YYYY-MM-DD").
+// Streak təqvimini (Duolingo üslubu) doldurmaq üçün. completed_at hər dərsin ilk
+// tamamlanma vaxtıdır; son aktivlik günü ayrıca əlavə olunur.
+export async function loadActiveDays(userId: string): Promise<string[]> {
+  const supabase = createClient();
+  const { data } = await supabase
+    .from("user_progress")
+    .select("completed_at")
+    .eq("user_id", userId);
+  const days = new Set<string>();
+  for (const r of (data ?? []) as { completed_at: string }[]) {
+    days.add(new Date(r.completed_at).toLocaleDateString("en-CA", { timeZone: "Asia/Baku" }));
+  }
+  return [...days];
+}
+
 // Dərs tamamlananda: user_progress-ə yaz, user_stats-ı yenilə (XP + streak).
 export async function completeLesson(
   userId: string,

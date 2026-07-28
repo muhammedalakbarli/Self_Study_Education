@@ -7,7 +7,8 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { Star, Flame, CircleCheck } from "lucide-react";
 import { useContent } from "@/components/ContentProvider";
-import { loadProgress, isLessonLocked, type ProgressState } from "@/lib/progress";
+import { loadProgress, loadActiveDays, isLessonLocked, type ProgressState } from "@/lib/progress";
+import StreakCalendar from "@/components/StreakCalendar";
 import { useAuthUser } from "@/lib/useAuthUser";
 import { displayName } from "@/lib/auth";
 import { useT } from "@/lib/i18n";
@@ -31,6 +32,8 @@ export default function DashboardPage() {
   const [state, setState] = useState<ProgressState | null>(null);
   const [activeSlug, setActiveSlug] = useState(subjects[0].slug);
   const [quests, setQuests] = useState<QuestState | null>(null);
+  const [calOpen, setCalOpen] = useState(false);
+  const [activeDays, setActiveDays] = useState<string[]>([]);
   const t = useT();
 
   useEffect(() => {
@@ -101,6 +104,10 @@ export default function DashboardPage() {
             value={state.streakDays}
             label={t("stat.streak")}
             color="text-orange-500"
+            onClick={() => {
+              setCalOpen(true);
+              if (user) loadActiveDays(user.id).then(setActiveDays);
+            }}
           />
           <StatChip
             Icon={CircleCheck}
@@ -109,6 +116,14 @@ export default function DashboardPage() {
             color="text-brand"
           />
         </div>
+
+        {calOpen && (
+          <StreakCalendar
+            streakDays={state.streakDays}
+            activeDays={activeDays}
+            onClose={() => setCalOpen(false)}
+          />
+        )}
 
         {/* Səviyyə + gündəlik questlər */}
         <div className="mt-4 rounded-2xl border border-line bg-panel p-5">
@@ -238,19 +253,30 @@ function StatChip({
   value,
   label,
   color,
+  onClick,
 }: {
   Icon: React.ComponentType<{ size?: number; className?: string }>;
   value: number;
   label: string;
   color: string;
+  onClick?: () => void;
 }) {
-  return (
-    <div className="flex items-center gap-2.5 rounded-2xl border border-line bg-panel px-4 py-3">
+  const inner = (
+    <>
       <Icon size={22} className={color} />
       <div className="leading-tight">
         <div className="text-lg font-extrabold text-fg">{value}</div>
         <div className="text-[11px] text-muted">{label}</div>
       </div>
-    </div>
+    </>
   );
+  const cls = "flex items-center gap-2.5 rounded-2xl border border-line bg-panel px-4 py-3";
+  if (onClick) {
+    return (
+      <button type="button" onClick={onClick} className={`${cls} text-left transition hover:border-orange-400 active:scale-[0.97]`}>
+        {inner}
+      </button>
+    );
+  }
+  return <div className={cls}>{inner}</div>;
 }
