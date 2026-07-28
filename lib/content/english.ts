@@ -849,58 +849,50 @@ export const english: Subject = {
     // BÖLMƏ 4 — BACARIQLAR (Skills)
     // ═══════════════════════════════════════════════════════════════
     {
-      id: "en-skills",
-      title: "Bacarıqlar (Skills)",
+      id: "en-listen-speak",
+      title: "Dinləmə (Listening)",
       description:
-        "Oxu, dinləmə, danışma və yazı bacarıqlarını inkişaf etdirmək.",
+        "İngiliscəni qulaqla tanı: salamlaşma, sual-cavab və gündəlik ifadələr.",
       lessons: [
-        // ── PROJECT 1: Reading ─────────────────────────────────────
         {
-          id: "en-sk-l1",
-          title: "Oxu (Reading)",
-          intro:
-            "Kiçik mətnləri oxuyub başa düşmək və mətn əsasında suallara cavab vermək.",
+          id: "en-lsn-l1",
+          title: "Dinlə və seç: sözlər",
+          intro: "İngilis sözünü dinlə, düzgün mənasını seç.",
           sections: [
             {
-              heading: "Mətn 1",
-              body: "Tom is a boy. He is ten years old. He lives in Baku with his family. He has a dog. The dog's name is Rex. Tom likes football.",
-            },
-            {
-              heading: "Mətn 2",
-              body: "Anna gets up at seven o'clock. She has breakfast. Then she goes to school. After school she reads books.",
+              heading: "Necə işləyir?",
+              body: "«Dinlə» düyməsinə bas, sözü eşit və mənasını seç. İstədiyin qədər təkrar dinləyə bilərsən.",
             },
             {
               heading: "Məsləhət",
-              body: "Cavabı tapmaq üçün mətni diqqətlə oxu. Yeni sözü cümlə içində (kontekstlə) öyrənmək daha yaxşıdır.",
+              body: "Sözü öz-özünə səssiz təkrarla — belə tələffüz daha yaxşı yadda qalır.",
             },
           ],
           tasks: [
-            { id: "en-sk-l1-t1", type: "multiple_choice", prompt: "Mətn 1: How old is Tom?", options: ["nine", "ten", "eleven", "twelve"], correctIndex: 1, xp: 10 },
-            { id: "en-sk-l1-t2", type: "multiple_choice", prompt: "Mətn 1: Where does Tom live?", options: ["Ganja", "Baku", "London", "Sheki"], correctIndex: 1, xp: 10 },
-            { id: "en-sk-l1-t3", type: "multiple_choice", prompt: "Mətn 1: What pet does Tom have?", options: ["a cat", "a dog", "a bird", "a fish"], correctIndex: 1, xp: 10 },
-            { id: "en-sk-l1-t4", type: "multiple_choice", prompt: "Mətn 1: What is the dog's name?", options: ["Rex", "Tom", "Max", "Bob"], correctIndex: 0, xp: 10 },
-            { id: "en-sk-l1-t5", type: "multiple_choice", prompt: "Mətn 1: What does Tom like?", options: ["basketball", "football", "tennis", "swimming"], correctIndex: 1, xp: 10 },
-            { id: "en-sk-l1-t6", type: "multiple_choice", prompt: "Mətn 1: Is Tom a girl or a boy?", options: ["a girl", "a boy"], correctIndex: 1, xp: 10 },
-            { id: "en-sk-l1-t7", type: "multiple_choice", prompt: "Mətn 1: Who does Tom live with?", options: ["alone", "his family", "his friend", "his teacher"], correctIndex: 1, xp: 10 },
-            { id: "en-sk-l1-t8", type: "multiple_choice", prompt: "Mətn 2: What time does Anna get up?", options: ["six o'clock", "seven o'clock", "eight o'clock", "nine o'clock"], correctIndex: 1, xp: 10 },
-            { id: "en-sk-l1-t9", type: "multiple_choice", prompt: "Mətn 2: What does Anna do after breakfast?", options: ["sleeps", "goes to school", "plays", "cooks"], correctIndex: 1, xp: 10 },
-            { id: "en-sk-l1-t10", type: "multiple_choice", prompt: "Mətn 2: What does Anna do after school?", options: ["reads books", "plays football", "sleeps", "cooks"], correctIndex: 0, xp: 10 },
-            { id: "en-sk-l1-t11", type: "multiple_choice", prompt: "Oxu (reading) bacarığı nədir?", options: ["dinləmək", "mətni oxuyub başa düşmək", "danışmaq", "yazmaq"], correctIndex: 1, xp: 10 },
-            { id: "en-sk-l1-t12", type: "multiple_choice", prompt: "Mətndə cavabı tapmaq üçün nə etməli?", options: ["mətni diqqətlə oxumaq", "yalnız şəkilə baxmaq", "təxmin etmək", "başqasından soruşmaq"], correctIndex: 0, xp: 10 },
-            { id: "en-sk-l1-t13", type: "fill_blank", prompt: "Mətn 2: Anna gets up at seven o'___. (boşluğu tamamla)", accepted: ["clock"], xp: 10 },
-            { id: "en-sk-l1-t14", type: "multiple_choice", prompt: "Mətn 1: 'Tom likes football.' — Tom neyi sevir?", options: ["kitab", "futbol", "musiqi", "üzgüçülük"], correctIndex: 1, xp: 10 },
-            { id: "en-sk-l1-t15", type: "multiple_choice", prompt: "Başlıq (title) mətnin nəyidir?", options: ["sonu", "adı / mövzusu", "şəkli", "sualı"], correctIndex: 1, xp: 10 },
+            { id: "en-lsn-t1", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "apple", options: ["kitab", "alma", "su", "it"], correctIndex: 1, xp: 10 },
+            { id: "en-lsn-t2", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "book", options: ["kitab", "ev", "süd", "quş"], correctIndex: 0, xp: 10 },
+            { id: "en-lsn-t3", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "water", options: ["ağac", "əl", "su", "gecə"], correctIndex: 2, xp: 10 },
+            { id: "en-lsn-t4", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "house", options: ["ev", "məktəb", "dost", "günəş"], correctIndex: 0, xp: 10 },
+            { id: "en-lsn-t5", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "dog", options: ["pişik", "quş", "it", "at"], correctIndex: 2, xp: 10 },
+            { id: "en-lsn-t6", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "cat", options: ["pişik", "it", "siçan", "quş"], correctIndex: 0, xp: 10 },
+            { id: "en-lsn-t7", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "school", options: ["ailə", "məktəb", "şəhər", "otaq"], correctIndex: 1, xp: 10 },
+            { id: "en-lsn-t8", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "friend", options: ["düşmən", "qonşu", "dost", "müəllim"], correctIndex: 2, xp: 10 },
+            { id: "en-lsn-t9", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "family", options: ["ailə", "sinif", "komanda", "dost"], correctIndex: 0, xp: 10 },
+            { id: "en-lsn-t10", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "teacher", options: ["şagird", "müəllim", "həkim", "sürücü"], correctIndex: 1, xp: 10 },
+            { id: "en-lsn-t11", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "morning", options: ["gecə", "axşam", "səhər", "günorta"], correctIndex: 2, xp: 10 },
+            { id: "en-lsn-t12", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "night", options: ["gecə", "gün", "səhər", "axşam"], correctIndex: 0, xp: 10 },
+            { id: "en-lsn-t13", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "happy", options: ["kədərli", "xoşbəxt", "yorğun", "ac"], correctIndex: 1, xp: 10 },
+            { id: "en-lsn-t14", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "food", options: ["su", "hava", "yemək", "işıq"], correctIndex: 2, xp: 10 },
+            { id: "en-lsn-t15", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "sun", options: ["günəş", "ay", "ulduz", "bulud"], correctIndex: 0, xp: 15 },
           ],
           bonusTasks: [
-            { id: "en-sk-l1-b1", type: "multiple_choice", prompt: "'Ali has a red bike. He rides it every day in the park.' — What colour is the bike?", options: ["blue", "red", "green", "black"], correctIndex: 1, xp: 15 },
-            { id: "en-sk-l1-b2", type: "multiple_choice", prompt: "Yuxarıdakı mətn: Where does Ali ride his bike?", options: ["in the park", "at school", "at home", "in the shop"], correctIndex: 0, xp: 15 },
-            { id: "en-sk-l1-b3", type: "multiple_choice", prompt: "Yuxarıdakı mətn: How often does Ali ride?", options: ["never", "every day", "once a week", "yesterday"], correctIndex: 1, xp: 15 },
-            { id: "en-sk-l1-b4", type: "multiple_choice", prompt: "'He rides it every day.' — 'it' nəyi bildirir?", options: ["the park", "the bike", "Ali", "the day"], correctIndex: 1, xp: 15 },
-            { id: "en-sk-l1-b5", type: "multiple_choice", prompt: "Oxuyarkən yeni sözü öyrənməyin ən yaxşı yolu?", options: ["cümlə içində, kontekstlə", "tək-tək əzbərləməklə", "heç öyrənməmək", "yalnız şəklə baxmaq"], correctIndex: 0, xp: 15 },
+            { id: "en-lsn-b1", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "milk", options: ["su", "süd", "çay", "şirə"], correctIndex: 1, xp: 15 },
+            { id: "en-lsn-b2", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "tree", options: ["gül", "ot", "ağac", "yarpaq"], correctIndex: 2, xp: 15 },
+            { id: "en-lsn-b3", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "bird", options: ["balıq", "quş", "arı", "kəpənək"], correctIndex: 1, xp: 15 },
+            { id: "en-lsn-b4", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "red", options: ["mavi", "yaşıl", "qırmızı", "sarı"], correctIndex: 2, xp: 15 },
+            { id: "en-lsn-b5", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "big", options: ["kiçik", "böyük", "uzun", "qısa"], correctIndex: 1, xp: 15 },
           ],
         },
-
-        // ── PROJECT 2: Listening ───────────────────────────────────
         {
           id: "en-sk-l2",
           title: "Dinləmə (Listening)",
@@ -946,8 +938,6 @@ export const english: Subject = {
             { id: "en-sk-l2-b5", type: "multiple_choice", prompt: "'How are you?' — ən uyğun cavab?", options: ["I'm fine, thanks.", "It is a book.", "I am from Baku.", "Yes."], correctIndex: 0, xp: 15 },
           ],
         },
-
-        // ── PROJECT 3: Speaking ────────────────────────────────────
         {
           id: "en-sk-l3",
           title: "Danışma (Speaking)",
@@ -993,8 +983,105 @@ export const english: Subject = {
             { id: "en-sk-l3-b5", type: "multiple_choice", prompt: "Təqdimatda adətən ilk nə deyirik?", options: ["adımızı", "yaşımızı", "rəngi", "vaxtı"], correctIndex: 0, xp: 15 },
           ],
         },
-
-        // ── PROJECT 4: Writing ─────────────────────────────────────
+      ],
+    },
+    {
+      id: "en-reading",
+      title: "Oxu (Reading)",
+      description:
+        "Qısa mətnləri oxuyub başa düş və suallara cavab ver.",
+      lessons: [
+        {
+          id: "en-sk-l1",
+          title: "Oxu (Reading)",
+          intro:
+            "Kiçik mətnləri oxuyub başa düşmək və mətn əsasında suallara cavab vermək.",
+          sections: [
+            {
+              heading: "Mətn 1",
+              body: "Tom is a boy. He is ten years old. He lives in Baku with his family. He has a dog. The dog's name is Rex. Tom likes football.",
+            },
+            {
+              heading: "Mətn 2",
+              body: "Anna gets up at seven o'clock. She has breakfast. Then she goes to school. After school she reads books.",
+            },
+            {
+              heading: "Məsləhət",
+              body: "Cavabı tapmaq üçün mətni diqqətlə oxu. Yeni sözü cümlə içində (kontekstlə) öyrənmək daha yaxşıdır.",
+            },
+          ],
+          tasks: [
+            { id: "en-sk-l1-t1", type: "multiple_choice", prompt: "Mətn 1: How old is Tom?", options: ["nine", "ten", "eleven", "twelve"], correctIndex: 1, xp: 10 },
+            { id: "en-sk-l1-t2", type: "multiple_choice", prompt: "Mətn 1: Where does Tom live?", options: ["Ganja", "Baku", "London", "Sheki"], correctIndex: 1, xp: 10 },
+            { id: "en-sk-l1-t3", type: "multiple_choice", prompt: "Mətn 1: What pet does Tom have?", options: ["a cat", "a dog", "a bird", "a fish"], correctIndex: 1, xp: 10 },
+            { id: "en-sk-l1-t4", type: "multiple_choice", prompt: "Mətn 1: What is the dog's name?", options: ["Rex", "Tom", "Max", "Bob"], correctIndex: 0, xp: 10 },
+            { id: "en-sk-l1-t5", type: "multiple_choice", prompt: "Mətn 1: What does Tom like?", options: ["basketball", "football", "tennis", "swimming"], correctIndex: 1, xp: 10 },
+            { id: "en-sk-l1-t6", type: "multiple_choice", prompt: "Mətn 1: Is Tom a girl or a boy?", options: ["a girl", "a boy"], correctIndex: 1, xp: 10 },
+            { id: "en-sk-l1-t7", type: "multiple_choice", prompt: "Mətn 1: Who does Tom live with?", options: ["alone", "his family", "his friend", "his teacher"], correctIndex: 1, xp: 10 },
+            { id: "en-sk-l1-t8", type: "multiple_choice", prompt: "Mətn 2: What time does Anna get up?", options: ["six o'clock", "seven o'clock", "eight o'clock", "nine o'clock"], correctIndex: 1, xp: 10 },
+            { id: "en-sk-l1-t9", type: "multiple_choice", prompt: "Mətn 2: What does Anna do after breakfast?", options: ["sleeps", "goes to school", "plays", "cooks"], correctIndex: 1, xp: 10 },
+            { id: "en-sk-l1-t10", type: "multiple_choice", prompt: "Mətn 2: What does Anna do after school?", options: ["reads books", "plays football", "sleeps", "cooks"], correctIndex: 0, xp: 10 },
+            { id: "en-sk-l1-t11", type: "multiple_choice", prompt: "Oxu (reading) bacarığı nədir?", options: ["dinləmək", "mətni oxuyub başa düşmək", "danışmaq", "yazmaq"], correctIndex: 1, xp: 10 },
+            { id: "en-sk-l1-t12", type: "multiple_choice", prompt: "Mətndə cavabı tapmaq üçün nə etməli?", options: ["mətni diqqətlə oxumaq", "yalnız şəkilə baxmaq", "təxmin etmək", "başqasından soruşmaq"], correctIndex: 0, xp: 10 },
+            { id: "en-sk-l1-t13", type: "fill_blank", prompt: "Mətn 2: Anna gets up at seven o'___. (boşluğu tamamla)", accepted: ["clock"], xp: 10 },
+            { id: "en-sk-l1-t14", type: "multiple_choice", prompt: "Mətn 1: 'Tom likes football.' — Tom neyi sevir?", options: ["kitab", "futbol", "musiqi", "üzgüçülük"], correctIndex: 1, xp: 10 },
+            { id: "en-sk-l1-t15", type: "multiple_choice", prompt: "Başlıq (title) mətnin nəyidir?", options: ["sonu", "adı / mövzusu", "şəkli", "sualı"], correctIndex: 1, xp: 10 },
+          ],
+          bonusTasks: [
+            { id: "en-sk-l1-b1", type: "multiple_choice", prompt: "'Ali has a red bike. He rides it every day in the park.' — What colour is the bike?", options: ["blue", "red", "green", "black"], correctIndex: 1, xp: 15 },
+            { id: "en-sk-l1-b2", type: "multiple_choice", prompt: "Yuxarıdakı mətn: Where does Ali ride his bike?", options: ["in the park", "at school", "at home", "in the shop"], correctIndex: 0, xp: 15 },
+            { id: "en-sk-l1-b3", type: "multiple_choice", prompt: "Yuxarıdakı mətn: How often does Ali ride?", options: ["never", "every day", "once a week", "yesterday"], correctIndex: 1, xp: 15 },
+            { id: "en-sk-l1-b4", type: "multiple_choice", prompt: "'He rides it every day.' — 'it' nəyi bildirir?", options: ["the park", "the bike", "Ali", "the day"], correctIndex: 1, xp: 15 },
+            { id: "en-sk-l1-b5", type: "multiple_choice", prompt: "Oxuyarkən yeni sözü öyrənməyin ən yaxşı yolu?", options: ["cümlə içində, kontekstlə", "tək-tək əzbərləməklə", "heç öyrənməmək", "yalnız şəklə baxmaq"], correctIndex: 0, xp: 15 },
+          ],
+        },
+      ],
+    },
+    {
+      id: "en-skills",
+      title: "Yazı (Writing)",
+      description:
+        "Böyük hərf, durğu işarələri və düzgün cümlə quruluşu ilə yaz.",
+      lessons: [
+        {
+          id: "en-wor-l1",
+          title: "Cümlə qur: sadə cümlələr",
+          intro: "Qarışıq sözləri düzgün sıraya düz və İngilis cümləsini qur.",
+          sections: [
+            {
+              heading: "Necə işləyir?",
+              body: "Aşağıdakı sözlərə sıra ilə bas — onlar yuxarıda cümləni düzəldəcək. Səhv seçsən, sözə basıb geri götür.",
+            },
+            {
+              heading: "Məsləhət",
+              body: "İngilis cümləsi adətən belədir: kim → nə edir → nəyi. Azərbaycanca tərcümə ipucu kimi verilir.",
+            },
+          ],
+          tasks: [
+            { id: "en-wor-t1", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["I", "am", "happy"], answer: "I am happy", translation: "Mən xoşbəxtəm.", xp: 10 },
+            { id: "en-wor-t2", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["She", "is", "my", "friend"], answer: "She is my friend", translation: "O mənim dostumdur.", xp: 10 },
+            { id: "en-wor-t3", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["The", "cat", "is", "black"], answer: "The cat is black", translation: "Pişik qaradır.", xp: 10 },
+            { id: "en-wor-t4", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["We", "go", "to", "school"], answer: "We go to school", translation: "Biz məktəbə gedirik.", xp: 10 },
+            { id: "en-wor-t5", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["He", "likes", "apples"], answer: "He likes apples", translation: "O almanı sevir.", xp: 10 },
+            { id: "en-wor-t6", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["This", "is", "my", "book"], answer: "This is my book", translation: "Bu mənim kitabımdır.", xp: 10 },
+            { id: "en-wor-t7", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["They", "play", "football"], answer: "They play football", translation: "Onlar futbol oynayır.", xp: 10 },
+            { id: "en-wor-t8", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["The", "sun", "is", "hot"], answer: "The sun is hot", translation: "Günəş istidir.", xp: 10 },
+            { id: "en-wor-t9", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["I", "have", "a", "dog"], answer: "I have a dog", translation: "Mənim itim var.", xp: 10 },
+            { id: "en-wor-t10", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["My", "mother", "is", "a", "teacher"], answer: "My mother is a teacher", translation: "Anam müəllimdir.", xp: 10 },
+            { id: "en-wor-t11", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["We", "are", "good", "friends"], answer: "We are good friends", translation: "Biz yaxşı dostlarıq.", xp: 10 },
+            { id: "en-wor-t12", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["The", "bird", "can", "fly"], answer: "The bird can fly", translation: "Quş uça bilər.", xp: 10 },
+            { id: "en-wor-t13", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["I", "drink", "milk"], answer: "I drink milk", translation: "Mən süd içirəm.", xp: 10 },
+            { id: "en-wor-t14", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["She", "reads", "a", "book"], answer: "She reads a book", translation: "O kitab oxuyur.", xp: 10 },
+            { id: "en-wor-t15", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["It", "is", "a", "big", "house"], answer: "It is a big house", translation: "Bu böyük evdir.", xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "en-wor-b1", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["Do", "you", "like", "music"], answer: "Do you like music", translation: "Sən musiqini sevirsən?", xp: 15 },
+            { id: "en-wor-b2", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["He", "is", "not", "at", "home"], answer: "He is not at home", translation: "O evdə deyil.", xp: 15 },
+            { id: "en-wor-b3", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["We", "watch", "TV", "every", "day"], answer: "We watch TV every day", translation: "Biz hər gün televizora baxırıq.", xp: 15 },
+            { id: "en-wor-b4", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["My", "father", "works", "every", "day"], answer: "My father works every day", translation: "Atam hər gün işləyir.", xp: 15 },
+            { id: "en-wor-b5", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["The", "children", "are", "playing"], answer: "The children are playing", translation: "Uşaqlar oynayır.", xp: 15 },
+          ],
+        },
         {
           id: "en-sk-l4",
           title: "Yazı (Writing)",
@@ -1037,92 +1124,6 @@ export const english: Subject = {
             { id: "en-sk-l4-b3", type: "multiple_choice", prompt: "Ölkə adı hansı formada düzgündür?", options: ["england", "England", "ENGLAND", "eng land"], correctIndex: 1, xp: 15 },
             { id: "en-sk-l4-b4", type: "multiple_choice", prompt: "Hansı düzgün yazılıb?", options: ["we are friends", "We are friends.", "We Are Friends", "we Are friends."], correctIndex: 1, xp: 15 },
             { id: "en-sk-l4-b5", type: "multiple_choice", prompt: "Yaxşı yazı üçün nə vacibdir?", options: ["böyük hərf, durğu işarəsi, düzgün quruluş", "yalnız uzun sözlər", "heç bir qayda", "yalnız rəqəmlər"], correctIndex: 0, xp: 15 },
-          ],
-        },
-      ],
-    },
-    {
-      id: "en-listen-speak",
-      title: "Dinləmə və danışıq",
-      description:
-        "İngiliscəni qulaqla tanı və sözlərdən düzgün cümlə qur — dinlə-seç və cümlə quran məşqləri.",
-      lessons: [
-        {
-          id: "en-lsn-l1",
-          title: "Dinlə və seç: sözlər",
-          intro: "İngilis sözünü dinlə, düzgün mənasını seç.",
-          sections: [
-            {
-              heading: "Necə işləyir?",
-              body: "«Dinlə» düyməsinə bas, sözü eşit və mənasını seç. İstədiyin qədər təkrar dinləyə bilərsən.",
-            },
-            {
-              heading: "Məsləhət",
-              body: "Sözü öz-özünə səssiz təkrarla — belə tələffüz daha yaxşı yadda qalır.",
-            },
-          ],
-          tasks: [
-            { id: "en-lsn-t1", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "apple", options: ["kitab", "alma", "su", "it"], correctIndex: 1, xp: 10 },
-            { id: "en-lsn-t2", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "book", options: ["kitab", "ev", "süd", "quş"], correctIndex: 0, xp: 10 },
-            { id: "en-lsn-t3", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "water", options: ["ağac", "əl", "su", "gecə"], correctIndex: 2, xp: 10 },
-            { id: "en-lsn-t4", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "house", options: ["ev", "məktəb", "dost", "günəş"], correctIndex: 0, xp: 10 },
-            { id: "en-lsn-t5", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "dog", options: ["pişik", "quş", "it", "at"], correctIndex: 2, xp: 10 },
-            { id: "en-lsn-t6", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "cat", options: ["pişik", "it", "siçan", "quş"], correctIndex: 0, xp: 10 },
-            { id: "en-lsn-t7", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "school", options: ["ailə", "məktəb", "şəhər", "otaq"], correctIndex: 1, xp: 10 },
-            { id: "en-lsn-t8", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "friend", options: ["düşmən", "qonşu", "dost", "müəllim"], correctIndex: 2, xp: 10 },
-            { id: "en-lsn-t9", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "family", options: ["ailə", "sinif", "komanda", "dost"], correctIndex: 0, xp: 10 },
-            { id: "en-lsn-t10", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "teacher", options: ["şagird", "müəllim", "həkim", "sürücü"], correctIndex: 1, xp: 10 },
-            { id: "en-lsn-t11", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "morning", options: ["gecə", "axşam", "səhər", "günorta"], correctIndex: 2, xp: 10 },
-            { id: "en-lsn-t12", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "night", options: ["gecə", "gün", "səhər", "axşam"], correctIndex: 0, xp: 10 },
-            { id: "en-lsn-t13", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "happy", options: ["kədərli", "xoşbəxt", "yorğun", "ac"], correctIndex: 1, xp: 10 },
-            { id: "en-lsn-t14", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "food", options: ["su", "hava", "yemək", "işıq"], correctIndex: 2, xp: 10 },
-            { id: "en-lsn-t15", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "sun", options: ["günəş", "ay", "ulduz", "bulud"], correctIndex: 0, xp: 15 },
-          ],
-          bonusTasks: [
-            { id: "en-lsn-b1", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "milk", options: ["su", "süd", "çay", "şirə"], correctIndex: 1, xp: 15 },
-            { id: "en-lsn-b2", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "tree", options: ["gül", "ot", "ağac", "yarpaq"], correctIndex: 2, xp: 15 },
-            { id: "en-lsn-b3", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "bird", options: ["balıq", "quş", "arı", "kəpənək"], correctIndex: 1, xp: 15 },
-            { id: "en-lsn-b4", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "red", options: ["mavi", "yaşıl", "qırmızı", "sarı"], correctIndex: 2, xp: 15 },
-            { id: "en-lsn-b5", type: "listening", prompt: "Dinlə və eşitdiyin sözün mənasını seç.", audioText: "big", options: ["kiçik", "böyük", "uzun", "qısa"], correctIndex: 1, xp: 15 },
-          ],
-        },
-        {
-          id: "en-wor-l1",
-          title: "Cümlə qur: sadə cümlələr",
-          intro: "Qarışıq sözləri düzgün sıraya düz və İngilis cümləsini qur.",
-          sections: [
-            {
-              heading: "Necə işləyir?",
-              body: "Aşağıdakı sözlərə sıra ilə bas — onlar yuxarıda cümləni düzəldəcək. Səhv seçsən, sözə basıb geri götür.",
-            },
-            {
-              heading: "Məsləhət",
-              body: "İngilis cümləsi adətən belədir: kim → nə edir → nəyi. Azərbaycanca tərcümə ipucu kimi verilir.",
-            },
-          ],
-          tasks: [
-            { id: "en-wor-t1", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["I", "am", "happy"], answer: "I am happy", translation: "Mən xoşbəxtəm.", xp: 10 },
-            { id: "en-wor-t2", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["She", "is", "my", "friend"], answer: "She is my friend", translation: "O mənim dostumdur.", xp: 10 },
-            { id: "en-wor-t3", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["The", "cat", "is", "black"], answer: "The cat is black", translation: "Pişik qaradır.", xp: 10 },
-            { id: "en-wor-t4", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["We", "go", "to", "school"], answer: "We go to school", translation: "Biz məktəbə gedirik.", xp: 10 },
-            { id: "en-wor-t5", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["He", "likes", "apples"], answer: "He likes apples", translation: "O almanı sevir.", xp: 10 },
-            { id: "en-wor-t6", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["This", "is", "my", "book"], answer: "This is my book", translation: "Bu mənim kitabımdır.", xp: 10 },
-            { id: "en-wor-t7", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["They", "play", "football"], answer: "They play football", translation: "Onlar futbol oynayır.", xp: 10 },
-            { id: "en-wor-t8", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["The", "sun", "is", "hot"], answer: "The sun is hot", translation: "Günəş istidir.", xp: 10 },
-            { id: "en-wor-t9", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["I", "have", "a", "dog"], answer: "I have a dog", translation: "Mənim itim var.", xp: 10 },
-            { id: "en-wor-t10", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["My", "mother", "is", "a", "teacher"], answer: "My mother is a teacher", translation: "Anam müəllimdir.", xp: 10 },
-            { id: "en-wor-t11", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["We", "are", "good", "friends"], answer: "We are good friends", translation: "Biz yaxşı dostlarıq.", xp: 10 },
-            { id: "en-wor-t12", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["The", "bird", "can", "fly"], answer: "The bird can fly", translation: "Quş uça bilər.", xp: 10 },
-            { id: "en-wor-t13", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["I", "drink", "milk"], answer: "I drink milk", translation: "Mən süd içirəm.", xp: 10 },
-            { id: "en-wor-t14", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["She", "reads", "a", "book"], answer: "She reads a book", translation: "O kitab oxuyur.", xp: 10 },
-            { id: "en-wor-t15", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["It", "is", "a", "big", "house"], answer: "It is a big house", translation: "Bu böyük evdir.", xp: 15 },
-          ],
-          bonusTasks: [
-            { id: "en-wor-b1", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["Do", "you", "like", "music"], answer: "Do you like music", translation: "Sən musiqini sevirsən?", xp: 15 },
-            { id: "en-wor-b2", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["He", "is", "not", "at", "home"], answer: "He is not at home", translation: "O evdə deyil.", xp: 15 },
-            { id: "en-wor-b3", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["We", "watch", "TV", "every", "day"], answer: "We watch TV every day", translation: "Biz hər gün televizora baxırıq.", xp: 15 },
-            { id: "en-wor-b4", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["My", "father", "works", "every", "day"], answer: "My father works every day", translation: "Atam hər gün işləyir.", xp: 15 },
-            { id: "en-wor-b5", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["The", "children", "are", "playing"], answer: "The children are playing", translation: "Uşaqlar oynayır.", xp: 15 },
           ],
         },
       ],
