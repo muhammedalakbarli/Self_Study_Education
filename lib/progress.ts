@@ -18,6 +18,24 @@ const emptyState: ProgressState = {
   completedLessons: [],
 };
 
+// Bugünün tarixi (Asia/Baku) — "YYYY-MM-DD". Serverdəki streak məntiqi ilə eyni zona.
+function bakuToday(): string {
+  return new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Baku" });
+}
+
+// Saxlanmış streak yalnız aktivlik olanda serverdə yenilənir. Oxuyanda isə real
+// vəziyyəti göstərmək lazımdır: son aktivlik bugün və ya dünəndirsə seriya durur,
+// daha köhnədirsə seriya qırılıb (0). Belə: bir neçə gün girməyəndə "1 gün" qalmaz.
+export function effectiveStreak(streakDays: number, lastActiveDate: string | null): number {
+  if (!lastActiveDate) return 0;
+  const today = bakuToday();
+  const y = new Date(today + "T00:00:00Z");
+  y.setUTCDate(y.getUTCDate() - 1);
+  const yesterday = y.toISOString().slice(0, 10);
+  if (lastActiveDate === today || lastActiveDate === yesterday) return streakDays;
+  return 0; // seriya qırılıb
+}
+
 // Profil sətrini yaradır (user_progress/user_stats ona FK ilə bağlıdır).
 // İlk girişdə çağırılır; varsa toxunmur.
 export async function ensureProfile(userId: string, name: string): Promise<void> {
@@ -41,10 +59,12 @@ export async function loadProgress(userId: string): Promise<ProgressState> {
 
   const stats = statsRes.data;
   const rows = progRes.data ?? [];
+  const lastActiveDate = stats?.last_active_date ?? null;
   return {
     totalXp: stats?.total_xp ?? 0,
-    streakDays: stats?.streak_days ?? 0,
-    lastActiveDate: stats?.last_active_date ?? null,
+    // Qırılmış seriyanı oxuyanda 0 göstər (server yalnız növbəti dərsdə yeniləyir).
+    streakDays: effectiveStreak(stats?.streak_days ?? 0, lastActiveDate),
+    lastActiveDate,
     completedLessons: rows.map((r: { lesson_id: string }) => r.lesson_id),
   };
 }
