@@ -2,11 +2,17 @@
 
 // Tapşırıq tipini alıb uyğun giriş sahəsini göstərir.
 // Çoxseçimli: böyük 3D "tile"-lar; reveal=true olduqda düz/səhv rəngi ilə canlanır.
+// Dil öyrənmə tipləri: listening (dinlə-seç), word_order (cümlə quran).
+// speakable=true (İngilis dili) olduqda variantların yanında tələffüz düyməsi çıxır.
 
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { Volume2 } from "lucide-react";
 import type { Task } from "@/lib/types";
 import type { UserAnswer } from "@/lib/grading";
 import { playSelect } from "@/lib/sound";
+import { speakEnglish } from "@/lib/tts";
+import SpeakButton from "@/components/SpeakButton";
 
 interface Props {
   task: Task;
@@ -14,27 +20,121 @@ interface Props {
   onChange: (value: UserAnswer) => void;
   disabled: boolean;
   reveal?: boolean; // yoxlanıldıqdan sonra düz/səhv göstər
+  speakable?: boolean; // variantların yanında tələffüz düyməsi (İngilis dili)
 }
 
-export default function TaskInput({ task, value, onChange, disabled, reveal }: Props) {
+export default function TaskInput({ task, value, onChange, disabled, reveal, speakable }: Props) {
+  // ── Çoxseçimli ─────────────────────────────────────────────
   if (task.type === "multiple_choice") {
-    const correctIndex = task.correctIndex;
     return (
-      <div className="grid gap-3">
-        {task.options.map((option, i) => {
-          const selected = value === i;
-          const isCorrect = reveal && i === correctIndex;
-          const isWrongPick = reveal && selected && i !== correctIndex;
+      <ChoiceGrid
+        options={task.options}
+        correctIndex={task.correctIndex}
+        value={typeof value === "number" ? value : null}
+        onChange={onChange}
+        disabled={disabled}
+        reveal={!!reveal}
+        speakable={speakable}
+      />
+    );
+  }
 
-          let state = "";
-          if (isCorrect) state = "tile-correct";
-          else if (isWrongPick) state = "tile-wrong";
-          else if (reveal) state = "opacity-60";
-          else if (selected) state = "tile-selected";
+  // ── Dinləmə (dinlə və seç) ─────────────────────────────────
+  if (task.type === "listening") {
+    return (
+      <div>
+        <button
+          type="button"
+          onClick={() => speakEnglish(task.audioText)}
+          className="mb-5 flex w-full items-center justify-center gap-3 rounded-2xl bg-brand px-5 py-5 text-lg font-extrabold text-white shadow-[0_4px_0_0_rgba(0,0,0,0.15)] active:scale-[0.98]"
+        >
+          <Volume2 size={24} /> Dinlə
+        </button>
+        <ChoiceGrid
+          options={task.options}
+          correctIndex={task.correctIndex}
+          value={typeof value === "number" ? value : null}
+          onChange={onChange}
+          disabled={disabled}
+          reveal={!!reveal}
+        />
+      </div>
+    );
+  }
 
-          return (
+  // ── Cümlə quran (word_order) ───────────────────────────────
+  if (task.type === "word_order") {
+    return (
+      <WordOrderInput
+        key={task.id}
+        words={task.words}
+        translation={task.translation}
+        disabled={disabled}
+        onChange={onChange}
+      />
+    );
+  }
+
+  // ── Mətn cavabı (fill_blank / numeric) ─────────────────────
+  return (
+    <input
+      type="text"
+      inputMode={task.type === "numeric" ? "decimal" : "text"}
+      value={value === null ? "" : String(value)}
+      disabled={disabled}
+      onChange={(e) => onChange(e.target.value)}
+      placeholder="Cavabını yaz..."
+      className={`w-full rounded-2xl border-2 bg-panel px-5 py-4 text-lg font-bold text-fg
+        shadow-[0_4px_0_0_var(--color-line)] placeholder:font-medium placeholder:text-muted
+        focus:outline-none disabled:opacity-90 ${
+          reveal ? "border-line" : "border-line focus:border-brand"
+        }`}
+    />
+  );
+}
+
+// Variant İngiliscədirsə (ASCII hərflər, qısa) tələffüz düyməsi göstərilə bilər.
+// Azərbaycanca izah variantları (ə/ç/ş/ğ/ı/ö/ü və ya uzun cümlə) istisna olunur.
+function isEnglishLike(text: string): boolean {
+  const t = text.trim();
+  return t.length > 0 && /^[\x20-\x7E]+$/.test(t) && t.split(/\s+/).length <= 6;
+}
+
+// Çoxseçimli variant şəbəkəsi (multiple_choice + listening ortaq istifadə edir).
+// Sıra qorunur (correctIndex sabit mövqedir). speakable → hər variantın yanında dinlə düyməsi.
+function ChoiceGrid({
+  options,
+  correctIndex,
+  value,
+  onChange,
+  disabled,
+  reveal,
+  speakable,
+}: {
+  options: string[];
+  correctIndex: number;
+  value: number | null;
+  onChange: (value: UserAnswer) => void;
+  disabled: boolean;
+  reveal: boolean;
+  speakable?: boolean;
+}) {
+  return (
+    <div className="grid gap-3">
+      {options.map((option, i) => {
+        const selected = value === i;
+        const isCorrect = reveal && i === correctIndex;
+        const isWrongPick = reveal && selected && i !== correctIndex;
+
+        let state = "";
+        if (isCorrect) state = "tile-correct";
+        else if (isWrongPick) state = "tile-wrong";
+        else if (reveal) state = "opacity-60";
+        else if (selected) state = "tile-selected";
+
+        return (
+          <div key={i} className="flex items-center gap-2">
             <motion.button
-              key={i}
               type="button"
               disabled={disabled}
               onClick={() => {
@@ -50,7 +150,7 @@ export default function TaskInput({ task, value, onChange, disabled, reveal }: P
                     : { scale: 1, x: 0 }
               }
               transition={{ duration: isWrongPick ? 0.42 : 0.32 }}
-              className={`tile flex items-center gap-3 px-5 py-4 text-left text-lg font-bold text-fg ${state} ${
+              className={`tile flex flex-1 items-center gap-3 px-5 py-4 text-left text-lg font-bold text-fg ${state} ${
                 disabled ? "cursor-default" : "cursor-pointer"
               }`}
             >
@@ -69,25 +169,95 @@ export default function TaskInput({ task, value, onChange, disabled, reveal }: P
               </span>
               <span className="flex-1">{option}</span>
             </motion.button>
+            {speakable && isEnglishLike(option) && <SpeakButton text={option} />}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+// Cümlə quran: söz bankından sözləri seçib cavab sətrini düz.
+function WordOrderInput({
+  words,
+  translation,
+  disabled,
+  onChange,
+}: {
+  words: string[];
+  translation?: string;
+  disabled: boolean;
+  onChange: (value: UserAnswer) => void;
+}) {
+  // Söz bankı: hər sözə sabit açar (təkrar sözlər üçün) + bir dəfə qarışıq sıra.
+  // Lazy state initializer yalnız mount-da işləyir; komponent hər tapşırıqda
+  // key={task.id} ilə remount olur, ona görə hər sualda təzə qarışıq alınır.
+  const [bank] = useState(() => {
+    const a = words.map((w, i) => ({ w, key: i }));
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  });
+  const [picked, setPicked] = useState<number[]>([]); // seçilmiş açarlar (sıra ilə)
+
+  // Seçim dəyişəndə valideynə cavabı bildir (yalnız tam olanda qeyri-boş).
+  useEffect(() => {
+    const complete = picked.length === words.length;
+    const sentence = picked.map((k) => bank.find((b) => b.key === k)!.w).join(" ");
+    onChange(complete ? sentence : "");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [picked]);
+
+  const available = bank.filter((b) => !picked.includes(b.key));
+
+  return (
+    <div>
+      {translation && (
+        <p className="mb-3 text-sm text-muted">
+          Tərcümə: <span className="font-semibold text-fg">{translation}</span>
+        </p>
+      )}
+
+      {/* Cavab sətri */}
+      <div className="mb-4 flex min-h-14 flex-wrap items-center gap-2 rounded-2xl border-2 border-dashed border-line bg-panel/50 p-3">
+        {picked.length === 0 && (
+          <span className="text-sm text-muted">Sözləri sıra ilə seç…</span>
+        )}
+        {picked.map((k) => {
+          const word = bank.find((b) => b.key === k)!.w;
+          return (
+            <button
+              key={k}
+              type="button"
+              disabled={disabled}
+              onClick={() => setPicked((p) => p.filter((x) => x !== k))}
+              className="rounded-xl bg-brand px-3 py-2 font-bold text-white active:scale-95"
+            >
+              {word}
+            </button>
           );
         })}
       </div>
-    );
-  }
 
-  return (
-    <input
-      type="text"
-      inputMode={task.type === "numeric" ? "decimal" : "text"}
-      value={value === null ? "" : String(value)}
-      disabled={disabled}
-      onChange={(e) => onChange(e.target.value)}
-      placeholder="Cavabını yaz..."
-      className={`w-full rounded-2xl border-2 bg-panel px-5 py-4 text-lg font-bold text-fg
-        shadow-[0_4px_0_0_var(--color-line)] placeholder:font-medium placeholder:text-muted
-        focus:outline-none disabled:opacity-90 ${
-          reveal ? "border-line" : "border-line focus:border-brand"
-        }`}
-    />
+      {/* Söz bankı */}
+      <div className="flex flex-wrap gap-2">
+        {available.map((b) => (
+          <button
+            key={b.key}
+            type="button"
+            disabled={disabled}
+            onClick={() => {
+              playSelect();
+              setPicked((p) => [...p, b.key]);
+            }}
+            className="tile px-3 py-2 font-bold text-fg active:scale-95"
+          >
+            {b.w}
+          </button>
+        ))}
+      </div>
+    </div>
   );
 }

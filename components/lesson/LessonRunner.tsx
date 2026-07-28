@@ -284,6 +284,7 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
             onChange={(v) => setAnswer(v)}
             disabled={checked}
             reveal={checked}
+            speakable={slug === "ingilis-dili"}
           />
         </div>
       </div>
@@ -335,6 +336,8 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
 function correctAnswerText(task: Task): string {
   if (task.type === "multiple_choice") return task.options[task.correctIndex];
   if (task.type === "numeric") return String(task.answer);
+  if (task.type === "listening") return task.options[task.correctIndex];
+  if (task.type === "word_order") return task.answer;
   return task.accepted[0] ?? "";
 }
 

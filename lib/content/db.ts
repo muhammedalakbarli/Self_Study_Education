@@ -79,6 +79,28 @@ function parseTask(row: TaskRow): { task: Task; bonus: boolean } {
       figure,
       accepted: (d.accepted as string[]) ?? [],
     };
+  } else if (row.type === "word_order") {
+    task = {
+      id: row.id,
+      type: "word_order",
+      prompt: row.prompt,
+      xp: row.xp,
+      figure,
+      words: (d.words as string[]) ?? [],
+      answer: (d.answer as string) ?? "",
+      translation: d.translation as string | undefined,
+    };
+  } else if (row.type === "listening") {
+    task = {
+      id: row.id,
+      type: "listening",
+      prompt: row.prompt,
+      xp: row.xp,
+      figure,
+      audioText: (d.audioText as string) ?? "",
+      options: (d.options as string[]) ?? [],
+      correctIndex: (d.correctIndex as number) ?? 0,
+    };
   } else {
     task = {
       id: row.id,

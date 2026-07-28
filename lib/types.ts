@@ -1,7 +1,12 @@
 // Tədris platformasının əsas məlumat tipləri.
 // Bu tiplər həm lokal seed məzmununda, həm də sonradan Supabase DB-də istifadə olunur.
 
-export type TaskType = "multiple_choice" | "fill_blank" | "numeric";
+export type TaskType =
+  | "multiple_choice"
+  | "fill_blank"
+  | "numeric"
+  | "word_order" // sözləri düz sıraya düz (cümlə quran)
+  | "listening"; // dinlə və seç
 
 // Tapşırığın yanında göstərilən şəkil (illüstrasiya) növləri
 export type TaskFigure =
@@ -44,7 +49,28 @@ export interface NumericTask extends TaskBase {
   tolerance?: number; // icazə verilən fərq (məs. onluq kəsrlər üçün)
 }
 
-export type Task = MultipleChoiceTask | FillBlankTask | NumericTask;
+// Cümlə quran — qarışıq sözləri düzgün sıraya düz (İngilis cümlə qurma məşqi)
+export interface WordOrderTask extends TaskBase {
+  type: "word_order";
+  words: string[]; // qarışıq söz bankı
+  answer: string; // düzgün tam cümlə
+  translation?: string; // azərbaycanca tərcümə (ipucu)
+}
+
+// Dinləmə — İngilis mətni səsləndirilir, düzgün variantı seç
+export interface ListeningTask extends TaskBase {
+  type: "listening";
+  audioText: string; // səsləndiriləcək İngilis mətni
+  options: string[];
+  correctIndex: number;
+}
+
+export type Task =
+  | MultipleChoiceTask
+  | FillBlankTask
+  | NumericTask
+  | WordOrderTask
+  | ListeningTask;
 
 // Layihə (project) səhifəsindəki qayda bölməsi
 export interface RuleSection {
