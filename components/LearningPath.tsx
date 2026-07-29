@@ -85,28 +85,20 @@ function NodeButton({ node }: { node: PathNode }) {
   );
 }
 
-// Bölmələr arası nazik ayırıcı (mətnsiz). Başlıq göstərilmir — path təmiz qalır.
-function UnitDivider() {
-  return <div className="my-4 h-px w-full max-w-[220px] bg-line" />;
-}
-
 export default function LearningPath({ nodes }: { nodes: PathNode[] }) {
   return (
     <div className="flex flex-col items-center py-2">
       {nodes.map((node, i) => {
         const offset = offsetAt(i);
-        // İlk düyün istisna olmaqla, yeni bölmədən əvvəl nazik ayırıcı göstər.
-        const banner = node.unitTitle && i > 0 ? <UnitDivider key={`u-${node.id}`} /> : null;
 
         // Ulduz-u aralıqlarda, düyünün əks tərəfində göstər.
         const showMascot = i > 0 && i % 6 === 3 && node.state !== "current";
         const mascotSide = offset >= 0 ? -1 : 1; // düyün sağdadırsa Ulduz solda
-        // Cari düyünün üstündə "BAŞLA" balonu üçün əlavə yer aç (banner ilə kəsişməsin).
+        // Cari düyünün üstündə "BAŞLA" balonu üçün əlavə yer aç.
         const extraTop = node.state === "current" ? "pt-10" : "";
 
         return (
           <div key={node.id} className="flex w-full flex-col items-center">
-            {banner}
             <div
               className={`relative flex items-center justify-center py-3 ${extraTop}`}
               style={{ transform: `translateX(${offset}px)` }}
