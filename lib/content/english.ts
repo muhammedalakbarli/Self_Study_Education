@@ -188,6 +188,181 @@ export const english: Subject = {
     },
 
     // ═══════════════════════════════════════════════════════════════
+    // 2-Cİ DÖVR — PRESENT CONTINUOUS (Qayda → Lüğət → Dinləmə → Oxu → Yazı)
+    // İndi baş verən işlər; yeni fellər: run, write, sleep, cook, sing, dance, swim, sit.
+    // ═══════════════════════════════════════════════════════════════
+    {
+      id: "en-c2-grammar",
+      title: "Qayda: Present Continuous",
+      description: "İndi, danışıq anında baş verən işlər. Qaydanı oxu, sonra məşq et.",
+      lessons: [
+        {
+          id: "pc-rule",
+          title: "Present Continuous qaydası",
+          intro: "Present Continuous indi, bu anda baş verən işi bildirir. Gəl qaydanı öyrənək!",
+          sections: [
+            { heading: "Present Continuous nədir?", body: "İndi, danışıq anında baş verən işi bildirir: I am reading now. (Mən indi oxuyuram.) Çox vaxt 'now', 'at the moment' sözləri ilə işlənir." },
+            { heading: "am / is / are + fel + -ing", body: "I → am (I am playing). he/she/it → is (She is running). you/we/they → are (They are singing)." },
+            { heading: "-ing yazılışı", body: "Adətən sadəcə -ing: play → playing. Sonu 'e' olanda 'e' düşür: write → writing. Qısa sözlərdə son samit qoşalaşır: run → running, sit → sitting." },
+          ],
+          tasks: [
+            { id: "pc-rule-t1", type: "multiple_choice", speakOptions: true, prompt: "'I ___ reading now.'", options: ["am", "is", "are", "be"], correctIndex: 0, xp: 10 },
+            { id: "pc-rule-t2", type: "multiple_choice", speakOptions: true, prompt: "'She ___ running.'", options: ["am", "is", "are", "be"], correctIndex: 1, xp: 10 },
+            { id: "pc-rule-t3", type: "multiple_choice", speakOptions: true, prompt: "'They ___ singing.'", options: ["am", "is", "are", "be"], correctIndex: 2, xp: 10 },
+            { id: "pc-rule-t4", type: "multiple_choice", speakOptions: true, prompt: "'We ___ cooking.'", options: ["am", "is", "are", "be"], correctIndex: 2, xp: 10 },
+            { id: "pc-rule-t5", type: "fill_blank", prompt: "'play' sözünə -ing əlavə et.", accepted: ["playing"], xp: 10 },
+            { id: "pc-rule-t6", type: "multiple_choice", prompt: "Present Continuous nə vaxt işlədilir?", options: ["hər gün olan iş", "indi baş verən iş", "keçmiş iş", "gələcək iş"], correctIndex: 1, xp: 10 },
+            { id: "pc-rule-t7", type: "multiple_choice", speakOptions: true, prompt: "'He is ___ now.' (write)", options: ["write", "writes", "writing", "wrote"], correctIndex: 2, xp: 10 },
+            { id: "pc-rule-t8", type: "fill_blank", prompt: "'run' sözünə -ing əlavə et (son samit qoşalaşır).", accepted: ["running"], xp: 10 },
+            { id: "pc-rule-t9", type: "multiple_choice", speakOptions: true, prompt: "'The baby ___ sleeping.'", options: ["am", "is", "are", "be"], correctIndex: 1, xp: 10 },
+            { id: "pc-rule-t10", type: "multiple_choice", speakOptions: true, prompt: "'Look! It ___ raining.'", options: ["am", "is", "are", "be"], correctIndex: 1, xp: 10 },
+            { id: "pc-rule-t11", type: "fill_blank", prompt: "'dance' sözünə -ing əlavə et ('e' düşür).", accepted: ["dancing"], xp: 10 },
+            { id: "pc-rule-t12", type: "multiple_choice", speakOptions: true, prompt: "'You ___ studying English.'", options: ["am", "is", "are", "be"], correctIndex: 2, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "pc-rule-b1", type: "fill_blank", prompt: "'sit' sözünə -ing əlavə et (son samit qoşalaşır).", accepted: ["sitting"], xp: 15 },
+            { id: "pc-rule-b2", type: "multiple_choice", speakOptions: true, prompt: "Hansı cümlə Present Continuous-dur?", options: ["I eat lunch.", "I am eating lunch.", "I ate lunch.", "I will eat lunch."], correctIndex: 1, xp: 15 },
+            { id: "pc-rule-b3", type: "fill_blank", prompt: "'swim' sözünə -ing əlavə et.", accepted: ["swimming"], xp: 15 },
+            { id: "pc-rule-b4", type: "multiple_choice", speakOptions: true, prompt: "'What ___ you doing?'", options: ["am", "is", "are", "be"], correctIndex: 2, xp: 15 },
+          ],
+        },
+      ],
+    },
+    {
+      id: "en-c2-vocab",
+      title: "Lüğət: İndi görülən işlər",
+      description: "8 yeni fel — run, write, sleep, cook, sing, dance, swim, sit.",
+      lessons: [
+        {
+          id: "pc-vocab",
+          title: "İş felləri (8 söz)",
+          intro: "İndi görülən işləri bildirən 8 yeni fel öyrənək.",
+          sections: [
+            { heading: "Yeni sözlər (8 fel)", body: "run — qaçmaq · write — yazmaq · sleep — yatmaq · cook — bişirmək · sing — mahnı oxumaq · dance — rəqs etmək · swim — üzmək · sit — oturmaq" },
+            { heading: "Məsləhət", body: "Bu felləri -ing forması ilə xatırla: running, writing, sleeping... çünki indi baş verən işi bildirirlər." },
+          ],
+          tasks: [
+            { id: "pc-vocab-t1", type: "multiple_choice", prompt: "'run' sözünün mənası?", options: ["qaçmaq", "yatmaq", "üzmək", "oxumaq"], correctIndex: 0, xp: 10 },
+            { id: "pc-vocab-t2", type: "multiple_choice", prompt: "'sleep' sözünün mənası?", options: ["oturmaq", "yatmaq", "qaçmaq", "bişirmək"], correctIndex: 1, xp: 10 },
+            { id: "pc-vocab-t3", type: "multiple_choice", prompt: "'cook' sözünün mənası?", options: ["bişirmək", "üzmək", "yazmaq", "rəqs etmək"], correctIndex: 0, xp: 10 },
+            { id: "pc-vocab-t4", type: "multiple_choice", prompt: "'swim' sözünün mənası?", options: ["oxumaq", "üzmək", "qaçmaq", "oturmaq"], correctIndex: 1, xp: 10 },
+            { id: "pc-vocab-t5", type: "multiple_choice", prompt: "'write' sözünün mənası?", options: ["yazmaq", "oxumaq", "oturmaq", "qaçmaq"], correctIndex: 0, xp: 10 },
+            { id: "pc-vocab-t6", type: "multiple_choice", prompt: "'dance' sözünün mənası?", options: ["rəqs etmək", "oxumaq", "üzmək", "yatmaq"], correctIndex: 0, xp: 10 },
+            { id: "pc-vocab-t7", type: "fill_blank", prompt: "'yatmaq' ingiliscə necə yazılır?", accepted: ["sleep"], xp: 10 },
+            { id: "pc-vocab-t8", type: "fill_blank", prompt: "'oturmaq' ingiliscə necə yazılır?", accepted: ["sit"], xp: 10 },
+            { id: "pc-vocab-t9", type: "multiple_choice", speakOptions: true, prompt: "'She is ___ in the pool.' (üzmək)", options: ["swimming", "running", "cooking", "singing"], correctIndex: 0, xp: 10 },
+            { id: "pc-vocab-t10", type: "multiple_choice", speakOptions: true, prompt: "'He is ___ a letter.' (yazmaq)", options: ["writing", "reading", "cooking", "dancing"], correctIndex: 0, xp: 10 },
+            { id: "pc-vocab-t11", type: "multiple_choice", speakOptions: true, prompt: "'They are ___ a song.' (oxumaq)", options: ["singing", "sleeping", "sitting", "running"], correctIndex: 0, xp: 10 },
+            { id: "pc-vocab-t12", type: "fill_blank", prompt: "'The boys are ___ in the yard.' (qaçmaq — -ing forması)", accepted: ["running"], xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "pc-vocab-b1", type: "multiple_choice", prompt: "'sing' sözünün mənası?", options: ["mahnı oxumaq", "yatmaq", "oturmaq", "üzmək"], correctIndex: 0, xp: 15 },
+            { id: "pc-vocab-b2", type: "multiple_choice", prompt: "'sit' sözünün mənası?", options: ["oturmaq", "qaçmaq", "bişirmək", "yazmaq"], correctIndex: 0, xp: 15 },
+            { id: "pc-vocab-b3", type: "multiple_choice", speakOptions: true, prompt: "'Mum is ___ dinner.' (bişirmək)", options: ["cooking", "swimming", "writing", "dancing"], correctIndex: 0, xp: 15 },
+            { id: "pc-vocab-b4", type: "fill_blank", prompt: "'rəqs etmək' ingiliscə necə yazılır?", accepted: ["dance"], xp: 15 },
+          ],
+        },
+      ],
+    },
+    {
+      id: "en-c2-listening",
+      title: "Dinləmə: Present Continuous",
+      description: "İndi baş verən işlərin cümlələrini dinlə və düzgün mənanı seç.",
+      lessons: [
+        {
+          id: "pc-listen",
+          title: "Dinlə və seç: indi baş verən iş",
+          intro: "Cümləni dinlə və düzgün cavabı seç.",
+          sections: [
+            { heading: "Necə işləyir?", body: "«Dinlə» düyməsinə bas, cümləni eşit və düzgün variantı seç. İstədiyin qədər təkrar dinlə." },
+          ],
+          tasks: [
+            { id: "pc-listen-t1", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I am reading a book.", options: ["Mən kitab oxuyuram.", "Mən yazıram.", "Mən yatıram.", "Mən qaçıram."], correctIndex: 0, xp: 10 },
+            { id: "pc-listen-t2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She is running.", options: ["O yazır.", "O qaçır.", "O yatır.", "O üzür."], correctIndex: 1, xp: 10 },
+            { id: "pc-listen-t3", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "They are singing.", options: ["Onlar rəqs edir.", "Onlar mahnı oxuyur.", "Onlar yatır.", "Onlar qaçır."], correctIndex: 1, xp: 10 },
+            { id: "pc-listen-t4", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "He is cooking dinner.", options: ["O şam yeməyi bişirir.", "O yemək yeyir.", "O yazır.", "O yatır."], correctIndex: 0, xp: 10 },
+            { id: "pc-listen-t5", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "We are swimming.", options: ["Biz üzürük.", "Biz qaçırıq.", "Biz oxuyuruq.", "Biz yatırıq."], correctIndex: 0, xp: 10 },
+            { id: "pc-listen-t6", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "The baby is sleeping.", options: ["Körpə yatır.", "Körpə ağlayır.", "Körpə oynayır.", "Körpə yeyir."], correctIndex: 0, xp: 10 },
+            { id: "pc-listen-t7", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "You are writing a letter.", options: ["Sən məktub yazırsan.", "Sən oxuyursan.", "Sən qaçırsan.", "Sən yatırsan."], correctIndex: 0, xp: 10 },
+            { id: "pc-listen-t8", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She is dancing now.", options: ["O indi rəqs edir.", "O indi oxuyur.", "O indi yatır.", "O indi qaçır."], correctIndex: 0, xp: 10 },
+            { id: "pc-listen-t9", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "The children are playing.", options: ["Uşaqlar oynayır.", "Uşaqlar yatır.", "Uşaqlar yeyir.", "Uşaqlar oxuyur."], correctIndex: 0, xp: 10 },
+            { id: "pc-listen-t10", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I am sitting on the chair.", options: ["Mən stulda oturmuşam.", "Mən qaçıram.", "Mən üzürəm.", "Mən yazıram."], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "pc-listen-b1", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "What are you doing?", options: ["Sən nə edirsən?", "Sən hara gedirsən?", "Sən kimsən?", "Sən neçə yaşındasan?"], correctIndex: 0, xp: 15 },
+            { id: "pc-listen-b2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "Look! It is raining.", options: ["Bax! Yağış yağır.", "Bax! Gün çıxıb.", "Bax! Qar yağır.", "Bax! Külək əsir."], correctIndex: 0, xp: 15 },
+            { id: "pc-listen-b3", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "My father is reading a newspaper.", options: ["Atam qəzet oxuyur.", "Anam qəzet oxuyur.", "Atam kitab oxuyur.", "Atam yazır."], correctIndex: 0, xp: 15 },
+          ],
+        },
+      ],
+    },
+    {
+      id: "en-c2-reading",
+      title: "Oxu: In the park",
+      description: "Qısa mətni oxu və suallara cavab ver (Present Continuous).",
+      lessons: [
+        {
+          id: "pc-read",
+          title: "Reading: In the park",
+          intro: "Qısa mətni oxu və suallara cavab ver.",
+          sections: [
+            { heading: "Read the text (Mətni oxu)", body: "Look at the park. It is a sunny day. Many people are in the park. Two boys are playing football. A girl is running with her dog. An old man is sitting on a bench and reading a newspaper. Some children are singing and dancing. Everyone is having a good time." },
+            { heading: "İpucu", body: "Sualı oxu, cavabı mətndə tap. Lazım olsa mətnə yenidən bax." },
+          ],
+          tasks: [
+            { id: "pc-read-t1", type: "multiple_choice", speakOptions: true, prompt: "What is the weather like?", options: ["rainy", "sunny", "snowy", "cloudy"], correctIndex: 1, xp: 10 },
+            { id: "pc-read-t2", type: "multiple_choice", speakOptions: true, prompt: "Where are the people?", options: ["at school", "in the park", "at home", "at the shop"], correctIndex: 1, xp: 10 },
+            { id: "pc-read-t3", type: "multiple_choice", speakOptions: true, prompt: "What are the two boys doing?", options: ["swimming", "playing football", "sleeping", "cooking"], correctIndex: 1, xp: 10 },
+            { id: "pc-read-t4", type: "multiple_choice", speakOptions: true, prompt: "What is the girl doing?", options: ["running with her dog", "reading", "dancing", "cooking"], correctIndex: 0, xp: 10 },
+            { id: "pc-read-t5", type: "multiple_choice", speakOptions: true, prompt: "What is the old man doing?", options: ["singing", "reading a newspaper", "running", "swimming"], correctIndex: 1, xp: 10 },
+            { id: "pc-read-t6", type: "multiple_choice", speakOptions: true, prompt: "Where is the old man sitting?", options: ["on a bench", "on the grass", "on a chair", "on the floor"], correctIndex: 0, xp: 10 },
+            { id: "pc-read-t7", type: "fill_blank", prompt: "'Some children are singing and ___.' (mətndən sözü yaz)", accepted: ["dancing"], xp: 10 },
+            { id: "pc-read-t8", type: "multiple_choice", speakOptions: true, prompt: "Are the people happy?", options: ["Yes, they are.", "No, they aren't.", "We don't know.", "They are sad."], correctIndex: 0, xp: 10 },
+            { id: "pc-read-t9", type: "multiple_choice", prompt: "'It is a sunny day.' — hava necədir?", options: ["günəşli", "yağışlı", "qarlı", "küləkli"], correctIndex: 0, xp: 10 },
+            { id: "pc-read-t10", type: "multiple_choice", speakOptions: true, prompt: "What is everyone having?", options: ["a good time", "lunch", "a book", "a car"], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "pc-read-b1", type: "multiple_choice", prompt: "'are playing' hansı zamandır?", options: ["Present Simple", "Present Continuous", "Past Simple", "Future"], correctIndex: 1, xp: 15 },
+            { id: "pc-read-b2", type: "fill_blank", prompt: "'A girl is ___ with her dog.' (qaçmaq — -ing, mətndən)", accepted: ["running"], xp: 15 },
+            { id: "pc-read-b3", type: "multiple_choice", prompt: "'Everyone is having a good time.' nə deməkdir?", options: ["hamı yaxşı vaxt keçirir", "hamı yorğundur", "hamı acdır", "hamı yatır"], correctIndex: 0, xp: 15 },
+          ],
+        },
+      ],
+    },
+    {
+      id: "en-c2-writing",
+      title: "Yazı: Present Continuous",
+      description: "Sözlərdən düzgün Present Continuous cümləsi qur.",
+      lessons: [
+        {
+          id: "pc-write",
+          title: "Cümlə qur: Present Continuous",
+          intro: "Sözləri düzgün sıraya düz və Present Continuous cümləsi qur.",
+          sections: [
+            { heading: "Necə işləyir?", body: "Sözlərə sıra ilə bas — cümlə yuxarıda düzələcək. Quruluş: kim → am/is/are → fel+ing." },
+          ],
+          tasks: [
+            { id: "pc-write-t1", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["I", "am", "reading"], answer: "I am reading", translation: "Mən oxuyuram.", xp: 10 },
+            { id: "pc-write-t2", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["She", "is", "running"], answer: "She is running", translation: "O qaçır.", xp: 10 },
+            { id: "pc-write-t3", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["They", "are", "singing"], answer: "They are singing", translation: "Onlar mahnı oxuyur.", xp: 10 },
+            { id: "pc-write-t4", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["He", "is", "cooking", "dinner"], answer: "He is cooking dinner", translation: "O şam yeməyi bişirir.", xp: 10 },
+            { id: "pc-write-t5", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["We", "are", "swimming"], answer: "We are swimming", translation: "Biz üzürük.", xp: 10 },
+            { id: "pc-write-t6", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["The", "baby", "is", "sleeping"], answer: "The baby is sleeping", translation: "Körpə yatır.", xp: 10 },
+            { id: "pc-write-t7", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["You", "are", "writing", "a", "letter"], answer: "You are writing a letter", translation: "Sən məktub yazırsan.", xp: 10 },
+            { id: "pc-write-t8", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["She", "is", "dancing", "now"], answer: "She is dancing now", translation: "O indi rəqs edir.", xp: 10 },
+            { id: "pc-write-t9", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["I", "am", "sitting", "here"], answer: "I am sitting here", translation: "Mən burada oturmuşam.", xp: 10 },
+            { id: "pc-write-t10", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["The", "children", "are", "playing"], answer: "The children are playing", translation: "Uşaqlar oynayır.", xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "pc-write-b1", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["What", "are", "you", "doing"], answer: "What are you doing", translation: "Sən nə edirsən?", xp: 15 },
+            { id: "pc-write-b2", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["It", "is", "raining", "now"], answer: "It is raining now", translation: "İndi yağış yağır.", xp: 15 },
+            { id: "pc-write-b3", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["My", "father", "is", "reading"], answer: "My father is reading", translation: "Atam oxuyur.", xp: 15 },
+          ],
+        },
+      ],
+    },
+
+    // ═══════════════════════════════════════════════════════════════
     // BÖLMƏ 1 — QRAMMATİKA (Grammar)
     // ═══════════════════════════════════════════════════════════════
     {
@@ -196,53 +371,6 @@ export const english: Subject = {
       description:
         "Present Simple, Present Continuous, Past Simple, sual/inkar cümlələr, əvəzliklər, artikllar, sifət dərəcələri və modal fellər.",
       lessons: [
-        // ── PROJECT 2: Present Continuous ──────────────────────────
-        {
-          id: "en-gr-l2",
-          title: "Present Continuous (İndiki davamedici zaman)",
-          intro:
-            "Danışıq anında — indi, elə bu dəqiqə — baş verən işləri bildirir. am/is/are + fel-ing.",
-          visual: "verb-timeline",
-          sections: [
-            {
-              heading: "Quruluş: am / is / are + fel-ing",
-              body: "I am reading. She is playing. They are running. 'be' feli (am/is/are) + əsas felə -ing əlavə olunur.",
-            },
-            {
-              heading: "am / is / are seçimi",
-              body: "I → am; he, she, it → is; you, we, they → are. Məsələn: I am, he is, we are.",
-            },
-            {
-              heading: "-ing qaydaları",
-              body: "Adətən sadəcə -ing əlavə olunur: play → playing. 'e' ilə bitirsə düşür: make → making. Qısa sözlərdə son samit qoşalaşır: run → running, sit → sitting.",
-            },
-          ],
-          tasks: [
-            { id: "en-gr-l2-t1", type: "multiple_choice", prompt: "'I ___ reading a book.'", options: ["am", "is", "are", "be"], correctIndex: 0, xp: 10 },
-            { id: "en-gr-l2-t2", type: "multiple_choice", prompt: "'She ___ playing.'", options: ["am", "is", "are", "be"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l2-t3", type: "multiple_choice", prompt: "'They ___ running.'", options: ["am", "is", "are", "be"], correctIndex: 2, xp: 10 },
-            { id: "en-gr-l2-t4", type: "multiple_choice", prompt: "'We ___ watching TV.'", options: ["am", "is", "are", "be"], correctIndex: 2, xp: 10 },
-            { id: "en-gr-l2-t5", type: "fill_blank", prompt: "'play' sözünə -ing əlavə et.", accepted: ["playing"], xp: 10 },
-            { id: "en-gr-l2-t6", type: "multiple_choice", prompt: "Present Continuous nə vaxt işlədilir?", options: ["hər gün olan iş", "indi, danışıq anında baş verən iş", "keçmiş iş", "ümumi fakt"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l2-t7", type: "multiple_choice", prompt: "'He is ___ now.' (write)", options: ["write", "writes", "writing", "wrote"], correctIndex: 2, xp: 10 },
-            { id: "en-gr-l2-t8", type: "fill_blank", prompt: "'run' sözünə -ing əlavə et (son samit qoşalaşır).", accepted: ["running"], xp: 10 },
-            { id: "en-gr-l2-t9", type: "multiple_choice", prompt: "'The baby ___ sleeping.'", options: ["am", "is", "are", "be"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l2-t10", type: "multiple_choice", prompt: "'Look! It ___ raining.'", options: ["am", "is", "are", "be"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l2-t11", type: "fill_blank", prompt: "'make' sözünə -ing əlavə et ('e' düşür).", accepted: ["making"], xp: 10 },
-            { id: "en-gr-l2-t12", type: "multiple_choice", prompt: "'You ___ studying English.'", options: ["am", "is", "are", "be"], correctIndex: 2, xp: 10 },
-            { id: "en-gr-l2-t13", type: "multiple_choice", prompt: "Hansı cümlə Present Continuous-dur?", options: ["I eat lunch.", "I am eating lunch.", "I ate lunch.", "I will eat lunch."], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l2-t14", type: "multiple_choice", prompt: "'-ing' hansı zamanın əlamətidir (bu mövzuda)?", options: ["Present Simple", "Present Continuous", "Past Simple", "hamısı"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l2-t15", type: "multiple_choice", prompt: "'My friends ___ dancing.'", options: ["is", "are", "am", "be"], correctIndex: 1, xp: 15 },
-          ],
-          bonusTasks: [
-            { id: "en-gr-l2-b1", type: "fill_blank", prompt: "'sit' sözünə -ing əlavə et (son samit qoşalaşır).", accepted: ["sitting"], xp: 15 },
-            { id: "en-gr-l2-b2", type: "multiple_choice", prompt: "Hansı cümlə SƏHVDİR?", options: ["She is cooking.", "They are playing.", "I am go.", "He is running."], correctIndex: 2, xp: 15 },
-            { id: "en-gr-l2-b3", type: "fill_blank", prompt: "'swim' sözünə -ing əlavə et.", accepted: ["swimming"], xp: 15 },
-            { id: "en-gr-l2-b4", type: "multiple_choice", prompt: "'What ___ you doing?'", options: ["am", "is", "are", "be"], correctIndex: 2, xp: 15 },
-            { id: "en-gr-l2-b5", type: "multiple_choice", prompt: "'The dogs ___ barking.'", options: ["is", "are", "am", "was"], correctIndex: 1, xp: 15 },
-          ],
-        },
-
         // ── PROJECT 3: Past Simple ─────────────────────────────────
         {
           id: "en-gr-l3",
