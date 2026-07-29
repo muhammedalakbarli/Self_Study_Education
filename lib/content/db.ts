@@ -112,6 +112,7 @@ function parseTask(row: TaskRow): { task: Task; bonus: boolean } {
       tolerance: d.tolerance as number | undefined,
     };
   }
+  if (d.speakOptions === true) task.speakOptions = true;
   return { task, bonus };
 }
 

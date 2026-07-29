@@ -31,6 +31,7 @@ export default function TaskInput({ task, value, onChange, disabled, reveal }: P
         onChange={onChange}
         disabled={disabled}
         reveal={!!reveal}
+        speakOptions={task.speakOptions}
       />
     );
   }
@@ -91,6 +92,7 @@ export default function TaskInput({ task, value, onChange, disabled, reveal }: P
 
 // Çoxseçimli variant şəbəkəsi (multiple_choice + listening ortaq istifadə edir).
 // Sıra qorunur (correctIndex sabit mövqedir).
+// speakOptions=true → variant İngilis sözdür, seçiləndə avtomatik səslənir.
 function ChoiceGrid({
   options,
   correctIndex,
@@ -98,6 +100,7 @@ function ChoiceGrid({
   onChange,
   disabled,
   reveal,
+  speakOptions,
 }: {
   options: string[];
   correctIndex: number;
@@ -105,6 +108,7 @@ function ChoiceGrid({
   onChange: (value: UserAnswer) => void;
   disabled: boolean;
   reveal: boolean;
+  speakOptions?: boolean;
 }) {
   return (
     <div className="grid gap-3">
@@ -126,6 +130,7 @@ function ChoiceGrid({
             disabled={disabled}
             onClick={() => {
               playSelect();
+              if (speakOptions) speakEnglish(option);
               onChange(i);
             }}
             whileTap={disabled ? undefined : { scale: 0.98 }}

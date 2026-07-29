@@ -26,6 +26,9 @@ interface TaskBase {
   prompt: string; // sualın mətni
   figure?: TaskFigure; // sualı canlandıran şəkil (istəyə bağlı)
   xp: number; // düzgün cavaba görə qazanılan XP
+  // Variantlar İngilis sözdürsə: seçiləndə avtomatik səslənir (TTS ilə tələffüz).
+  // Yalnız BÜTÜN variantları İngilis olan tapşırıqlarda true qoyulur.
+  speakOptions?: boolean;
 }
 
 // Çoxseçimli sual
