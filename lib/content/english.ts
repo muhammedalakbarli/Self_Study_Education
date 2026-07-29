@@ -684,6 +684,326 @@ export const english: Subject = {
     },
 
     // ═══════════════════════════════════════════════════════════════
+    // 5-Cİ DÖVR — PRONOUNS (Əvəzliklər)
+    // ═══════════════════════════════════════════════════════════════
+    {
+      id: "en-c5-grammar",
+      title: "Qayda: Əvəzliklər",
+      description: "Şəxs (I, you, he...) və yiyəlik (my, your, his...) əvəzlikləri.",
+      lessons: [
+        {
+          id: "pron-rule",
+          title: "Əvəzliklər qaydası",
+          intro: "İsim əvəzinə işlənən sözlər — əvəzliklər. Gəl öyrənək!",
+          sections: [
+            { heading: "Şəxs əvəzlikləri", body: "I (mən), you (sən/siz), he (o — kişi), she (o — qadın), it (o — əşya/heyvan), we (biz), they (onlar). Cümlədə isim əvəzinə işlənir." },
+            { heading: "Yiyəlik əvəzlikləri", body: "my (mənim), your (sənin), his (onun — kişi), her (onun — qadın), its (onun), our (bizim), their (onların). İsimdən əvvəl gəlir: my book, her cat." },
+            { heading: "Nə vaxt he / she / it?", body: "Kişi üçün he, qadın üçün she, əşya/heyvan üçün it. Ali → he, Nigar → she, the cat → it." },
+          ],
+          tasks: [
+            { id: "pron-rule-t1", type: "multiple_choice", speakOptions: true, prompt: "'Ali is my friend. ___ is nice.'", options: ["He", "She", "It", "They"], correctIndex: 0, xp: 10 },
+            { id: "pron-rule-t2", type: "multiple_choice", speakOptions: true, prompt: "'Nigar is a girl. ___ is tall.'", options: ["He", "She", "It", "We"], correctIndex: 1, xp: 10 },
+            { id: "pron-rule-t3", type: "multiple_choice", speakOptions: true, prompt: "'The dog is big. ___ is black.'", options: ["He", "She", "It", "They"], correctIndex: 2, xp: 10 },
+            { id: "pron-rule-t4", type: "multiple_choice", speakOptions: true, prompt: "'This is ___ book.' (mənim)", options: ["my", "your", "his", "her"], correctIndex: 0, xp: 10 },
+            { id: "pron-rule-t5", type: "multiple_choice", speakOptions: true, prompt: "'Leyla has a cat. ___ cat is white.' (onun — qadın)", options: ["His", "Her", "Its", "Their"], correctIndex: 1, xp: 10 },
+            { id: "pron-rule-t6", type: "multiple_choice", speakOptions: true, prompt: "'We are students. ___ are happy.'", options: ["We", "They", "You", "He"], correctIndex: 0, xp: 10 },
+            { id: "pron-rule-t7", type: "multiple_choice", speakOptions: true, prompt: "'___ am a boy.' (mən)", options: ["I", "You", "He", "We"], correctIndex: 0, xp: 10 },
+            { id: "pron-rule-t8", type: "fill_blank", prompt: "'biz' ingiliscə əvəzlik necə yazılır?", accepted: ["we"], xp: 10 },
+            { id: "pron-rule-t9", type: "multiple_choice", speakOptions: true, prompt: "'Tom and Sam are here. ___ are my friends.' (onlar)", options: ["We", "They", "You", "He"], correctIndex: 1, xp: 10 },
+            { id: "pron-rule-t10", type: "multiple_choice", speakOptions: true, prompt: "'Is this ___ pen?' (sənin)", options: ["my", "your", "his", "its"], correctIndex: 1, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "pron-rule-b1", type: "multiple_choice", speakOptions: true, prompt: "'onlar' ingiliscə əvəzlik?", options: ["we", "you", "they", "he"], correctIndex: 2, xp: 15 },
+            { id: "pron-rule-b2", type: "multiple_choice", speakOptions: true, prompt: "'The book is on the table. ___ is red.'", options: ["He", "She", "It", "They"], correctIndex: 2, xp: 15 },
+            { id: "pron-rule-b3", type: "fill_blank", prompt: "'mənim' (yiyəlik) ingiliscə necə yazılır?", accepted: ["my"], xp: 15 },
+          ],
+        },
+      ],
+    },
+    {
+      id: "en-c5-vocab",
+      title: "Lüğət: Əvəzliklər",
+      description: "Şəxs və yiyəlik əvəzlikləri: I/he/she/we/they, my/your/her...",
+      lessons: [
+        {
+          id: "pron-vocab",
+          title: "Əvəzliklər (sözlər)",
+          intro: "Əvəzliklərin mənasını öyrənək.",
+          sections: [
+            { heading: "Şəxs əvəzlikləri", body: "I — mən · you — sən/siz · he — o (kişi) · she — o (qadın) · it — o (əşya) · we — biz · they — onlar" },
+            { heading: "Yiyəlik əvəzlikləri", body: "my — mənim · your — sənin · his — onun (kişi) · her — onun (qadın) · our — bizim · their — onların" },
+          ],
+          tasks: [
+            { id: "pron-vocab-t1", type: "multiple_choice", prompt: "'he' nə deməkdir?", options: ["o (kişi)", "o (qadın)", "mən", "biz"], correctIndex: 0, xp: 10 },
+            { id: "pron-vocab-t2", type: "multiple_choice", prompt: "'she' nə deməkdir?", options: ["o (kişi)", "o (qadın)", "sən", "onlar"], correctIndex: 1, xp: 10 },
+            { id: "pron-vocab-t3", type: "multiple_choice", prompt: "'we' nə deməkdir?", options: ["biz", "siz", "onlar", "mən"], correctIndex: 0, xp: 10 },
+            { id: "pron-vocab-t4", type: "multiple_choice", prompt: "'they' nə deməkdir?", options: ["onlar", "biz", "sən", "o"], correctIndex: 0, xp: 10 },
+            { id: "pron-vocab-t5", type: "multiple_choice", prompt: "'my' nə deməkdir?", options: ["mənim", "sənin", "onun", "bizim"], correctIndex: 0, xp: 10 },
+            { id: "pron-vocab-t6", type: "multiple_choice", prompt: "'your' nə deməkdir?", options: ["sənin", "mənim", "onun", "onların"], correctIndex: 0, xp: 10 },
+            { id: "pron-vocab-t7", type: "fill_blank", prompt: "'mən' ingiliscə əvəzlik necə yazılır?", accepted: ["i"], xp: 10 },
+            { id: "pron-vocab-t8", type: "fill_blank", prompt: "'o' (əşya/heyvan) ingiliscə əvəzlik?", accepted: ["it"], xp: 10 },
+            { id: "pron-vocab-t9", type: "multiple_choice", speakOptions: true, prompt: "'This is ___ dog.' (onun — kişi)", options: ["his", "her", "its", "my"], correctIndex: 0, xp: 10 },
+            { id: "pron-vocab-t10", type: "multiple_choice", speakOptions: true, prompt: "'___ are teachers.' (onlar)", options: ["They", "We", "You", "He"], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "pron-vocab-b1", type: "multiple_choice", prompt: "'her' (yiyəlik) nə deməkdir?", options: ["onun (qadın)", "onun (kişi)", "mənim", "sənin"], correctIndex: 0, xp: 15 },
+            { id: "pron-vocab-b2", type: "multiple_choice", prompt: "'it' nə deməkdir?", options: ["o (əşya)", "o (kişi)", "o (qadın)", "onlar"], correctIndex: 0, xp: 15 },
+            { id: "pron-vocab-b3", type: "fill_blank", prompt: "'biz' ingiliscə necə yazılır?", accepted: ["we"], xp: 15 },
+          ],
+        },
+      ],
+    },
+    {
+      id: "en-c5-listening",
+      title: "Dinləmə: Əvəzliklər",
+      description: "Əvəzlikli cümlələri dinlə və düzgün mənanı seç.",
+      lessons: [
+        {
+          id: "pron-listen",
+          title: "Dinlə və seç: əvəzliklər",
+          intro: "Cümləni dinlə və düzgün cavabı seç.",
+          sections: [
+            { heading: "Necə işləyir?", body: "«Dinlə» düyməsinə bas, cümləni eşit və düzgün variantı seç. İstədiyin qədər təkrar dinlə." },
+          ],
+          tasks: [
+            { id: "pron-listen-t1", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "He is my brother.", options: ["O mənim qardaşımdır.", "O mənim bacımdır.", "Onlar mənim qardaşımdır.", "Bu mənim qardaşımdır."], correctIndex: 0, xp: 10 },
+            { id: "pron-listen-t2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She is a teacher.", options: ["O müəllimdir (qadın).", "O müəllimdir (kişi).", "O şagirddir.", "Onlar müəllimdir."], correctIndex: 0, xp: 10 },
+            { id: "pron-listen-t3", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "They are my friends.", options: ["Onlar mənim dostlarımdır.", "Biz dostuq.", "O mənim dostumdur.", "Sən mənim dostumsan."], correctIndex: 0, xp: 10 },
+            { id: "pron-listen-t4", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "This is my book.", options: ["Bu mənim kitabımdır.", "Bu sənin kitabındır.", "Bu onun kitabıdır.", "Bunlar mənim kitabımdır."], correctIndex: 0, xp: 10 },
+            { id: "pron-listen-t5", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "We are happy.", options: ["Biz xoşbəxtik.", "Onlar xoşbəxtdir.", "Mən xoşbəxtəm.", "Sən xoşbəxtsən."], correctIndex: 0, xp: 10 },
+            { id: "pron-listen-t6", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "It is a cat.", options: ["Bu pişikdir.", "Bu itdir.", "O uşaqdır.", "Onlar pişikdir."], correctIndex: 0, xp: 10 },
+            { id: "pron-listen-t7", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "Her name is Leyla.", options: ["Onun adı Leyladır (qadın).", "Onun adı Leyladır (kişi).", "Mənim adım Leyladır.", "Sənin adın Leyladır."], correctIndex: 0, xp: 10 },
+            { id: "pron-listen-t8", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I am a student.", options: ["Mən şagirdəm.", "Sən şagirdsən.", "O şagirddir.", "Biz şagirdik."], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "pron-listen-b1", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "His car is fast.", options: ["Onun maşını sürətlidir.", "Onun maşını yavaşdır.", "Mənim maşınım sürətlidir.", "Sənin maşının sürətlidir."], correctIndex: 0, xp: 15 },
+            { id: "pron-listen-b2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "You are my friend.", options: ["Sən mənim dostumsan.", "O mənim dostumdur.", "Biz dostuq.", "Onlar mənim dostumdur."], correctIndex: 0, xp: 15 },
+          ],
+        },
+      ],
+    },
+    {
+      id: "en-c5-reading",
+      title: "Oxu: My family",
+      description: "Ailə haqqında mətni oxu və suallara cavab ver (əvəzliklər).",
+      lessons: [
+        {
+          id: "pron-read",
+          title: "Reading: My family",
+          intro: "Qısa mətni oxu və suallara cavab ver.",
+          sections: [
+            { heading: "Read the text (Mətni oxu)", body: "This is my family. My father is a doctor. He works at a hospital. My mother is a teacher. She works at a school. I have a sister. Her name is Aysel. She is nine. We have a cat. It is black and white. Its name is Pamuk. We love our cat." },
+            { heading: "İpucu", body: "Sualı oxu, cavabı mətndə tap. Lazım olsa mətnə yenidən bax." },
+          ],
+          tasks: [
+            { id: "pron-read-t1", type: "multiple_choice", speakOptions: true, prompt: "What is the father's job?", options: ["teacher", "doctor", "driver", "cook"], correctIndex: 1, xp: 10 },
+            { id: "pron-read-t2", type: "multiple_choice", speakOptions: true, prompt: "Where does the mother work?", options: ["at a hospital", "at a school", "at home", "at a shop"], correctIndex: 1, xp: 10 },
+            { id: "pron-read-t3", type: "multiple_choice", speakOptions: true, prompt: "What is the sister's name?", options: ["Leyla", "Aysel", "Nigar", "Sara"], correctIndex: 1, xp: 10 },
+            { id: "pron-read-t4", type: "multiple_choice", speakOptions: true, prompt: "How old is the sister?", options: ["eight", "nine", "ten", "eleven"], correctIndex: 1, xp: 10 },
+            { id: "pron-read-t5", type: "multiple_choice", speakOptions: true, prompt: "What colour is the cat?", options: ["black", "white", "black and white", "brown"], correctIndex: 2, xp: 10 },
+            { id: "pron-read-t6", type: "multiple_choice", speakOptions: true, prompt: "What is the cat's name?", options: ["Pamuk", "Rex", "Max", "Tom"], correctIndex: 0, xp: 10 },
+            { id: "pron-read-t7", type: "fill_blank", prompt: "'___ father is a doctor.' (mənim — mətndən)", accepted: ["my"], xp: 10 },
+            { id: "pron-read-t8", type: "multiple_choice", speakOptions: true, prompt: "'He works at a hospital.' — Who is 'He'?", options: ["the father", "the mother", "the sister", "the cat"], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "pron-read-b1", type: "multiple_choice", speakOptions: true, prompt: "'Its name is Pamuk.' — What is 'Its'?", options: ["the cat", "the father", "the sister", "the mother"], correctIndex: 0, xp: 15 },
+            { id: "pron-read-b2", type: "fill_blank", prompt: "'Her name is ___.' (mətndən)", accepted: ["aysel"], xp: 15 },
+          ],
+        },
+      ],
+    },
+    {
+      id: "en-c5-writing",
+      title: "Yazı: Əvəzliklər",
+      description: "Sözlərdən əvəzlikli cümlə qur.",
+      lessons: [
+        {
+          id: "pron-write",
+          title: "Cümlə qur: əvəzliklər",
+          intro: "Sözləri düzgün sıraya düz və cümlə qur.",
+          sections: [
+            { heading: "Necə işləyir?", body: "Sözlərə sıra ilə bas. Cümlə əvəzliklə başlaya bilər: He is..., They are..., This is my..." },
+          ],
+          tasks: [
+            { id: "pron-write-t1", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["He", "is", "my", "brother"], answer: "He is my brother", translation: "O mənim qardaşımdır.", xp: 10 },
+            { id: "pron-write-t2", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["She", "is", "a", "teacher"], answer: "She is a teacher", translation: "O müəllimdir.", xp: 10 },
+            { id: "pron-write-t3", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["They", "are", "my", "friends"], answer: "They are my friends", translation: "Onlar mənim dostlarımdır.", xp: 10 },
+            { id: "pron-write-t4", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["This", "is", "my", "book"], answer: "This is my book", translation: "Bu mənim kitabımdır.", xp: 10 },
+            { id: "pron-write-t5", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["We", "are", "happy"], answer: "We are happy", translation: "Biz xoşbəxtik.", xp: 10 },
+            { id: "pron-write-t6", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["It", "is", "a", "cat"], answer: "It is a cat", translation: "Bu pişikdir.", xp: 10 },
+            { id: "pron-write-t7", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["Her", "name", "is", "Leyla"], answer: "Her name is Leyla", translation: "Onun adı Leyladır.", xp: 10 },
+            { id: "pron-write-t8", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["I", "am", "a", "student"], answer: "I am a student", translation: "Mən şagirdəm.", xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "pron-write-b1", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["His", "car", "is", "fast"], answer: "His car is fast", translation: "Onun maşını sürətlidir.", xp: 15 },
+            { id: "pron-write-b2", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["You", "are", "my", "friend"], answer: "You are my friend", translation: "Sən mənim dostumsan.", xp: 15 },
+            { id: "pron-write-b3", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["Our", "cat", "is", "black"], answer: "Our cat is black", translation: "Bizim pişiyimiz qaradır.", xp: 15 },
+          ],
+        },
+      ],
+    },
+    // ═══════════════════════════════════════════════════════════════
+    // 6-CI DÖVR — ARTICLES (a / an / the)
+    // Yeni isimlər: orange, egg, umbrella, elephant, banana, pen, car, box.
+    // ═══════════════════════════════════════════════════════════════
+    {
+      id: "en-c6-grammar",
+      title: "Qayda: Artikllar (a / an / the)",
+      description: "Qeyri-müəyyən (a/an) və müəyyən (the) artikllar.",
+      lessons: [
+        {
+          id: "art-rule",
+          title: "Artikllar qaydası",
+          intro: "a, an, the — İngiliscə artikllar. Nə vaxt hansını işlətməli?",
+          sections: [
+            { heading: "a / an nə üçündür?", body: "Tək, sayıla bilən isimdən əvvəl: a book, a dog. Samitlə başlayan sözdən əvvəl 'a', saitlə (a,e,i,o,u) başlayan sözdən əvvəl 'an': an apple, an egg, an umbrella." },
+            { heading: "the nə üçündür?", body: "Konkret, məlum əşya üçün: the sun, the book (masanın üstündəki). Həm tək, həm cəm ilə işlənir." },
+            { heading: "Nə vaxt artikl yox?", body: "Cəm ümumi isimlərdə artikl işlənmir: I like apples. Dogs are friendly." },
+          ],
+          tasks: [
+            { id: "art-rule-t1", type: "multiple_choice", speakOptions: true, prompt: "'___ apple' (düzgün artikl)", options: ["a", "an", "the", "this"], correctIndex: 1, xp: 10 },
+            { id: "art-rule-t2", type: "multiple_choice", speakOptions: true, prompt: "'___ dog'", options: ["a", "an", "the", "this"], correctIndex: 0, xp: 10 },
+            { id: "art-rule-t3", type: "multiple_choice", speakOptions: true, prompt: "'___ egg'", options: ["a", "an", "the", "this"], correctIndex: 1, xp: 10 },
+            { id: "art-rule-t4", type: "multiple_choice", speakOptions: true, prompt: "'___ book'", options: ["a", "an", "the", "this"], correctIndex: 0, xp: 10 },
+            { id: "art-rule-t5", type: "multiple_choice", speakOptions: true, prompt: "'___ umbrella'", options: ["a", "an", "the", "this"], correctIndex: 1, xp: 10 },
+            { id: "art-rule-t6", type: "multiple_choice", speakOptions: true, prompt: "Saitlə başlayan sözdən əvvəl hansı işlənir?", options: ["a", "an", "the", "this"], correctIndex: 1, xp: 10 },
+            { id: "art-rule-t7", type: "multiple_choice", speakOptions: true, prompt: "'Look at ___ sun.' (konkret)", options: ["a", "an", "the", "this"], correctIndex: 2, xp: 10 },
+            { id: "art-rule-t8", type: "multiple_choice", speakOptions: true, prompt: "'I have ___ orange.'", options: ["a", "an", "the", "some"], correctIndex: 1, xp: 10 },
+            { id: "art-rule-t9", type: "fill_blank", prompt: "Saitlə başlayan 'egg' üçün hansı artikl? (a / an)", accepted: ["an"], xp: 10 },
+            { id: "art-rule-t10", type: "multiple_choice", speakOptions: true, prompt: "'She is ___ teacher.'", options: ["a", "an", "the", "this"], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "art-rule-b1", type: "multiple_choice", speakOptions: true, prompt: "'___ elephant is big.'", options: ["A", "An", "The", "This"], correctIndex: 1, xp: 15 },
+            { id: "art-rule-b2", type: "multiple_choice", prompt: "Cəm ümumi isimdə (apples) hansı artikl işlənir?", options: ["a", "an", "the", "heç biri"], correctIndex: 3, xp: 15 },
+            { id: "art-rule-b3", type: "fill_blank", prompt: "Samitlə başlayan 'car' üçün hansı artikl? (a / an)", accepted: ["a"], xp: 15 },
+          ],
+        },
+      ],
+    },
+    {
+      id: "en-c6-vocab",
+      title: "Lüğət: Əşyalar",
+      description: "8 yeni isim: orange, egg, umbrella, elephant, banana, pen, car, box.",
+      lessons: [
+        {
+          id: "art-vocab",
+          title: "Əşyalar (8 söz)",
+          intro: "8 yeni isim öyrənək və a/an ilə işlədək.",
+          sections: [
+            { heading: "Yeni sözlər (8 isim)", body: "orange — portağal · egg — yumurta · umbrella — çətir · elephant — fil · banana — banan · pen — qələm · car — maşın · box — qutu" },
+            { heading: "Məsləhət", body: "Saitlə başlayanlar 'an' alır: an orange, an egg, an umbrella, an elephant. Samitlə başlayanlar 'a': a banana, a pen, a car, a box." },
+          ],
+          tasks: [
+            { id: "art-vocab-t1", type: "multiple_choice", prompt: "'orange' sözünün mənası?", options: ["portağal", "alma", "banan", "yumurta"], correctIndex: 0, xp: 10 },
+            { id: "art-vocab-t2", type: "multiple_choice", prompt: "'egg' sözünün mənası?", options: ["yumurta", "portağal", "çətir", "qutu"], correctIndex: 0, xp: 10 },
+            { id: "art-vocab-t3", type: "multiple_choice", prompt: "'umbrella' sözünün mənası?", options: ["çətir", "qələm", "qutu", "maşın"], correctIndex: 0, xp: 10 },
+            { id: "art-vocab-t4", type: "multiple_choice", prompt: "'elephant' sözünün mənası?", options: ["fil", "pişik", "it", "quş"], correctIndex: 0, xp: 10 },
+            { id: "art-vocab-t5", type: "multiple_choice", prompt: "'banana' sözünün mənası?", options: ["banan", "portağal", "alma", "yumurta"], correctIndex: 0, xp: 10 },
+            { id: "art-vocab-t6", type: "multiple_choice", prompt: "'pen' sözünün mənası?", options: ["qələm", "kitab", "qutu", "çətir"], correctIndex: 0, xp: 10 },
+            { id: "art-vocab-t7", type: "fill_blank", prompt: "'maşın' ingiliscə necə yazılır?", accepted: ["car"], xp: 10 },
+            { id: "art-vocab-t8", type: "fill_blank", prompt: "'qutu' ingiliscə necə yazılır?", accepted: ["box"], xp: 10 },
+            { id: "art-vocab-t9", type: "multiple_choice", speakOptions: true, prompt: "Hansı söz 'an' ilə işlənir?", options: ["apple", "dog", "book", "car"], correctIndex: 0, xp: 10 },
+            { id: "art-vocab-t10", type: "multiple_choice", speakOptions: true, prompt: "Hansı söz 'a' ilə işlənir?", options: ["egg", "orange", "banana", "umbrella"], correctIndex: 2, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "art-vocab-b1", type: "multiple_choice", prompt: "'box' sözünün mənası?", options: ["qutu", "çətir", "qələm", "fil"], correctIndex: 0, xp: 15 },
+            { id: "art-vocab-b2", type: "multiple_choice", prompt: "'car' sözünün mənası?", options: ["maşın", "qutu", "banan", "qələm"], correctIndex: 0, xp: 15 },
+            { id: "art-vocab-b3", type: "multiple_choice", speakOptions: true, prompt: "Hansı sözdən əvvəl 'an' gəlir?", options: ["banana", "elephant", "pen", "car"], correctIndex: 1, xp: 15 },
+          ],
+        },
+      ],
+    },
+    {
+      id: "en-c6-listening",
+      title: "Dinləmə: Artikllar",
+      description: "Artikllı cümlələri dinlə və düzgün mənanı seç.",
+      lessons: [
+        {
+          id: "art-listen",
+          title: "Dinlə və seç: əşyalar",
+          intro: "Cümləni dinlə və düzgün cavabı seç.",
+          sections: [
+            { heading: "Necə işləyir?", body: "«Dinlə» düyməsinə bas, cümləni eşit və düzgün variantı seç. İstədiyin qədər təkrar dinlə." },
+          ],
+          tasks: [
+            { id: "art-listen-t1", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I have an apple.", options: ["Mənim almam var.", "Mənim iki almam var.", "Mən alma istəyirəm.", "Mənim portağalım var."], correctIndex: 0, xp: 10 },
+            { id: "art-listen-t2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She has a dog.", options: ["Onun iti var.", "Onun pişiyi var.", "Mənim itim var.", "Onun iki iti var."], correctIndex: 0, xp: 10 },
+            { id: "art-listen-t3", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "Look at the sun.", options: ["Günəşə bax.", "Aya bax.", "Ulduza bax.", "Buluda bax."], correctIndex: 0, xp: 10 },
+            { id: "art-listen-t4", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "It is an egg.", options: ["Bu yumurtadır.", "Bu almadır.", "Bu qutudur.", "Bu portağaldır."], correctIndex: 0, xp: 10 },
+            { id: "art-listen-t5", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "This is a book.", options: ["Bu kitabdır.", "Bu qələmdir.", "Bunlar kitabdır.", "Bu qutudur."], correctIndex: 0, xp: 10 },
+            { id: "art-listen-t6", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I see an elephant.", options: ["Mən fil görürəm.", "Mən pişik görürəm.", "Mən it görürəm.", "Mən quş görürəm."], correctIndex: 0, xp: 10 },
+            { id: "art-listen-t7", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "The car is red.", options: ["Maşın qırmızıdır.", "Maşın mavidir.", "Qutu qırmızıdır.", "Maşın yaşıldır."], correctIndex: 0, xp: 10 },
+            { id: "art-listen-t8", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I want an orange.", options: ["Mən portağal istəyirəm.", "Mən alma istəyirəm.", "Mən banan istəyirəm.", "Mən yumurta istəyirəm."], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "art-listen-b1", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She has an umbrella.", options: ["Onun çətiri var.", "Onun qələmi var.", "Mənim çətirim var.", "Onun iki çətiri var."], correctIndex: 0, xp: 15 },
+            { id: "art-listen-b2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "The book is on the table.", options: ["Kitab masanın üstündədir.", "Kitab masanın altındadır.", "Qutu masanın üstündədir.", "Kitab stulun üstündədir."], correctIndex: 0, xp: 15 },
+          ],
+        },
+      ],
+    },
+    {
+      id: "en-c6-reading",
+      title: "Oxu: A day at the zoo",
+      description: "Heyvanxana haqqında mətni oxu və suallara cavab ver (artikllar).",
+      lessons: [
+        {
+          id: "art-read",
+          title: "Reading: A day at the zoo",
+          intro: "Qısa mətni oxu və suallara cavab ver.",
+          sections: [
+            { heading: "Read the text (Mətni oxu)", body: "Today we are at the zoo. Look! There is an elephant. It is very big. There is a lion too. The lion is sleeping. I can see a monkey. The monkey is eating a banana. Near the water there is a bird. It is an eagle. I like the zoo very much." },
+            { heading: "İpucu", body: "Sualı oxu, cavabı mətndə tap. Lazım olsa mətnə yenidən bax." },
+          ],
+          tasks: [
+            { id: "art-read-t1", type: "multiple_choice", speakOptions: true, prompt: "Where are they today?", options: ["at school", "at the zoo", "at home", "in the park"], correctIndex: 1, xp: 10 },
+            { id: "art-read-t2", type: "multiple_choice", speakOptions: true, prompt: "What is very big?", options: ["the lion", "the elephant", "the monkey", "the bird"], correctIndex: 1, xp: 10 },
+            { id: "art-read-t3", type: "multiple_choice", speakOptions: true, prompt: "What is the lion doing?", options: ["eating", "sleeping", "running", "drinking"], correctIndex: 1, xp: 10 },
+            { id: "art-read-t4", type: "multiple_choice", speakOptions: true, prompt: "What is the monkey eating?", options: ["an apple", "a banana", "an orange", "an egg"], correctIndex: 1, xp: 10 },
+            { id: "art-read-t5", type: "multiple_choice", speakOptions: true, prompt: "What kind of bird is it?", options: ["an eagle", "a duck", "a parrot", "an owl"], correctIndex: 0, xp: 10 },
+            { id: "art-read-t6", type: "fill_blank", prompt: "'There is ___ elephant.' (a / an — mətndən)", accepted: ["an"], xp: 10 },
+            { id: "art-read-t7", type: "multiple_choice", speakOptions: true, prompt: "Does the child like the zoo?", options: ["Yes, very much.", "No.", "We don't know.", "A little."], correctIndex: 0, xp: 10 },
+            { id: "art-read-t8", type: "fill_blank", prompt: "'The monkey is eating a ___.' (mətndən)", accepted: ["banana"], xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "art-read-b1", type: "multiple_choice", prompt: "'zoo' nə deməkdir?", options: ["heyvanxana", "məktəb", "park", "bağça"], correctIndex: 0, xp: 15 },
+            { id: "art-read-b2", type: "multiple_choice", speakOptions: true, prompt: "'The lion is sleeping.' — Is the lion awake?", options: ["No, it is sleeping.", "Yes, it is.", "It is eating.", "It is running."], correctIndex: 0, xp: 15 },
+          ],
+        },
+      ],
+    },
+    {
+      id: "en-c6-writing",
+      title: "Yazı: Artikllar",
+      description: "Sözlərdən artikllı cümlə qur.",
+      lessons: [
+        {
+          id: "art-write",
+          title: "Cümlə qur: artikllar",
+          intro: "Sözləri düzgün sıraya düz və cümlə qur.",
+          sections: [
+            { heading: "Necə işləyir?", body: "Sözlərə sıra ilə bas. Saitlə başlayan isimdən əvvəl 'an', samitlə başlayandan əvvəl 'a'." },
+          ],
+          tasks: [
+            { id: "art-write-t1", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["I", "have", "an", "apple"], answer: "I have an apple", translation: "Mənim almam var.", xp: 10 },
+            { id: "art-write-t2", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["She", "has", "a", "dog"], answer: "She has a dog", translation: "Onun iti var.", xp: 10 },
+            { id: "art-write-t3", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["Look", "at", "the", "sun"], answer: "Look at the sun", translation: "Günəşə bax.", xp: 10 },
+            { id: "art-write-t4", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["It", "is", "an", "egg"], answer: "It is an egg", translation: "Bu yumurtadır.", xp: 10 },
+            { id: "art-write-t5", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["This", "is", "a", "book"], answer: "This is a book", translation: "Bu kitabdır.", xp: 10 },
+            { id: "art-write-t6", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["I", "see", "an", "elephant"], answer: "I see an elephant", translation: "Mən fil görürəm.", xp: 10 },
+            { id: "art-write-t7", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["The", "car", "is", "red"], answer: "The car is red", translation: "Maşın qırmızıdır.", xp: 10 },
+            { id: "art-write-t8", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["I", "want", "an", "orange"], answer: "I want an orange", translation: "Mən portağal istəyirəm.", xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "art-write-b1", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["She", "has", "an", "umbrella"], answer: "She has an umbrella", translation: "Onun çətiri var.", xp: 15 },
+            { id: "art-write-b2", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["The", "book", "is", "here"], answer: "The book is here", translation: "Kitab buradadır.", xp: 15 },
+            { id: "art-write-b3", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["He", "has", "a", "pen"], answer: "He has a pen", translation: "Onun qələmi var.", xp: 15 },
+          ],
+        },
+      ],
+    },
+
+    // ═══════════════════════════════════════════════════════════════
     // BÖLMƏ 1 — QRAMMATİKA (Grammar)
     // ═══════════════════════════════════════════════════════════════
     {
@@ -694,98 +1014,7 @@ export const english: Subject = {
       lessons: [
 
 
-        // ── PROJECT 5: Pronouns ────────────────────────────────────
-        {
-          id: "en-gr-l5",
-          title: "Əvəzliklər (Pronouns)",
-          intro:
-            "Şəxs (I, you, he...), yiyəlik (my, your, his...) və işarə (this, that, these, those) əvəzlikləri.",
-          visual: "noun-cards",
-          sections: [
-            {
-              heading: "Şəxs əvəzlikləri",
-              body: "I (mən), you (sən/siz), he (o — kişi), she (o — qadın), it (o — əşya/heyvan), we (biz), they (onlar).",
-            },
-            {
-              heading: "Yiyəlik əvəzlikləri",
-              body: "my (mənim), your (sənin), his (onun — kişi), her (onun — qadın), its (onun — əşya), our (bizim), their (onların).",
-            },
-            {
-              heading: "İşarə əvəzlikləri",
-              body: "this (bu — yaxın, tək), these (bunlar — yaxın, cəm), that (o — uzaq, tək), those (onlar — uzaq, cəm).",
-            },
-          ],
-          tasks: [
-            { id: "en-gr-l5-t1", type: "multiple_choice", prompt: "'___ am a student.'", options: ["I", "You", "He", "She"], correctIndex: 0, xp: 10 },
-            { id: "en-gr-l5-t2", type: "multiple_choice", prompt: "Qız (a girl) üçün hansı əvəzlik?", options: ["he", "she", "it", "they"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l5-t3", type: "multiple_choice", prompt: "Oğlan (a boy) üçün hansı əvəzlik?", options: ["he", "she", "it", "we"], correctIndex: 0, xp: 10 },
-            { id: "en-gr-l5-t4", type: "multiple_choice", prompt: "Əşya və ya heyvan üçün hansı əvəzlik?", options: ["he", "she", "it", "they"], correctIndex: 2, xp: 10 },
-            { id: "en-gr-l5-t5", type: "multiple_choice", prompt: "'This is ___ book.' (mənim)", options: ["my", "your", "his", "her"], correctIndex: 0, xp: 10 },
-            { id: "en-gr-l5-t6", type: "multiple_choice", prompt: "'That is ___ car.' (onun — qadın)", options: ["his", "her", "its", "their"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l5-t7", type: "multiple_choice", prompt: "'___ is my friend.' (yaxında bir nəfər)", options: ["This", "These", "Those", "Them"], correctIndex: 0, xp: 10 },
-            { id: "en-gr-l5-t8", type: "multiple_choice", prompt: "'___ are my friends.' (yaxında çox)", options: ["This", "These", "That", "Those"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l5-t9", type: "multiple_choice", prompt: "'___ is a dog over there.' (uzaqda tək)", options: ["This", "That", "These", "Those"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l5-t10", type: "multiple_choice", prompt: "'___ are cars over there.' (uzaqda çox)", options: ["These", "Those", "This", "That"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l5-t11", type: "multiple_choice", prompt: "Biz (we) — hansı əvəzlik doğrudur?", options: ["we", "they", "you", "it"], correctIndex: 0, xp: 10 },
-            { id: "en-gr-l5-t12", type: "multiple_choice", prompt: "'It is ___ house.' (bizim)", options: ["our", "their", "your", "my"], correctIndex: 0, xp: 10 },
-            { id: "en-gr-l5-t13", type: "multiple_choice", prompt: "'They are ___ toys.' (onların)", options: ["our", "their", "his", "her"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l5-t14", type: "multiple_choice", prompt: "Hansı yiyəlik əvəzliyidir?", options: ["I", "my", "this", "she"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l5-t15", type: "multiple_choice", prompt: "'___ and my brother play together.' (Mən)", options: ["I", "Me", "My", "Mine"], correctIndex: 0, xp: 15 },
-          ],
-          bonusTasks: [
-            { id: "en-gr-l5-b1", type: "multiple_choice", prompt: "'his' hansı növ əvəzlikdir?", options: ["şəxs", "yiyəlik", "işarə", "sual"], correctIndex: 1, xp: 15 },
-            { id: "en-gr-l5-b2", type: "multiple_choice", prompt: "'these' nə bildirir?", options: ["yaxında bir", "yaxında çox", "uzaqda bir", "uzaqda çox"], correctIndex: 1, xp: 15 },
-            { id: "en-gr-l5-b3", type: "multiple_choice", prompt: "'The book is ___.' (mənimdir)", options: ["my", "mine", "me", "I"], correctIndex: 1, xp: 15 },
-            { id: "en-gr-l5-b4", type: "multiple_choice", prompt: "'The dog wags ___ tail.' (heyvan — onun)", options: ["his", "her", "its", "their"], correctIndex: 2, xp: 15 },
-            { id: "en-gr-l5-b5", type: "multiple_choice", prompt: "'You and I' = hansı əvəzlik?", options: ["we", "they", "you", "he"], correctIndex: 0, xp: 15 },
-          ],
-        },
 
-        // ── PROJECT 6: Articles ────────────────────────────────────
-        {
-          id: "en-gr-l6",
-          title: "Artikllar (a / an / the)",
-          intro:
-            "a, an və the artikllarını nə vaxt işlətmək lazım olduğunu öyrənirik.",
-          sections: [
-            {
-              heading: "a / an — qeyri-müəyyən",
-              body: "Samit səsi ilə başlayan sözdən əvvəl 'a' (a book, a dog). Sait səsi (a, e, i, o, u) ilə başlayan sözdən əvvəl 'an' (an apple, an orange).",
-            },
-            {
-              heading: "the — müəyyən artikl",
-              body: "Konkret, hər iki tərəfə məlum olan əşya üçün 'the' işlədilir: The sun is bright. I saw a cat. The cat was black.",
-            },
-            {
-              heading: "Diqqət — səsə görə",
-              body: "Qayda hərfə yox, SƏSƏ görədir: an hour ('h' oxunmur), a university ('yu' — samit səsi).",
-            },
-          ],
-          tasks: [
-            { id: "en-gr-l6-t1", type: "multiple_choice", prompt: "'___ apple'", options: ["a", "an", "the", "-"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l6-t2", type: "multiple_choice", prompt: "'___ book'", options: ["a", "an", "the", "-"], correctIndex: 0, xp: 10 },
-            { id: "en-gr-l6-t3", type: "multiple_choice", prompt: "'___ orange'", options: ["a", "an", "the", "-"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l6-t4", type: "multiple_choice", prompt: "'___ dog'", options: ["a", "an", "the", "-"], correctIndex: 0, xp: 10 },
-            { id: "en-gr-l6-t5", type: "multiple_choice", prompt: "'___ umbrella'", options: ["a", "an", "the", "-"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l6-t6", type: "multiple_choice", prompt: "'___ car'", options: ["a", "an", "the", "-"], correctIndex: 0, xp: 10 },
-            { id: "en-gr-l6-t7", type: "multiple_choice", prompt: "Sait səsi ilə başlayan sözdən əvvəl hansı artikl?", options: ["a", "an", "the", "heç nə"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l6-t8", type: "multiple_choice", prompt: "'___ egg'", options: ["a", "an", "the", "-"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l6-t9", type: "multiple_choice", prompt: "'___ house'", options: ["a", "an", "the", "-"], correctIndex: 0, xp: 10 },
-            { id: "en-gr-l6-t10", type: "multiple_choice", prompt: "Konkret, məlum əşya üçün hansı artikl?", options: ["a", "an", "the", "heç nə"], correctIndex: 2, xp: 10 },
-            { id: "en-gr-l6-t11", type: "multiple_choice", prompt: "'I saw a cat. ___ cat was black.'", options: ["A", "An", "The", "-"], correctIndex: 2, xp: 10 },
-            { id: "en-gr-l6-t12", type: "multiple_choice", prompt: "'___ elephant is big.'", options: ["A", "An", "The", "-"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l6-t13", type: "multiple_choice", prompt: "'___ sun is bright.' (tək və məlumdur)", options: ["A", "An", "The", "-"], correctIndex: 2, xp: 10 },
-            { id: "en-gr-l6-t14", type: "multiple_choice", prompt: "'___ apple a day.'", options: ["A", "An", "The", "-"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l6-t15", type: "multiple_choice", prompt: "Hansı ifadə düzgündür?", options: ["a apple", "an apple", "the a apple", "an book"], correctIndex: 1, xp: 15 },
-          ],
-          bonusTasks: [
-            { id: "en-gr-l6-b1", type: "multiple_choice", prompt: "'___ hour' ('h' oxunmur — sait səsi)", options: ["a", "an", "the", "-"], correctIndex: 1, xp: 15 },
-            { id: "en-gr-l6-b2", type: "multiple_choice", prompt: "'___ university' ('yu' — samit səsi)", options: ["a", "an", "the", "-"], correctIndex: 0, xp: 15 },
-            { id: "en-gr-l6-b3", type: "multiple_choice", prompt: "Hansı cümlə düzgündür?", options: ["I have an dog.", "She is a teacher.", "He is an student.", "It is a apple."], correctIndex: 1, xp: 15 },
-            { id: "en-gr-l6-b4", type: "multiple_choice", prompt: "'the' nə vaxt işlədilir?", options: ["hər hansı bir əşya", "konkret, məlum əşya", "yalnız cəmdə", "heç vaxt"], correctIndex: 1, xp: 15 },
-            { id: "en-gr-l6-b5", type: "multiple_choice", prompt: "'___ ice cream, please.'", options: ["a", "an", "the", "-"], correctIndex: 1, xp: 15 },
-          ],
-        },
 
         // ── PROJECT 7: Adjectives — degrees ────────────────────────
         {
