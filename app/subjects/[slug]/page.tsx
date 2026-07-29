@@ -6,7 +6,7 @@ import { use, useEffect, useState } from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { useContent } from "@/components/ContentProvider";
-import { loadProgress, isLessonLocked, type ProgressState } from "@/lib/progress";
+import { loadProgress, lessonState, type ProgressState } from "@/lib/progress";
 import { useAuthUser } from "@/lib/useAuthUser";
 import { useT } from "@/lib/i18n";
 import LearningPath, { type PathNode } from "@/components/LearningPath";
@@ -56,17 +56,13 @@ export default function SubjectPage({
         {/* Bütün bölmələrin dərsləri tək, birləşmiş yolda (yuxarıdan aşağıya) */}
         {(() => {
           const nodes: PathNode[] = subject.units.flatMap((u) =>
-            u.lessons.map((l, li) => {
-              const locked = isLessonLocked(order, l.id, completed);
-              const done = completed.includes(l.id);
-              return {
-                id: l.id,
-                title: l.title,
-                state: done ? "done" : locked ? "locked" : "current",
-                href: `/lessons/${l.id}`,
-                unitTitle: li === 0 ? u.title : undefined,
-              };
-            }),
+            u.lessons.map((l, li) => ({
+              id: l.id,
+              title: l.title,
+              state: lessonState(order, l.id, completed),
+              href: `/lessons/${l.id}`,
+              unitTitle: li === 0 ? u.title : undefined,
+            })),
           );
 
           return (

@@ -7,7 +7,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { Star, Flame, CircleCheck } from "lucide-react";
 import { useContent } from "@/components/ContentProvider";
-import { loadProgress, loadActiveDays, isLessonLocked, type ProgressState } from "@/lib/progress";
+import { loadProgress, loadActiveDays, lessonState, type ProgressState } from "@/lib/progress";
 import StreakCalendar from "@/components/StreakCalendar";
 import { useAuthUser } from "@/lib/useAuthUser";
 import { displayName } from "@/lib/auth";
@@ -60,17 +60,13 @@ export default function DashboardPage() {
     const lessons = active.units.flatMap((u) => u.lessons);
     const order = lessons.map((l) => l.id);
     const nodes: PathNode[] = active.units.flatMap((u) =>
-      u.lessons.map((l, li) => {
-        const locked = isLessonLocked(order, l.id, completed);
-        const done = completed.includes(l.id);
-        return {
-          id: l.id,
-          title: l.title,
-          state: done ? "done" : locked ? "locked" : "current",
-          href: `/lessons/${l.id}`,
-          unitTitle: li === 0 ? u.title : undefined,
-        };
-      }),
+      u.lessons.map((l, li) => ({
+        id: l.id,
+        title: l.title,
+        state: lessonState(order, l.id, completed),
+        href: `/lessons/${l.id}`,
+        unitTitle: li === 0 ? u.title : undefined,
+      })),
     );
     const currentLesson = lessons.find((l) => !completed.includes(l.id)) ?? null;
     const doneCount = lessons.filter((l) => completed.includes(l.id)).length;

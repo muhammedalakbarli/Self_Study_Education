@@ -114,16 +114,25 @@ export async function addXp(_userId: string, amount: number): Promise<void> {
 }
 
 // Dərs kiliddədirmi? Fəndəki əvvəlki dərs tamamlanmayıbsa kiliddədir (ilk dərs həmişə açıqdır).
-// `order` — fəndəki dərs id-lərinin sırası (useContent().orderedLessonIds(slug)-dən).
-export function isLessonLocked(
+export type LessonUIState = "done" | "current" | "locked";
+
+// Dərsin path-dakı vəziyyəti — CİDDİ ARDICIL model.
+// `order` — fəndəki dərs id-lərinin sırası (yuxarıdan aşağıya).
+// Qayda: ilk tamamlanmamış dərs "cari"dir; ondan ƏVVƏLKİLƏR "done";
+// ondan SONRAKILAR — əvvəllər tamamlanmış olsa belə — "locked".
+// Beləcə məzmun yenidən sıralanıb/əlavə olunsa da tullanmaq mümkün olmur.
+export function lessonState(
   order: string[],
   lessonId: string,
   completed: string[],
-): boolean {
-  const index = order.indexOf(lessonId);
-  if (index <= 0) return false;
-  const prev = order[index - 1];
-  return !completed.includes(prev);
+): LessonUIState {
+  const idx = order.indexOf(lessonId);
+  if (idx < 0) return "locked";
+  const frontier = order.findIndex((id) => !completed.includes(id));
+  if (frontier === -1) return "done"; // bütün dərslər tamam
+  if (idx < frontier) return "done";
+  if (idx === frontier) return "current";
+  return "locked";
 }
 
 export { emptyState };
