@@ -85,36 +85,18 @@ function NodeButton({ node }: { node: PathNode }) {
   );
 }
 
-// Bölmə başlığı banneri (rəngli lent).
-function UnitBanner({ title, index }: { title: string; index: number }) {
-  return (
-    <div className="my-4 w-full max-w-md">
-      <div className="flex items-center gap-3 rounded-2xl bg-brand px-5 py-3 text-white shadow-sm">
-        <span className="text-xs font-extrabold uppercase tracking-widest text-white/70">
-          {index}
-        </span>
-        <span className="h-5 w-px bg-white/30" />
-        <span className="text-sm font-extrabold">{title}</span>
-      </div>
-    </div>
-  );
+// Bölmələr arası nazik ayırıcı (mətnsiz). Başlıq göstərilmir — path təmiz qalır.
+function UnitDivider() {
+  return <div className="my-4 h-px w-full max-w-[220px] bg-line" />;
 }
 
 export default function LearningPath({ nodes }: { nodes: PathNode[] }) {
-  let unitCount = 0;
-
   return (
     <div className="flex flex-col items-center py-2">
       {nodes.map((node, i) => {
         const offset = offsetAt(i);
-        // Bölmə banneri düyünlərdən müstəqil, tam mərkəzdə göstərilir.
-        const banner = node.unitTitle ? (
-          <UnitBanner
-            key={`u-${node.id}`}
-            title={node.unitTitle}
-            index={++unitCount}
-          />
-        ) : null;
+        // İlk düyün istisna olmaqla, yeni bölmədən əvvəl nazik ayırıcı göstər.
+        const banner = node.unitTitle && i > 0 ? <UnitDivider key={`u-${node.id}`} /> : null;
 
         // Ulduz-u aralıqlarda, düyünün əks tərəfində göstər.
         const showMascot = i > 0 && i % 6 === 3 && node.state !== "current";
