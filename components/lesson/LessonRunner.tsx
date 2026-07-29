@@ -284,7 +284,6 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
             onChange={(v) => setAnswer(v)}
             disabled={checked}
             reveal={checked}
-            speakable={slug === "ingilis-dili"}
           />
         </div>
       </div>
