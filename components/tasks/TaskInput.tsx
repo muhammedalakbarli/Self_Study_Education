@@ -3,7 +3,6 @@
 // Tapşırıq tipini alıb uyğun giriş sahəsini göstərir.
 // Çoxseçimli: böyük 3D "tile"-lar; reveal=true olduqda düz/səhv rəngi ilə canlanır.
 // Dil öyrənmə tipləri: listening (dinlə-seç), word_order (cümlə quran).
-// speakable=true (İngilis dili) olduqda variantların yanında tələffüz düyməsi çıxır.
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
@@ -12,7 +11,6 @@ import type { Task } from "@/lib/types";
 import type { UserAnswer } from "@/lib/grading";
 import { playSelect } from "@/lib/sound";
 import { speakEnglish } from "@/lib/tts";
-import SpeakButton from "@/components/SpeakButton";
 
 interface Props {
   task: Task;
@@ -20,10 +18,9 @@ interface Props {
   onChange: (value: UserAnswer) => void;
   disabled: boolean;
   reveal?: boolean; // yoxlanıldıqdan sonra düz/səhv göstər
-  speakable?: boolean; // variantların yanında tələffüz düyməsi (İngilis dili)
 }
 
-export default function TaskInput({ task, value, onChange, disabled, reveal, speakable }: Props) {
+export default function TaskInput({ task, value, onChange, disabled, reveal }: Props) {
   // ── Çoxseçimli ─────────────────────────────────────────────
   if (task.type === "multiple_choice") {
     return (
@@ -34,7 +31,6 @@ export default function TaskInput({ task, value, onChange, disabled, reveal, spe
         onChange={onChange}
         disabled={disabled}
         reveal={!!reveal}
-        speakable={speakable}
       />
     );
   }
@@ -93,15 +89,8 @@ export default function TaskInput({ task, value, onChange, disabled, reveal, spe
   );
 }
 
-// Variant İngiliscədirsə (ASCII hərflər, qısa) tələffüz düyməsi göstərilə bilər.
-// Azərbaycanca izah variantları (ə/ç/ş/ğ/ı/ö/ü və ya uzun cümlə) istisna olunur.
-function isEnglishLike(text: string): boolean {
-  const t = text.trim();
-  return t.length > 0 && /^[\x20-\x7E]+$/.test(t) && t.split(/\s+/).length <= 6;
-}
-
 // Çoxseçimli variant şəbəkəsi (multiple_choice + listening ortaq istifadə edir).
-// Sıra qorunur (correctIndex sabit mövqedir). speakable → hər variantın yanında dinlə düyməsi.
+// Sıra qorunur (correctIndex sabit mövqedir).
 function ChoiceGrid({
   options,
   correctIndex,
@@ -109,7 +98,6 @@ function ChoiceGrid({
   onChange,
   disabled,
   reveal,
-  speakable,
 }: {
   options: string[];
   correctIndex: number;
@@ -117,7 +105,6 @@ function ChoiceGrid({
   onChange: (value: UserAnswer) => void;
   disabled: boolean;
   reveal: boolean;
-  speakable?: boolean;
 }) {
   return (
     <div className="grid gap-3">
@@ -133,44 +120,42 @@ function ChoiceGrid({
         else if (selected) state = "tile-selected";
 
         return (
-          <div key={i} className="flex items-center gap-2">
-            <motion.button
-              type="button"
-              disabled={disabled}
-              onClick={() => {
-                playSelect();
-                onChange(i);
-              }}
-              whileTap={disabled ? undefined : { scale: 0.98 }}
-              animate={
+          <motion.button
+            key={i}
+            type="button"
+            disabled={disabled}
+            onClick={() => {
+              playSelect();
+              onChange(i);
+            }}
+            whileTap={disabled ? undefined : { scale: 0.98 }}
+            animate={
+              isCorrect
+                ? { scale: [1, 1.03, 1] }
+                : isWrongPick
+                  ? { x: [0, -9, 9, -6, 6, 0] }
+                  : { scale: 1, x: 0 }
+            }
+            transition={{ duration: isWrongPick ? 0.42 : 0.32 }}
+            className={`tile flex items-center gap-3 px-5 py-4 text-left text-lg font-bold text-fg ${state} ${
+              disabled ? "cursor-default" : "cursor-pointer"
+            }`}
+          >
+            <span
+              className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border-2 text-sm font-extrabold ${
                 isCorrect
-                  ? { scale: [1, 1.03, 1] }
+                  ? "border-emerald-500 text-emerald-600"
                   : isWrongPick
-                    ? { x: [0, -9, 9, -6, 6, 0] }
-                    : { scale: 1, x: 0 }
-              }
-              transition={{ duration: isWrongPick ? 0.42 : 0.32 }}
-              className={`tile flex flex-1 items-center gap-3 px-5 py-4 text-left text-lg font-bold text-fg ${state} ${
-                disabled ? "cursor-default" : "cursor-pointer"
+                    ? "border-red-400 text-red-500"
+                    : selected && !reveal
+                      ? "border-brand text-brand"
+                      : "border-line text-muted"
               }`}
             >
-              <span
-                className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border-2 text-sm font-extrabold ${
-                  isCorrect
-                    ? "border-emerald-500 text-emerald-600"
-                    : isWrongPick
-                      ? "border-red-400 text-red-500"
-                      : selected && !reveal
-                        ? "border-brand text-brand"
-                        : "border-line text-muted"
-                }`}
-              >
-                {String.fromCharCode(65 + i)}
-              </span>
-              <span className="flex-1">{option}</span>
-            </motion.button>
-            {speakable && isEnglishLike(option) && <SpeakButton text={option} />}
-          </div>
+              {String.fromCharCode(65 + i)}
+            </span>
+            <span className="flex-1">{option}</span>
+          </motion.button>
         );
       })}
     </div>
