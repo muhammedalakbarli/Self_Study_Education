@@ -196,53 +196,6 @@ export const english: Subject = {
       description:
         "Present Simple, Present Continuous, Past Simple, sual/inkar cümlələr, əvəzliklər, artikllar, sifət dərəcələri və modal fellər.",
       lessons: [
-        // ── PROJECT 1: Present Simple ──────────────────────────────
-        {
-          id: "en-gr-l1",
-          title: "Present Simple (İndiki sadə zaman)",
-          intro:
-            "Hər gün təkrarlanan işləri və faktları bildirən zaman. Bu layihədə onu öyrənəcəyik.",
-          visual: "verb-timeline",
-          sections: [
-            {
-              heading: "Nə vaxt işlədilir?",
-              body: "Present Simple hər gün, tez-tez təkrarlanan işlər (I go to school every day) və ümumi faktlar (The sun rises in the east) üçün işlədilir.",
-            },
-            {
-              heading: "he / she / it qaydası",
-              body: "I, you, we, they ilə fel dəyişmir: I play, they play. Amma he, she, it ilə felə -s (və ya -es) əlavə olunur: he plays, she watches.",
-            },
-            {
-              heading: "İnkar və sual",
-              body: "İnkar: don't / doesn't (I don't like, she doesn't like). Sual: Do / Does (Do you like? Does he play?). Bunlardan sonra fel əsas formada qalır.",
-            },
-          ],
-          tasks: [
-            { id: "en-gr-l1-t1", type: "multiple_choice", prompt: "'I ___ to school every day.'", options: ["go", "goes", "going", "went"], correctIndex: 0, xp: 10 },
-            { id: "en-gr-l1-t2", type: "multiple_choice", prompt: "'She ___ English.'", options: ["speak", "speaks", "speaking", "spoke"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l1-t3", type: "multiple_choice", prompt: "'He ___ football on Sundays.'", options: ["play", "plays", "playing", "played"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l1-t4", type: "multiple_choice", prompt: "'They ___ in Baku.'", options: ["live", "lives", "living", "lived"], correctIndex: 0, xp: 10 },
-            { id: "en-gr-l1-t5", type: "fill_blank", prompt: "'He (read) books.' — boşluğa düzgün formanı yaz.", accepted: ["reads"], xp: 10 },
-            { id: "en-gr-l1-t6", type: "multiple_choice", prompt: "Present Simple hansı iş üçün işlədilir?", options: ["indi baş verən iş", "hər gün təkrarlanan iş", "keçmiş iş", "gələcək iş"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l1-t7", type: "multiple_choice", prompt: "he / she / it ilə felə hansı şəkilçi əlavə olunur?", options: ["-s", "-ed", "-ing", "heç nə"], correctIndex: 0, xp: 10 },
-            { id: "en-gr-l1-t8", type: "multiple_choice", prompt: "'I don't ___ coffee.'", options: ["like", "likes", "liking", "liked"], correctIndex: 0, xp: 10 },
-            { id: "en-gr-l1-t9", type: "multiple_choice", prompt: "İnkar: 'She ___ like tea.'", options: ["don't", "doesn't", "isn't", "not"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l1-t10", type: "multiple_choice", prompt: "Sual: '___ you like music?'", options: ["Do", "Does", "Are", "Is"], correctIndex: 0, xp: 10 },
-            { id: "en-gr-l1-t11", type: "multiple_choice", prompt: "Sual: '___ he play tennis?'", options: ["Do", "Does", "Is", "Are"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l1-t12", type: "fill_blank", prompt: "'They (go) to school.' — düzgün formanı yaz.", accepted: ["go"], xp: 10 },
-            { id: "en-gr-l1-t13", type: "multiple_choice", prompt: "'The sun ___ in the east.' (fakt)", options: ["rise", "rises", "rising", "rose"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l1-t14", type: "multiple_choice", prompt: "'We ___ TV in the evening.'", options: ["watch", "watches", "watching", "watched"], correctIndex: 0, xp: 10 },
-            { id: "en-gr-l1-t15", type: "multiple_choice", prompt: "'My mother ___ dinner every day.'", options: ["cook", "cooks", "cooking", "cooked"], correctIndex: 1, xp: 15 },
-          ],
-          bonusTasks: [
-            { id: "en-gr-l1-b1", type: "multiple_choice", prompt: "'Cats ___ milk.'", options: ["drink", "drinks", "drinking", "drank"], correctIndex: 0, xp: 15 },
-            { id: "en-gr-l1-b2", type: "fill_blank", prompt: "'She (watch) TV.' — düzgün formanı yaz.", accepted: ["watches"], xp: 15 },
-            { id: "en-gr-l1-b3", type: "multiple_choice", prompt: "Hansı cümlə düzgündür?", options: ["He go home.", "He goes home.", "He going home.", "He gone home."], correctIndex: 1, xp: 15 },
-            { id: "en-gr-l1-b4", type: "multiple_choice", prompt: "'___ your sister speak French?'", options: ["Do", "Does", "Is", "Are"], correctIndex: 1, xp: 15 },
-            { id: "en-gr-l1-b5", type: "multiple_choice", prompt: "'I ___ not eat meat.'", options: ["do", "does", "am", "is"], correctIndex: 0, xp: 15 },
-          ],
-        },
-
         // ── PROJECT 2: Present Continuous ──────────────────────────
         {
           id: "en-gr-l2",
