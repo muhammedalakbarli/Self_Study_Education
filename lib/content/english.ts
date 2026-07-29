@@ -1004,112 +1004,326 @@ export const english: Subject = {
     },
 
     // ═══════════════════════════════════════════════════════════════
-    // BÖLMƏ 1 — QRAMMATİKA (Grammar)
+    // 7-Cİ DÖVR — COMPARATIVES (Sifət dərəcələri)
+    // Yeni sifətlər: tall, short, fast, slow, strong, young, clever, heavy.
     // ═══════════════════════════════════════════════════════════════
     {
-      id: "en-grammar",
-      title: "Qrammatika — Zamanlar və cümlə",
-      description:
-        "Present Simple, Present Continuous, Past Simple, sual/inkar cümlələr, əvəzliklər, artikllar, sifət dərəcələri və modal fellər.",
+      id: "en-c7-grammar",
+      title: "Qayda: Sifət dərəcələri",
+      description: "Müqayisə (-er / more) və üstünlük (-est / most) dərəcələri.",
       lessons: [
-
-
-
-
-        // ── PROJECT 7: Adjectives — degrees ────────────────────────
         {
-          id: "en-gr-l7",
-          title: "Sifətin dərəcələri (Comparative & superlative)",
-          intro:
-            "Sifətləri müqayisə etmək (comparative) və üstünlük dərəcəsi (superlative) qurmaq.",
-          visual: "adjective-apple",
+          id: "comp-rule",
+          title: "Sifət dərəcələri qaydası",
+          intro: "İki və ya daha çox şeyi müqayisə edək. Gəl öyrənək!",
           sections: [
-            {
-              heading: "Qısa sifətlər: -er / -est",
-              body: "Qısa sifətə müqayisədə -er, üstünlük dərəcəsində -est əlavə olunur: tall → taller → tallest; big → bigger → biggest (son samit qoşalaşa bilər).",
-            },
-            {
-              heading: "Uzun sifətlər: more / most",
-              body: "Uzun sifətlərdə more (müqayisə) və most (üstünlük) işlədilir: beautiful → more beautiful → most beautiful.",
-            },
-            {
-              heading: "Qaydasız sifətlər və 'than'",
-              body: "good → better → best; bad → worse → worst; far → farther → farthest. Müqayisədə 'than' işlədilir: A is taller than B.",
-            },
+            { heading: "Müqayisə dərəcəsi (-er / more)", body: "İki şeyi müqayisə edərkən: tall → taller, big → bigger. Uzun sözlərdə 'more': beautiful → more beautiful. 'than' ilə: Tom is taller than Sam." },
+            { heading: "Üstünlük dərəcəsi (-est / most)", body: "Ən yüksək dərəcə: tall → the tallest, big → the biggest. Uzun sözlərdə 'the most': the most beautiful." },
+            { heading: "Qeyri-qaydalı", body: "good → better → the best. bad → worse → the worst." },
           ],
           tasks: [
-            { id: "en-gr-l7-t1", type: "multiple_choice", prompt: "'big' sifətinin müqayisə dərəcəsi?", options: ["biger", "bigger", "more big", "biggest"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l7-t2", type: "multiple_choice", prompt: "'tall' müqayisə dərəcəsi (comparative)?", options: ["taller", "tallest", "more tall", "talls"], correctIndex: 0, xp: 10 },
-            { id: "en-gr-l7-t3", type: "multiple_choice", prompt: "'small' üstünlük dərəcəsi (superlative)?", options: ["smaller", "smallest", "most small", "smalls"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l7-t4", type: "fill_blank", prompt: "'fast' sözünün comparative forması?", accepted: ["faster"], xp: 10 },
-            { id: "en-gr-l7-t5", type: "multiple_choice", prompt: "'good' müqayisə dərəcəsi (qaydasız)?", options: ["gooder", "better", "best", "more good"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l7-t6", type: "multiple_choice", prompt: "'good' üstünlük dərəcəsi?", options: ["better", "best", "goodest", "most good"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l7-t7", type: "multiple_choice", prompt: "'beautiful' müqayisə dərəcəsi?", options: ["beautifuller", "more beautiful", "beautifulest", "most beautiful"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l7-t8", type: "multiple_choice", prompt: "Uzun sifətlərə müqayisədə hansı söz əlavə olunur?", options: ["-er", "more", "-est", "most"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l7-t9", type: "multiple_choice", prompt: "Qısa sifətlərə üstünlük dərəcəsində hansı şəkilçi?", options: ["-er", "-est", "more", "most"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l7-t10", type: "multiple_choice", prompt: "'A is taller ___ B.'", options: ["then", "than", "that", "to"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l7-t11", type: "fill_blank", prompt: "'high' sözünün superlative forması (the ___)?", accepted: ["highest"], xp: 10 },
-            { id: "en-gr-l7-t12", type: "multiple_choice", prompt: "'happy' comparative ('y' → 'i')?", options: ["happier", "happyer", "more happy", "happiest"], correctIndex: 0, xp: 10 },
-            { id: "en-gr-l7-t13", type: "multiple_choice", prompt: "'bad' müqayisə dərəcəsi (qaydasız)?", options: ["badder", "worse", "worst", "more bad"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l7-t14", type: "multiple_choice", prompt: "'The elephant is the ___ animal here.' (big)", options: ["bigger", "biggest", "more big", "big"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l7-t15", type: "multiple_choice", prompt: "'This car is ___ than that one.' (fast)", options: ["faster", "fastest", "more fast", "fast"], correctIndex: 0, xp: 15 },
+            { id: "comp-rule-t1", type: "multiple_choice", speakOptions: true, prompt: "'Tom is ___ than Sam.' (tall)", options: ["tall", "taller", "tallest", "more tall"], correctIndex: 1, xp: 10 },
+            { id: "comp-rule-t2", type: "multiple_choice", speakOptions: true, prompt: "'This box is ___ than that one.' (big)", options: ["big", "bigger", "biggest", "more big"], correctIndex: 1, xp: 10 },
+            { id: "comp-rule-t3", type: "multiple_choice", speakOptions: true, prompt: "'She is the ___ girl in the class.' (tall)", options: ["tall", "taller", "tallest", "more tall"], correctIndex: 2, xp: 10 },
+            { id: "comp-rule-t4", type: "multiple_choice", speakOptions: true, prompt: "'A car is ___ than a bike.' (fast)", options: ["fast", "faster", "fastest", "more fast"], correctIndex: 1, xp: 10 },
+            { id: "comp-rule-t5", type: "multiple_choice", speakOptions: true, prompt: "'good' müqayisə forması?", options: ["gooder", "better", "more good", "best"], correctIndex: 1, xp: 10 },
+            { id: "comp-rule-t6", type: "fill_blank", prompt: "'small' sözünün müqayisə forması (-er)?", accepted: ["smaller"], xp: 10 },
+            { id: "comp-rule-t7", type: "multiple_choice", speakOptions: true, prompt: "'Everest is the ___ mountain.' (high)", options: ["high", "higher", "highest", "more high"], correctIndex: 2, xp: 10 },
+            { id: "comp-rule-t8", type: "multiple_choice", speakOptions: true, prompt: "'This book is ___ than that one.' (interesting)", options: ["interestinger", "more interesting", "most interesting", "interesting"], correctIndex: 1, xp: 10 },
+            { id: "comp-rule-t9", type: "multiple_choice", speakOptions: true, prompt: "Müqayisə üçün hansı söz işlənir?", options: ["than", "then", "that", "the"], correctIndex: 0, xp: 10 },
+            { id: "comp-rule-t10", type: "fill_blank", prompt: "'old' sözünün üstünlük forması (the ___)?", accepted: ["oldest"], xp: 15 },
           ],
           bonusTasks: [
-            { id: "en-gr-l7-b1", type: "multiple_choice", prompt: "'long' superlative?", options: ["longer", "longest", "most long", "longs"], correctIndex: 1, xp: 15 },
-            { id: "en-gr-l7-b2", type: "multiple_choice", prompt: "'expensive' comparative?", options: ["expensiver", "more expensive", "expensivest", "most expensive"], correctIndex: 1, xp: 15 },
-            { id: "en-gr-l7-b3", type: "multiple_choice", prompt: "'bad' superlative?", options: ["baddest", "worst", "worse", "most bad"], correctIndex: 1, xp: 15 },
-            { id: "en-gr-l7-b4", type: "fill_blank", prompt: "'nice' comparative forması?", accepted: ["nicer"], xp: 15 },
-            { id: "en-gr-l7-b5", type: "multiple_choice", prompt: "'far' comparative (qaydasız)?", options: ["farer", "farther", "farthest", "more far"], correctIndex: 1, xp: 15 },
-          ],
-        },
-
-        // ── PROJECT 8: Modal verbs ─────────────────────────────────
-        {
-          id: "en-gr-l8",
-          title: "Modal fellər (can / must / should)",
-          intro:
-            "can (bacarıq/icazə), must (məcburiyyət) və should (məsləhət) fellərini öyrənirik.",
-          sections: [
-            {
-              heading: "Mənaları",
-              body: "can = bacarıq və ya icazə (I can swim). must = məcburiyyət (You must stop). should = məsləhət/tövsiyə (You should rest).",
-            },
-            {
-              heading: "Quruluş",
-              body: "Modal feldən sonra fel HƏMİŞƏ əsas formada (base) qalır: 'She can speak' (can speaks YOX), 'He should go'.",
-            },
-            {
-              heading: "Sual və inkar",
-              body: "Sual: Can I open the window? İnkar: can't (bacarmıram), mustn't (olmaz), shouldn't (yaxşı deyil).",
-            },
-          ],
-          tasks: [
-            { id: "en-gr-l8-t1", type: "multiple_choice", prompt: "'I ___ swim.' (bacarıq)", options: ["can", "must", "should", "am"], correctIndex: 0, xp: 10 },
-            { id: "en-gr-l8-t2", type: "multiple_choice", prompt: "Modaldan sonra fel hansı formada olur?", options: ["+s", "+ing", "+ed", "əsas forma (base)"], correctIndex: 3, xp: 10 },
-            { id: "en-gr-l8-t3", type: "multiple_choice", prompt: "'You ___ do your homework.' (məcburiyyət)", options: ["can", "must", "should", "are"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l8-t4", type: "multiple_choice", prompt: "'You ___ eat vegetables.' (məsləhət)", options: ["can", "must", "should", "do"], correctIndex: 2, xp: 10 },
-            { id: "en-gr-l8-t5", type: "multiple_choice", prompt: "'She can ___ English.'", options: ["speak", "speaks", "speaking", "spoke"], correctIndex: 0, xp: 10 },
-            { id: "en-gr-l8-t6", type: "multiple_choice", prompt: "'can' nə bildirir?", options: ["bacarıq/icazə", "keçmiş", "cəm", "sual"], correctIndex: 0, xp: 10 },
-            { id: "en-gr-l8-t7", type: "multiple_choice", prompt: "'must' nə bildirir?", options: ["məsləhət", "məcburiyyət", "bacarıq", "arzu"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l8-t8", type: "multiple_choice", prompt: "'should' nə bildirir?", options: ["məcburiyyət", "məsləhət/tövsiyə", "bacarıq", "icazə"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l8-t9", type: "multiple_choice", prompt: "İnkar: 'I ___ swim.' (bacarmıram)", options: ["can't", "mustn't", "shouldn't", "don't"], correctIndex: 0, xp: 10 },
-            { id: "en-gr-l8-t10", type: "multiple_choice", prompt: "'___ I open the window?' (icazə soruşur)", options: ["Can", "Must", "Should", "Do"], correctIndex: 0, xp: 10 },
-            { id: "en-gr-l8-t11", type: "multiple_choice", prompt: "'Birds ___ fly.'", options: ["can", "must", "should", "are"], correctIndex: 0, xp: 10 },
-            { id: "en-gr-l8-t12", type: "multiple_choice", prompt: "'You ___ tell lies.' (yaxşı deyil)", options: ["shouldn't", "can", "should", "do"], correctIndex: 0, xp: 10 },
-            { id: "en-gr-l8-t13", type: "multiple_choice", prompt: "'We ___ wear a seatbelt.' (məcburiyyət)", options: ["must", "can", "should", "are"], correctIndex: 0, xp: 10 },
-            { id: "en-gr-l8-t14", type: "multiple_choice", prompt: "Hansı cümlə düzgündür?", options: ["I can to swim.", "I can swim.", "I can swims.", "I can swimming."], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l8-t15", type: "multiple_choice", prompt: "'He ___ play the piano.' (bacarır)", options: ["can", "must", "should", "is"], correctIndex: 0, xp: 15 },
-          ],
-          bonusTasks: [
-            { id: "en-gr-l8-b1", type: "multiple_choice", prompt: "'You should ___ more water.' (drink)", options: ["drink", "drinks", "drinking", "drank"], correctIndex: 0, xp: 15 },
-            { id: "en-gr-l8-b2", type: "multiple_choice", prompt: "İcazə istəmək üçün hansı söz?", options: ["must", "can", "should", "do"], correctIndex: 1, xp: 15 },
-            { id: "en-gr-l8-b3", type: "multiple_choice", prompt: "'Students ___ respect teachers.' (məcburiyyət)", options: ["must", "can", "might", "could"], correctIndex: 0, xp: 15 },
-            { id: "en-gr-l8-b4", type: "multiple_choice", prompt: "'can' felinin keçmiş forması?", options: ["canned", "could", "caned", "cans"], correctIndex: 1, xp: 15 },
-            { id: "en-gr-l8-b5", type: "multiple_choice", prompt: "Hansı cümlə SƏHVDİR?", options: ["I can run.", "She must go.", "You should rest.", "He can runs."], correctIndex: 3, xp: 15 },
+            { id: "comp-rule-b1", type: "multiple_choice", speakOptions: true, prompt: "'bad' üstünlük forması?", options: ["baddest", "worst", "more bad", "worse"], correctIndex: 1, xp: 15 },
+            { id: "comp-rule-b2", type: "multiple_choice", speakOptions: true, prompt: "'An elephant is ___ than a cat.' (big)", options: ["big", "bigger", "biggest", "more big"], correctIndex: 1, xp: 15 },
+            { id: "comp-rule-b3", type: "fill_blank", prompt: "'fast' sözünün üstünlük forması (the ___)?", accepted: ["fastest"], xp: 15 },
           ],
         },
       ],
     },
+    {
+      id: "en-c7-vocab",
+      title: "Lüğət: Sifətlər",
+      description: "8 yeni sifət: tall, short, fast, slow, strong, young, clever, heavy.",
+      lessons: [
+        {
+          id: "comp-vocab",
+          title: "Sifətlər (8 söz)",
+          intro: "Müqayisə üçün 8 yeni sifət öyrənək.",
+          sections: [
+            { heading: "Yeni sözlər (8 sifət)", body: "tall — hündür · short — qısa/alçaq · fast — sürətli · slow — yavaş · strong — güclü · young — gənc/cavan · clever — ağıllı · heavy — ağır" },
+            { heading: "Məsləhət", body: "Bu sifətlərin müqayisə formasını da yadda saxla: taller, faster, stronger, heavier..." },
+          ],
+          tasks: [
+            { id: "comp-vocab-t1", type: "multiple_choice", prompt: "'tall' sözünün mənası?", options: ["hündür", "alçaq", "sürətli", "yavaş"], correctIndex: 0, xp: 10 },
+            { id: "comp-vocab-t2", type: "multiple_choice", prompt: "'fast' sözünün mənası?", options: ["sürətli", "yavaş", "güclü", "ağır"], correctIndex: 0, xp: 10 },
+            { id: "comp-vocab-t3", type: "multiple_choice", prompt: "'slow' sözünün mənası?", options: ["yavaş", "sürətli", "hündür", "gənc"], correctIndex: 0, xp: 10 },
+            { id: "comp-vocab-t4", type: "multiple_choice", prompt: "'strong' sözünün mənası?", options: ["güclü", "zəif", "ağıllı", "gənc"], correctIndex: 0, xp: 10 },
+            { id: "comp-vocab-t5", type: "multiple_choice", prompt: "'young' sözünün mənası?", options: ["gənc / cavan", "qoca", "hündür", "ağır"], correctIndex: 0, xp: 10 },
+            { id: "comp-vocab-t6", type: "multiple_choice", prompt: "'clever' sözünün mənası?", options: ["ağıllı", "güclü", "sürətli", "hündür"], correctIndex: 0, xp: 10 },
+            { id: "comp-vocab-t7", type: "fill_blank", prompt: "'ağır' ingiliscə necə yazılır?", accepted: ["heavy"], xp: 10 },
+            { id: "comp-vocab-t8", type: "fill_blank", prompt: "'qısa / alçaq' ingiliscə necə yazılır?", accepted: ["short"], xp: 10 },
+            { id: "comp-vocab-t9", type: "multiple_choice", speakOptions: true, prompt: "'A giraffe is very ___.' (hündür)", options: ["tall", "short", "slow", "heavy"], correctIndex: 0, xp: 10 },
+            { id: "comp-vocab-t10", type: "multiple_choice", speakOptions: true, prompt: "'A turtle is ___.' (yavaş)", options: ["slow", "fast", "tall", "strong"], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "comp-vocab-b1", type: "multiple_choice", prompt: "'heavy' sözünün mənası?", options: ["ağır", "yüngül", "sürətli", "ağıllı"], correctIndex: 0, xp: 15 },
+            { id: "comp-vocab-b2", type: "multiple_choice", prompt: "'short' sözünün mənası?", options: ["qısa / alçaq", "hündür", "güclü", "gənc"], correctIndex: 0, xp: 15 },
+            { id: "comp-vocab-b3", type: "multiple_choice", speakOptions: true, prompt: "'A lion is ___.' (güclü)", options: ["strong", "weak", "slow", "short"], correctIndex: 0, xp: 15 },
+          ],
+        },
+      ],
+    },
+    {
+      id: "en-c7-listening",
+      title: "Dinləmə: Sifət dərəcələri",
+      description: "Müqayisə cümlələrini dinlə və düzgün mənanı seç.",
+      lessons: [
+        {
+          id: "comp-listen",
+          title: "Dinlə və seç: müqayisə",
+          intro: "Cümləni dinlə və düzgün cavabı seç.",
+          sections: [
+            { heading: "Necə işləyir?", body: "«Dinlə» düyməsinə bas, cümləni eşit və düzgün variantı seç. İstədiyin qədər təkrar dinlə." },
+          ],
+          tasks: [
+            { id: "comp-listen-t1", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "Tom is taller than Sam.", options: ["Tom Samdan hündürdür.", "Tom Samdan alçaqdır.", "Sam Tomdan hündürdür.", "Tom və Sam eyni boydadır."], correctIndex: 0, xp: 10 },
+            { id: "comp-listen-t2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "A car is faster than a bike.", options: ["Maşın velosipeddən sürətlidir.", "Velosiped maşından sürətlidir.", "Maşın velosipeddən yavaşdır.", "Maşın və velosiped eynidir."], correctIndex: 0, xp: 10 },
+            { id: "comp-listen-t3", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "This box is bigger.", options: ["Bu qutu daha böyükdür.", "Bu qutu daha kiçikdir.", "Bu qutu ağırdır.", "Bu qutu yüngüldür."], correctIndex: 0, xp: 10 },
+            { id: "comp-listen-t4", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She is the best student.", options: ["O ən yaxşı şagirddir.", "O ən pis şagirddir.", "O yaxşı şagirddir.", "O yeni şagirddir."], correctIndex: 0, xp: 10 },
+            { id: "comp-listen-t5", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "An elephant is heavy.", options: ["Fil ağırdır.", "Fil yüngüldür.", "Pişik ağırdır.", "Fil sürətlidir."], correctIndex: 0, xp: 10 },
+            { id: "comp-listen-t6", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "A turtle is slow.", options: ["Tısbağa yavaşdır.", "Tısbağa sürətlidir.", "Dovşan yavaşdır.", "Tısbağa güclüdür."], correctIndex: 0, xp: 10 },
+            { id: "comp-listen-t7", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "He is stronger than me.", options: ["O məndən güclüdür.", "O məndən zəifdir.", "Mən ondan güclüyəm.", "Biz eyni güclüyük."], correctIndex: 0, xp: 10 },
+            { id: "comp-listen-t8", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "This is the tallest tree.", options: ["Bu ən hündür ağacdır.", "Bu ən alçaq ağacdır.", "Bu hündür ağacdır.", "Bu qısa ağacdır."], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "comp-listen-b1", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "A plane is faster than a car.", options: ["Təyyarə maşından sürətlidir.", "Maşın təyyarədən sürətlidir.", "Təyyarə maşından yavaşdır.", "Təyyarə və maşın eynidir."], correctIndex: 0, xp: 15 },
+            { id: "comp-listen-b2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She is younger than her brother.", options: ["O qardaşından cavandır.", "O qardaşından böyükdür.", "O qardaşı ilə eyni yaşdadır.", "Qardaşı ondan cavandır."], correctIndex: 0, xp: 15 },
+          ],
+        },
+      ],
+    },
+    {
+      id: "en-c7-reading",
+      title: "Oxu: Animals",
+      description: "Heyvanlar haqqında mətni oxu və suallara cavab ver (müqayisə).",
+      lessons: [
+        {
+          id: "comp-read",
+          title: "Reading: Animals",
+          intro: "Qısa mətni oxu və suallara cavab ver.",
+          sections: [
+            { heading: "Read the text (Mətni oxu)", body: "Animals are different. The cheetah is the fastest animal. It can run very fast. The elephant is the biggest animal on land. It is very heavy. The giraffe is the tallest animal. Its neck is very long. A mouse is smaller than a cat, but a cat is smaller than a dog. The blue whale is the biggest animal in the world." },
+            { heading: "İpucu", body: "Sualı oxu, cavabı mətndə tap. Lazım olsa mətnə yenidən bax." },
+          ],
+          tasks: [
+            { id: "comp-read-t1", type: "multiple_choice", speakOptions: true, prompt: "Which is the fastest animal?", options: ["the elephant", "the cheetah", "the giraffe", "the mouse"], correctIndex: 1, xp: 10 },
+            { id: "comp-read-t2", type: "multiple_choice", speakOptions: true, prompt: "Which is the biggest animal on land?", options: ["the giraffe", "the elephant", "the cheetah", "the mouse"], correctIndex: 1, xp: 10 },
+            { id: "comp-read-t3", type: "multiple_choice", speakOptions: true, prompt: "Which is the tallest animal?", options: ["the elephant", "the giraffe", "the cheetah", "the whale"], correctIndex: 1, xp: 10 },
+            { id: "comp-read-t4", type: "multiple_choice", speakOptions: true, prompt: "Is a mouse bigger than a cat?", options: ["Yes.", "No, it is smaller.", "They are the same.", "We don't know."], correctIndex: 1, xp: 10 },
+            { id: "comp-read-t5", type: "multiple_choice", speakOptions: true, prompt: "What is the biggest animal in the world?", options: ["the elephant", "the blue whale", "the giraffe", "the cheetah"], correctIndex: 1, xp: 10 },
+            { id: "comp-read-t6", type: "fill_blank", prompt: "'The giraffe is the ___ animal.' (ən hündür — mətndən)", accepted: ["tallest"], xp: 10 },
+            { id: "comp-read-t7", type: "multiple_choice", speakOptions: true, prompt: "'The elephant is very ___.'", options: ["heavy", "light", "small", "fast"], correctIndex: 0, xp: 10 },
+            { id: "comp-read-t8", type: "multiple_choice", speakOptions: true, prompt: "A cat is smaller than a ___.", options: ["mouse", "dog", "elephant", "giraffe"], correctIndex: 1, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "comp-read-b1", type: "multiple_choice", prompt: "'neck' nə deməkdir?", options: ["boyun", "ayaq", "qol", "quyruq"], correctIndex: 0, xp: 15 },
+            { id: "comp-read-b2", type: "fill_blank", prompt: "'The cheetah is the ___ animal.' (ən sürətli — mətndən)", accepted: ["fastest"], xp: 15 },
+          ],
+        },
+      ],
+    },
+    {
+      id: "en-c7-writing",
+      title: "Yazı: Sifət dərəcələri",
+      description: "Sözlərdən müqayisə cümləsi qur.",
+      lessons: [
+        {
+          id: "comp-write",
+          title: "Cümlə qur: müqayisə",
+          intro: "Sözləri düzgün sıraya düz və müqayisə cümləsi qur.",
+          sections: [
+            { heading: "Necə işləyir?", body: "Sözlərə sıra ilə bas. Müqayisə: X is + sifət-er + than + Y. Üstünlük: the + sifət-est." },
+          ],
+          tasks: [
+            { id: "comp-write-t1", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["Tom", "is", "taller", "than", "Sam"], answer: "Tom is taller than Sam", translation: "Tom Samdan hündürdür.", xp: 10 },
+            { id: "comp-write-t2", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["A", "car", "is", "faster"], answer: "A car is faster", translation: "Maşın daha sürətlidir.", xp: 10 },
+            { id: "comp-write-t3", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["This", "box", "is", "bigger"], answer: "This box is bigger", translation: "Bu qutu daha böyükdür.", xp: 10 },
+            { id: "comp-write-t4", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["She", "is", "the", "best"], answer: "She is the best", translation: "O ən yaxşıdır.", xp: 10 },
+            { id: "comp-write-t5", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["An", "elephant", "is", "heavy"], answer: "An elephant is heavy", translation: "Fil ağırdır.", xp: 10 },
+            { id: "comp-write-t6", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["A", "turtle", "is", "slow"], answer: "A turtle is slow", translation: "Tısbağa yavaşdır.", xp: 10 },
+            { id: "comp-write-t7", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["He", "is", "stronger", "than", "me"], answer: "He is stronger than me", translation: "O məndən güclüdür.", xp: 10 },
+            { id: "comp-write-t8", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["This", "tree", "is", "the", "tallest"], answer: "This tree is the tallest", translation: "Bu ağac ən hündürdür.", xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "comp-write-b1", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["A", "plane", "is", "fast"], answer: "A plane is fast", translation: "Təyyarə sürətlidir.", xp: 15 },
+            { id: "comp-write-b2", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["She", "is", "younger", "than", "me"], answer: "She is younger than me", translation: "O məndən cavandır.", xp: 15 },
+            { id: "comp-write-b3", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["This", "is", "the", "biggest", "box"], answer: "This is the biggest box", translation: "Bu ən böyük qutudur.", xp: 15 },
+          ],
+        },
+      ],
+    },
+    // ═══════════════════════════════════════════════════════════════
+    // 8-Cİ DÖVR — MODAL VERBS (can / must / should)
+    // Yeni fellər: jump, climb, fly, draw, drive, fix, ride, count.
+    // ═══════════════════════════════════════════════════════════════
+    {
+      id: "en-c8-grammar",
+      title: "Qayda: Modal fellər",
+      description: "can (bacarıq), must (məcburiyyət), should (məsləhət).",
+      lessons: [
+        {
+          id: "modal-rule",
+          title: "Modal fellər qaydası",
+          intro: "can, must, should — modal fellər. Nə vaxt hansını işlətməli?",
+          sections: [
+            { heading: "can — bacarıq / icazə", body: "Bir işi bacarmaq və ya icazə: I can swim. Can I go? Modaldan sonra fel əsas formadadır (can swim, NOT can swims)." },
+            { heading: "must — məcburiyyət", body: "Vacib, məcburi iş: You must stop. İnkar mustn't = qadağan: You mustn't run here." },
+            { heading: "should — məsləhət", body: "Tövsiyə/məsləhət: You should sleep early. İnkar shouldn't: You shouldn't eat too much." },
+          ],
+          tasks: [
+            { id: "modal-rule-t1", type: "multiple_choice", speakOptions: true, prompt: "'I ___ swim very well.' (bacarıq)", options: ["can", "must", "should", "am"], correctIndex: 0, xp: 10 },
+            { id: "modal-rule-t2", type: "multiple_choice", speakOptions: true, prompt: "'You ___ stop at a red light.' (məcburi)", options: ["can", "must", "should", "may"], correctIndex: 1, xp: 10 },
+            { id: "modal-rule-t3", type: "multiple_choice", speakOptions: true, prompt: "'You ___ sleep early.' (məsləhət)", options: ["can", "must", "should", "do"], correctIndex: 2, xp: 10 },
+            { id: "modal-rule-t4", type: "multiple_choice", prompt: "Modaldan sonra fel hansı formada olur?", options: ["əsas forma", "-s", "-ing", "-ed"], correctIndex: 0, xp: 10 },
+            { id: "modal-rule-t5", type: "multiple_choice", speakOptions: true, prompt: "'Birds ___ fly.'", options: ["can", "must", "should", "are"], correctIndex: 0, xp: 10 },
+            { id: "modal-rule-t6", type: "multiple_choice", speakOptions: true, prompt: "'___ I open the window?' (icazə)", options: ["Can", "Must", "Should", "Do"], correctIndex: 0, xp: 10 },
+            { id: "modal-rule-t7", type: "multiple_choice", speakOptions: true, prompt: "'You ___ run in the hospital.' (qadağa)", options: ["can", "mustn't", "should", "may"], correctIndex: 1, xp: 10 },
+            { id: "modal-rule-t8", type: "multiple_choice", speakOptions: true, prompt: "'She ___ drive a car.' (bacarır)", options: ["can", "must", "should", "is"], correctIndex: 0, xp: 10 },
+            { id: "modal-rule-t9", type: "multiple_choice", speakOptions: true, prompt: "'You ___ eat too much sugar.' (məsləhət — inkar)", options: ["shouldn't", "can", "must", "do"], correctIndex: 0, xp: 10 },
+            { id: "modal-rule-t10", type: "fill_blank", prompt: "'bacarmaq' mənasını verən modal fel?", accepted: ["can"], xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "modal-rule-b1", type: "multiple_choice", speakOptions: true, prompt: "'Fish ___ swim.'", options: ["can", "must", "should", "are"], correctIndex: 0, xp: 15 },
+            { id: "modal-rule-b2", type: "multiple_choice", speakOptions: true, prompt: "'We ___ help our friends.' (məsləhət)", options: ["should", "mustn't", "can't", "do"], correctIndex: 0, xp: 15 },
+            { id: "modal-rule-b3", type: "fill_blank", prompt: "'məcburiyyət' bildirən modal fel?", accepted: ["must"], xp: 15 },
+          ],
+        },
+      ],
+    },
+    {
+      id: "en-c8-vocab",
+      title: "Lüğət: Bacarıq felləri",
+      description: "8 yeni fel: jump, climb, fly, draw, drive, fix, ride, count.",
+      lessons: [
+        {
+          id: "modal-vocab",
+          title: "Bacarıq felləri (8 söz)",
+          intro: "'can' ilə işlədəcəyimiz 8 yeni fel öyrənək.",
+          sections: [
+            { heading: "Yeni sözlər (8 fel)", body: "jump — tullanmaq · climb — dırmaşmaq · fly — uçmaq · draw — rəsm çəkmək · drive — sürmək · fix — təmir etmək · ride — minmək · count — saymaq" },
+            { heading: "Məsləhət", body: "Bu felləri 'can' ilə işlət: I can jump. She can draw. A bird can fly." },
+          ],
+          tasks: [
+            { id: "modal-vocab-t1", type: "multiple_choice", prompt: "'jump' sözünün mənası?", options: ["tullanmaq", "dırmaşmaq", "uçmaq", "sürmək"], correctIndex: 0, xp: 10 },
+            { id: "modal-vocab-t2", type: "multiple_choice", prompt: "'climb' sözünün mənası?", options: ["dırmaşmaq", "tullanmaq", "minmək", "saymaq"], correctIndex: 0, xp: 10 },
+            { id: "modal-vocab-t3", type: "multiple_choice", prompt: "'fly' sözünün mənası?", options: ["uçmaq", "üzmək", "qaçmaq", "tullanmaq"], correctIndex: 0, xp: 10 },
+            { id: "modal-vocab-t4", type: "multiple_choice", prompt: "'draw' sözünün mənası?", options: ["rəsm çəkmək", "yazmaq", "oxumaq", "sürmək"], correctIndex: 0, xp: 10 },
+            { id: "modal-vocab-t5", type: "multiple_choice", prompt: "'drive' sözünün mənası?", options: ["sürmək", "minmək", "uçmaq", "təmir etmək"], correctIndex: 0, xp: 10 },
+            { id: "modal-vocab-t6", type: "multiple_choice", prompt: "'fix' sözünün mənası?", options: ["təmir etmək", "sürmək", "saymaq", "dırmaşmaq"], correctIndex: 0, xp: 10 },
+            { id: "modal-vocab-t7", type: "fill_blank", prompt: "'minmək' ingiliscə necə yazılır?", accepted: ["ride"], xp: 10 },
+            { id: "modal-vocab-t8", type: "fill_blank", prompt: "'saymaq' ingiliscə necə yazılır?", accepted: ["count"], xp: 10 },
+            { id: "modal-vocab-t9", type: "multiple_choice", speakOptions: true, prompt: "'A bird can ___.' (uçmaq)", options: ["fly", "swim", "drive", "count"], correctIndex: 0, xp: 10 },
+            { id: "modal-vocab-t10", type: "multiple_choice", speakOptions: true, prompt: "'I can ___ a bike.' (minmək)", options: ["ride", "fly", "draw", "fix"], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "modal-vocab-b1", type: "multiple_choice", prompt: "'count' sözünün mənası?", options: ["saymaq", "çəkmək", "sürmək", "uçmaq"], correctIndex: 0, xp: 15 },
+            { id: "modal-vocab-b2", type: "multiple_choice", prompt: "'ride' sözünün mənası?", options: ["minmək", "tullanmaq", "uçmaq", "saymaq"], correctIndex: 0, xp: 15 },
+            { id: "modal-vocab-b3", type: "multiple_choice", speakOptions: true, prompt: "'She can ___ a picture.' (rəsm çəkmək)", options: ["draw", "drive", "count", "climb"], correctIndex: 0, xp: 15 },
+          ],
+        },
+      ],
+    },
+    {
+      id: "en-c8-listening",
+      title: "Dinləmə: Modal fellər",
+      description: "Modal cümlələri dinlə və düzgün mənanı seç.",
+      lessons: [
+        {
+          id: "modal-listen",
+          title: "Dinlə və seç: can / must / should",
+          intro: "Cümləni dinlə və düzgün cavabı seç.",
+          sections: [
+            { heading: "Necə işləyir?", body: "«Dinlə» düyməsinə bas, cümləni eşit və düzgün variantı seç. İstədiyin qədər təkrar dinlə." },
+          ],
+          tasks: [
+            { id: "modal-listen-t1", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I can swim.", options: ["Mən üzə bilirəm.", "Mən üzmürəm.", "Mən üzmək istəyirəm.", "Mən üzürəm."], correctIndex: 0, xp: 10 },
+            { id: "modal-listen-t2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "You must stop.", options: ["Sən dayanmalısan.", "Sən getməlisən.", "Sən dayanma.", "Sən dayana bilərsən."], correctIndex: 0, xp: 10 },
+            { id: "modal-listen-t3", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "You should sleep early.", options: ["Sən erkən yatmalısan.", "Sən gec yatmalısan.", "Sən yatmamalısan.", "Sən erkən durmalısan."], correctIndex: 0, xp: 10 },
+            { id: "modal-listen-t4", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "Birds can fly.", options: ["Quşlar uça bilər.", "Quşlar uça bilməz.", "Balıqlar uça bilər.", "Quşlar üzə bilər."], correctIndex: 0, xp: 10 },
+            { id: "modal-listen-t5", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Can I open the window?", options: ["Pəncərəni aça bilərəm?", "Pəncərəni bağlaya bilərəm?", "Qapını aça bilərəm?", "Pəncərəni açmalıyam?"], correctIndex: 0, xp: 10 },
+            { id: "modal-listen-t6", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "You mustn't run here.", options: ["Sən burada qaçmamalısan.", "Sən burada qaça bilərsən.", "Sən burada gəzməlisən.", "Sən burada qaçmalısan."], correctIndex: 0, xp: 10 },
+            { id: "modal-listen-t7", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She can drive a car.", options: ["O maşın sürə bilir.", "O maşın sürə bilmir.", "O velosiped sürə bilir.", "O maşın sürməlidir."], correctIndex: 0, xp: 10 },
+            { id: "modal-listen-t8", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "We should help others.", options: ["Biz başqalarına kömək etməliyik.", "Biz kömək etməməliyik.", "Biz özümüzə kömək etməliyik.", "Biz kömək edə bilərik."], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "modal-listen-b1", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I can ride a bike.", options: ["Mən velosiped sürə bilirəm.", "Mən velosiped sürə bilmirəm.", "Mən maşın sürə bilirəm.", "Mən velosiped sürməliyəm."], correctIndex: 0, xp: 15 },
+            { id: "modal-listen-b2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "You shouldn't eat too much.", options: ["Sən çox yeməməlisən.", "Sən çox yeməlisən.", "Sən az yeməməlisən.", "Sən çox yeyə bilərsən."], correctIndex: 0, xp: 15 },
+          ],
+        },
+      ],
+    },
+    {
+      id: "en-c8-reading",
+      title: "Oxu: School rules",
+      description: "Məktəb qaydaları haqqında mətni oxu və suallara cavab ver (modallar).",
+      lessons: [
+        {
+          id: "modal-read",
+          title: "Reading: School rules",
+          intro: "Qısa mətni oxu və suallara cavab ver.",
+          sections: [
+            { heading: "Read the text (Mətni oxu)", body: "At our school there are some rules. You must come to school on time. You must listen to the teacher. You should do your homework every day. You can play in the yard at break time. You mustn't run in the classroom. You shouldn't shout. Good students always follow the rules." },
+            { heading: "İpucu", body: "Sualı oxu, cavabı mətndə tap. Lazım olsa mətnə yenidən bax." },
+          ],
+          tasks: [
+            { id: "modal-read-t1", type: "multiple_choice", speakOptions: true, prompt: "What must you do on time?", options: ["play", "come to school", "run", "shout"], correctIndex: 1, xp: 10 },
+            { id: "modal-read-t2", type: "multiple_choice", speakOptions: true, prompt: "What should you do every day?", options: ["play football", "do your homework", "shout", "run"], correctIndex: 1, xp: 10 },
+            { id: "modal-read-t3", type: "multiple_choice", speakOptions: true, prompt: "Where can you play?", options: ["in the classroom", "in the yard", "on the road", "at home"], correctIndex: 1, xp: 10 },
+            { id: "modal-read-t4", type: "multiple_choice", speakOptions: true, prompt: "What mustn't you do in the classroom?", options: ["listen", "run", "sit", "write"], correctIndex: 1, xp: 10 },
+            { id: "modal-read-t5", type: "multiple_choice", speakOptions: true, prompt: "What shouldn't you do?", options: ["shout", "study", "listen", "read"], correctIndex: 0, xp: 10 },
+            { id: "modal-read-t6", type: "fill_blank", prompt: "'You ___ listen to the teacher.' (məcburi — mətndən)", accepted: ["must"], xp: 10 },
+            { id: "modal-read-t7", type: "multiple_choice", speakOptions: true, prompt: "Can you play at break time?", options: ["Yes, in the yard.", "No.", "Only at home.", "We don't know."], correctIndex: 0, xp: 10 },
+            { id: "modal-read-t8", type: "multiple_choice", speakOptions: true, prompt: "'Good students follow the ___.'", options: ["rules", "cars", "birds", "boxes"], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "modal-read-b1", type: "multiple_choice", prompt: "'on time' nə deməkdir?", options: ["vaxtında", "gec", "tez", "heç vaxt"], correctIndex: 0, xp: 15 },
+            { id: "modal-read-b2", type: "fill_blank", prompt: "'You ___ run in the classroom.' (qadağa — mətndən)", accepted: ["mustn't"], xp: 15 },
+          ],
+        },
+      ],
+    },
+    {
+      id: "en-c8-writing",
+      title: "Yazı: Modal fellər",
+      description: "Sözlərdən modal fellə cümlə qur.",
+      lessons: [
+        {
+          id: "modal-write",
+          title: "Cümlə qur: can / must / should",
+          intro: "Sözləri düzgün sıraya düz və modal cümlə qur.",
+          sections: [
+            { heading: "Necə işləyir?", body: "Sözlərə sıra ilə bas. Quruluş: kim + modal (can/must/should) + fel (əsas forma)." },
+          ],
+          tasks: [
+            { id: "modal-write-t1", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["I", "can", "swim"], answer: "I can swim", translation: "Mən üzə bilirəm.", xp: 10 },
+            { id: "modal-write-t2", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["You", "must", "stop"], answer: "You must stop", translation: "Sən dayanmalısan.", xp: 10 },
+            { id: "modal-write-t3", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["You", "should", "sleep", "early"], answer: "You should sleep early", translation: "Sən erkən yatmalısan.", xp: 10 },
+            { id: "modal-write-t4", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["Birds", "can", "fly"], answer: "Birds can fly", translation: "Quşlar uça bilər.", xp: 10 },
+            { id: "modal-write-t5", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["Can", "I", "open", "the", "window"], answer: "Can I open the window", translation: "Pəncərəni aça bilərəm?", xp: 10 },
+            { id: "modal-write-t6", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["She", "can", "drive", "a", "car"], answer: "She can drive a car", translation: "O maşın sürə bilir.", xp: 10 },
+            { id: "modal-write-t7", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["We", "should", "help", "others"], answer: "We should help others", translation: "Biz başqalarına kömək etməliyik.", xp: 10 },
+            { id: "modal-write-t8", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["I", "can", "ride", "a", "bike"], answer: "I can ride a bike", translation: "Mən velosiped sürə bilirəm.", xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "modal-write-b1", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["You", "mustn't", "run", "here"], answer: "You mustn't run here", translation: "Sən burada qaçmamalısan.", xp: 15 },
+            { id: "modal-write-b2", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["He", "can", "draw"], answer: "He can draw", translation: "O rəsm çəkə bilir.", xp: 15 },
+            { id: "modal-write-b3", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["You", "should", "listen"], answer: "You should listen", translation: "Sən qulaq asmalısan.", xp: 15 },
+          ],
+        },
+      ],
+    },
+
 
     // ═══════════════════════════════════════════════════════════════
     // BÖLMƏ 2 — İSİMLƏR (Nouns)
