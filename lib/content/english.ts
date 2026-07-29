@@ -363,6 +363,327 @@ export const english: Subject = {
     },
 
     // ═══════════════════════════════════════════════════════════════
+    // 3-CÜ DÖVR — PAST SIMPLE (Qayda → Lüğət → Dinləmə → Oxu → Yazı)
+    // Keçmiş işlər; yeni fellər: visit, help, clean, wash, walk, talk, want, call.
+    // ═══════════════════════════════════════════════════════════════
+    {
+      id: "en-c3-grammar",
+      title: "Qayda: Past Simple",
+      description: "Keçmişdə bitmiş işlər. Qaydalı (-ed) və qaydasız fellər.",
+      lessons: [
+        {
+          id: "past-rule",
+          title: "Past Simple qaydası",
+          intro: "Past Simple keçmişdə bitmiş işi bildirir. Gəl qaydanı öyrənək!",
+          sections: [
+            { heading: "Past Simple nədir?", body: "Keçmişdə bitmiş işi bildirir: I played yesterday. Çox vaxt 'yesterday', 'last week', 'ago' sözləri ilə işlənir." },
+            { heading: "Qaydalı fellər: -ed", body: "Əksər fellərə -ed əlavə olunur: play → played, visit → visited, help → helped. Bütün şəxslərdə eynidir (I/he/we played)." },
+            { heading: "Qaydasız fellər", body: "Bəzi fellər dəyişir: go → went, see → saw, eat → ate, have → had. Bunları əzbərləmək lazımdır." },
+          ],
+          tasks: [
+            { id: "past-rule-t1", type: "multiple_choice", speakOptions: true, prompt: "'I ___ football yesterday.'", options: ["play", "plays", "played", "playing"], correctIndex: 2, xp: 10 },
+            { id: "past-rule-t2", type: "multiple_choice", speakOptions: true, prompt: "'She ___ her homework.' (do)", options: ["do", "does", "did", "done"], correctIndex: 2, xp: 10 },
+            { id: "past-rule-t3", type: "multiple_choice", speakOptions: true, prompt: "'We ___ to the park.' (go)", options: ["go", "goes", "went", "gone"], correctIndex: 2, xp: 10 },
+            { id: "past-rule-t4", type: "multiple_choice", speakOptions: true, prompt: "'He ___ a film.' (watch)", options: ["watch", "watched", "watching", "watches"], correctIndex: 1, xp: 10 },
+            { id: "past-rule-t5", type: "fill_blank", prompt: "'visit' felinin keçmiş formasını yaz.", accepted: ["visited"], xp: 10 },
+            { id: "past-rule-t6", type: "multiple_choice", prompt: "Past Simple hansı vaxt üçündür?", options: ["indi", "keçmiş", "gələcək", "həmişə"], correctIndex: 1, xp: 10 },
+            { id: "past-rule-t7", type: "multiple_choice", speakOptions: true, prompt: "'They ___ pizza.' (eat)", options: ["eat", "ate", "eaten", "eats"], correctIndex: 1, xp: 10 },
+            { id: "past-rule-t8", type: "multiple_choice", speakOptions: true, prompt: "İnkar: 'I ___ not play.'", options: ["do", "did", "does", "am"], correctIndex: 1, xp: 10 },
+            { id: "past-rule-t9", type: "multiple_choice", speakOptions: true, prompt: "Sual: '___ you see the film?'", options: ["Do", "Did", "Does", "Are"], correctIndex: 1, xp: 10 },
+            { id: "past-rule-t10", type: "fill_blank", prompt: "'help' felinin keçmiş formasını yaz.", accepted: ["helped"], xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "past-rule-b1", type: "multiple_choice", speakOptions: true, prompt: "'She ___ a letter.' (write)", options: ["write", "wrote", "written", "writes"], correctIndex: 1, xp: 15 },
+            { id: "past-rule-b2", type: "fill_blank", prompt: "'clean' felinin keçmiş formasını yaz.", accepted: ["cleaned"], xp: 15 },
+            { id: "past-rule-b3", type: "multiple_choice", speakOptions: true, prompt: "'I ___ happy yesterday.' (be)", options: ["am", "was", "were", "is"], correctIndex: 1, xp: 15 },
+          ],
+        },
+      ],
+    },
+    {
+      id: "en-c3-vocab",
+      title: "Lüğət: Keçmiş işlər",
+      description: "8 yeni fel — visit, help, clean, wash, walk, talk, want, call.",
+      lessons: [
+        {
+          id: "past-vocab",
+          title: "Gündəlik fellər II (8 söz)",
+          intro: "Keçmişdə görülən işləri bildirən 8 yeni fel öyrənək.",
+          sections: [
+            { heading: "Yeni sözlər (8 fel)", body: "visit — ziyarət etmək · help — kömək etmək · clean — təmizləmək · wash — yumaq · walk — gəzmək · talk — danışmaq · want — istəmək · call — zəng etmək" },
+            { heading: "Məsləhət", body: "Bu fellər qaydalıdır — keçmişdə -ed alır: visited, helped, cleaned... Bir cümlədə xatırla: I helped my mother." },
+          ],
+          tasks: [
+            { id: "past-vocab-t1", type: "multiple_choice", prompt: "'visit' sözünün mənası?", options: ["ziyarət etmək", "təmizləmək", "yumaq", "gəzmək"], correctIndex: 0, xp: 10 },
+            { id: "past-vocab-t2", type: "multiple_choice", prompt: "'help' sözünün mənası?", options: ["kömək etmək", "danışmaq", "istəmək", "zəng etmək"], correctIndex: 0, xp: 10 },
+            { id: "past-vocab-t3", type: "multiple_choice", prompt: "'clean' sözünün mənası?", options: ["təmizləmək", "yumaq", "gəzmək", "ziyarət etmək"], correctIndex: 0, xp: 10 },
+            { id: "past-vocab-t4", type: "multiple_choice", prompt: "'wash' sözünün mənası?", options: ["yumaq", "təmizləmək", "danışmaq", "istəmək"], correctIndex: 0, xp: 10 },
+            { id: "past-vocab-t5", type: "multiple_choice", prompt: "'walk' sözünün mənası?", options: ["gəzmək / yerimək", "qaçmaq", "üzmək", "oturmaq"], correctIndex: 0, xp: 10 },
+            { id: "past-vocab-t6", type: "multiple_choice", prompt: "'talk' sözünün mənası?", options: ["danışmaq", "dinləmək", "oxumaq", "yazmaq"], correctIndex: 0, xp: 10 },
+            { id: "past-vocab-t7", type: "fill_blank", prompt: "'istəmək' ingiliscə necə yazılır?", accepted: ["want"], xp: 10 },
+            { id: "past-vocab-t8", type: "fill_blank", prompt: "'zəng etmək' ingiliscə necə yazılır?", accepted: ["call"], xp: 10 },
+            { id: "past-vocab-t9", type: "multiple_choice", speakOptions: true, prompt: "'Yesterday I ___ my grandma.' (ziyarət etdim)", options: ["visited", "cleaned", "walked", "wanted"], correctIndex: 0, xp: 10 },
+            { id: "past-vocab-t10", type: "multiple_choice", speakOptions: true, prompt: "'She ___ the dishes.' (yudu)", options: ["washed", "helped", "talked", "called"], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "past-vocab-b1", type: "multiple_choice", prompt: "'want' sözünün mənası?", options: ["istəmək", "sevmək", "bilmək", "görmək"], correctIndex: 0, xp: 15 },
+            { id: "past-vocab-b2", type: "multiple_choice", prompt: "'call' sözünün mənası?", options: ["zəng etmək", "gəzmək", "yumaq", "oxumaq"], correctIndex: 0, xp: 15 },
+            { id: "past-vocab-b3", type: "multiple_choice", speakOptions: true, prompt: "'We ___ in the park.' (gəzdik)", options: ["walked", "washed", "wanted", "called"], correctIndex: 0, xp: 15 },
+          ],
+        },
+      ],
+    },
+    {
+      id: "en-c3-listening",
+      title: "Dinləmə: Past Simple",
+      description: "Keçmiş işlərin cümlələrini dinlə və düzgün mənanı seç.",
+      lessons: [
+        {
+          id: "past-listen",
+          title: "Dinlə və seç: keçmiş iş",
+          intro: "Cümləni dinlə və düzgün cavabı seç.",
+          sections: [
+            { heading: "Necə işləyir?", body: "«Dinlə» düyməsinə bas, cümləni eşit və düzgün variantı seç. İstədiyin qədər təkrar dinlə." },
+          ],
+          tasks: [
+            { id: "past-listen-t1", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I played football yesterday.", options: ["Mən dünən futbol oynadım.", "Mən indi futbol oynayıram.", "Mən sabah oynayacağam.", "Mən futbola baxdım."], correctIndex: 0, xp: 10 },
+            { id: "past-listen-t2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She visited her grandmother.", options: ["O nənəsini ziyarət etdi.", "O nənəsinə zəng etdi.", "O anasını ziyarət etdi.", "O nənəsinə kömək etdi."], correctIndex: 0, xp: 10 },
+            { id: "past-listen-t3", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "We went to school.", options: ["Biz məktəbə getdik.", "Biz evə getdik.", "Biz məktəbdəyik.", "Biz məktəbə gedirik."], correctIndex: 0, xp: 10 },
+            { id: "past-listen-t4", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "He watched a film.", options: ["O film izlədi.", "O kitab oxudu.", "O film çəkdi.", "O televizora baxır."], correctIndex: 0, xp: 10 },
+            { id: "past-listen-t5", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "They ate pizza.", options: ["Onlar pizza yedi.", "Onlar pizza bişirdi.", "Onlar pizza istədi.", "Onlar yemək yeyir."], correctIndex: 0, xp: 10 },
+            { id: "past-listen-t6", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I cleaned my room.", options: ["Mən otağımı təmizlədim.", "Mən otağıma getdim.", "Mən otağımı yudum.", "Mən otağı gördüm."], correctIndex: 0, xp: 10 },
+            { id: "past-listen-t7", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She washed the dishes.", options: ["O qabları yudu.", "O qabları yığdı.", "O əllərini yudu.", "O paltar yudu."], correctIndex: 0, xp: 10 },
+            { id: "past-listen-t8", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "We walked in the park.", options: ["Biz parkda gəzdik.", "Biz parkda qaçdıq.", "Biz parka getdik.", "Biz bağda gəzdik."], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "past-listen-b1", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Did you see the film?", options: ["Sən filmi gördün?", "Sən film çəkdin?", "Sən film izləyirsən?", "Sən filmi bəyəndin?"], correctIndex: 0, xp: 15 },
+            { id: "past-listen-b2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "He helped his mother.", options: ["O anasına kömək etdi.", "O anasına zəng etdi.", "O atasına kömək etdi.", "O anası ilə danışdı."], correctIndex: 0, xp: 15 },
+          ],
+        },
+      ],
+    },
+    {
+      id: "en-c3-reading",
+      title: "Oxu: My weekend",
+      description: "Keçmiş haqqında qısa mətni oxu və suallara cavab ver (Past Simple).",
+      lessons: [
+        {
+          id: "past-read",
+          title: "Reading: My weekend",
+          intro: "Qısa mətni oxu və suallara cavab ver.",
+          sections: [
+            { heading: "Read the text (Mətni oxu)", body: "Last Saturday was a great day. In the morning I cleaned my room and helped my mother. Then we visited my grandmother. She cooked a nice dinner. In the afternoon I played football with my friends. In the evening I watched a film and went to bed early. It was a happy day." },
+            { heading: "İpucu", body: "Sualı oxu, cavabı mətndə tap. Lazım olsa mətnə yenidən bax." },
+          ],
+          tasks: [
+            { id: "past-read-t1", type: "multiple_choice", speakOptions: true, prompt: "When was the great day?", options: ["last Sunday", "last Saturday", "yesterday", "last Monday"], correctIndex: 1, xp: 10 },
+            { id: "past-read-t2", type: "multiple_choice", speakOptions: true, prompt: "What did the boy do in the morning?", options: ["played football", "cleaned his room", "watched a film", "slept"], correctIndex: 1, xp: 10 },
+            { id: "past-read-t3", type: "multiple_choice", speakOptions: true, prompt: "Who did they visit?", options: ["his teacher", "his grandmother", "his friend", "his uncle"], correctIndex: 1, xp: 10 },
+            { id: "past-read-t4", type: "multiple_choice", speakOptions: true, prompt: "Who cooked dinner?", options: ["his mother", "his grandmother", "the boy", "his father"], correctIndex: 1, xp: 10 },
+            { id: "past-read-t5", type: "multiple_choice", speakOptions: true, prompt: "What did he do in the afternoon?", options: ["watched TV", "played football", "cleaned", "slept"], correctIndex: 1, xp: 10 },
+            { id: "past-read-t6", type: "multiple_choice", speakOptions: true, prompt: "What did he do in the evening?", options: ["watched a film", "played football", "cooked", "cleaned"], correctIndex: 0, xp: 10 },
+            { id: "past-read-t7", type: "fill_blank", prompt: "'I ___ my mother.' (kömək etdim — mətndən)", accepted: ["helped"], xp: 10 },
+            { id: "past-read-t8", type: "multiple_choice", speakOptions: true, prompt: "Was it a happy day?", options: ["Yes, it was.", "No, it wasn't.", "We don't know.", "It was sad."], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "past-read-b1", type: "multiple_choice", prompt: "'went to bed' nə deməkdir?", options: ["yatmağa getdi", "oyandı", "yeməyə getdi", "çölə çıxdı"], correctIndex: 0, xp: 15 },
+            { id: "past-read-b2", type: "fill_blank", prompt: "'We ___ my grandmother.' (ziyarət etdik — mətndən)", accepted: ["visited"], xp: 15 },
+          ],
+        },
+      ],
+    },
+    {
+      id: "en-c3-writing",
+      title: "Yazı: Past Simple",
+      description: "Sözlərdən düzgün Past Simple cümləsi qur.",
+      lessons: [
+        {
+          id: "past-write",
+          title: "Cümlə qur: Past Simple",
+          intro: "Sözləri düzgün sıraya düz və Past Simple cümləsi qur.",
+          sections: [
+            { heading: "Necə işləyir?", body: "Sözlərə sıra ilə bas — cümlə yuxarıda düzələcək. Keçmişdə fel -ed alır və ya qaydasız dəyişir (played, went, ate)." },
+          ],
+          tasks: [
+            { id: "past-write-t1", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["I", "played", "football"], answer: "I played football", translation: "Mən futbol oynadım.", xp: 10 },
+            { id: "past-write-t2", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["She", "visited", "her", "grandmother"], answer: "She visited her grandmother", translation: "O nənəsini ziyarət etdi.", xp: 10 },
+            { id: "past-write-t3", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["We", "went", "to", "school"], answer: "We went to school", translation: "Biz məktəbə getdik.", xp: 10 },
+            { id: "past-write-t4", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["He", "watched", "a", "film"], answer: "He watched a film", translation: "O film izlədi.", xp: 10 },
+            { id: "past-write-t5", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["They", "ate", "pizza"], answer: "They ate pizza", translation: "Onlar pizza yedi.", xp: 10 },
+            { id: "past-write-t6", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["I", "cleaned", "my", "room"], answer: "I cleaned my room", translation: "Mən otağımı təmizlədim.", xp: 10 },
+            { id: "past-write-t7", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["She", "washed", "the", "dishes"], answer: "She washed the dishes", translation: "O qabları yudu.", xp: 10 },
+            { id: "past-write-t8", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["We", "walked", "in", "the", "park"], answer: "We walked in the park", translation: "Biz parkda gəzdik.", xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "past-write-b1", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["I", "helped", "my", "mother"], answer: "I helped my mother", translation: "Mən anama kömək etdim.", xp: 15 },
+            { id: "past-write-b2", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["Did", "you", "see", "the", "film"], answer: "Did you see the film", translation: "Sən filmi gördün?", xp: 15 },
+            { id: "past-write-b3", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["He", "did", "not", "play"], answer: "He did not play", translation: "O oynamadı.", xp: 15 },
+          ],
+        },
+      ],
+    },
+    // ═══════════════════════════════════════════════════════════════
+    // 4-CÜ DÖVR — QUESTIONS & NEGATIVES (Sual və inkar)
+    // Sual sözləri: what, where, when, who, why, how.
+    // ═══════════════════════════════════════════════════════════════
+    {
+      id: "en-c4-grammar",
+      title: "Qayda: Sual və inkar",
+      description: "Sual (do/does/did) və inkar (don't/doesn't/didn't) cümlələri.",
+      lessons: [
+        {
+          id: "q-rule",
+          title: "Sual və inkar qaydası",
+          intro: "İngiliscə sual və inkar necə qurulur? Gəl öyrənək!",
+          sections: [
+            { heading: "Sual necə qurulur?", body: "do/does/did + kim + fel: Do you like tea? Does she play? Did they go? Sual sözü əvvələ gəlir: What do you want?" },
+            { heading: "İnkar (negatives)", body: "don't/doesn't/didn't + fel: I don't like. She doesn't play. We didn't go." },
+            { heading: "Sual sözləri", body: "what (nə), where (harada), when (nə vaxt), who (kim), why (niyə), how (necə)." },
+          ],
+          tasks: [
+            { id: "q-rule-t1", type: "multiple_choice", speakOptions: true, prompt: "Sual: '___ you like music?'", options: ["Do", "Does", "Did", "Are"], correctIndex: 0, xp: 10 },
+            { id: "q-rule-t2", type: "multiple_choice", speakOptions: true, prompt: "Sual: '___ she play tennis?'", options: ["Do", "Does", "Is", "Are"], correctIndex: 1, xp: 10 },
+            { id: "q-rule-t3", type: "multiple_choice", speakOptions: true, prompt: "İnkar: 'I ___ like coffee.'", options: ["don't", "doesn't", "isn't", "not"], correctIndex: 0, xp: 10 },
+            { id: "q-rule-t4", type: "multiple_choice", speakOptions: true, prompt: "İnkar: 'He ___ eat meat.'", options: ["don't", "doesn't", "isn't", "aren't"], correctIndex: 1, xp: 10 },
+            { id: "q-rule-t5", type: "multiple_choice", speakOptions: true, prompt: "'___ do you live?' (harada)", options: ["What", "Where", "When", "Who"], correctIndex: 1, xp: 10 },
+            { id: "q-rule-t6", type: "multiple_choice", speakOptions: true, prompt: "'___ is your name?' (nə)", options: ["What", "Where", "When", "Why"], correctIndex: 0, xp: 10 },
+            { id: "q-rule-t7", type: "multiple_choice", speakOptions: true, prompt: "'___ are you sad?' (niyə)", options: ["What", "Where", "Why", "Who"], correctIndex: 2, xp: 10 },
+            { id: "q-rule-t8", type: "fill_blank", prompt: "'kim' sual sözü ingiliscə necə yazılır?", accepted: ["who"], xp: 10 },
+            { id: "q-rule-t9", type: "multiple_choice", speakOptions: true, prompt: "Keçmiş sual: '___ you see it?'", options: ["Do", "Does", "Did", "Are"], correctIndex: 2, xp: 10 },
+            { id: "q-rule-t10", type: "multiple_choice", speakOptions: true, prompt: "İnkar (keçmiş): 'We ___ go.'", options: ["don't", "doesn't", "didn't", "isn't"], correctIndex: 2, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "q-rule-b1", type: "multiple_choice", speakOptions: true, prompt: "'___ old are you?' (necə — yaş)", options: ["How", "What", "Where", "Who"], correctIndex: 0, xp: 15 },
+            { id: "q-rule-b2", type: "multiple_choice", speakOptions: true, prompt: "'Does he ___ English?'", options: ["speak", "speaks", "speaking", "spoke"], correctIndex: 0, xp: 15 },
+            { id: "q-rule-b3", type: "fill_blank", prompt: "'nə vaxt' sual sözü ingiliscə necə yazılır?", accepted: ["when"], xp: 15 },
+          ],
+        },
+      ],
+    },
+    {
+      id: "en-c4-vocab",
+      title: "Lüğət: Sual sözləri",
+      description: "6 sual sözü: what, where, when, who, why, how.",
+      lessons: [
+        {
+          id: "q-vocab",
+          title: "Sual sözləri (wh- sözlər)",
+          intro: "İngiliscə sual verməyə kömək edən 6 sözü öyrənək.",
+          sections: [
+            { heading: "Yeni sözlər (sual sözləri)", body: "what — nə · where — harada · when — nə vaxt · who — kim · why — niyə · how — necə" },
+            { heading: "Məsləhət", body: "Bu sözlər cümlənin əvvəlində gəlir: What is your name? Where do you live?" },
+          ],
+          tasks: [
+            { id: "q-vocab-t1", type: "multiple_choice", prompt: "'what' sözünün mənası?", options: ["nə", "harada", "nə vaxt", "kim"], correctIndex: 0, xp: 10 },
+            { id: "q-vocab-t2", type: "multiple_choice", prompt: "'where' sözünün mənası?", options: ["kim", "harada", "niyə", "necə"], correctIndex: 1, xp: 10 },
+            { id: "q-vocab-t3", type: "multiple_choice", prompt: "'when' sözünün mənası?", options: ["nə vaxt", "harada", "nə", "kim"], correctIndex: 0, xp: 10 },
+            { id: "q-vocab-t4", type: "multiple_choice", prompt: "'who' sözünün mənası?", options: ["kim", "nə", "harada", "niyə"], correctIndex: 0, xp: 10 },
+            { id: "q-vocab-t5", type: "multiple_choice", prompt: "'why' sözünün mənası?", options: ["niyə", "necə", "nə vaxt", "kim"], correctIndex: 0, xp: 10 },
+            { id: "q-vocab-t6", type: "multiple_choice", prompt: "'how' sözünün mənası?", options: ["necə", "niyə", "harada", "nə"], correctIndex: 0, xp: 10 },
+            { id: "q-vocab-t7", type: "fill_blank", prompt: "'harada' ingiliscə necə yazılır?", accepted: ["where"], xp: 10 },
+            { id: "q-vocab-t8", type: "fill_blank", prompt: "'niyə' ingiliscə necə yazılır?", accepted: ["why"], xp: 10 },
+            { id: "q-vocab-t9", type: "multiple_choice", speakOptions: true, prompt: "'___ is your teacher?' (kim)", options: ["Who", "What", "Where", "When"], correctIndex: 0, xp: 10 },
+            { id: "q-vocab-t10", type: "multiple_choice", speakOptions: true, prompt: "'___ do you go to school?' (nə vaxt)", options: ["When", "Who", "What", "Why"], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "q-vocab-b1", type: "multiple_choice", prompt: "'how' sözünün mənası?", options: ["necə", "nə", "kim", "harada"], correctIndex: 0, xp: 15 },
+            { id: "q-vocab-b2", type: "fill_blank", prompt: "'nə' ingiliscə necə yazılır?", accepted: ["what"], xp: 15 },
+            { id: "q-vocab-b3", type: "multiple_choice", speakOptions: true, prompt: "'___ are you? — I am fine.' (necə)", options: ["How", "What", "Who", "Why"], correctIndex: 0, xp: 15 },
+          ],
+        },
+      ],
+    },
+    {
+      id: "en-c4-listening",
+      title: "Dinləmə: Sual və inkar",
+      description: "Sual və inkar cümlələrini dinlə və düzgün mənanı seç.",
+      lessons: [
+        {
+          id: "q-listen",
+          title: "Dinlə və seç: sual-cavab",
+          intro: "Cümləni dinlə və düzgün cavabı seç.",
+          sections: [
+            { heading: "Necə işləyir?", body: "«Dinlə» düyməsinə bas, cümləni eşit və düzgün variantı seç. İstədiyin qədər təkrar dinlə." },
+          ],
+          tasks: [
+            { id: "q-listen-t1", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "What is your name?", options: ["Adın nədir?", "Neçə yaşın var?", "Haralısan?", "Necəsən?"], correctIndex: 0, xp: 10 },
+            { id: "q-listen-t2", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Where do you live?", options: ["Harada yaşayırsan?", "Nə vaxt gəlirsən?", "Kimsən?", "Niyə gəldin?"], correctIndex: 0, xp: 10 },
+            { id: "q-listen-t3", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "How old are you?", options: ["Neçə yaşın var?", "Adın nədir?", "Necəsən?", "Haradasan?"], correctIndex: 0, xp: 10 },
+            { id: "q-listen-t4", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Do you like football?", options: ["Futbolu sevirsən?", "Futbol oynayırsan?", "Futbola baxırsan?", "Futbol bilirsən?"], correctIndex: 0, xp: 10 },
+            { id: "q-listen-t5", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Why are you late?", options: ["Niyə gecikirsən?", "Harada idin?", "Kiminlə gəldin?", "Nə vaxt gəldin?"], correctIndex: 0, xp: 10 },
+            { id: "q-listen-t6", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I don't like coffee.", options: ["Mən qəhvə sevmirəm.", "Mən qəhvə sevirəm.", "Mən çay sevmirəm.", "Mən qəhvə içirəm."], correctIndex: 0, xp: 10 },
+            { id: "q-listen-t7", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She doesn't play tennis.", options: ["O tennis oynamır.", "O tennis oynayır.", "O futbol oynamır.", "O tennisə baxmır."], correctIndex: 0, xp: 10 },
+            { id: "q-listen-t8", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "When do you get up?", options: ["Nə vaxt durursan?", "Harada durursan?", "Niyə durursan?", "Necə durursan?"], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "q-listen-b1", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Who is your best friend?", options: ["Ən yaxşı dostun kimdir?", "Dostun haradadır?", "Dostun neçə yaşındadır?", "Dostun necədir?"], correctIndex: 0, xp: 15 },
+            { id: "q-listen-b2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "We didn't watch the film.", options: ["Biz filmi izləmədik.", "Biz filmi izlədik.", "Biz filmə baxırıq.", "Biz filmi bəyənmədik."], correctIndex: 0, xp: 15 },
+          ],
+        },
+      ],
+    },
+    {
+      id: "en-c4-reading",
+      title: "Oxu: An interview",
+      description: "Qısa müsahibəni oxu və suallara cavab ver (sual-cavab).",
+      lessons: [
+        {
+          id: "q-read",
+          title: "Reading: An interview",
+          intro: "Qısa müsahibəni oxu və suallara cavab ver.",
+          sections: [
+            { heading: "Read the text (Mətni oxu)", body: "This is an interview with Nigar. — What is your name? — My name is Nigar. — Where are you from? — I am from Ganja. — How old are you? — I am eleven. — Do you like school? — Yes, I do. I like English very much. — What is your favourite sport? — I like basketball. — Do you play every day? — No, I don't. I play on Sundays." },
+            { heading: "İpucu", body: "Sualı oxu, cavabı mətndə tap. Lazım olsa mətnə yenidən bax." },
+          ],
+          tasks: [
+            { id: "q-read-t1", type: "multiple_choice", speakOptions: true, prompt: "What is her name?", options: ["Leyla", "Nigar", "Anna", "Sara"], correctIndex: 1, xp: 10 },
+            { id: "q-read-t2", type: "multiple_choice", speakOptions: true, prompt: "Where is she from?", options: ["Baku", "Ganja", "Sheki", "London"], correctIndex: 1, xp: 10 },
+            { id: "q-read-t3", type: "multiple_choice", speakOptions: true, prompt: "How old is she?", options: ["ten", "eleven", "twelve", "nine"], correctIndex: 1, xp: 10 },
+            { id: "q-read-t4", type: "multiple_choice", speakOptions: true, prompt: "Does she like school?", options: ["Yes, she does.", "No, she doesn't.", "We don't know.", "She likes maths."], correctIndex: 0, xp: 10 },
+            { id: "q-read-t5", type: "multiple_choice", speakOptions: true, prompt: "What is her favourite sport?", options: ["football", "basketball", "tennis", "swimming"], correctIndex: 1, xp: 10 },
+            { id: "q-read-t6", type: "multiple_choice", speakOptions: true, prompt: "Does she play every day?", options: ["Yes, every day.", "No, she plays on Sundays.", "Yes, on Mondays.", "She doesn't play."], correctIndex: 1, xp: 10 },
+            { id: "q-read-t7", type: "fill_blank", prompt: "'What is your ___? — My name is Nigar.'", accepted: ["name"], xp: 10 },
+            { id: "q-read-t8", type: "multiple_choice", speakOptions: true, prompt: "Which subject does she like?", options: ["maths", "English", "science", "art"], correctIndex: 1, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "q-read-b1", type: "multiple_choice", prompt: "'favourite' nə deməkdir?", options: ["ən sevimli", "ən pis", "ən böyük", "ən kiçik"], correctIndex: 0, xp: 15 },
+            { id: "q-read-b2", type: "fill_blank", prompt: "'Where are you ___? — I am from Ganja.'", accepted: ["from"], xp: 15 },
+          ],
+        },
+      ],
+    },
+    {
+      id: "en-c4-writing",
+      title: "Yazı: Sual və inkar",
+      description: "Sözlərdən düzgün sual və inkar cümləsi qur.",
+      lessons: [
+        {
+          id: "q-write",
+          title: "Cümlə qur: sual və inkar",
+          intro: "Sözləri düzgün sıraya düz və sual/inkar cümləsi qur.",
+          sections: [
+            { heading: "Necə işləyir?", body: "Sözlərə sıra ilə bas. Sual: (sual sözü) + do/does/did + kim + fel. İnkar: kim + do/does not + fel." },
+          ],
+          tasks: [
+            { id: "q-write-t1", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["What", "is", "your", "name"], answer: "What is your name", translation: "Adın nədir?", xp: 10 },
+            { id: "q-write-t2", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["Where", "do", "you", "live"], answer: "Where do you live", translation: "Harada yaşayırsan?", xp: 10 },
+            { id: "q-write-t3", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["Do", "you", "like", "music"], answer: "Do you like music", translation: "Musiqini sevirsən?", xp: 10 },
+            { id: "q-write-t4", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["I", "do", "not", "like", "tea"], answer: "I do not like tea", translation: "Mən çay sevmirəm.", xp: 10 },
+            { id: "q-write-t5", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["When", "do", "you", "get", "up"], answer: "When do you get up", translation: "Nə vaxt durursan?", xp: 10 },
+            { id: "q-write-t6", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["Why", "are", "you", "sad"], answer: "Why are you sad", translation: "Niyə kədərlisən?", xp: 10 },
+            { id: "q-write-t7", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["She", "does", "not", "play"], answer: "She does not play", translation: "O oynamır.", xp: 10 },
+            { id: "q-write-t8", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["How", "old", "are", "you"], answer: "How old are you", translation: "Neçə yaşın var?", xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "q-write-b1", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["Who", "is", "your", "teacher"], answer: "Who is your teacher", translation: "Müəllimin kimdir?", xp: 15 },
+            { id: "q-write-b2", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["Did", "you", "see", "it"], answer: "Did you see it", translation: "Onu gördün?", xp: 15 },
+            { id: "q-write-b3", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["We", "did", "not", "go"], answer: "We did not go", translation: "Biz getmədik.", xp: 15 },
+          ],
+        },
+      ],
+    },
+
+    // ═══════════════════════════════════════════════════════════════
     // BÖLMƏ 1 — QRAMMATİKA (Grammar)
     // ═══════════════════════════════════════════════════════════════
     {
@@ -371,98 +692,7 @@ export const english: Subject = {
       description:
         "Present Simple, Present Continuous, Past Simple, sual/inkar cümlələr, əvəzliklər, artikllar, sifət dərəcələri və modal fellər.",
       lessons: [
-        // ── PROJECT 3: Past Simple ─────────────────────────────────
-        {
-          id: "en-gr-l3",
-          title: "Past Simple (Keçmiş sadə zaman)",
-          intro:
-            "Keçmişdə baş verib bitmiş işlər. 'to be' (was/were), qaydalı fellər (+ed) və qaydasız fellər.",
-          visual: "tobe-table",
-          sections: [
-            {
-              heading: "to be — was / were",
-              body: "I, he, she, it → was (I was at home). You, we, they → were (They were happy).",
-            },
-            {
-              heading: "Qaydalı fellər: +ed",
-              body: "Adi fellərə keçmişdə -ed əlavə olunur: play → played, watch → watched, visit → visited.",
-            },
-            {
-              heading: "Qaydasız (irregular) fellər",
-              body: "Bəzi fellər tamamilə dəyişir və əzbərlənməlidir: go → went, eat → ate, see → saw, have → had, make → made, come → came, take → took.",
-            },
-          ],
-          tasks: [
-            { id: "en-gr-l3-t1", type: "multiple_choice", prompt: "'I ___ at home yesterday.' (to be)", options: ["was", "were", "am", "is"], correctIndex: 0, xp: 10 },
-            { id: "en-gr-l3-t2", type: "multiple_choice", prompt: "'They ___ happy.' (past)", options: ["was", "were", "are", "is"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l3-t3", type: "multiple_choice", prompt: "'She ___ a teacher.' (past)", options: ["was", "were", "are", "am"], correctIndex: 0, xp: 10 },
-            { id: "en-gr-l3-t4", type: "multiple_choice", prompt: "'We ___ at school.' (past)", options: ["was", "were", "am", "is"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l3-t5", type: "fill_blank", prompt: "'play' felinin keçmiş forması?", accepted: ["played"], xp: 10 },
-            { id: "en-gr-l3-t6", type: "fill_blank", prompt: "'watch' felinin keçmiş forması?", accepted: ["watched"], xp: 10 },
-            { id: "en-gr-l3-t7", type: "multiple_choice", prompt: "'go' felinin keçmiş forması (qaydasız)?", options: ["goed", "went", "gone", "going"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l3-t8", type: "multiple_choice", prompt: "'eat' felinin keçmiş forması?", options: ["eated", "ate", "eaten", "eating"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l3-t9", type: "multiple_choice", prompt: "Qaydalı fellərə keçmişdə hansı şəkilçi əlavə olunur?", options: ["-s", "-ing", "-ed", "-es"], correctIndex: 2, xp: 10 },
-            { id: "en-gr-l3-t10", type: "fill_blank", prompt: "'visit' felinin keçmiş forması?", accepted: ["visited"], xp: 10 },
-            { id: "en-gr-l3-t11", type: "multiple_choice", prompt: "'see' felinin keçmiş forması?", options: ["seed", "saw", "seen", "sawed"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l3-t12", type: "multiple_choice", prompt: "'have' felinin keçmiş forması?", options: ["haved", "had", "has", "having"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l3-t13", type: "multiple_choice", prompt: "'You ___ my friend.' (past)", options: ["was", "were", "are", "am"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l3-t14", type: "multiple_choice", prompt: "'He ___ not at home.' (past)", options: ["was", "were", "is", "are"], correctIndex: 0, xp: 10 },
-            { id: "en-gr-l3-t15", type: "multiple_choice", prompt: "'make' felinin keçmiş forması?", options: ["maked", "made", "making", "makes"], correctIndex: 1, xp: 15 },
-          ],
-          bonusTasks: [
-            { id: "en-gr-l3-b1", type: "multiple_choice", prompt: "'come' felinin keçmiş forması?", options: ["comed", "came", "come", "coming"], correctIndex: 1, xp: 15 },
-            { id: "en-gr-l3-b2", type: "fill_blank", prompt: "'study' felinin keçmiş forması?", accepted: ["studied"], xp: 15 },
-            { id: "en-gr-l3-b3", type: "multiple_choice", prompt: "'They ___ football yesterday.' (play)", options: ["play", "plays", "played", "playing"], correctIndex: 2, xp: 15 },
-            { id: "en-gr-l3-b4", type: "multiple_choice", prompt: "'was' hansı əvəzliklərlə işlədilir?", options: ["I, he, she, it", "you, we, they", "hamısı", "heç biri"], correctIndex: 0, xp: 15 },
-            { id: "en-gr-l3-b5", type: "multiple_choice", prompt: "'take' felinin keçmiş forması?", options: ["taked", "took", "taken", "takes"], correctIndex: 1, xp: 15 },
-          ],
-        },
 
-        // ── PROJECT 4: Sual və inkar cümlələr ──────────────────────
-        {
-          id: "en-gr-l4",
-          title: "Sual və inkar cümlələr (Questions & negatives)",
-          intro:
-            "Wh- sual sözləri (Who, What, Where, When, Why, How) və inkar cümlələr qurmağı öyrənirik.",
-          sections: [
-            {
-              heading: "Wh- sual sözləri",
-              body: "Who = kim, What = nə, Where = harada, When = nə vaxt, Why = niyə, How = necə. Bu sözlər sualın əvvəlində gəlir.",
-            },
-            {
-              heading: "İnkar cümlələr",
-              body: "Present Simple: don't / doesn't (I don't like, She doesn't play). 'to be': isn't/aren't (past: wasn't/weren't).",
-            },
-            {
-              heading: "Durğu işarəsi",
-              body: "Sual cümləsi həmişə sual işarəsi (?) ilə bitir. Nəqli cümlə nöqtə (.) ilə bitir.",
-            },
-          ],
-          tasks: [
-            { id: "en-gr-l4-t1", type: "multiple_choice", prompt: "'___ is your name?' (adını soruşur)", options: ["Who", "What", "Where", "When"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l4-t2", type: "multiple_choice", prompt: "'___ do you live?' (yer soruşur)", options: ["Who", "What", "Where", "When"], correctIndex: 2, xp: 10 },
-            { id: "en-gr-l4-t3", type: "multiple_choice", prompt: "'___ is that boy?' (kim)", options: ["Who", "What", "Where", "Why"], correctIndex: 0, xp: 10 },
-            { id: "en-gr-l4-t4", type: "multiple_choice", prompt: "'___ is your birthday?' (vaxt)", options: ["Where", "When", "Why", "How"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l4-t5", type: "multiple_choice", prompt: "'___ are you sad?' (səbəb)", options: ["Who", "Why", "Where", "When"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l4-t6", type: "multiple_choice", prompt: "'___ are you?' (necəsən)", options: ["What", "Who", "How", "Where"], correctIndex: 2, xp: 10 },
-            { id: "en-gr-l4-t7", type: "multiple_choice", prompt: "Wh- sualları əsasən hansı hərflərlə başlayır?", options: ["a, b", "wh, h", "s, es", "ed"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l4-t8", type: "multiple_choice", prompt: "İnkar: 'I ___ like fish.' (Present Simple)", options: ["don't", "doesn't", "isn't", "not"], correctIndex: 0, xp: 10 },
-            { id: "en-gr-l4-t9", type: "multiple_choice", prompt: "İnkar: 'She ___ play tennis.'", options: ["don't", "doesn't", "isn't", "aren't"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l4-t10", type: "multiple_choice", prompt: "'___ many books do you have?' (say soruşur)", options: ["How", "What", "Who", "Why"], correctIndex: 0, xp: 10 },
-            { id: "en-gr-l4-t11", type: "multiple_choice", prompt: "'___ colour is it?' (rəng soruşur)", options: ["What", "Who", "When", "Why"], correctIndex: 0, xp: 10 },
-            { id: "en-gr-l4-t12", type: "multiple_choice", prompt: "İnkar: 'They ___ at home.' (past: to be)", options: ["wasn't", "weren't", "isn't", "don't"], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l4-t13", type: "multiple_choice", prompt: "Sual cümləsi hansı işarə ilə bitir?", options: [".", "?", "!", ","], correctIndex: 1, xp: 10 },
-            { id: "en-gr-l4-t14", type: "multiple_choice", prompt: "'Do you like ice cream?' — müsbət cavab?", options: ["Yes, I do.", "Yes, I am.", "No, I don't like", "I do not"], correctIndex: 0, xp: 10 },
-            { id: "en-gr-l4-t15", type: "multiple_choice", prompt: "'___ is your teacher?' (kim)", options: ["What", "Who", "Where", "When"], correctIndex: 1, xp: 15 },
-          ],
-          bonusTasks: [
-            { id: "en-gr-l4-b1", type: "multiple_choice", prompt: "'___ do you go to school?' (nə vaxt)", options: ["Where", "When", "Why", "Who"], correctIndex: 1, xp: 15 },
-            { id: "en-gr-l4-b2", type: "multiple_choice", prompt: "İnkar: 'He ___ not my brother.' (to be)", options: ["is", "does", "do", "are"], correctIndex: 0, xp: 15 },
-            { id: "en-gr-l4-b3", type: "multiple_choice", prompt: "'How old ___ you?'", options: ["is", "are", "am", "do"], correctIndex: 1, xp: 15 },
-            { id: "en-gr-l4-b4", type: "multiple_choice", prompt: "'___ is the weather today?' (necə)", options: ["What", "How", "Who", "When"], correctIndex: 1, xp: 15 },
-            { id: "en-gr-l4-b5", type: "multiple_choice", prompt: "Hansı sual sözü 'səbəb' soruşur?", options: ["Where", "Why", "When", "Who"], correctIndex: 1, xp: 15 },
-          ],
-        },
 
         // ── PROJECT 5: Pronouns ────────────────────────────────────
         {
