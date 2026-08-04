@@ -27,12 +27,12 @@ export interface QuestState {
 
 // Quest hovuzu — gündən-günə fırlanır.
 const POOL: Quest[] = [
-  { id: "xp20", kind: "xp", goal: 20, rewardXp: 10, labelKey: "quest.xp" },
-  { id: "correct10", kind: "correct", goal: 10, rewardXp: 10, labelKey: "quest.correct" },
-  { id: "lessons1", kind: "lessons", goal: 1, rewardXp: 10, labelKey: "quest.lessons" },
-  { id: "xp40", kind: "xp", goal: 40, rewardXp: 15, labelKey: "quest.xp" },
-  { id: "correct20", kind: "correct", goal: 20, rewardXp: 15, labelKey: "quest.correct" },
-  { id: "lessons2", kind: "lessons", goal: 2, rewardXp: 20, labelKey: "quest.lessons" },
+  { id: "xp20", kind: "xp", goal: 20, rewardXp: 5, labelKey: "quest.xp" },
+  { id: "correct10", kind: "correct", goal: 10, rewardXp: 5, labelKey: "quest.correct" },
+  { id: "lessons1", kind: "lessons", goal: 1, rewardXp: 5, labelKey: "quest.lessons" },
+  { id: "xp40", kind: "xp", goal: 40, rewardXp: 6, labelKey: "quest.xp" },
+  { id: "correct20", kind: "correct", goal: 20, rewardXp: 6, labelKey: "quest.correct" },
+  { id: "lessons2", kind: "lessons", goal: 2, rewardXp: 8, labelKey: "quest.lessons" },
 ];
 
 // Bugünkü 3 quest (tarixə görə deterministik).

@@ -35,8 +35,11 @@ interface Props {
 
 type Phase = "main" | "bonusPrompt" | "bonus" | "done";
 
+// Duolingo-vari XP: hər düzgün cavab az XP verir (dərs ≈ 30-40 XP, əvvəl ~230).
+// Tapşırığın öz `xp` dəyəri artıq cəmi müəyyən etmir — sabit formul istifadə olunur.
+const XP_PER_CORRECT = 2; // hər düzgün cavab
 const COMBO_STEP = 5; // hər 5 ard-arda düzgün → bonus
-const COMBO_BONUS = 5; // bonus XP
+const COMBO_BONUS = 1; // bonus XP
 
 export default function LessonRunner({ slug, lesson, userId }: Props) {
   const t = useT();
@@ -79,7 +82,7 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
       setBestCombo((b) => Math.max(b, nextCombo));
       const bonus = nextCombo % COMBO_STEP === 0 ? COMBO_BONUS : 0;
       setComboBonus(bonus);
-      setEarnedXp((x) => x + result.earnedXp + bonus);
+      setEarnedXp((x) => x + XP_PER_CORRECT + bonus);
       setCorrectCount((c) => c + 1);
       removeMistake(task.id);
       bumpQuest("correct", 1);
