@@ -5,7 +5,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Trophy, ChevronUp, ChevronDown } from "lucide-react";
+import { Trophy, ChevronUp, ChevronDown, Lock } from "lucide-react";
 import { useAuthUser } from "@/lib/useAuthUser";
 import {
   loadCohort,
@@ -57,25 +57,25 @@ export default function LeaguePage() {
           <Trophy size={30} className="text-accent-soft" />
         </div>
 
-        {/* İştirak etmirsənsə (bu həftə XP yoxdur) — dərs et çağırışı */}
-        {!iAmIn && (
-          <div className="mt-4 rounded-2xl border-2 border-brand/30 bg-brand/5 p-6 text-center">
-            <div className="text-sm font-bold text-fg">{t("league.needXp")}</div>
+        {/* İştirak etmirsənsə (bu həftə XP yoxdur) — liqanın üstünə "cover":
+            cədvəl göstərilmir, yalnız dərs et çağırışı. */}
+        {!iAmIn ? (
+          <div className="mt-4 rounded-3xl border-2 border-brand/30 bg-brand/5 p-8 text-center">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-brand/10 text-brand">
+              <Lock size={30} />
+            </div>
+            <div className="mt-4 text-base font-bold text-fg">{t("league.needXp")}</div>
             <Link
               href="/dashboard"
-              className="mt-4 inline-block rounded-2xl bg-brand px-5 py-2.5 text-sm font-extrabold uppercase tracking-wide text-white btn-pop"
+              className="mt-5 inline-block rounded-2xl bg-brand px-6 py-3 text-sm font-extrabold uppercase tracking-wide text-white btn-pop"
             >
               {t("league.needXpCta")}
             </Link>
           </div>
-        )}
-
-        {size === 0 ? (
-          !iAmIn ? null : (
-            <div className="mt-4 rounded-2xl border border-line bg-panel p-8 text-center text-muted">
-              {t("league.empty")}
-            </div>
-          )
+        ) : size === 0 ? (
+          <div className="mt-4 rounded-2xl border border-line bg-panel p-8 text-center text-muted">
+            {t("league.empty")}
+          </div>
         ) : (
           <div className="mt-4 overflow-hidden rounded-2xl border border-line bg-panel">
             {rows.map((r, i) => {
