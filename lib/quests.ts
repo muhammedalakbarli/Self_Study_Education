@@ -23,7 +23,11 @@ export interface QuestState {
   lessons: number;
   correct: number;
   claimed: string[];
+  chestOpened: boolean; // bugünkü sandıq açılıbmı
 }
+
+// Sandıq mükafatı (bonus XP) — həvəsləndirmək üçün random "loot".
+const CHEST_REWARDS = [15, 25, 40];
 
 // Quest hovuzu — gündən-günə fırlanır.
 const POOL: Quest[] = [
@@ -48,6 +52,7 @@ const EMPTY = (date: string): QuestState => ({
   lessons: 0,
   correct: 0,
   claimed: [],
+  chestOpened: false,
 });
 
 function normalize(raw: unknown): QuestState {
@@ -60,6 +65,7 @@ function normalize(raw: unknown): QuestState {
     lessons: s.lessons ?? 0,
     correct: s.correct ?? 0,
     claimed: Array.isArray(s.claimed) ? s.claimed : [],
+    chestOpened: !!s.chestOpened,
   };
 }
 
@@ -149,4 +155,26 @@ export async function syncQuestRewards(userId: string): Promise<QuestState> {
 // Yalnız oxu (mükafat vermədən) — UI üçün.
 export async function loadQuestState(): Promise<QuestState> {
   return readState();
+}
+
+// Bütün gündəlik questlər tamamlanıb (claim olunub) və sandıq hələ açılmayıbsa — sandıq hazırdır.
+export function chestAvailable(state: QuestState): boolean {
+  if (state.chestOpened) return false;
+  return todaysQuests(state.date).every((q) => state.claimed.includes(q.id));
+}
+
+// Sandığı aç: random bonus XP ver (user_stats + həftəlik liqa), bir dəfə (chestOpened).
+// Qazanılan XP-ni qaytarır; artıq açılıbsa və ya hazır deyilsə 0.
+export async function openChest(userId: string): Promise<number> {
+  let reward = 0;
+  await enqueue(async () => {
+    const s = await readState();
+    if (!chestAvailable(s)) return;
+    reward = CHEST_REWARDS[Math.floor(Math.random() * CHEST_REWARDS.length)];
+    s.chestOpened = true;
+    await addXp(userId, reward).catch(() => {});
+    await addWeeklyXp(reward);
+    await writeState(s);
+  });
+  return reward;
 }

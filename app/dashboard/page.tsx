@@ -5,7 +5,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { Star, Flame, CircleCheck } from "lucide-react";
+import { Star, Flame, CircleCheck, Gift } from "lucide-react";
 import { useContent } from "@/components/ContentProvider";
 import { loadProgress, loadActiveDays, lessonState, type ProgressState } from "@/lib/progress";
 import StreakCalendar from "@/components/StreakCalendar";
@@ -18,8 +18,12 @@ import {
   todaysQuests,
   questValue,
   isQuestDone,
+  chestAvailable,
+  openChest,
+  loadQuestState,
   type QuestState,
 } from "@/lib/quests";
+import ChestModal from "@/components/ChestModal";
 import RadialProgress from "@/components/RadialProgress";
 import LearningPath, { type PathNode } from "@/components/LearningPath";
 import { PageSkeleton } from "@/components/Skeleton";
@@ -34,6 +38,7 @@ export default function DashboardPage() {
   const [quests, setQuests] = useState<QuestState | null>(null);
   const [calOpen, setCalOpen] = useState(false);
   const [activeDays, setActiveDays] = useState<string[]>([]);
+  const [chestOpen, setChestOpen] = useState(false);
   const t = useT();
 
   useEffect(() => {
@@ -157,9 +162,38 @@ export default function DashboardPage() {
                   </div>
                 );
               })}
+
+              {/* Bütün görevlər bitəndə — mükafat sandığı */}
+              {quests && chestAvailable(quests) && (
+                <button
+                  type="button"
+                  onClick={() => setChestOpen(true)}
+                  className="mt-1 flex w-full items-center gap-3 rounded-2xl border-2 border-accent/40 bg-accent/10 px-4 py-3 text-left transition hover:bg-accent/15"
+                >
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-amber-300 to-accent text-white shadow-sm">
+                    <Gift size={24} />
+                  </span>
+                  <span className="flex-1">
+                    <span className="block text-sm font-extrabold text-fg">{t("chest.readyShort")}</span>
+                    <span className="block text-xs text-muted">{t("chest.open")} →</span>
+                  </span>
+                </button>
+              )}
             </div>
           )}
         </div>
+
+        {chestOpen && user && (
+          <ChestModal
+            onOpen={async () => {
+              const reward = await openChest(user.id);
+              await loadProgress(user.id).then(setState).catch(() => {});
+              await loadQuestState().then(setQuests).catch(() => {});
+              return reward;
+            }}
+            onClose={() => setChestOpen(false)}
+          />
+        )}
 
         {/* Fənn tab-ları */}
         <div className="mt-6 flex flex-wrap gap-2">
