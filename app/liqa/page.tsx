@@ -9,6 +9,8 @@ import { Trophy, ChevronUp, ChevronDown } from "lucide-react";
 import { useAuthUser } from "@/lib/useAuthUser";
 import {
   loadCohort,
+  loadMyLeagueTier,
+  maybeLeagueRollover,
   TIER_KEYS,
   PROMOTE,
   DEMOTE,
@@ -23,15 +25,22 @@ import Avatar from "@/components/Avatar";
 export default function LeaguePage() {
   const { user, ready } = useAuthUser();
   const [rows, setRows] = useState<CohortRow[] | null>(null);
+  const [myTier, setMyTier] = useState(0);
   const t = useT();
 
   useEffect(() => {
-    loadCohort().then(setRows);
+    // Əvvəl həftəlik rollover (idempotent), sonra kohort + öz tierim.
+    maybeLeagueRollover()
+      .then(() => Promise.all([loadCohort(), loadMyLeagueTier()]))
+      .then(([cohort, tier]) => {
+        setRows(cohort);
+        setMyTier(tier);
+      });
   }, []);
 
   if (!ready || !user || !rows) return <PageSkeleton />;
 
-  const myTier = rows.find((r) => r.isMe)?.tier ?? 0;
+  const iAmIn = rows.some((r) => r.isMe);
   const size = rows.length;
   const demoActive = size >= 12;
 
@@ -48,10 +57,25 @@ export default function LeaguePage() {
           <Trophy size={30} className="text-accent-soft" />
         </div>
 
-        {size === 0 ? (
-          <div className="mt-4 rounded-2xl border border-line bg-panel p-8 text-center text-muted">
-            {t("league.empty")}
+        {/* İştirak etmirsənsə (bu həftə XP yoxdur) — dərs et çağırışı */}
+        {!iAmIn && (
+          <div className="mt-4 rounded-2xl border-2 border-brand/30 bg-brand/5 p-6 text-center">
+            <div className="text-sm font-bold text-fg">{t("league.needXp")}</div>
+            <Link
+              href="/dashboard"
+              className="mt-4 inline-block rounded-2xl bg-brand px-5 py-2.5 text-sm font-extrabold uppercase tracking-wide text-white btn-pop"
+            >
+              {t("league.needXpCta")}
+            </Link>
           </div>
+        )}
+
+        {size === 0 ? (
+          !iAmIn ? null : (
+            <div className="mt-4 rounded-2xl border border-line bg-panel p-8 text-center text-muted">
+              {t("league.empty")}
+            </div>
+          )
         ) : (
           <div className="mt-4 overflow-hidden rounded-2xl border border-line bg-panel">
             {rows.map((r, i) => {
