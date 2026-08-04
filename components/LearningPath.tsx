@@ -9,7 +9,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Star, Check, Lock, Trophy } from "lucide-react";
+import { Star, Check, Lock } from "lucide-react";
 import Mascot from "@/components/Mascot";
 import { useT } from "@/lib/i18n";
 import { playSelect } from "@/lib/sound";
@@ -206,47 +206,12 @@ function NodeLabel({ node }: { node: PathNode }) {
   );
 }
 
-// Bölmə keçidində mətnsiz kubok — bitibsə qızılı+parıltı, yoxsa boz.
-function Milestone({ gold }: { gold: boolean }) {
-  return (
-    <div className="relative flex justify-center py-1">
-      <motion.div
-        initial={{ opacity: 0, scale: 0.6 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true, margin: "-40px" }}
-        transition={{ type: "spring", stiffness: 300, damping: 16 }}
-        className={`relative flex h-14 w-14 items-center justify-center rounded-2xl ${
-          gold
-            ? "milestone-shine bg-gradient-to-br from-amber-300 to-accent text-white shadow-md"
-            : "bg-panel-2 text-muted/50 ring-1 ring-line"
-        }`}
-        aria-hidden
-      >
-        <Trophy size={26} strokeWidth={2.5} {...(gold ? { fill: "currentColor" } : {})} />
-      </motion.div>
-    </div>
-  );
-}
-
 export default function LearningPath({ nodes }: { nodes: PathNode[] }) {
   const rows: React.ReactNode[] = [];
   let prevOffset: number | null = null;
 
   nodes.forEach((node, i) => {
     const off = offsetAt(i);
-    const isUnitStart = !!node.unitTitle && i > 0;
-
-    // Bölmə keçidi: əvvəlki düyün → kubok → bu düyün.
-    if (isUnitStart) {
-      const gold = node.state !== "locked";
-      if (prevOffset !== null) {
-        rows.push(
-          <Connector key={`c-m-${node.id}`} topX={prevOffset} bottomX={0} reached={gold} brand={false} />,
-        );
-      }
-      rows.push(<Milestone key={`m-${node.id}`} gold={gold} />);
-      prevOffset = 0;
-    }
 
     // Bu düyünə gələn seqment (keçilmişsə rəngli, cari isə brand, yoxsa boz-kəsik).
     if (prevOffset !== null) {

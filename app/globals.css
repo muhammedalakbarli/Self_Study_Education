@@ -226,25 +226,10 @@ h1, h2, h3 {
   animation: trail-dash 1.2s linear infinite;
 }
 
-/* Milestone kuboku (qızılı) — sürüşən işıq parıltısı */
-@keyframes milestone-shine {
-  0%,
-  100% {
-    box-shadow: 0 4px 10px rgba(255, 149, 0, 0.35);
-  }
-  50% {
-    box-shadow: 0 4px 20px rgba(255, 149, 0, 0.65);
-  }
-}
-.milestone-shine {
-  animation: milestone-shine 1.8s ease-in-out infinite;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .node-bob,
   .twinkle,
-  .trail-dash,
-  .milestone-shine {
+  .trail-dash {
     animation: none;
   }
 }
@@ -255,7 +240,6 @@ h1, h2, h3 {
 .no-anim .path-bounce,
 .no-anim .node-bob,
 .no-anim .twinkle,
-.no-anim .trail-dash,
-.no-anim .milestone-shine {
+.no-anim .trail-dash {
   animation: none !important;
 }
