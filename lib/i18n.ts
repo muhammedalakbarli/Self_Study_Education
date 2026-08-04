@@ -157,6 +157,12 @@ const DICT: Dict = {
   },
   "league.you": { az: "Sən", en: "You", ru: "Ты" },
   "league.thisWeek": { az: "Bu həftə", en: "This week", ru: "На этой неделе" },
+  "league.needXp": {
+    az: "Bu həftə hələ XP qazanmamısan. Liqaya qatılmaq üçün ən azı bir dərs et!",
+    en: "You haven't earned any XP this week. Do at least one lesson to join the league!",
+    ru: "На этой неделе ты ещё не заработал XP. Пройди хотя бы один урок, чтобы попасть в лигу!",
+  },
+  "league.needXpCta": { az: "Dərsə keç", en: "Go to lessons", ru: "К урокам" },
   "league.tier.bronze": { az: "Bürünc liqa", en: "Bronze league", ru: "Бронзовая лига" },
   "league.tier.silver": { az: "Gümüş liqa", en: "Silver league", ru: "Серебряная лига" },
   "league.tier.gold": { az: "Qızıl liqa", en: "Gold league", ru: "Золотая лига" },

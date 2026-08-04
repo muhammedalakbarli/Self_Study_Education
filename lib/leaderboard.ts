@@ -61,6 +61,17 @@ export async function addWeeklyXp(amount: number): Promise<void> {
   }
 }
 
+// Həftə dəyişibsə liqa rollover-unu işə sal (idempotent — server həftədə bir dəfə edir).
+// Liqa səhifəsi yüklənəndə çağırılır; pg_cron olmadan tier-lərin irəliləməsini təmin edir.
+export async function maybeLeagueRollover(): Promise<void> {
+  try {
+    const supabase = createClient();
+    await supabase.rpc("maybe_league_rollover");
+  } catch {
+    // sükutla ötür — kritik deyil
+  }
+}
+
 // Öz liqa pilləm (0-4). Sətir yoxdursa 0 (Bürünc).
 export async function loadMyLeagueTier(): Promise<number> {
   try {
