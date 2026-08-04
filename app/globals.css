@@ -186,9 +186,76 @@ h1, h2, h3 {
   }
 }
 
+/* Öyrənmə yolu — cari düyün yüngülcə nəfəs alır (yuxarı-aşağı) */
+@keyframes node-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+.node-bob {
+  animation: node-bob 2.2s ease-in-out infinite;
+}
+
+/* Tamamlanmış düyünün küncündə incə parıltı */
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.6) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1) rotate(20deg);
+  }
+}
+.twinkle {
+  animation: twinkle 2.4s ease-in-out infinite;
+}
+
+/* Qarşıdakı (kilidli) yol seqmentində kəsiklərin yavaş axını */
+@keyframes trail-dash {
+  to {
+    stroke-dashoffset: -28;
+  }
+}
+.trail-dash {
+  animation: trail-dash 1.2s linear infinite;
+}
+
+/* Milestone kuboku (qızılı) — sürüşən işıq parıltısı */
+@keyframes milestone-shine {
+  0%,
+  100% {
+    box-shadow: 0 4px 10px rgba(255, 149, 0, 0.35);
+  }
+  50% {
+    box-shadow: 0 4px 20px rgba(255, 149, 0, 0.65);
+  }
+}
+.milestone-shine {
+  animation: milestone-shine 1.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .node-bob,
+  .twinkle,
+  .trail-dash,
+  .milestone-shine {
+    animation: none;
+  }
+}
+
 /* Ayarlardan animasiyalar söndürüləndə */
 .no-anim .ulduz-float,
 .no-anim .ulduz-wave,
-.no-anim .path-bounce {
+.no-anim .path-bounce,
+.no-anim .node-bob,
+.no-anim .twinkle,
+.no-anim .trail-dash,
+.no-anim .milestone-shine {
   animation: none !important;
 }
