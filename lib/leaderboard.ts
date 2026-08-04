@@ -27,6 +27,55 @@ export interface CohortRow {
   weeklyXp: number;
   tier: number;
   isMe: boolean;
+  isBot: boolean;
+}
+
+// ── Liqa botları ─────────────────────────────────────────────────
+// Real istifadəçilər az olduğu üçün hər kohort həftə+pillə üzrə deterministik
+// botlarla 15-ə tamamlanır (rəqabət hissi → oynamağa təşviq). Botlar DB-də deyil,
+// oxuma zamanı yaradılır; həftə boyu sabit, hər həftə dəyişir.
+const BOT_NAMES = [
+  "Aygün", "Tural", "Nigar", "Elvin", "Leyla", "Rəşad", "Günel", "Kamran",
+  "Aysel", "Orxan", "Səbinə", "Murad", "Zəhra", "Elnur", "Nərmin", "Ceyhun",
+  "Aytac", "Ramil", "Fidan", "Vüsal", "Xəyalə", "Ayxan", "Sevinc", "Ruslan",
+  "Gülnar", "Emin", "Türkan", "Nihad",
+];
+// Pillə üzrə həftəlik XP aralığı (aşağı→yuxarı liqa daha güclüdür).
+const TIER_XP: [number, number][] = [
+  [20, 250], [60, 400], [120, 550], [200, 700], [300, 900],
+];
+
+// Deterministik hash (FNV-1a) → 0..1.
+function seedHash(s: string): number {
+  let h = 2166136261;
+  for (let i = 0; i < s.length; i++) {
+    h ^= s.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return (h >>> 0) / 4294967295;
+}
+
+function makeBots(count: number, tier: number, week: string): CohortRow[] {
+  if (count <= 0) return [];
+  const t = Math.max(0, Math.min(MAX_TIER, tier));
+  const [lo, hi] = TIER_XP[t];
+  const nameOff = Math.floor(seedHash(`${week}:${t}:names`) * BOT_NAMES.length);
+  const bots: CohortRow[] = [];
+  for (let i = 0; i < count; i++) {
+    const name = BOT_NAMES[(nameOff + i) % BOT_NAMES.length];
+    const xp = Math.round(lo + seedHash(`${week}:${t}:${i}`) * (hi - lo));
+    bots.push({
+      userId: `bot-${t}-${i}`,
+      name,
+      username: null,
+      avatar: null,
+      weeklyXp: xp,
+      tier: t,
+      isMe: false,
+      isBot: true,
+    });
+  }
+  return bots;
 }
 
 // Liqa pilləsi (0..4) → i18n açarı.
@@ -91,13 +140,18 @@ export async function loadMyLeagueTier(): Promise<number> {
   }
 }
 
-// Çağıranın liqa kohortu (eyni pillə, həftəlik XP üzrə, max 15).
-export async function loadCohort(): Promise<CohortRow[]> {
+// Çağıranın liqa kohortu (eyni pillə, həftəlik XP üzrə). Real istifadəçilər +
+// botlarla həmişə `size` (15) nəfərə tamamlanır; XP üzrə azalan sıralama.
+export async function loadCohort(size = 15): Promise<CohortRow[]> {
   try {
     const supabase = createClient();
-    const { data } = await supabase.rpc("get_cohort", { p_week: weekKey(), p_size: 15 });
-    return (
-      (data ?? []) as {
+    const week = weekKey();
+    const [res, tier] = await Promise.all([
+      supabase.rpc("get_cohort", { p_week: week, p_size: size }),
+      loadMyLeagueTier(),
+    ]);
+    const real: CohortRow[] = (
+      (res.data ?? []) as {
         user_id: string;
         name: string;
         username: string | null;
@@ -114,7 +168,10 @@ export async function loadCohort(): Promise<CohortRow[]> {
       weeklyXp: r.weekly_xp,
       tier: r.tier,
       isMe: r.is_me,
+      isBot: false,
     }));
+    const bots = makeBots(size - real.length, tier, week);
+    return [...real, ...bots].sort((a, b) => b.weeklyXp - a.weeklyXp);
   } catch {
     return [];
   }
