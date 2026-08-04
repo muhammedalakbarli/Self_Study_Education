@@ -101,7 +101,7 @@ describe("todaysQuests", () => {
     expect(q1.map((q) => q.id)).toEqual(q2.map((q) => q.id));
   });
   it("questValue və isQuestDone", () => {
-    const state = { date: "2026-07-20", xp: 25, lessons: 1, correct: 3, claimed: [] };
+    const state = { date: "2026-07-20", xp: 25, lessons: 1, correct: 3, claimed: [], chestOpened: false };
     expect(questValue(state, "xp")).toBe(25);
     const q = { id: "xp20", kind: "xp" as const, goal: 20, rewardXp: 10, labelKey: "quest.xp" };
     expect(isQuestDone(state, q)).toBe(true);

@@ -187,6 +187,17 @@ const DICT: Dict = {
     ru: "{n} верных ответов",
   },
   "quest.lessons": { az: "{n} dərs bitir", en: "Finish {n} lessons", ru: "Заверши {n} уроков" },
+  "chest.title": { az: "Gündəlik sandıq", en: "Daily chest", ru: "Ежедневный сундук" },
+  "chest.ready": {
+    az: "Bütün gündəlik görevləri bitirdin! Sandığı aç.",
+    en: "You finished all daily goals! Open the chest.",
+    ru: "Ты выполнил все дневные цели! Открой сундук.",
+  },
+  "chest.readyShort": { az: "Sandıq hazır!", en: "Chest ready!", ru: "Сундук готов!" },
+  "chest.open": { az: "Aç", en: "Open", ru: "Открыть" },
+  "chest.reward": { az: "Təbriklər! Mükafatın:", en: "Congrats! Your reward:", ru: "Поздравляем! Твоя награда:" },
+  "common.ok": { az: "Al", en: "Claim", ru: "Забрать" },
+  "common.close": { az: "Bağla", en: "Close", ru: "Закрыть" },
   "quest.allDone": {
     az: "Bütün gündəlik hədəflər tamamlandı!",
     en: "All daily goals done!",
