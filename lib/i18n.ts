@@ -262,6 +262,7 @@ const DICT: Dict = {
     ru: "Тебя ждёт ежедневный челлендж — 5 заданий",
   },
   "dash.start": { az: "Başla", en: "Start", ru: "Начать" },
+  "path.locked": { az: "Kilidli", en: "Locked", ru: "Закрыто" },
   "dash.next": { az: "Növbəti", en: "Next", ru: "Далее" },
   "dash.allDone": {
     az: "Bütün dərslər bitdi!",
