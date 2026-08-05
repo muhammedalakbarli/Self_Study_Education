@@ -6,6 +6,13 @@
 import { useEffect, useState } from "react";
 import { useAuthUser } from "@/lib/useAuthUser";
 import { loadPrefs, savePrefs, type Prefs, type DarkMode, type Lang } from "@/lib/prefs";
+import {
+  pushSupported,
+  pushPermission,
+  isSubscribed,
+  subscribeToPush,
+  unsubscribeFromPush,
+} from "@/lib/push";
 import { useT, LANG_NAMES } from "@/lib/i18n";
 import { PageSkeleton } from "@/components/Skeleton";
 import Toggle from "@/components/Toggle";
@@ -20,13 +27,31 @@ const LESSON_ROWS: { key: keyof Prefs; labelKey: string; hintKey: string }[] = [
 export default function SettingsPage() {
   const { user, ready } = useAuthUser();
   const [prefs, setPrefs] = useState<Prefs | null>(null);
+  const [pushOn, setPushOn] = useState(false);
+  const [pushBusy, setPushBusy] = useState(false);
+  const [pushMsg, setPushMsg] = useState("");
   const t = useT();
 
   useEffect(() => {
     // Hidrasiya-təhlükəsiz: localStorage tərcihlərini mount-dan sonra oxu.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setPrefs(loadPrefs());
+    isSubscribed().then(setPushOn).catch(() => {});
   }, []);
+
+  async function togglePush(value: boolean) {
+    setPushBusy(true);
+    setPushMsg("");
+    if (value) {
+      const res = await subscribeToPush();
+      if (res.ok) setPushOn(true);
+      else setPushMsg(res.error === "denied" ? t("settings.notifDenied") : t("settings.notifError"));
+    } else {
+      await unsubscribeFromPush();
+      setPushOn(false);
+    }
+    setPushBusy(false);
+  }
 
   if (!ready || !user || !prefs) return <PageSkeleton />;
 
@@ -75,6 +100,27 @@ export default function SettingsPage() {
               />
             </div>
           ))}
+        </div>
+
+        {/* Bildirişlər (re-engagement push) */}
+        <h2 className="mt-6 text-xs font-bold uppercase tracking-wide text-muted">
+          {t("settings.notifSection")}
+        </h2>
+        <div className="mt-2 overflow-hidden rounded-2xl border border-line bg-panel">
+          <div className="flex items-center justify-between gap-4 px-4 py-3.5">
+            <div>
+              <div className="font-bold text-fg">{t("settings.notifications")}</div>
+              <div className="text-xs text-muted">
+                {pushSupported() ? t("settings.notificationsHint") : t("settings.notifUnsupported")}
+              </div>
+              {pushMsg && <div className="mt-1 text-xs font-semibold text-red-500">{pushMsg}</div>}
+            </div>
+            <Toggle
+              checked={pushOn}
+              disabled={pushBusy || !pushSupported() || pushPermission() === "denied"}
+              onChange={togglePush}
+            />
+          </div>
         </div>
 
         {/* Görünüş */}
