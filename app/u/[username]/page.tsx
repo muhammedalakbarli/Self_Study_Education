@@ -123,8 +123,8 @@ export default function PublicProfilePage({
             </div>
           </div>
 
-          {/* İzlə / İzlənilir */}
-          {user && !isSelf && (
+          {/* İzlə / İzlənilir — bot profilində gizli (DB sətri yoxdur) */}
+          {user && !isSelf && !p.isBot && (
             <button
               type="button"
               onClick={toggleFollow}
