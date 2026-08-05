@@ -2,16 +2,10 @@
 // XP atomik RPC ilə artırılır (race yox); oxuma bütün istifadəçilərin cari həftə sətrini gətirir.
 
 import { createClient } from "./supabase/client";
+import { botIdentity, weekKey } from "./bots";
 
-// ISO həftə açarı: "YYYY-Www".
-export function weekKey(d: Date = new Date()): string {
-  const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-  const day = date.getUTCDay() || 7; // bazar=7
-  date.setUTCDate(date.getUTCDate() + 4 - day); // cari həftənin cümə axşamı
-  const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
-  const week = Math.ceil(((date.getTime() - yearStart.getTime()) / 86400000 + 1) / 7);
-  return `${date.getUTCFullYear()}-W${String(week).padStart(2, "0")}`;
-}
+// ISO həftə açarı — saf modulda (bots.ts) saxlanılır; geriyə uyğunluq üçün re-export.
+export { weekKey };
 
 export interface LeaderRow {
   userId: string;
@@ -33,44 +27,20 @@ export interface CohortRow {
 // ── Liqa botları ─────────────────────────────────────────────────
 // Real istifadəçilər az olduğu üçün hər kohort həftə+pillə üzrə deterministik
 // botlarla 15-ə tamamlanır (rəqabət hissi → oynamağa təşviq). Botlar DB-də deyil,
-// oxuma zamanı yaradılır; həftə boyu sabit, hər həftə dəyişir.
-const BOT_NAMES = [
-  "Aygün", "Tural", "Nigar", "Elvin", "Leyla", "Rəşad", "Günel", "Kamran",
-  "Aysel", "Orxan", "Səbinə", "Murad", "Zəhra", "Elnur", "Nərmin", "Ceyhun",
-  "Aytac", "Ramil", "Fidan", "Vüsal", "Xəyalə", "Ayxan", "Sevinc", "Ruslan",
-  "Gülnar", "Emin", "Türkan", "Nihad",
-];
-// Pillə üzrə həftəlik XP aralığı (aşağı→yuxarı liqa daha güclüdür).
-const TIER_XP: [number, number][] = [
-  [20, 250], [60, 400], [120, 550], [200, 700], [300, 900],
-];
-
-// Deterministik hash (FNV-1a) → 0..1.
-function seedHash(s: string): number {
-  let h = 2166136261;
-  for (let i = 0; i < s.length; i++) {
-    h ^= s.charCodeAt(i);
-    h = Math.imul(h, 16777619);
-  }
-  return (h >>> 0) / 4294967295;
-}
-
+// oxuma zamanı `botIdentity` (lib/bots.ts) ilə yaradılır; username + avatar daşıyır ki,
+// real istifadəçidən seçilməsin və klik edildikdə profilləri (findBot) açılsın.
 function makeBots(count: number, tier: number, week: string): CohortRow[] {
   if (count <= 0) return [];
-  const t = Math.max(0, Math.min(MAX_TIER, tier));
-  const [lo, hi] = TIER_XP[t];
-  const nameOff = Math.floor(seedHash(`${week}:${t}:names`) * BOT_NAMES.length);
   const bots: CohortRow[] = [];
   for (let i = 0; i < count; i++) {
-    const name = BOT_NAMES[(nameOff + i) % BOT_NAMES.length];
-    const xp = Math.round(lo + seedHash(`${week}:${t}:${i}`) * (hi - lo));
+    const b = botIdentity(tier, i, week);
     bots.push({
-      userId: `bot-${t}-${i}`,
-      name,
-      username: null,
-      avatar: null,
-      weeklyXp: xp,
-      tier: t,
+      userId: b.userId,
+      name: b.name,
+      username: b.username,
+      avatar: b.avatar,
+      weeklyXp: b.weeklyXp,
+      tier: b.tier,
       isMe: false,
       isBot: true,
     });

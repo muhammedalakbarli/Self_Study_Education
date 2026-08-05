@@ -2,6 +2,7 @@
 
 import { createClient } from "./supabase/client";
 import { getLang, type Lang } from "./i18n";
+import { findBot } from "./bots";
 import type { AvatarConfig } from "@/components/Avatar";
 
 export interface ProfileRow {
@@ -109,9 +110,31 @@ export interface PublicProfile {
   followers: number;
   following: number;
   amFollowing: boolean;
+  isBot?: boolean;
 }
 
-// key = username və ya user_id (uuid) — hər ikisi ilə açılır.
+// Bot kimliyini ictimai profil formasına çevir (DB yox — deterministik).
+function botToProfile(key: string): PublicProfile | null {
+  const b = findBot(key);
+  if (!b) return null;
+  return {
+    id: b.userId,
+    name: b.name,
+    username: b.username,
+    avatar: b.avatar,
+    createdAt: b.createdAt,
+    totalXp: b.totalXp,
+    streakDays: b.streakDays,
+    tier: b.tier,
+    followers: b.followers,
+    following: b.following,
+    amFollowing: false,
+    isBot: true,
+  };
+}
+
+// key = username və ya user_id (uuid) — hər ikisi ilə açılır. Real istifadəçi tapılmasa
+// bot kimliyi yoxlanılır (liqa botları DB-də deyil).
 export async function getPublicProfile(key: string): Promise<PublicProfile | null> {
   try {
     const supabase = createClient();
@@ -131,7 +154,7 @@ export async function getPublicProfile(key: string): Promise<PublicProfile | nul
           am_following: boolean;
         }
       | undefined;
-    if (!row) return null;
+    if (!row) return botToProfile(key); // real yoxdursa — bot ola bilər
     return {
       id: row.id,
       name: row.name,
@@ -146,6 +169,6 @@ export async function getPublicProfile(key: string): Promise<PublicProfile | nul
       amFollowing: row.am_following ?? false,
     };
   } catch {
-    return null;
+    return botToProfile(key); // xəta olsa da bot profili işləsin
   }
 }

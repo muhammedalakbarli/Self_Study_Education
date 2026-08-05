@@ -160,8 +160,8 @@ function Row({
         : "bg-panel";
   const meRing = row.isMe ? "ring-2 ring-inset ring-brand/60" : "";
   const cls = `flex items-center gap-3 border-b border-line px-4 py-3.5 last:border-b-0 transition ${zoneBg} ${meRing}`;
-  // Botlar klik olunmur (profil yoxdur); real istifadəçilər profilə keçir.
-  const href = row.isBot ? null : row.isMe ? "/profil" : `/u/${row.username || row.userId}`;
+  // Hər sətir profilə keçir; botlar da username daşıyır (findBot ilə açılır).
+  const href = row.isMe ? "/profil" : `/u/${row.username || row.userId}`;
 
   const inner = (
     <>
