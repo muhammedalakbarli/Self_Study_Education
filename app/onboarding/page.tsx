@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getCurrentUser, displayName } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/client";
+import { track } from "@/lib/analytics";
 import Logo from "@/components/Logo";
 import Mascot from "@/components/Mascot";
 
@@ -112,6 +113,7 @@ export default function OnboardingPage() {
     await supabase.auth.updateUser({
       data: { ...answers, onboarded: true },
     });
+    track("onboarding_completed", answers);
     router.replace("/dashboard");
   }
 

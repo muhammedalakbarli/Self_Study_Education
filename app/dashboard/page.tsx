@@ -11,6 +11,7 @@ import { loadProgress, loadActiveDays, lessonState, type ProgressState } from "@
 import StreakCalendar from "@/components/StreakCalendar";
 import { useAuthUser } from "@/lib/useAuthUser";
 import { displayName } from "@/lib/auth";
+import { track } from "@/lib/analytics";
 import { useT } from "@/lib/i18n";
 import { levelFromXp } from "@/lib/levels";
 import {
@@ -187,6 +188,7 @@ export default function DashboardPage() {
           <ChestModal
             onOpen={async () => {
               const reward = await openChest(user.id);
+              track("chest_opened", { reward });
               await loadProgress(user.id).then(setState).catch(() => {});
               await loadQuestState().then(setQuests).catch(() => {});
               return reward;

@@ -11,6 +11,7 @@ import Logo from "@/components/Logo";
 import GoogleButton from "@/components/GoogleButton";
 import Mascot from "@/components/Mascot";
 import { signUpWithEmail } from "@/lib/auth";
+import { track } from "@/lib/analytics";
 import { useT } from "@/lib/i18n";
 
 export default function SignupPage() {
@@ -66,6 +67,7 @@ export default function SignupPage() {
       setError(res.error || t("auth.err.signupFailed"));
       return;
     }
+    track("signup_completed", { method: "email" });
     if (res.needsEmailConfirm) {
       router.push("/login?confirm=1");
       return;

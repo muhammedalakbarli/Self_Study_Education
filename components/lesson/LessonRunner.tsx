@@ -17,6 +17,7 @@ import { bumpQuest, bumpQuests } from "@/lib/quests";
 import { addWeeklyXp } from "@/lib/leaderboard";
 import { addMonthlyXp } from "@/lib/monthly";
 import { touchFriendStreaks } from "@/lib/friends";
+import { track } from "@/lib/analytics";
 import { levelFromXp } from "@/lib/levels";
 import { playCorrect, playWrong, playComplete, playLevelUp, playCombo, playStreak } from "@/lib/sound";
 import { vibrateCorrect, vibrateWrong, vibrateCelebrate } from "@/lib/haptics";
@@ -63,6 +64,11 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
   useEffect(() => {
     loadProgress(userId).then((p) => setStartXp(p.totalXp)).catch(() => setStartXp(0));
   }, [userId]);
+
+  // Analitika: dərs başlandı (funnel — signup→onboarding→dərs).
+  useEffect(() => {
+    track("lesson_started", { lessonId: lesson.id, subject: slug });
+  }, [lesson.id, slug]);
 
   const inBonus = phase === "bonus";
   const list: Task[] = inBonus ? bonusTasks : mainTasks;
@@ -135,6 +141,15 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
       levelFromXp(startXp).level < levelFromXp(startXp + finalXp).level;
     if (up) playLevelUp();
     else playComplete();
+    track("lesson_completed", {
+      lessonId: lesson.id,
+      subject: slug,
+      xp: finalXp,
+      correct: correctCount,
+      answered,
+      bestCombo,
+      leveledUp: up,
+    });
     setPhase("done");
   }
 
