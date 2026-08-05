@@ -16,6 +16,7 @@ import {
   DEMOTE,
   type CohortRow,
 } from "@/lib/leaderboard";
+import { track } from "@/lib/analytics";
 import { useT } from "@/lib/i18n";
 import { PageSkeleton } from "@/components/Skeleton";
 import Mascot from "@/components/Mascot";
@@ -35,6 +36,7 @@ export default function LeaguePage() {
       .then(([cohort, tier]) => {
         setRows(cohort);
         setMyTier(tier);
+        track("league_viewed", { tier, participating: cohort.some((r) => r.isMe) });
       });
   }, []);
 

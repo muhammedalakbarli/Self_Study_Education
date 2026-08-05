@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { displayName } from "./auth";
 import { ensureProfile } from "./progress";
 import { createClient } from "./supabase/client";
+import { identifyUser, resetAnalytics, track } from "./analytics";
 import type { User } from "@supabase/supabase-js";
 
 export function useAuthUser(): { user: User | null; ready: boolean } {
@@ -29,6 +30,7 @@ export function useAuthUser(): { user: User | null; ready: boolean } {
         return;
       }
       ensureProfile(u.id, displayName(u)).catch(() => {});
+      identifyUser(u.id, { grade: u.user_metadata?.grade });
       setUser(u);
       setReady(true);
     });
@@ -37,12 +39,15 @@ export function useAuthUser(): { user: User | null; ready: boolean } {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       const u = session?.user ?? null;
       if (event === "SIGNED_OUT" || !u) {
-        setUser(null); 
+        resetAnalytics();
+        setUser(null);
         setReady(false);
         router.replace("/login");
         return;
       }
       if (event === "SIGNED_IN" || event === "TOKEN_REFRESHED") {
+        identifyUser(u.id, { grade: u.user_metadata?.grade });
+        if (event === "SIGNED_IN") track("session_start");
         if (!u.user_metadata?.onboarded) {
           router.replace("/onboarding");
           setReady(true);
