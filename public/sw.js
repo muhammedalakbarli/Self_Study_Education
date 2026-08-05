@@ -5,7 +5,7 @@
 //   - Naviqasiya (səhifə): əvvəlcə şəbəkə, offline olsa keşdən/ana səhifədən.
 //   - Statik fayllar (_next/static, şəkil, şrift): stale-while-revalidate.
 
-const CACHE = "bilik-yolu-v2";
+const CACHE = "bilik-yolu-v3";
 const OFFLINE_URL = "/";
 
 // Şəbəkə çatmayanda göstəriləcək minimal offline HTML.
@@ -21,6 +21,47 @@ h1{font-size:20px;margin:16px 0 8px}p{color:#6b6880;max-width:280px}</style></he
 // Səhifə "Yenilə" deyəndə gözləyən SW-i dərhal aktiv et (yeni versiyaya keç).
 self.addEventListener("message", (event) => {
   if (event.data && event.data.type === "SKIP_WAITING") self.skipWaiting();
+});
+
+// ── Push bildirişləri (re-engagement) ──
+// Server (Vercel Cron) push göndərəndə bildirişi göstər.
+self.addEventListener("push", (event) => {
+  let data = {};
+  try {
+    data = event.data ? event.data.json() : {};
+  } catch {
+    data = {};
+  }
+  const title = data.title || "Bilik Yolu";
+  const options = {
+    body: data.body || "Öyrənməyə davam et! 🔥",
+    icon: "/icon-192.png",
+    badge: "/icon-192.png",
+    lang: "az",
+    tag: data.tag || "bilik-reminder",
+    renotify: true,
+    data: { url: data.url || "/dashboard" },
+  };
+  event.waitUntil(self.registration.showNotification(title, options));
+});
+
+// Bildirişə toxunanda tətbiqi aç/fokusla.
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+  const target = (event.notification.data && event.notification.data.url) || "/dashboard";
+  event.waitUntil(
+    self.clients
+      .matchAll({ type: "window", includeUncontrolled: true })
+      .then((clientList) => {
+        for (const client of clientList) {
+          if ("focus" in client) {
+            client.navigate(target);
+            return client.focus();
+          }
+        }
+        if (self.clients.openWindow) return self.clients.openWindow(target);
+      }),
+  );
 });
 
 self.addEventListener("install", (event) => {

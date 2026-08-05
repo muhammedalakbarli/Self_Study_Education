@@ -418,6 +418,28 @@ const DICT: Dict = {
   },
   "settings.listening": { az: "Dinləmə çalışmaları", en: "Listening exercises", ru: "Аудирование" },
   "settings.listeningHint": { az: "Səsli tapşırıqlar", en: "Audio tasks", ru: "Аудиозадания" },
+  "settings.notifSection": { az: "Bildirişlər", en: "Notifications", ru: "Уведомления" },
+  "settings.notifications": { az: "Xatırlatmalar", en: "Reminders", ru: "Напоминания" },
+  "settings.notificationsHint": {
+    az: "Streak-in yanmasın deyə gündəlik xatırlatma göndərək",
+    en: "We'll send a daily reminder so your streak doesn't break",
+    ru: "Отправим ежедневное напоминание, чтобы не сгорел стрик",
+  },
+  "settings.notifDenied": {
+    az: "Bildirişlər brauzerdə bloklanıb — brauzer ayarlarından icazə ver",
+    en: "Notifications are blocked in your browser — allow them in browser settings",
+    ru: "Уведомления заблокированы в браузере — разрешите их в настройках",
+  },
+  "settings.notifUnsupported": {
+    az: "Bu brauzer bildirişləri dəstəkləmir",
+    en: "This browser does not support notifications",
+    ru: "Этот браузер не поддерживает уведомления",
+  },
+  "settings.notifError": {
+    az: "Alınmadı, bir az sonra yenidən yoxla",
+    en: "Something went wrong, try again later",
+    ru: "Не удалось, попробуйте позже",
+  },
   "settings.appearance": { az: "Görünüş", en: "Appearance", ru: "Внешний вид" },
   "settings.dark": { az: "Tünd rejim", en: "Dark mode", ru: "Тёмная тема" },
   "settings.darkHint": {
