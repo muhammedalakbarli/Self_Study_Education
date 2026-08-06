@@ -34,7 +34,7 @@ interface Props {
   userId: string;
 }
 
-type Phase = "main" | "bonusPrompt" | "bonus" | "done";
+type Phase = "main" | "bonusPrompt" | "bonus" | "retry" | "done";
 
 // Duolingo-vari XP: hər düzgün cavab az XP verir (dərs ≈ 30-40 XP, əvvəl ~230).
 // Tapşırığın öz `xp` dəyəri artıq cəmi müəyyən etmir — sabit formul istifadə olunur.
@@ -59,6 +59,10 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
   const [bestCombo, setBestCombo] = useState(0);
   const [comboBonus, setComboBonus] = useState(0); // bu addımda verilən combo bonusu
   const [startXp, setStartXp] = useState<number | null>(null);
+  // Səhv cavablandırılan tapşırıqlar — bölmə sonunda düz cavablanana qədər təkrarlanır.
+  const [wrongIds, setWrongIds] = useState<string[]>([]);
+  const [retryQueue, setRetryQueue] = useState<Task[]>([]);
+  const [retryTotal, setRetryTotal] = useState(0);
 
   // Level-up aşkarı üçün dərsə başlamazdan əvvəlki XP.
   useEffect(() => {
@@ -71,16 +75,38 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
   }, [lesson.id, slug]);
 
   const inBonus = phase === "bonus";
-  const list: Task[] = inBonus ? bonusTasks : mainTasks;
-  const task = list[index];
+  const inRetry = phase === "retry";
+  const list: Task[] = inRetry ? retryQueue : inBonus ? bonusTasks : mainTasks;
+  const task = inRetry ? retryQueue[0] : list[index];
   const total = list.length;
-  const progressPct = total ? Math.round((index / total) * 100) : 0;
+  const progressPct = inRetry
+    ? retryTotal
+      ? Math.round(((retryTotal - retryQueue.length) / retryTotal) * 100)
+      : 0
+    : total
+      ? Math.round((index / total) * 100)
+      : 0;
 
   function handleCheck() {
     if (answer === null || answer === "") return;
     const result = gradeTask(task, answer);
     setChecked(true);
     setLastCorrect(result.correct);
+
+    // Təkrar mərhələsi — XP/combo/statistika dəyişmir, yalnız düz cavab tələb olunur.
+    if (inRetry) {
+      if (result.correct) {
+        removeMistake(task.id);
+        playCorrect();
+        vibrateCorrect();
+      } else {
+        addMistake(task.id);
+        playWrong();
+        vibrateWrong();
+      }
+      return;
+    }
+
     setAnswered((a) => a + 1);
     if (result.correct) {
       const nextCombo = combo + 1;
@@ -99,6 +125,8 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
       setCombo(0);
       setComboBonus(0);
       addMistake(task.id);
+      // Bölmə sonunda təkrar üçün səhv tapşırığı yadda saxla (təkrarsız).
+      setWrongIds((w) => (w.includes(task.id) ? w : [...w, task.id]));
       playWrong();
       vibrateWrong();
     }
@@ -157,6 +185,19 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
     setAnswer(null);
     setChecked(false);
     setComboBonus(0);
+
+    // Təkrar mərhələsi: düz cavab → növbatiyə keç; səhv → sona at (düz olana qədər dövr et).
+    if (inRetry) {
+      const [head, ...rest] = retryQueue;
+      const next = lastCorrect ? rest : [...rest, head];
+      if (next.length === 0) {
+        finishLesson(earnedXp);
+        return;
+      }
+      setRetryQueue(next);
+      return;
+    }
+
     if (index + 1 < total) {
       setIndex((i) => i + 1);
       return;
@@ -164,6 +205,23 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
     if (!inBonus && bonusTasks.length > 0) {
       setPhase("bonusPrompt");
       setIndex(0);
+    } else {
+      maybeRetryOrFinish();
+    }
+  }
+
+  // Bölmə sonu: səhv tapşırıqlar varsa əvvəl onları təkrarlat, sonra bitir.
+  function maybeRetryOrFinish() {
+    const all = [...mainTasks, ...bonusTasks];
+    const retry = wrongIds
+      .map((id) => all.find((tk) => tk.id === id))
+      .filter((tk): tk is Task => !!tk);
+    if (retry.length > 0) {
+      setRetryQueue(retry);
+      setRetryTotal(retry.length);
+      setAnswer(null);
+      setChecked(false);
+      setPhase("retry");
     } else {
       finishLesson(earnedXp);
     }
@@ -198,7 +256,7 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
             {t("run.startBonus")}
           </button>
           <button
-            onClick={() => finishLesson(earnedXp)}
+            onClick={maybeRetryOrFinish}
             className="rounded-2xl border-2 border-line px-5 py-3 font-bold text-fg btn-pop btn-pop-ghost hover:border-brand"
           >
             {t("run.finish")}
@@ -226,8 +284,13 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
   }
 
   // ── Tapşırıq (main və ya bonus) — immersiv tam-ekran ──
-  const ctaText =
-    index + 1 < total ? t("run.next") : inBonus ? t("run.finish") : t("run.continue");
+  const ctaText = inRetry
+    ? t("run.next")
+    : index + 1 < total
+      ? t("run.next")
+      : inBonus
+        ? t("run.finish")
+        : t("run.continue");
 
   return (
     <div className="flex min-h-screen flex-col bg-ink">
@@ -260,7 +323,7 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
         </Link>
         <div className="h-4 flex-1 overflow-hidden rounded-full bg-panel-2">
           <motion.div
-            className={`h-full origin-left rounded-full ${inBonus ? "bg-accent" : "bg-brand"}`}
+            className={`h-full origin-left rounded-full ${inRetry ? "bg-orange-500" : inBonus ? "bg-accent" : "bg-brand"}`}
             initial={false}
             animate={{ scaleX: Math.max(progressPct / 100, 0.02) }}
             transition={{ type: "spring", stiffness: 260, damping: 26 }}
@@ -268,7 +331,7 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
           />
         </div>
         <AnimatePresence>
-          {combo >= 2 && !checked && (
+          {combo >= 2 && !checked && !inRetry && (
             <motion.span
               key={combo}
               initial={{ scale: 0.4, opacity: 0 }}
@@ -286,11 +349,22 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
       {/* Sual sahəsi */}
       <div className="mx-auto w-full max-w-xl flex-1 px-4 pt-8 pb-44">
         <div className="flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-muted">
-          {inBonus ? t("run.bonus") : t("run.task")} {index + 1} / {total}
-          {inBonus && (
-            <span className="rounded-full bg-accent/15 px-2.5 py-0.5 text-accent">
-              {t("run.bonus")}
-            </span>
+          {inRetry ? (
+            <>
+              🔁 {t("run.retry")} {retryTotal - retryQueue.length + 1} / {retryTotal}
+              <span className="rounded-full bg-orange-500/15 px-2.5 py-0.5 text-orange-500">
+                {t("run.retry")}
+              </span>
+            </>
+          ) : (
+            <>
+              {inBonus ? t("run.bonus") : t("run.task")} {index + 1} / {total}
+              {inBonus && (
+                <span className="rounded-full bg-accent/15 px-2.5 py-0.5 text-accent">
+                  {t("run.bonus")}
+                </span>
+              )}
+            </>
           )}
         </div>
         <h2 className="mt-3 text-2xl font-bold text-fg">{task.prompt}</h2>

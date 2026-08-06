@@ -9,6 +9,7 @@ import { useAuthUser } from "@/lib/useAuthUser";
 import { loadProgress, type ProgressState } from "@/lib/progress";
 import { useContent } from "@/components/ContentProvider";
 import { loadMistakes, removeMistake } from "@/lib/mistakes";
+import { isPassageTask } from "@/lib/content";
 import { isDailyDone, markDailyDone } from "@/lib/daily";
 import { useT, hasKey } from "@/lib/i18n";
 import type { Task } from "@/lib/types";
@@ -44,17 +45,19 @@ export default function PracticePage() {
 
   const completedTasks = useMemo(() => {
     const done = state?.completedLessons ?? [];
-    return subjects.flatMap((s) =>
-      s.units.flatMap((u) =>
-        u.lessons
-          .filter((l) => done.includes(l.id))
-          .flatMap((l) => [...l.tasks, ...(l.bonusTasks ?? [])]),
-      ),
-    );
+    return subjects
+      .flatMap((s) =>
+        s.units.flatMap((u) =>
+          u.lessons
+            .filter((l) => done.includes(l.id))
+            .flatMap((l) => [...l.tasks, ...(l.bonusTasks ?? [])]),
+        ),
+      )
+      .filter((t) => !isPassageTask(t)); // mətnə bağlı reading suallarını praktikaya salma
   }, [state, subjects]);
 
   const mistakeTasks = useMemo(
-    () => mistakes.map(getTaskById).filter((t): t is Task => !!t),
+    () => mistakes.map(getTaskById).filter((t): t is Task => !!t && !isPassageTask(t)),
     [mistakes, getTaskById],
   );
 
@@ -89,7 +92,8 @@ export default function PracticePage() {
 
   const active = subjects.find((s) => s.slug === activeSlug)!;
   const speedPool = completedTasks.filter((t) => t.type === "multiple_choice");
-  const dailyPool = completedTasks.length >= 5 ? completedTasks : getAllTasks();
+  const dailyPool =
+    completedTasks.length >= 5 ? completedTasks : getAllTasks().filter((t) => !isPassageTask(t));
 
   function startDaily() {
     setSession({ tasks: sample(dailyPool, 5), title: t("practice.daily"), daily: true });
