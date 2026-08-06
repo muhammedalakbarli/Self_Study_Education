@@ -122,6 +122,26 @@ export async function fetchContentTree(): Promise<Subject[] | null> {
   return fetchContentTreeWith(createClient());
 }
 
+// Tapşırıqları TAM çək — Supabase sorğu başına default 1000 sətir qaytarır, tapşırıqlar
+// isə mindən çoxdur. Səhifələmə olmasa hər dərsin yalnız ilk ~10 tapşırığı gəlir (sort_order
+// 0–9 global kəsilir). Ona görə 1000-lik səhifələrlə hamısını yığırıq.
+async function fetchAllTasks(supabase: SupabaseClient): Promise<TaskRow[]> {
+  const PAGE = 1000;
+  const all: TaskRow[] = [];
+  for (let from = 0; ; from += PAGE) {
+    const { data, error } = await supabase
+      .from("tasks")
+      .select("*")
+      .order("sort_order")
+      .order("id")
+      .range(from, from + PAGE - 1);
+    if (error || !data || data.length === 0) break;
+    all.push(...(data as TaskRow[]));
+    if (data.length < PAGE) break;
+  }
+  return all;
+}
+
 // Eyni məntiq, amma verilmiş client ilə — server (route handler) tərəf üçün.
 export async function fetchContentTreeWith(
   supabase: SupabaseClient,
@@ -129,18 +149,17 @@ export async function fetchContentTreeWith(
   try {
     // İkinci açar (id) — eyni sort_order-lu sətirlərdə sıra sabit qalsın
     // (məs. admin paneldən yaradılıb təsadüfən eyni sort_order almış bölmələr).
-    const [subsRes, unitsRes, lessonsRes, tasksRes] = await Promise.all([
+    const [subsRes, unitsRes, lessonsRes, taskRows] = await Promise.all([
       supabase.from("subjects").select("*").order("sort_order").order("id"),
       supabase.from("units").select("*").order("sort_order").order("id"),
       supabase.from("lessons").select("*").order("sort_order").order("id"),
-      supabase.from("tasks").select("*").order("sort_order").order("id"),
+      fetchAllTasks(supabase),
     ]);
 
     const subs = subsRes.data as SubjectRow[] | null;
     if (subsRes.error || !subs || subs.length === 0) return null;
     const unitRows = (unitsRes.data ?? []) as UnitRow[];
     const lessonRows = (lessonsRes.data ?? []) as LessonRow[];
-    const taskRows = (tasksRes.data ?? []) as TaskRow[];
 
     // Tapşırıqları dərsə görə qrupla (əsas + bonus).
     const tasksByLesson = new Map<string, { main: Task[]; bonus: Task[] }>();
