@@ -5,6 +5,8 @@
 
 import { useEffect, useState } from "react";
 import { useAuthUser } from "@/lib/useAuthUser";
+import { createClient } from "@/lib/supabase/client";
+import { userGrade, GRADES_WITH_CONTENT } from "@/lib/grade";
 import { loadPrefs, savePrefs, type Prefs, type DarkMode, type Lang } from "@/lib/prefs";
 import {
   pushSupported,
@@ -74,6 +76,13 @@ export default function SettingsPage() {
     window.location.reload();
   }
 
+  // Sinif dəyişdir — user_metadata.grade yenilə və yeni sinfin proqramına keç.
+  async function setGrade(value: number) {
+    const supabase = createClient();
+    await supabase.auth.updateUser({ data: { grade: value } });
+    window.location.href = "/dashboard";
+  }
+
   return (
     <div className="min-h-screen bg-ink">
       <main className="mx-auto max-w-2xl px-4 py-6">
@@ -120,6 +129,30 @@ export default function SettingsPage() {
               disabled={pushBusy || !pushSupported() || pushPermission() === "denied"}
               onChange={togglePush}
             />
+          </div>
+        </div>
+
+        {/* Sinif */}
+        <h2 className="mt-6 text-xs font-bold uppercase tracking-wide text-muted">
+          {t("settings.gradeSection")}
+        </h2>
+        <div className="mt-2 overflow-hidden rounded-2xl border border-line bg-panel">
+          <div className="flex items-center justify-between gap-4 px-4 py-3.5">
+            <div>
+              <div className="font-bold text-fg">{t("settings.grade")}</div>
+              <div className="text-xs text-muted">{t("settings.gradeHint")}</div>
+            </div>
+            <select
+              value={userGrade(user)}
+              onChange={(e) => setGrade(Number(e.target.value))}
+              className="rounded-xl border-2 border-line bg-panel px-3 py-2 text-sm font-bold text-fg outline-none focus:border-brand"
+            >
+              {GRADES_WITH_CONTENT.map((g) => (
+                <option key={g} value={g}>
+                  {t("settings.gradeOption").replace("{n}", String(g))}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
 

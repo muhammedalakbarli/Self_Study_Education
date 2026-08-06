@@ -32,6 +32,9 @@ const DICT: Dict = {
   "subject.riyaziyyat": { az: "Riyaziyyat", en: "Mathematics", ru: "Математика" },
   "subject.azerbaycan-dili": { az: "Azərbaycan dili", en: "Azerbaijani", ru: "Азербайджанский" },
   "subject.ingilis-dili": { az: "İngilis dili", en: "English", ru: "Английский" },
+  "subject.riyaziyyat-6": { az: "Riyaziyyat", en: "Mathematics", ru: "Математика" },
+  "subject.azerbaycan-dili-6": { az: "Azərbaycan dili", en: "Azerbaijani", ru: "Азербайджанский" },
+  "subject.ingilis-dili-6": { az: "İngilis dili", en: "English", ru: "Английский" },
 
   // Bölmə (unit) adları — Praktika "Bölmə üzrə" siyahısı
   "unit.ry-natural": {
@@ -273,6 +276,13 @@ const DICT: Dict = {
   // Öyrən (dashboard)
   "dash.title": { az: "Öyrən", en: "Learn", ru: "Учёба" },
   "dash.greeting": { az: "Salam", en: "Hi", ru: "Привет" },
+  "dash.gradeSoonTitle": { az: "Tezliklə!", en: "Coming soon!", ru: "Скоро!" },
+  "dash.gradeSoon": {
+    az: "{n}-ci sinif proqramı hazırlanır. Ayarlardan sinfini dəyişə bilərsən.",
+    en: "The grade {n} program is being prepared. You can change your grade in settings.",
+    ru: "Программа {n} класса готовится. Класс можно изменить в настройках.",
+  },
+  "dash.changeGrade": { az: "Sinfi dəyiş", en: "Change grade", ru: "Изменить класс" },
   "dash.continue": { az: "davam edək", en: "let's continue", ru: "продолжим" },
   "dash.dailyBanner": {
     az: "Gündəlik challenge səni gözləyir — 5 tapşırıq",
@@ -441,6 +451,14 @@ const DICT: Dict = {
     en: "Something went wrong, try again later",
     ru: "Не удалось, попробуйте позже",
   },
+  "settings.gradeSection": { az: "Sinif", en: "Grade", ru: "Класс" },
+  "settings.grade": { az: "Sinfin", en: "Your grade", ru: "Твой класс" },
+  "settings.gradeHint": {
+    az: "Proqram seçdiyin sinfə görə göstərilir",
+    en: "Content is shown based on your grade",
+    ru: "Контент показывается по твоему классу",
+  },
+  "settings.gradeOption": { az: "{n}-ci sinif", en: "Grade {n}", ru: "{n} класс" },
   "settings.appearance": { az: "Görünüş", en: "Appearance", ru: "Внешний вид" },
   "settings.dark": { az: "Tünd rejim", en: "Dark mode", ru: "Тёмная тема" },
   "settings.darkHint": {
