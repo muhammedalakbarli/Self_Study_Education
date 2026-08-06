@@ -1,0 +1,185 @@
+// İngilis dili — 6-cı sinif proqramı (Azərbaycan kurikuluma uyğun).
+// Bölmələr (qrammatika + tematik): 1) Present Perfect  2) Future (will / going to)
+// 3) Countable/Uncountable + quantifiers  4) Adverbs & Prepositions
+// 5) Comparatives & Superlatives  6) Tematik lüğət (Technology, Travel).
+// Hər dərs 15 əsas + 5 bonus. Mərhələli. id prefiksi en6-*. reading dərsləri -read- ilə
+// (praktikadan çıxarılır, passage sections-dədir); listening öz audioText-i ilə tamdır.
+
+import type { Subject } from "../types";
+
+export const english6: Subject = {
+  slug: "ingilis-dili-6",
+  name: "İngilis dili",
+  grade: 6,
+  icon: "E",
+  color: "violet",
+  units: [
+    // ═══════════════ 1. Present Perfect ═══════════════
+    {
+      id: "en6-pp",
+      title: "Present Perfect",
+      description:
+        "have/has + III forma (V3) — keçmişdə baş verib indi ilə bağlı olan işlər.",
+      lessons: [
+        {
+          id: "en6-pp-rule",
+          title: "Present Perfect qaydası",
+          intro: "have/has + feilin III forması ilə keçmiş-indi əlaqəsini ifadə etmək.",
+          sections: [
+            { heading: "Present Perfect nədir?", body: "Keçmişdə baş verib nəticəsi indi ilə bağlı olan işi bildirir: I have finished my homework. (Ev tapşırığımı bitirmişəm — indi hazırdır.)" },
+            { heading: "have / has + V3", body: "I/you/we/they → have; he/she/it → has. Feil III formada olur: go → gone, do → done, see → seen, write → written." },
+            { heading: "just / already / yet", body: "'just' (təzəcə), 'already' (artıq) təsdiqdə; 'yet' (hələ) sual və inkarda: I have just eaten. Have you finished yet?" },
+          ],
+          tasks: [
+            { id: "en6-pp-rule-t1", type: "multiple_choice", speakOptions: true, prompt: "'I ___ finished my work.'", options: ["have", "has", "am", "did"], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-rule-t2", type: "multiple_choice", speakOptions: true, prompt: "'She ___ gone home.'", options: ["have", "has", "is", "did"], correctIndex: 1, xp: 10 },
+            { id: "en6-pp-rule-t3", type: "multiple_choice", speakOptions: true, prompt: "'They ___ seen this film.'", options: ["have", "has", "is", "was"], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-rule-t4", type: "multiple_choice", speakOptions: true, prompt: "'go' feilinin III forması hansıdır?", options: ["gone", "went", "going", "goed"], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-rule-t5", type: "multiple_choice", speakOptions: true, prompt: "'do' feilinin III forması hansıdır?", options: ["done", "did", "doing", "does"], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-rule-t6", type: "fill_blank", prompt: "'see' feilinin III formasını yaz.", accepted: ["seen"], xp: 10 },
+            { id: "en6-pp-rule-t7", type: "multiple_choice", speakOptions: true, prompt: "'He has ___ a letter.' (write)", options: ["written", "wrote", "writing", "write"], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-rule-t8", type: "multiple_choice", speakOptions: true, prompt: "'We have ___ our lunch.' (eat)", options: ["eaten", "ate", "eating", "eat"], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-rule-t9", type: "multiple_choice", speakOptions: true, prompt: "Sual: '___ you finished?'", options: ["Have", "Has", "Did", "Are"], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-rule-t10", type: "multiple_choice", speakOptions: true, prompt: "'I have ___ eaten.' (təzəcə)", options: ["just", "yet", "ago", "since"], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-rule-t11", type: "multiple_choice", speakOptions: true, prompt: "'Have you finished ___?' (hələ)", options: ["yet", "just", "already", "ago"], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-rule-t12", type: "multiple_choice", speakOptions: true, prompt: "'She has ___ done it.' (artıq)", options: ["already", "yet", "ago", "since"], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-rule-t13", type: "fill_blank", prompt: "'take' feilinin III formasını yaz.", accepted: ["taken"], xp: 10 },
+            { id: "en6-pp-rule-t14", type: "multiple_choice", speakOptions: true, prompt: "İnkar: 'I ___ not seen it.'", options: ["have", "has", "did", "am"], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-rule-t15", type: "multiple_choice", prompt: "Present Perfect nəyi bildirir?", options: ["keçmiş iş, indi ilə bağlı", "gələcək iş", "hər gün olan iş", "indi baş verən iş"], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "en6-pp-rule-b1", type: "fill_blank", prompt: "'break' feilinin III formasını yaz.", accepted: ["broken"], xp: 15 },
+            { id: "en6-pp-rule-b2", type: "multiple_choice", speakOptions: true, prompt: "'He has ___ his keys.' (lose)", options: ["lost", "losed", "losing", "lose"], correctIndex: 0, xp: 15 },
+            { id: "en6-pp-rule-b3", type: "multiple_choice", speakOptions: true, prompt: "Hansı cümlə Present Perfect-dir?", options: ["I have read it.", "I read it yesterday.", "I am reading.", "I will read."], correctIndex: 0, xp: 15 },
+            { id: "en6-pp-rule-b4", type: "fill_blank", prompt: "'give' feilinin III formasını yaz.", accepted: ["given"], xp: 15 },
+            { id: "en6-pp-rule-b5", type: "multiple_choice", speakOptions: true, prompt: "'___ she arrived?'", options: ["Has", "Have", "Did", "Is"], correctIndex: 0, xp: 15 },
+          ],
+        },
+        {
+          id: "en6-pp-vocab",
+          title: "Lüğət və III formalar",
+          intro: "Present Perfect üçün lazım olan qaydasız feillərin III forması.",
+          sections: [
+            { heading: "Qaydasız III formalar", body: "be → been, have → had, come → come, make → made, take → taken, find → found, buy → bought, bring → brought." },
+            { heading: "Faydalı sözlər", body: "already — artıq · yet — hələ · just — təzəcə · ever — heç (soruşanda) · never — heç vaxt · since — -dən bəri · for — müddətlə." },
+          ],
+          tasks: [
+            { id: "en6-pp-vocab-t1", type: "fill_blank", prompt: "'be' feilinin III formasını yaz.", accepted: ["been"], xp: 10 },
+            { id: "en6-pp-vocab-t2", type: "fill_blank", prompt: "'make' feilinin III formasını yaz.", accepted: ["made"], xp: 10 },
+            { id: "en6-pp-vocab-t3", type: "fill_blank", prompt: "'take' feilinin III formasını yaz.", accepted: ["taken"], xp: 10 },
+            { id: "en6-pp-vocab-t4", type: "fill_blank", prompt: "'buy' feilinin III formasını yaz.", accepted: ["bought"], xp: 10 },
+            { id: "en6-pp-vocab-t5", type: "multiple_choice", prompt: "'ever' sözünün mənası nədir?", options: ["heç (soruşanda)", "artıq", "təzəcə", "hər gün"], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-vocab-t6", type: "multiple_choice", prompt: "'never' sözünün mənası?", options: ["heç vaxt", "həmişə", "artıq", "hələ"], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-vocab-t7", type: "multiple_choice", prompt: "'already' sözünün mənası?", options: ["artıq", "hələ", "heç vaxt", "təzəcə"], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-vocab-t8", type: "multiple_choice", prompt: "'yet' sözünün mənası?", options: ["hələ", "artıq", "təzəcə", "həmişə"], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-vocab-t9", type: "fill_blank", prompt: "'come' feilinin III formasını yaz.", accepted: ["come"], xp: 10 },
+            { id: "en6-pp-vocab-t10", type: "fill_blank", prompt: "'find' feilinin III formasını yaz.", accepted: ["found"], xp: 10 },
+            { id: "en6-pp-vocab-t11", type: "multiple_choice", prompt: "'since' nə üçün işlənir?", options: ["başlanğıc vaxt (-dən bəri)", "müddət", "gələcək", "təkrar"], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-vocab-t12", type: "multiple_choice", prompt: "'for' nə üçün işlənir?", options: ["müddət (2 hours)", "başlanğıc vaxt", "gələcək", "keçmiş dəqiq an"], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-vocab-t13", type: "fill_blank", prompt: "'bring' feilinin III formasını yaz.", accepted: ["brought"], xp: 10 },
+            { id: "en6-pp-vocab-t14", type: "multiple_choice", speakOptions: true, prompt: "'I have lived here ___ 2010.'", options: ["since", "for", "yet", "ago"], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-vocab-t15", type: "multiple_choice", speakOptions: true, prompt: "'I have known him ___ five years.'", options: ["for", "since", "yet", "ago"], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "en6-pp-vocab-b1", type: "fill_blank", prompt: "'have' feilinin III formasını yaz.", accepted: ["had"], xp: 15 },
+            { id: "en6-pp-vocab-b2", type: "multiple_choice", speakOptions: true, prompt: "'Have you ___ been to London?' (heç)", options: ["ever", "never", "yet", "just"], correctIndex: 0, xp: 15 },
+            { id: "en6-pp-vocab-b3", type: "multiple_choice", speakOptions: true, prompt: "'I have ___ seen a lion.' (heç vaxt)", options: ["never", "ever", "yet", "already"], correctIndex: 0, xp: 15 },
+            { id: "en6-pp-vocab-b4", type: "fill_blank", prompt: "'read' feilinin III formasını yaz.", accepted: ["read"], xp: 15 },
+            { id: "en6-pp-vocab-b5", type: "multiple_choice", speakOptions: true, prompt: "'She has worked here ___ ten years.'", options: ["for", "since", "yet", "ago"], correctIndex: 0, xp: 15 },
+          ],
+        },
+        {
+          id: "en6-pp-listen",
+          title: "Dinləmə: Present Perfect",
+          intro: "Present Perfect cümlələrini dinlə və düzgün mənanı seç.",
+          sections: [
+            { heading: "Necə işləyir?", body: "«Dinlə» düyməsinə bas, cümləni eşit və düzgün variantı seç. İstədiyin qədər təkrar dinlə." },
+          ],
+          tasks: [
+            { id: "en6-pp-listen-t1", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I have finished my homework.", options: ["Ev tapşırığımı bitirmişəm.", "Ev tapşırığımı edirəm.", "Ev tapşırığı edəcəyəm.", "Ev tapşırığı etmədim."], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-listen-t2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She has gone home.", options: ["O evə gedib.", "O evə gedir.", "O evdədir.", "O evə gedəcək."], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-listen-t3", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "They have seen this film.", options: ["Onlar bu filmi görüblər.", "Onlar bu filmə baxır.", "Onlar bu filmi görməyib.", "Onlar film çəkir."], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-listen-t4", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I have just eaten.", options: ["Təzəcə yemişəm.", "İndi yeyirəm.", "Yeməyəcəyəm.", "Hələ yeməmişəm."], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-listen-t5", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "We have already done it.", options: ["Biz onu artıq etmişik.", "Biz onu edəcəyik.", "Biz onu etmirik.", "Biz onu edirik."], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-listen-t6", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Have you finished yet?", options: ["Hələ bitirməmisən?", "Nə vaxt bitirdin?", "Bitirəcəksən?", "Bitirirsən?"], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-listen-t7", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "He has lost his keys.", options: ["O açarlarını itirib.", "O açarlarını tapıb.", "O açar alır.", "O açarları verir."], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-listen-t8", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Have you ever been to Baku?", options: ["Heç Bakıda olmusan?", "Bakıya gedirsən?", "Bakıya gedəcəksən?", "Bakını sevirsən?"], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-listen-t9", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I have never seen snow.", options: ["Heç vaxt qar görməmişəm.", "Qar görürəm.", "Qar görmüşəm.", "Qar görəcəyəm."], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-listen-t10", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She has lived here for ten years.", options: ["O on ildir burada yaşayır.", "O on il burada yaşadı.", "O buraya köçəcək.", "O burada yaşamır."], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-listen-t11", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "We have bought a new car.", options: ["Yeni maşın almışıq.", "Yeni maşın alırıq.", "Yeni maşın alacağıq.", "Maşın satmışıq."], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-listen-t12", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "He has written a book.", options: ["O kitab yazıb.", "O kitab oxuyub.", "O kitab yazır.", "O kitab alıb."], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-listen-t13", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I have made a cake.", options: ["Tort bişirmişəm.", "Tort yemişəm.", "Tort alıram.", "Tort bişirirəm."], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-listen-t14", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "They have come home.", options: ["Onlar evə gəliblər.", "Onlar evə gedir.", "Onlar evdə deyil.", "Onlar gələcək."], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-listen-t15", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Has she arrived?", options: ["O çatıb?", "O çatır?", "O çatacaq?", "O gedib?"], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "en6-pp-listen-b1", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I have known him for years.", options: ["Onu illərdir tanıyıram.", "Onu tanımıram.", "Onu tanıyacağam.", "Onu yeni tanıdım."], correctIndex: 0, xp: 15 },
+            { id: "en6-pp-listen-b2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She has broken the window.", options: ["O pəncərəni sındırıb.", "O pəncərəni açıb.", "O pəncərəni bağlayıb.", "O pəncərəni təmizləyib."], correctIndex: 0, xp: 15 },
+            { id: "en6-pp-listen-b3", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Have they left?", options: ["Onlar gedib?", "Onlar gəlib?", "Onlar qalıb?", "Onlar gedir?"], correctIndex: 0, xp: 15 },
+          ],
+        },
+        {
+          id: "en6-pp-read",
+          title: "Reading: A trip abroad",
+          intro: "Qısa mətni oxu və suallara cavab ver (Present Perfect).",
+          sections: [
+            { heading: "Read the text (Mətni oxu)", body: "Hi, I am Kamran. I have travelled a lot this year. I have been to Turkey and Georgia. I have visited many museums and I have tried delicious food. I have not been to Europe yet, but I hope to go next year. I have taken hundreds of photos. Travelling has taught me a lot about different cultures." },
+            { heading: "İpucu", body: "Sualı oxu, cavabı mətndə tap. Lazım olsa mətnə yenidən bax." },
+          ],
+          tasks: [
+            { id: "en6-pp-read-t1", type: "multiple_choice", speakOptions: true, prompt: "What is the boy's name?", options: ["Kamran", "Tural", "Elvin", "Orxan"], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-read-t2", type: "multiple_choice", speakOptions: true, prompt: "Which countries has he been to?", options: ["Turkey and Georgia", "France and Italy", "Russia and Iran", "Spain and Greece"], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-read-t3", type: "multiple_choice", speakOptions: true, prompt: "What has he visited?", options: ["many museums", "many shops", "many schools", "many parks"], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-read-t4", type: "multiple_choice", speakOptions: true, prompt: "Has he been to Europe?", options: ["No, not yet.", "Yes, he has.", "Yes, last year.", "We don't know."], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-read-t5", type: "multiple_choice", speakOptions: true, prompt: "What has he taken?", options: ["hundreds of photos", "many books", "some money", "a few gifts"], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-read-t6", type: "fill_blank", prompt: "'I have ___ delicious food.' (dadmaq — mətndən)", accepted: ["tried"], xp: 10 },
+            { id: "en6-pp-read-t7", type: "multiple_choice", speakOptions: true, prompt: "When does he hope to go to Europe?", options: ["next year", "this year", "next month", "never"], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-read-t8", type: "multiple_choice", prompt: "'travelled a lot' nə deməkdir?", options: ["çox səyahət etmiş", "az səyahət etmiş", "heç səyahət etməmiş", "səyahət edəcək"], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-read-t9", type: "multiple_choice", speakOptions: true, prompt: "What has travelling taught him?", options: ["about different cultures", "about maths", "about music", "about sport"], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-read-t10", type: "fill_blank", prompt: "'I have ___ to Turkey and Georgia.' (mətndən)", accepted: ["been"], xp: 10 },
+            { id: "en6-pp-read-t11", type: "multiple_choice", prompt: "'museum' nə deməkdir?", options: ["muzey", "məktəb", "mağaza", "park"], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-read-t12", type: "multiple_choice", speakOptions: true, prompt: "How many photos has he taken?", options: ["hundreds", "ten", "none", "two"], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-read-t13", type: "multiple_choice", prompt: "'delicious' nə deməkdir?", options: ["dadlı", "acı", "soyuq", "isti"], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-read-t14", type: "multiple_choice", speakOptions: true, prompt: "Has he travelled this year?", options: ["Yes, a lot.", "No, not at all.", "Only once.", "We don't know."], correctIndex: 0, xp: 10 },
+            { id: "en6-pp-read-t15", type: "multiple_choice", prompt: "'culture' nə deməkdir?", options: ["mədəniyyət", "ölkə", "şəhər", "dil"], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "en6-pp-read-b1", type: "multiple_choice", prompt: "'abroad' nə deməkdir?", options: ["xaricdə", "evdə", "məktəbdə", "şəhərdə"], correctIndex: 0, xp: 15 },
+            { id: "en6-pp-read-b2", type: "fill_blank", prompt: "'I have not been to Europe ___.' (hələ — mətndən)", accepted: ["yet"], xp: 15 },
+            { id: "en6-pp-read-b3", type: "multiple_choice", speakOptions: true, prompt: "What does he hope to do next year?", options: ["go to Europe", "stay home", "sell photos", "learn maths"], correctIndex: 0, xp: 15 },
+          ],
+        },
+        {
+          id: "en6-pp-write",
+          title: "Cümlə qur: Present Perfect",
+          intro: "Sözləri düzgün sıraya düz və Present Perfect cümləsi qur.",
+          sections: [
+            { heading: "Necə işləyir?", body: "Sözlərə sıra ilə bas. Quruluş: kim + have/has + V3 (III forma) + qalan. Məs: I have finished it." },
+          ],
+          tasks: [
+            { id: "en6-pp-write-t1", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["I", "have", "finished"], answer: "I have finished", translation: "Mən bitirmişəm.", xp: 10 },
+            { id: "en6-pp-write-t2", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["She", "has", "gone", "home"], answer: "She has gone home", translation: "O evə gedib.", xp: 10 },
+            { id: "en6-pp-write-t3", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["They", "have", "seen", "it"], answer: "They have seen it", translation: "Onlar onu görüblər.", xp: 10 },
+            { id: "en6-pp-write-t4", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["I", "have", "just", "eaten"], answer: "I have just eaten", translation: "Təzəcə yemişəm.", xp: 10 },
+            { id: "en6-pp-write-t5", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["He", "has", "lost", "his", "keys"], answer: "He has lost his keys", translation: "O açarlarını itirib.", xp: 10 },
+            { id: "en6-pp-write-t6", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["We", "have", "bought", "a", "car"], answer: "We have bought a car", translation: "Maşın almışıq.", xp: 10 },
+            { id: "en6-pp-write-t7", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["Have", "you", "finished"], answer: "Have you finished", translation: "Bitirmisən?", xp: 10 },
+            { id: "en6-pp-write-t8", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["She", "has", "written", "a", "book"], answer: "She has written a book", translation: "O kitab yazıb.", xp: 10 },
+            { id: "en6-pp-write-t9", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["I", "have", "never", "seen", "snow"], answer: "I have never seen snow", translation: "Heç vaxt qar görməmişəm.", xp: 10 },
+            { id: "en6-pp-write-t10", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["They", "have", "come", "home"], answer: "They have come home", translation: "Onlar evə gəliblər.", xp: 10 },
+            { id: "en6-pp-write-t11", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["He", "has", "made", "a", "cake"], answer: "He has made a cake", translation: "O tort bişirib.", xp: 10 },
+            { id: "en6-pp-write-t12", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["I", "have", "already", "done", "it"], answer: "I have already done it", translation: "Artıq etmişəm.", xp: 10 },
+            { id: "en6-pp-write-t13", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["Has", "she", "arrived"], answer: "Has she arrived", translation: "O çatıb?", xp: 10 },
+            { id: "en6-pp-write-t14", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["We", "have", "visited", "the", "museum"], answer: "We have visited the museum", translation: "Muzeyi ziyarət etmişik.", xp: 10 },
+            { id: "en6-pp-write-t15", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["Have", "you", "ever", "been", "there"], answer: "Have you ever been there", translation: "Heç orada olmusan?", xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "en6-pp-write-b1", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["I", "have", "lived", "here", "since", "2010"], answer: "I have lived here since 2010", translation: "2010-dan bəri burada yaşayıram.", xp: 15 },
+            { id: "en6-pp-write-b2", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["She", "has", "not", "arrived", "yet"], answer: "She has not arrived yet", translation: "O hələ çatmayıb.", xp: 15 },
+            { id: "en6-pp-write-b3", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["He", "has", "broken", "the", "window"], answer: "He has broken the window", translation: "O pəncərəni sındırıb.", xp: 15 },
+          ],
+        },
+      ],
+    },
+  ],
+};
