@@ -42,3 +42,11 @@ export function getAllTasks(): Task[] {
 export function getTaskById(id: string): Task | undefined {
   return getAllTasks().find((t) => t.id === id);
 }
+
+// Reading-comprehension tapşırıqları dərsin oxu mətninə (passage) bağlıdır. Təsadüfi
+// praktikada (qarışıq/sürət/gündəlik/səhvlər) mətn göstərilmədiyi üçün cavablana bilmir —
+// ona görə bu tapşırıqlar praktika hovuzlarından çıxarılır (dərs içində normal işləyir).
+// Dinləmə tapşırıqları isə öz `audioText`-ini daşıyır (öz-özünə tam) → praktikada qalır.
+export function isPassageTask(task: { id: string }): boolean {
+  return /-read-/.test(task.id);
+}

@@ -234,6 +234,7 @@ const DICT: Dict = {
   "run.finish": { az: "Bitir", en: "Finish", ru: "Готово" },
   "run.task": { az: "Tapşırıq", en: "Task", ru: "Задание" },
   "run.bonus": { az: "Bonus", en: "Bonus", ru: "Бонус" },
+  "run.retry": { az: "Təkrar", en: "Retry", ru: "Повтор" },
   "run.correct": { az: "Doğru! Afərin.", en: "Correct! Well done.", ru: "Верно! Молодец." },
   "run.wrong": {
     az: "Səhv. Növbəti dəfə alınacaq!",
