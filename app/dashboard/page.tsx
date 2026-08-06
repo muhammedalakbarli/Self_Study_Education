@@ -11,6 +11,7 @@ import { loadProgress, loadActiveDays, lessonState, type ProgressState } from "@
 import StreakCalendar from "@/components/StreakCalendar";
 import { useAuthUser } from "@/lib/useAuthUser";
 import { displayName } from "@/lib/auth";
+import { userGrade } from "@/lib/grade";
 import { track } from "@/lib/analytics";
 import { useT } from "@/lib/i18n";
 import { levelFromXp } from "@/lib/levels";
@@ -34,8 +35,11 @@ import SpeechBubble from "@/components/SpeechBubble";
 export default function DashboardPage() {
   const { user, ready } = useAuthUser();
   const { subjects } = useContent();
+  // Yalnız istifadəçinin sinfinə (onboarding) uyğun fənlər.
+  const grade = userGrade(user);
+  const shown = useMemo(() => subjects.filter((s) => s.grade === grade), [subjects, grade]);
   const [state, setState] = useState<ProgressState | null>(null);
-  const [activeSlug, setActiveSlug] = useState(subjects[0].slug);
+  const [activeSlug, setActiveSlug] = useState("");
   const [quests, setQuests] = useState<QuestState | null>(null);
   const [calOpen, setCalOpen] = useState(false);
   const [activeDays, setActiveDays] = useState<string[]>([]);
@@ -59,13 +63,22 @@ export default function DashboardPage() {
       .catch(() => {});
   }, [user]);
 
-  const active = subjects.find((s) => s.slug === activeSlug)!;
+  // Aktiv fənn həmişə göstərilən (sinif üzrə) siyahının içindən; ilk yükləmədə birincisi.
+  const active = shown.find((s) => s.slug === activeSlug) ?? shown[0];
+
+  // activeSlug göstərilən siyahıda deyilsə (sinif dəyişəndə) ilk fənnə keç.
+  useEffect(() => {
+    if (shown.length && !shown.some((s) => s.slug === activeSlug)) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setActiveSlug(shown[0].slug);
+    }
+  }, [shown, activeSlug]);
 
   const { nodes, currentLesson, scorePct } = useMemo(() => {
     const completed = state?.completedLessons ?? [];
-    const lessons = active.units.flatMap((u) => u.lessons);
+    const lessons = active ? active.units.flatMap((u) => u.lessons) : [];
     const order = lessons.map((l) => l.id);
-    const nodes: PathNode[] = active.units.flatMap((u) =>
+    const nodes: PathNode[] = (active?.units ?? []).flatMap((u) =>
       u.lessons.map((l, li) => ({
         id: l.id,
         title: l.title,
@@ -83,6 +96,27 @@ export default function DashboardPage() {
   }, [active, state]);
 
   if (!ready || !state) return <PageSkeleton />;
+
+  // Bu sinif üçün hələ məzmun yoxdursa (məs. 7–8-ci sinif) — dostcasına mesaj.
+  if (shown.length === 0 || !active) {
+    return (
+      <div className="min-h-screen bg-ink">
+        <main className="mx-auto max-w-lg px-4 py-16 text-center">
+          <Mascot size={90} mood="happy" />
+          <h1 className="mt-5 text-2xl font-bold text-fg">{t("dash.gradeSoonTitle")}</h1>
+          <p className="mt-2 text-muted">
+            {t("dash.gradeSoon").replace("{n}", String(grade))}
+          </p>
+          <Link
+            href="/ayarlar"
+            className="mt-6 inline-block rounded-2xl bg-brand px-6 py-3 font-extrabold text-white btn-pop"
+          >
+            {t("dash.changeGrade")}
+          </Link>
+        </main>
+      </div>
+    );
+  }
 
   const totalCompleted = state.completedLessons.length;
 
@@ -197,9 +231,9 @@ export default function DashboardPage() {
           />
         )}
 
-        {/* Fənn tab-ları */}
+        {/* Fənn tab-ları (yalnız cari sinif) */}
         <div className="mt-6 flex flex-wrap gap-2">
-          {subjects.map((s) => {
+          {shown.map((s) => {
             const on = s.slug === activeSlug;
             return (
               <button
