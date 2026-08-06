@@ -8,12 +8,14 @@ import { english } from "./english";
 import { math6 } from "./math6";
 import { azerbaijani6 } from "./azerbaijani6";
 import { english6 } from "./english6";
+import { math7 } from "./math7";
 
 // 5-ci sinif fənləri + 6-cı sinif fənləri. App dashboard-da istifadəçinin
 // sinfinə (user_metadata.grade) görə süzür (bax lib/grade.ts).
 export const subjects: Subject[] = [
   math, azerbaijani, english,
   math6, azerbaijani6, english6,
+  math7,
 ];
 
 export function getSubject(slug: string): Subject | undefined {
