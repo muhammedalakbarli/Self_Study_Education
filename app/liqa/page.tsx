@@ -5,12 +5,13 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Trophy, ChevronUp, ChevronDown, Lock } from "lucide-react";
+import { Trophy, ChevronUp, ChevronDown, Lock, Clock } from "lucide-react";
 import { useAuthUser } from "@/lib/useAuthUser";
 import {
   loadCohort,
   loadMyLeagueTier,
   maybeLeagueRollover,
+  weekEndsAt,
   TIER_KEYS,
   PROMOTE,
   DEMOTE,
@@ -58,6 +59,9 @@ export default function LeaguePage() {
           </div>
           <Trophy size={30} className="text-accent-soft" />
         </div>
+
+        {/* Həftəlik geri sayım — liqa nə vaxt sıfırlanır */}
+        <LeagueTimer t={t} />
 
         {/* İştirak etmirsənsə (bu həftə XP yoxdur) — liqanın üstünə "cover":
             cədvəl göstərilmir, yalnız dərs et çağırışı. */}
@@ -119,6 +123,31 @@ export default function LeaguePage() {
 
 function tierKey(tier: number): string {
   return TIER_KEYS[Math.max(0, Math.min(TIER_KEYS.length - 1, tier))];
+}
+
+// Həftəlik liqanın bitməsinə qalan vaxt (növbəti B.E. 00:00 Asia/Baku).
+function LeagueTimer({ t }: { t: (k: string) => string }) {
+  const [left, setLeft] = useState(() => weekEndsAt().getTime() - Date.now());
+  useEffect(() => {
+    const id = setInterval(() => setLeft(weekEndsAt().getTime() - Date.now()), 1000);
+    return () => clearInterval(id);
+  }, []);
+  const total = Math.max(0, left);
+  const d = Math.floor(total / 86400000);
+  const h = Math.floor((total % 86400000) / 3600000);
+  const m = Math.floor((total % 3600000) / 60000);
+  return (
+    <div className="mt-3 flex items-center justify-center gap-2 rounded-2xl border border-line bg-panel py-2.5 text-sm">
+      <Clock size={16} className="text-brand" />
+      <span className="font-semibold text-muted">{t("league.endsIn")}:</span>
+      <span className="font-extrabold text-fg tabular-nums">
+        {d}
+        {t("league.dayShort")} {h}
+        {t("league.hourShort")} {m}
+        {t("league.minShort")}
+      </span>
+    </div>
+  );
 }
 
 function ZoneLine({

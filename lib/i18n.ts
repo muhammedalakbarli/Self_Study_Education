@@ -196,6 +196,10 @@ const DICT: Dict = {
   },
   "league.promoZone": { az: "Yüksəliş zonası", en: "Promotion zone", ru: "Зона повышения" },
   "league.demoZone": { az: "Enmə zonası", en: "Demotion zone", ru: "Зона понижения" },
+  "league.endsIn": { az: "Bitməsinə", en: "Ends in", ru: "До конца" },
+  "league.dayShort": { az: "g", en: "d", ru: "д" },
+  "league.hourShort": { az: "s", en: "h", ru: "ч" },
+  "league.minShort": { az: "dəq", en: "m", ru: "м" },
 
   // Səviyyə (level)
   "level.label": { az: "Səviyyə", en: "Level", ru: "Уровень" },

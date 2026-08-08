@@ -7,6 +7,22 @@ import { botIdentity, weekKey } from "./bots";
 // ISO həftə açarı — saf modulda (bots.ts) saxlanılır; geriyə uyğunluq üçün re-export.
 export { weekKey };
 
+// Liqa həftəsinin bitmə anı = növbəti bazar ertəsi 00:00 Asia/Baku (server rollover
+// da bu anda işə düşür: pg_cron bazar 20:05 UTC = B.E. 00:05 Baku; maybe_league_rollover
+// Asia/Baku ISO həftəsi ilə). İstifadəçinin cihaz saat qurşağından asılı olmadan düzgün
+// hesablamaq üçün Baku divar-saatı ilə hesablayıb real ana çeviririk.
+export function weekEndsAt(now: Date = new Date()): Date {
+  // now → Baku divar-saatı (yerli tz-də təfsir olunan Date)
+  const bakuWall = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Baku" }));
+  const offset = now.getTime() - bakuWall.getTime(); // yerli − Baku fərqi (ms)
+  const day = bakuWall.getDay(); // 0=bazar … 1=B.E. … 6=şənbə
+  const addDays = 8 - (day === 0 ? 7 : day); // növbəti B.E.-yə qədər gün (1..7)
+  const target = new Date(bakuWall);
+  target.setDate(bakuWall.getDate() + addDays);
+  target.setHours(0, 0, 0, 0);
+  return new Date(target.getTime() + offset); // Baku divar-saatını real ana çevir
+}
+
 export interface LeaderRow {
   userId: string;
   name: string;
