@@ -20,6 +20,7 @@ import { useAuthUser } from "@/lib/useAuthUser";
 import { loadProgress, type ProgressState } from "@/lib/progress";
 import { signOut } from "@/lib/auth";
 import { useContent } from "@/components/ContentProvider";
+import { subjectsForGrade } from "@/lib/grade";
 import { useT } from "@/lib/i18n";
 import { levelFromXp } from "@/lib/levels";
 import { computeAchievements, type AchievementKind } from "@/lib/achievements";
@@ -220,7 +221,7 @@ export default function ProfilePage() {
         <div className="mt-4 rounded-2xl border border-line bg-panel p-5">
           <h2 className="text-lg font-bold text-fg">{t("profile.progress")}</h2>
           <div className="mt-4 space-y-4">
-            {subjects.map((s) => {
+            {subjectsForGrade(subjects, user).map((s) => {
               const ls = s.units.flatMap((u) => u.lessons);
               const done = ls.filter((l) => state.completedLessons.includes(l.id)).length;
               const pct = ls.length ? Math.round((done / ls.length) * 100) : 0;

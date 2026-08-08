@@ -8,6 +8,7 @@ import { BookOpen, User, Dumbbell, LogOut, ChevronRight, Settings, HelpCircle } 
 import { useAuthUser } from "@/lib/useAuthUser";
 import { signOut } from "@/lib/auth";
 import { useContent } from "@/components/ContentProvider";
+import { subjectsForGrade } from "@/lib/grade";
 import { useT } from "@/lib/i18n";
 import { PageSkeleton } from "@/components/Skeleton";
 import Logo from "@/components/Logo";
@@ -17,6 +18,8 @@ export default function MorePage() {
   const { subjects } = useContent();
   const router = useRouter();
   const t = useT();
+
+  const shown = subjectsForGrade(subjects, user);
 
   if (!ready || !user) return <PageSkeleton />;
 
@@ -35,7 +38,7 @@ export default function MorePage() {
           {t("more.subjects")}
         </h2>
         <div className="mt-2 overflow-hidden rounded-2xl border border-line bg-panel">
-          {subjects.map((s) => (
+          {shown.map((s) => (
             <Link
               key={s.slug}
               href={`/subjects/${s.slug}`}

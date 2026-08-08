@@ -8,6 +8,7 @@ import { AlertCircle, Shuffle, Timer, ChevronRight, Check } from "lucide-react";
 import { useAuthUser } from "@/lib/useAuthUser";
 import { loadProgress, type ProgressState } from "@/lib/progress";
 import { useContent } from "@/components/ContentProvider";
+import { subjectsForGrade } from "@/lib/grade";
 import { loadMistakes, removeMistake } from "@/lib/mistakes";
 import { isPassageTask } from "@/lib/content";
 import { isDailyDone, markDailyDone } from "@/lib/daily";
@@ -24,13 +25,16 @@ type Session = { tasks: Task[]; title: string; timed?: boolean; daily?: boolean 
 
 export default function PracticePage() {
   const { user, ready } = useAuthUser();
-  const { subjects, getTaskById, getAllTasks } = useContent();
+  const { subjects, getTaskById } = useContent();
   const [state, setState] = useState<ProgressState | null>(null);
   const [mistakes, setMistakes] = useState<string[]>([]);
-  const [activeSlug, setActiveSlug] = useState(subjects[0].slug);
+  const [activeSlug, setActiveSlug] = useState("");
   const [session, setSession] = useState<Session | null>(null);
   const [dailyDone, setDailyDone] = useState(false);
   const t = useT();
+
+  // Yalnız istifadəçinin sinfinin fənləri (əks halda "Riyaziyyat" hər sinif üçün təkrarlanır).
+  const shown = useMemo(() => subjectsForGrade(subjects, user), [subjects, user]);
 
   useEffect(() => {
     if (user) loadProgress(user.id).then(setState);
@@ -43,9 +47,17 @@ export default function PracticePage() {
     if (user) setDailyDone(isDailyDone(user.user_metadata));
   }, [user]);
 
+  // activeSlug-u istifadəçinin sinfinin fənlərinə uyğunlaşdır.
+  useEffect(() => {
+    if (shown.length && !shown.some((s) => s.slug === activeSlug)) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setActiveSlug(shown[0].slug);
+    }
+  }, [shown, activeSlug]);
+
   const completedTasks = useMemo(() => {
     const done = state?.completedLessons ?? [];
-    return subjects
+    return shown
       .flatMap((s) =>
         s.units.flatMap((u) =>
           u.lessons
@@ -54,7 +66,7 @@ export default function PracticePage() {
         ),
       )
       .filter((t) => !isPassageTask(t)); // mətnə bağlı reading suallarını praktikaya salma
-  }, [state, subjects]);
+  }, [state, shown]);
 
   const mistakeTasks = useMemo(
     () => mistakes.map(getTaskById).filter((t): t is Task => !!t && !isPassageTask(t)),
@@ -90,10 +102,13 @@ export default function PracticePage() {
     );
   }
 
-  const active = subjects.find((s) => s.slug === activeSlug)!;
+  const active = shown.find((s) => s.slug === activeSlug) ?? shown[0];
   const speedPool = completedTasks.filter((t) => t.type === "multiple_choice");
-  const dailyPool =
-    completedTasks.length >= 5 ? completedTasks : getAllTasks().filter((t) => !isPassageTask(t));
+  // Gündəlik hovuzun ehtiyatı da yalnız istifadəçinin sinfindən olsun.
+  const gradeAllTasks = shown
+    .flatMap((s) => s.units.flatMap((u) => u.lessons.flatMap((l) => [...l.tasks, ...(l.bonusTasks ?? [])])))
+    .filter((t) => !isPassageTask(t));
+  const dailyPool = completedTasks.length >= 5 ? completedTasks : gradeAllTasks;
 
   function startDaily() {
     setSession({ tasks: sample(dailyPool, 5), title: t("practice.daily"), daily: true });
@@ -170,7 +185,7 @@ export default function PracticePage() {
         {/* Bölmə üzrə praktika */}
         <h2 className="mt-8 text-lg font-bold text-fg">{t("practice.byUnit")}</h2>
         <div className="mt-3 flex flex-wrap gap-2">
-          {subjects.map((s) => {
+          {shown.map((s) => {
             const on = s.slug === activeSlug;
             return (
               <button
@@ -189,7 +204,7 @@ export default function PracticePage() {
         </div>
 
         <div className="mt-3 overflow-hidden rounded-2xl border border-line bg-panel">
-          {active.units.map((u) => {
+          {(active?.units ?? []).map((u) => {
             const unitTasks = u.lessons.flatMap((l) => [
               ...l.tasks,
               ...(l.bonusTasks ?? []),

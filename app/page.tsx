@@ -256,14 +256,18 @@ function PathMedia() {
   );
 }
 
-// Panel: fənlər
+// Panel: fənlər. Giriş etməmiş vitrin — sinif seçilmədiyi üçün fənləri adına
+// görə təkrarsız göstəririk (əks halda hər sinifdən "Riyaziyyat" təkrarlanardı).
 function SubjectsMedia() {
   const { subjects } = useContent();
+  const unique = subjects.filter(
+    (s, i, arr) => arr.findIndex((x) => x.name === s.name) === i,
+  );
   return (
     <div className="flex aspect-[4/3] flex-col justify-center gap-3 rounded-3xl border border-line bg-brand/5 p-8">
-      {subjects.map((s) => (
+      {unique.map((s) => (
         <div
-          key={s.slug}
+          key={s.name}
           className="flex items-center gap-3 rounded-2xl border border-line bg-panel px-4 py-3"
         >
           <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand text-lg font-bold text-white">
