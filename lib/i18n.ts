@@ -38,6 +38,9 @@ const DICT: Dict = {
   "subject.riyaziyyat-7": { az: "Riyaziyyat", en: "Mathematics", ru: "Математика" },
   "subject.azerbaycan-dili-7": { az: "Azərbaycan dili", en: "Azerbaijani", ru: "Азербайджанский" },
   "subject.ingilis-dili-7": { az: "İngilis dili", en: "English", ru: "Английский" },
+  "subject.riyaziyyat-8": { az: "Riyaziyyat", en: "Mathematics", ru: "Математика" },
+  "subject.azerbaycan-dili-8": { az: "Azərbaycan dili", en: "Azerbaijani", ru: "Азербайджанский" },
+  "subject.ingilis-dili-8": { az: "İngilis dili", en: "English", ru: "Английский" },
 
   // Bölmə (unit) adları — Praktika "Bölmə üzrə" siyahısı
   "unit.ry-natural": {

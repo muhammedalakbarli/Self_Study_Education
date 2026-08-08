@@ -10,4 +10,4 @@ export function userGrade(user: User | null): number {
 }
 
 // Hazırda məzmunu olan siniflər (settings sinif dəyişdiricisi bunları göstərir).
-export const GRADES_WITH_CONTENT = [5, 6, 7];
+export const GRADES_WITH_CONTENT = [5, 6, 7, 8];
