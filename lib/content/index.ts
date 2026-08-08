@@ -2,6 +2,7 @@
 // "@/lib/content" importları bu index-i istifadə edir (əvvəlki content.ts əvəzi).
 
 import type { Subject, Task } from "../types";
+import { math1 } from "./math1";
 import { math } from "./math";
 import { azerbaijani } from "./azerbaijani";
 import { english } from "./english";
@@ -18,6 +19,7 @@ import { english8 } from "./english8";
 // 5-ci sinif fənləri + 6-cı sinif fənləri. App dashboard-da istifadəçinin
 // sinfinə (user_metadata.grade) görə süzür (bax lib/grade.ts).
 export const subjects: Subject[] = [
+  math1,
   math, azerbaijani, english,
   math6, azerbaijani6, english6,
   math7, azerbaijani7, english7,
