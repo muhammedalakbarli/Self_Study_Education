@@ -11,7 +11,7 @@ import { loadProgress, loadActiveDays, lessonState, type ProgressState } from "@
 import StreakCalendar from "@/components/StreakCalendar";
 import { useAuthUser } from "@/lib/useAuthUser";
 import { displayName } from "@/lib/auth";
-import { userGrade } from "@/lib/grade";
+import { userGrade, subjectsForGrade } from "@/lib/grade";
 import { track } from "@/lib/analytics";
 import { useT } from "@/lib/i18n";
 import { levelFromXp } from "@/lib/levels";
@@ -37,7 +37,7 @@ export default function DashboardPage() {
   const { subjects } = useContent();
   // Yalnız istifadəçinin sinfinə (onboarding) uyğun fənlər.
   const grade = userGrade(user);
-  const shown = useMemo(() => subjects.filter((s) => s.grade === grade), [subjects, grade]);
+  const shown = useMemo(() => subjectsForGrade(subjects, user), [subjects, user]);
   const [state, setState] = useState<ProgressState | null>(null);
   const [activeSlug, setActiveSlug] = useState("");
   const [quests, setQuests] = useState<QuestState | null>(null);

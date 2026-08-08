@@ -2,6 +2,7 @@
 // App məzmunu bu sinfə görə süzür (dashboard yalnız uyğun sinfin fənlərini göstərir).
 
 import type { User } from "@supabase/supabase-js";
+import type { Subject } from "./types";
 
 // Onboarding sinfi (1–11). Yoxdursa/etibarsızsa default 5.
 export function userGrade(user: User | null): number {
@@ -11,3 +12,11 @@ export function userGrade(user: User | null): number {
 
 // Hazırda məzmunu olan siniflər (settings sinif dəyişdiricisi bunları göstərir).
 export const GRADES_WITH_CONTENT = [1, 2, 3, 4, 5, 6, 7, 8];
+
+// İstifadəçinin sinfinə uyğun fənlər. BÜTÜN şagird-üzlü səhifələr (dashboard,
+// praktika, profil, "daha") bu funksiyadan istifadə etməlidir — əks halda hər
+// sinifdə eyni adlı fənlər (Riyaziyyat, Azərbaycan dili, İngilis dili) təkrarlanır.
+export function subjectsForGrade(subjects: Subject[], user: User | null): Subject[] {
+  const g = userGrade(user);
+  return subjects.filter((s) => s.grade === g);
+}
