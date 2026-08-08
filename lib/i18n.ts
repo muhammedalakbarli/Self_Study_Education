@@ -34,6 +34,7 @@ const DICT: Dict = {
   "subject.ingilis-dili": { az: "İngilis dili", en: "English", ru: "Английский" },
   "subject.riyaziyyat-1": { az: "Riyaziyyat", en: "Mathematics", ru: "Математика" },
   "subject.azerbaycan-dili-1": { az: "Azərbaycan dili", en: "Azerbaijani", ru: "Азербайджанский" },
+  "subject.ingilis-dili-1": { az: "İngilis dili", en: "English", ru: "Английский" },
   "subject.riyaziyyat-6": { az: "Riyaziyyat", en: "Mathematics", ru: "Математика" },
   "subject.azerbaycan-dili-6": { az: "Azərbaycan dili", en: "Azerbaijani", ru: "Азербайджанский" },
   "subject.ingilis-dili-6": { az: "İngilis dili", en: "English", ru: "Английский" },
