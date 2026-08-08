@@ -11,6 +11,9 @@ import { english2 } from "./english2";
 import { math3 } from "./math3";
 import { azerbaijani3 } from "./azerbaijani3";
 import { english3 } from "./english3";
+import { math4 } from "./math4";
+import { azerbaijani4 } from "./azerbaijani4";
+import { english4 } from "./english4";
 import { math } from "./math";
 import { azerbaijani } from "./azerbaijani";
 import { english } from "./english";
@@ -30,6 +33,7 @@ export const subjects: Subject[] = [
   math1, azerbaijani1, english1,
   math2, azerbaijani2, english2,
   math3, azerbaijani3, english3,
+  math4, azerbaijani4, english4,
   math, azerbaijani, english,
   math6, azerbaijani6, english6,
   math7, azerbaijani7, english7,
