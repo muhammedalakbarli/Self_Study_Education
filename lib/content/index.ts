@@ -5,6 +5,9 @@ import type { Subject, Task } from "../types";
 import { math1 } from "./math1";
 import { azerbaijani1 } from "./azerbaijani1";
 import { english1 } from "./english1";
+import { math2 } from "./math2";
+import { azerbaijani2 } from "./azerbaijani2";
+import { english2 } from "./english2";
 import { math } from "./math";
 import { azerbaijani } from "./azerbaijani";
 import { english } from "./english";
@@ -22,6 +25,7 @@ import { english8 } from "./english8";
 // sinfinə (user_metadata.grade) görə süzür (bax lib/grade.ts).
 export const subjects: Subject[] = [
   math1, azerbaijani1, english1,
+  math2, azerbaijani2, english2,
   math, azerbaijani, english,
   math6, azerbaijani6, english6,
   math7, azerbaijani7, english7,
