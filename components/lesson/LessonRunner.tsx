@@ -137,7 +137,7 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
   const onEnterRef = useRef<(e: KeyboardEvent) => void>(() => {});
   useEffect(() => {
     onEnterRef.current = (e) => {
-      if (phase !== "main" && phase !== "bonus") return;
+      if (phase !== "main" && phase !== "bonus" && phase !== "retry") return;
       const el = e.target as HTMLElement | null;
       if (el?.closest("[data-feedback]")) return;
       e.preventDefault();

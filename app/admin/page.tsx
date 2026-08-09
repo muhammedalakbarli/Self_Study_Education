@@ -108,6 +108,9 @@ export default function AdminPage() {
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-bold text-fg">Admin · Məzmun</h1>
           <div className="flex items-center gap-4">
+            <Link href="/admin/analitika" className="text-sm font-semibold text-brand hover:underline">
+              Analitika
+            </Link>
             <Link href="/admin/feedback" className="text-sm font-semibold text-brand hover:underline">
               Rəylər
             </Link>

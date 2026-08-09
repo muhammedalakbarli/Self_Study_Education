@@ -11,7 +11,72 @@ import { useAuthUser } from "@/lib/useAuthUser";
 import { checkIsAdmin } from "@/lib/adminApi";
 import { createClient } from "@/lib/supabase/client";
 import { FEEDBACK_LABELS, type FeedbackCategory } from "@/lib/feedback";
+import { useContent } from "@/components/ContentProvider";
+import type { Subject, Task } from "@/lib/types";
 import { PageSkeleton } from "@/components/Skeleton";
+
+// task_id-yə görə sualı və yerini (fənn/bölmə/dərs) tap.
+function findTaskInfo(subjects: Subject[], taskId: string) {
+  for (const s of subjects)
+    for (const u of s.units)
+      for (const l of u.lessons) {
+        const task = [...l.tasks, ...(l.bonusTasks ?? [])].find((x) => x.id === taskId);
+        if (task) return { task, subject: s, unit: u, lesson: l };
+      }
+  return undefined;
+}
+
+// Rəydəki sualın mətni + variantları + düz cavabı + yeri.
+function TaskDetail({ subjects, taskId }: { subjects: Subject[]; taskId: string }) {
+  const info = findTaskInfo(subjects, taskId);
+  if (!info) {
+    return (
+      <div className="mt-2 rounded-xl border border-dashed border-line bg-panel-2 px-3 py-2 text-xs text-muted">
+        Sual məzmunda tapılmadı (silinmiş və ya köhnə id).
+      </div>
+    );
+  }
+  const { task, subject, unit, lesson } = info;
+  return (
+    <div className="mt-2 rounded-xl border border-line bg-panel-2 px-3 py-2.5">
+      <div className="text-[11px] font-semibold text-muted">
+        {subject.name} · {unit.title} · {lesson.title}
+      </div>
+      <p className="mt-1 text-sm font-bold text-fg">{task.prompt}</p>
+      <TaskAnswer task={task} />
+    </div>
+  );
+}
+
+function TaskAnswer({ task }: { task: Task }) {
+  if (task.type === "multiple_choice" || task.type === "listening") {
+    return (
+      <div className="mt-1.5 space-y-0.5">
+        {task.type === "listening" && (
+          <div className="text-xs italic text-muted">🔊 “{task.audioText}”</div>
+        )}
+        {task.options.map((o, i) => (
+          <div
+            key={i}
+            className={`text-xs ${i === task.correctIndex ? "font-bold text-emerald-600" : "text-muted"}`}
+          >
+            {i === task.correctIndex ? "✓ " : "• "}
+            {o}
+          </div>
+        ))}
+      </div>
+    );
+  }
+  const answer =
+    task.type === "fill_blank"
+      ? task.accepted.join(" / ")
+      : task.type === "numeric"
+        ? String(task.answer)
+        : task.type === "word_order"
+          ? task.answer
+          : "";
+  return <div className="mt-1.5 text-xs font-bold text-emerald-600">Cavab: {answer}</div>;
+}
 
 interface FeedbackRow {
   id: string;
@@ -25,6 +90,7 @@ interface FeedbackRow {
 export default function AdminFeedbackPage() {
   const router = useRouter();
   const { user, ready } = useAuthUser();
+  const { subjects } = useContent();
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
   const [rows, setRows] = useState<FeedbackRow[] | undefined>(undefined);
   const [showResolved, setShowResolved] = useState(false);
@@ -71,9 +137,10 @@ export default function AdminFeedbackPage() {
       <main className="mx-auto max-w-3xl px-4 py-6">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-bold text-fg">Admin · Rəylər</h1>
-          <Link href="/admin" className="text-sm text-muted hover:text-fg">
-            ← Məzmun
-          </Link>
+          <div className="flex gap-3 text-sm text-muted">
+            <Link href="/admin/analitika" className="hover:text-fg">Analitika</Link>
+            <Link href="/admin" className="hover:text-fg">Məzmun</Link>
+          </div>
         </div>
 
         <div className="mt-3 flex items-center justify-between">
@@ -107,7 +174,13 @@ export default function AdminFeedbackPage() {
                       </span>
                       <span className="font-mono text-xs text-muted">{r.task_id}</span>
                     </div>
-                    {r.message && <p className="mt-1.5 text-sm text-fg">{r.message}</p>}
+                    <TaskDetail subjects={subjects} taskId={r.task_id} />
+                    {r.message && (
+                      <p className="mt-1.5 text-sm text-fg">
+                        <span className="text-muted">İstifadəçi qeydi: </span>
+                        {r.message}
+                      </p>
+                    )}
                     <div className="mt-1 text-xs text-muted">
                       {new Date(r.created_at).toLocaleString("az-AZ")}
                     </div>
