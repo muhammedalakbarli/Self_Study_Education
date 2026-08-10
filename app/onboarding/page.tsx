@@ -10,20 +10,32 @@ import { createClient } from "@/lib/supabase/client";
 import { track } from "@/lib/analytics";
 import Logo from "@/components/Logo";
 import Mascot from "@/components/Mascot";
+import { GRADES_WITH_CONTENT } from "@/lib/grade";
 
 type Option = { value: string | number; label: string; note?: string };
 type Step = { key: string; q: string; options: Option[] };
+
+// Azərbaycan dilində sıra saylarının şəkilçisi (1-ci, 2-ci, 3-cü, 4-cü ...).
+const GRADE_ORDINAL: Record<number, string> = {
+  1: "1-ci",
+  2: "2-ci",
+  3: "3-cü",
+  4: "4-cü",
+  5: "5-ci",
+  6: "6-cı",
+  7: "7-ci",
+  8: "8-ci",
+};
+function gradeLabel(g: number): string {
+  return `${GRADE_ORDINAL[g] ?? `${g}-ci`} sinif`;
+}
 
 const STEPS: Step[] = [
   {
     key: "grade",
     q: "Neçənci sinifdə oxuyursan?",
-    options: [
-      { value: 5, label: "5-ci sinif", note: "Hazırda mövcuddur" },
-      { value: 6, label: "6-cı sinif", note: "Tezliklə" },
-      { value: 7, label: "7-ci sinif", note: "Tezliklə" },
-      { value: 8, label: "8-ci sinif", note: "Tezliklə" },
-    ],
+    // Məzmunu olan bütün siniflər (1–8). GRADES_WITH_CONTENT ilə sinxrondur.
+    options: GRADES_WITH_CONTENT.map((g) => ({ value: g, label: gradeLabel(g) })),
   },
   {
     key: "focus",

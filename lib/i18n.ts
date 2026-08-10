@@ -2,7 +2,7 @@
 
 // Sadə i18n: AZ/EN/RU lüğət + hydration-təhlükəsiz useT hook.
 // Dil `bilik-prefs` (localStorage) içində saxlanılır; dəyişəndə səhifə yenilənir.
-// Qeyd: dərs məzmunu (suallar/variantlar) 5-ci sinif kurikulumu olduğu üçün AZ qalır.
+// Qeyd: dərs məzmunu (suallar/variantlar) AZ kurikulumu olduğu üçün AZ qalır.
 
 import { useSyncExternalStore } from "react";
 import type { Lang } from "./prefs";
@@ -501,9 +501,9 @@ const DICT: Dict = {
   // ── Landing (ana səhifə) ──
   "home.login": { az: "Daxil ol", en: "Sign in", ru: "Войти" },
   "home.badge": {
-    az: "Azərbaycan məktəbliləri üçün · 5-ci sinif",
-    en: "For Azerbaijani students · 5th grade",
-    ru: "Для школьников Азербайджана · 5 класс",
+    az: "Azərbaycan məktəbliləri üçün · 1–8-ci siniflər",
+    en: "For Azerbaijani students · grades 1–8",
+    ru: "Для школьников Азербайджана · 1–8 классы",
   },
   "home.hero1": { az: "Öyrənməyi ", en: "Make learning ", ru: "Преврати учёбу в " },
   "home.hero2": { az: "əyləncəyə", en: "fun", ru: "игру" },
@@ -554,9 +554,9 @@ const DICT: Dict = {
     ru: "3 предмета, реальная программа",
   },
   "home.r3.body": {
-    az: "5-ci sinif proqramına uyğun: hər mövzu izah + tapşırıqlarla. Riyaziyyat, Azərbaycan dili və İngilis dili.",
-    en: "Aligned with the 5th-grade program: each topic with an explanation + exercises. Math, Azerbaijani and English.",
-    ru: "По программе 5 класса: каждая тема с объяснением и заданиями. Математика, азербайджанский и английский.",
+    az: "1–8-ci sinif proqramına uyğun: hər mövzu izah + tapşırıqlarla. Riyaziyyat, Azərbaycan dili və İngilis dili.",
+    en: "Aligned with the grade 1–8 program: each topic with an explanation + exercises. Math, Azerbaijani and English.",
+    ru: "По программе 1–8 классов: каждая тема с объяснением и заданиями. Математика, азербайджанский и английский.",
   },
   "home.finalTitle": {
     az: "Bu gün öyrənməyə başla",
