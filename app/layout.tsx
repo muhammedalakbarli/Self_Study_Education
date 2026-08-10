@@ -28,14 +28,15 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://self-study-education.vercel.app"),
   title: {
-    default: "Bilik Yolu — 5-ci sinif üçün interaktiv öyrənmə",
+    default: "Bilik Yolu — 1–8-ci siniflər üçün interaktiv öyrənmə",
     template: "%s · Bilik Yolu",
   },
   description:
     "Riyaziyyat, Azərbaycan dili və İngilis dilini oyun kimi öyrən. Azərbaycan məktəbliləri üçün pulsuz, interaktiv platforma.",
   keywords: [
     "təhsil",
-    "5-ci sinif",
+    "ibtidai sinif",
+    "orta məktəb",
     "riyaziyyat",
     "Azərbaycan dili",
     "İngilis dili",
@@ -55,7 +56,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Bilik Yolu — öyrənməyi əyləncəyə çevir",
     description:
-      "5-ci sinif üçün Riyaziyyat, Azərbaycan dili və İngilis dili — oyun kimi, pulsuz.",
+      "1–8-ci siniflər üçün Riyaziyyat, Azərbaycan dili və İngilis dili — oyun kimi, pulsuz.",
     url: "/",
     siteName: "Bilik Yolu",
     locale: "az_AZ",
@@ -65,7 +66,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Bilik Yolu — öyrənməyi əyləncəyə çevir",
     description:
-      "5-ci sinif üçün interaktiv öyrənmə platforması. Pulsuz və maraqlı.",
+      "1–8-ci siniflər üçün interaktiv öyrənmə platforması. Pulsuz və maraqlı.",
   },
 };
 

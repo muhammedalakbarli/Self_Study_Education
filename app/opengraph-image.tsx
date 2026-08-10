@@ -3,7 +3,7 @@ import { ImageResponse } from "next/og";
 // Link paylaşılanda görünən sosial önizləmə şəkli (1200×630).
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = "Bilik Yolu — 5-ci sinif üçün interaktiv öyrənmə";
+export const alt = "Bilik Yolu — 1–8-ci siniflər üçün interaktiv öyrənmə";
 
 export default function OpengraphImage() {
   return new ImageResponse(

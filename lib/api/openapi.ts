@@ -19,7 +19,7 @@ export const openApiSpec = {
     title: "Bilik Yolu API",
     version: "1.0.0",
     description:
-      "5-ci sinif üçün özünütədris platformasının REST API-si. " +
+      "1–8-ci siniflər üçün özünütədris platformasının REST API-si. " +
       "Autentifikasiya Supabase sessiyası ilə (giriş/qeydiyyat httpOnly cookie qoyur).",
   },
   servers: [{ url: "/", description: "Cari mühit" }],
