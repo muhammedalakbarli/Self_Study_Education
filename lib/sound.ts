@@ -104,6 +104,25 @@ export function playSelect() {
   });
 }
 
+// Öyrənmə yolunda dərsə keçəndə xoş "addım/pop" (iki qalxan not).
+export function playStep() {
+  const ac = audioCtx();
+  play(() => {
+    if (!ac) return;
+    tone(ac, 587, 0, 0.08, "triangle", 0.09); // D5
+    tone(ac, 880, 0.06, 0.12, "sine", 0.08); // A5
+  });
+}
+
+// Yeni bölmə açılanda/başında qısa bayram akkordu (milestone).
+export function playMilestone() {
+  const ac = audioCtx();
+  play(() => {
+    if (!ac) return;
+    [523, 784, 1047].forEach((f, i) => tone(ac, f, i * 0.08, 0.2, "triangle", 0.1));
+  });
+}
+
 // Combo artdıqca yüksələn "blip" (səviyyəyə görə tezlik).
 export function playCombo(level = 1) {
   const ac = audioCtx();
