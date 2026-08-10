@@ -7,6 +7,7 @@ import Link from "next/link";
 import { Star, Flame, Crown, UserPlus, Check, type LucideIcon } from "lucide-react";
 import { getPublicProfile, loadProfileRow, memberDate, type PublicProfile } from "@/lib/profileApi";
 import { followUser, unfollowUser } from "@/lib/follows";
+import { isBotFollowed, toggleBotFollow } from "@/lib/botFollows";
 import { useAuthUser } from "@/lib/useAuthUser";
 import { levelFromXp } from "@/lib/levels";
 import { computeAchievements, type AchievementKind } from "@/lib/achievements";
@@ -43,8 +44,10 @@ export default function PublicProfilePage({
     getPublicProfile(uname).then((pr) => {
       setP(pr);
       if (pr) {
-        setFollowing(pr.amFollowing);
-        setFollowers(pr.followers);
+        // Bot: izləmə vəziyyəti localStorage-da (DB sətri yoxdur), reload-dan sonra qalır.
+        const botFollowed = pr.isBot ? isBotFollowed(pr.id) : false;
+        setFollowing(pr.isBot ? botFollowed : pr.amFollowing);
+        setFollowers(pr.followers + (botFollowed ? 1 : 0));
       }
     });
   }, [uname]);
@@ -58,8 +61,15 @@ export default function PublicProfilePage({
 
   async function toggleFollow() {
     if (!p || busy) return;
-    setBusy(true);
     const next = !following;
+    // Bot: DB yox — optimistik UI + localStorage (real profil kimi görünsün, revert etmə).
+    if (p.isBot) {
+      setFollowing(next);
+      setFollowers((c) => c + (next ? 1 : -1));
+      toggleBotFollow(p.id);
+      return;
+    }
+    setBusy(true);
     setFollowing(next);
     setFollowers((c) => c + (next ? 1 : -1));
     const ok = next ? await followUser(p.id) : await unfollowUser(p.id);
@@ -123,8 +133,9 @@ export default function PublicProfilePage({
             </div>
           </div>
 
-          {/* İzlə / İzlənilir — bot profilində gizli (DB sətri yoxdur) */}
-          {user && !isSelf && !p.isBot && (
+          {/* İzlə / İzlənilir — botlarda da göstərilir (real profildən fərqlənməsin;
+              bot izləməsi localStorage-da saxlanılır). */}
+          {user && !isSelf && (
             <button
               type="button"
               onClick={toggleFollow}
