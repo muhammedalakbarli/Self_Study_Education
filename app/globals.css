@@ -386,6 +386,64 @@ h1, h2, h3 {
   }
 }
 
+/* ── Landing (marketinq) səhifəsi effektləri ── */
+
+/* Yumşaq rəngli "blob" — fonda yavaş üzür/morflaşır */
+@keyframes blob-float {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(24px, -30px) scale(1.08);
+  }
+  66% {
+    transform: translate(-20px, 18px) scale(0.94);
+  }
+}
+.blob-float {
+  animation: blob-float 16s ease-in-out infinite;
+}
+
+/* Yavaş üzmə (hero mascot qutusu / dekor) */
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+.float-slow {
+  animation: float-slow 5s ease-in-out infinite;
+}
+
+/* Gradient mətn/fon axını */
+@keyframes gradient-pan {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.gradient-pan {
+  background-size: 200% 200%;
+  animation: gradient-pan 6s ease infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blob-float,
+  .float-slow,
+  .gradient-pan {
+    animation: none;
+  }
+}
+
 /* Ayarlardan animasiyalar söndürüləndə */
 .no-anim .ulduz-float,
 .no-anim .ulduz-wave,
@@ -399,6 +457,9 @@ h1, h2, h3 {
 .no-anim .xp-pop,
 .no-anim .pop-in,
 .no-anim .shake-x,
-.no-anim .progress-shine {
+.no-anim .progress-shine,
+.no-anim .blob-float,
+.no-anim .float-slow,
+.no-anim .gradient-pan {
   animation: none !important;
 }

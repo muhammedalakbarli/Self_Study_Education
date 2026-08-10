@@ -569,6 +569,68 @@ const DICT: Dict = {
     ru: "Создайте аккаунт, завершите первый урок и получите XP. Совершенно бесплатно.",
   },
 
+  // ── Landing: fənn vitrini ──
+  "home.subjects.title": {
+    az: "Üç fənn, bir yolda",
+    en: "Three subjects, one path",
+    ru: "Три предмета, один путь",
+  },
+  "home.subjects.body": {
+    az: "Hər fənn kurikuluma uyğun mövzu-mövzu, oyun kimi.",
+    en: "Each subject topic by topic, curriculum-aligned, like a game.",
+    ru: "Каждый предмет тема за темой, по программе, как игра.",
+  },
+  "home.subjects.math": { az: "Riyaziyyat", en: "Math", ru: "Математика" },
+  "home.subjects.az": { az: "Azərbaycan dili", en: "Azerbaijani", ru: "Азербайджанский" },
+  "home.subjects.en": { az: "İngilis dili", en: "English", ru: "Английский" },
+  "home.subjects.mathDesc": {
+    az: "Saylar, hesab, həndəsə",
+    en: "Numbers, arithmetic, geometry",
+    ru: "Числа, арифметика, геометрия",
+  },
+  "home.subjects.azDesc": {
+    az: "Qrammatika, oxu, yazı",
+    en: "Grammar, reading, writing",
+    ru: "Грамматика, чтение, письмо",
+  },
+  "home.subjects.enDesc": {
+    az: "Lüğət, dinləmə, tələffüz",
+    en: "Vocabulary, listening, speaking",
+    ru: "Лексика, аудирование, речь",
+  },
+
+  // ── Landing: oyunlaşdırma çipləri ──
+  "home.feat.title": {
+    az: "Öyrənməyi əyləncəyə çevirən hər şey",
+    en: "Everything that makes learning fun",
+    ru: "Всё, что делает учёбу увлекательной",
+  },
+  "home.feat.xp": { az: "XP və səviyyələr", en: "XP & levels", ru: "XP и уровни" },
+  "home.feat.streak": { az: "Gündəlik seriya", en: "Daily streak", ru: "Ежедневная серия" },
+  "home.feat.league": { az: "Həftəlik liqa", en: "Weekly league", ru: "Еженедельная лига" },
+  "home.feat.badge": { az: "Nişan və mükafat", en: "Badges & rewards", ru: "Значки и награды" },
+
+  // ── Landing: necə işləyir ──
+  "home.how.title": { az: "Necə işləyir?", en: "How it works", ru: "Как это работает" },
+  "home.how.s1.t": { az: "Hesab yarat", en: "Create an account", ru: "Создай аккаунт" },
+  "home.how.s1.d": {
+    az: "Sinfini seç, bir neçə saniyəyə hazırsan.",
+    en: "Pick your grade, ready in seconds.",
+    ru: "Выбери класс — готово за секунды.",
+  },
+  "home.how.s2.t": { az: "Hər gün öyrən", en: "Learn every day", ru: "Учись каждый день" },
+  "home.how.s2.d": {
+    az: "Qısa dərslər, oyun kimi tapşırıqlar.",
+    en: "Short lessons, game-like tasks.",
+    ru: "Короткие уроки, задания как игра.",
+  },
+  "home.how.s3.t": { az: "İrəlilə və qazan", en: "Progress & win", ru: "Прогресс и победа" },
+  "home.how.s3.d": {
+    az: "XP topla, seriyanı qoru, liqada yüksəl.",
+    en: "Earn XP, keep your streak, climb the league.",
+    ru: "Набирай XP, береги серию, поднимайся в лиге.",
+  },
+
   // ── Giriş / Qeydiyyat (auth) ──
   "auth.or": { az: "və ya", en: "or", ru: "или" },
   "auth.email": { az: "Email", en: "Email", ru: "Эл. почта" },
