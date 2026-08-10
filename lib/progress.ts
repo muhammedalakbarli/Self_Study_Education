@@ -8,6 +8,7 @@ export interface ProgressState {
   totalXp: number;
   streakDays: number;
   lastActiveDate: string | null; // "YYYY-MM-DD"
+  streakFreezes: number; // seriya qoruyucuları (buraxılmış günü örtür)
   completedLessons: string[]; // tamamlanmış dərs id-ləri
 }
 
@@ -15,6 +16,7 @@ const emptyState: ProgressState = {
   totalXp: 0,
   streakDays: 0,
   lastActiveDate: null,
+  streakFreezes: 0,
   completedLessons: [],
 };
 
@@ -26,13 +28,23 @@ function bakuToday(): string {
 // Saxlanmış streak yalnız aktivlik olanda serverdə yenilənir. Oxuyanda isə real
 // vəziyyəti göstərmək lazımdır: son aktivlik bugün və ya dünəndirsə seriya durur,
 // daha köhnədirsə seriya qırılıb (0). Belə: bir neçə gün girməyəndə "1 gün" qalmaz.
-export function effectiveStreak(streakDays: number, lastActiveDate: string | null): number {
+export function effectiveStreak(
+  streakDays: number,
+  lastActiveDate: string | null,
+  streakFreezes = 0,
+): number {
   if (!lastActiveDate) return 0;
   const today = bakuToday();
-  const y = new Date(today + "T00:00:00Z");
-  y.setUTCDate(y.getUTCDate() - 1);
-  const yesterday = y.toISOString().slice(0, 10);
+  const dayBefore = (iso: string, n: number): string => {
+    const d = new Date(iso + "T00:00:00Z");
+    d.setUTCDate(d.getUTCDate() - n);
+    return d.toISOString().slice(0, 10);
+  };
+  const yesterday = dayBefore(today, 1);
   if (lastActiveDate === today || lastActiveDate === yesterday) return streakDays;
+  // 1 gün buraxılıb, amma freeze var → seriya hələ də sağdır (növbəti aktivlikdə freeze
+  // serverdə işlədiləcək). Beləcə istifadəçi bir gün buraxsa da 0-a düşdüyünü görmür.
+  if (streakFreezes > 0 && lastActiveDate === dayBefore(today, 2)) return streakDays;
   return 0; // seriya qırılıb
 }
 
@@ -51,7 +63,7 @@ export async function loadProgress(userId: string): Promise<ProgressState> {
   const [statsRes, progRes] = await Promise.all([
     supabase
       .from("user_stats")
-      .select("total_xp, streak_days, last_active_date")
+      .select("total_xp, streak_days, last_active_date, streak_freezes")
       .eq("user_id", userId)
       .maybeSingle(),
     supabase.from("user_progress").select("lesson_id").eq("user_id", userId),
@@ -60,11 +72,13 @@ export async function loadProgress(userId: string): Promise<ProgressState> {
   const stats = statsRes.data;
   const rows = progRes.data ?? [];
   const lastActiveDate = stats?.last_active_date ?? null;
+  const streakFreezes = stats?.streak_freezes ?? 0;
   return {
     totalXp: stats?.total_xp ?? 0,
     // Qırılmış seriyanı oxuyanda 0 göstər (server yalnız növbəti dərsdə yeniləyir).
-    streakDays: effectiveStreak(stats?.streak_days ?? 0, lastActiveDate),
+    streakDays: effectiveStreak(stats?.streak_days ?? 0, lastActiveDate, streakFreezes),
     lastActiveDate,
+    streakFreezes,
     completedLessons: rows.map((r: { lesson_id: string }) => r.lesson_id),
   };
 }
@@ -111,6 +125,18 @@ export async function addXp(_userId: string, amount: number): Promise<void> {
   if (!amount) return;
   const supabase = createClient();
   await supabase.rpc("add_user_xp", { p_amount: amount, p_touch_streak: false });
+}
+
+// Seriya qoruyucu (freeze) qazan — cap-ə qədər (default 2). Gündəlik sandıq açılanda
+// çağırılır. Yeni freeze sayını qaytarır (RPC yoxdursa/xəta olsa sükutla 0).
+export async function grantStreakFreeze(cap = 2): Promise<number> {
+  try {
+    const supabase = createClient();
+    const { data } = await supabase.rpc("grant_streak_freeze", { p_cap: cap });
+    return typeof data === "number" ? data : 0;
+  } catch {
+    return 0;
+  }
 }
 
 // Dərs kiliddədirmi? Fəndəki əvvəlki dərs tamamlanmayıbsa kiliddədir (ilk dərs həmişə açıqdır).

@@ -5,9 +5,9 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { Star, Flame, CircleCheck, Gift } from "lucide-react";
+import { Star, Flame, CircleCheck, Gift, Shield } from "lucide-react";
 import { useContent } from "@/components/ContentProvider";
-import { loadProgress, loadActiveDays, lessonState, type ProgressState } from "@/lib/progress";
+import { loadProgress, loadActiveDays, lessonState, grantStreakFreeze, type ProgressState } from "@/lib/progress";
 import StreakCalendar from "@/components/StreakCalendar";
 import { useAuthUser } from "@/lib/useAuthUser";
 import { displayName } from "@/lib/auth";
@@ -140,6 +140,7 @@ export default function DashboardPage() {
             value={state.streakDays}
             label={t("stat.streak")}
             color="text-orange-500"
+            badge={state.streakFreezes}
             onClick={() => {
               setCalOpen(true);
               if (user) loadActiveDays(user.id).then(setActiveDays);
@@ -223,6 +224,8 @@ export default function DashboardPage() {
             onOpen={async () => {
               const reward = await openChest(user.id);
               track("chest_opened", { reward });
+              // Sandıqdan həm də seriya qoruyucu (freeze) qazan — cap 2.
+              await grantStreakFreeze().catch(() => 0);
               await loadProgress(user.id).then(setState).catch(() => {});
               await loadQuestState().then(setQuests).catch(() => {});
               return reward;
@@ -320,12 +323,14 @@ function StatChip({
   label,
   color,
   onClick,
+  badge,
 }: {
   Icon: React.ComponentType<{ size?: number; className?: string }>;
   value: number;
   label: string;
   color: string;
   onClick?: () => void;
+  badge?: number; // >0 olanda küncdə qalxan (freeze) nişanı
 }) {
   const inner = (
     <>
@@ -334,9 +339,18 @@ function StatChip({
         <div className="text-lg font-extrabold text-fg">{value}</div>
         <div className="text-[11px] text-muted">{label}</div>
       </div>
+      {badge != null && badge > 0 && (
+        <span
+          title="Seriya qoruyucu"
+          className="absolute -right-1.5 -top-1.5 flex items-center gap-0.5 rounded-full bg-sky-500 px-1.5 py-0.5 text-[10px] font-extrabold text-white shadow"
+        >
+          <Shield size={10} strokeWidth={2.5} />
+          {badge}
+        </span>
+      )}
     </>
   );
-  const cls = "flex items-center gap-2.5 rounded-2xl border border-line bg-panel px-4 py-3";
+  const cls = "relative flex items-center gap-2.5 rounded-2xl border border-line bg-panel px-4 py-3";
   if (onClick) {
     return (
       <button type="button" onClick={onClick} className={`${cls} text-left transition hover:border-orange-400 active:scale-[0.97]`}>

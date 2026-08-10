@@ -98,6 +98,7 @@ export default function PublicProfilePage({
     streakDays: p.streakDays,
     completedLessons: [],
     lastActiveDate: null,
+    streakFreezes: 0,
   }).filter((a) => a.kind !== "lessons");
 
   return (
