@@ -1,117 +1,132 @@
-# Bilik Yolu 📚
+<div align="center">
 
-Azərbaycan orta məktəb şagirdləri (5-ci sinif) üçün interaktiv öyrənmə platforması.
-Holberton + Duolingo hibrid modeli: addım-addım dərslər, tapşırıqlar, XP, streak və
-bacarıq ağacı (skill tree).
+# Bilik Yolu
 
-**Fənlər:** Riyaziyyat · Azərbaycan dili · İngilis dili
-**Model:** B2C — şagird özü qeydiyyatdan keçir, öz sürəti ilə öyrənir.
+**Azərbaycan məktəbliləri üçün oyunlaşdırılmış öyrənmə platforması**
+
+1–8-ci siniflər üçün interaktiv dərslər, tapşırıqlar, XP, seriyalar və həftəlik liqalar.
+Holberton + Duolingo hibrid modeli əsasında qurulub.
+
+![Next.js](https://img.shields.io/badge/Next.js-16-000000?logo=nextdotjs)
+![React](https://img.shields.io/badge/React-19-087EA4?logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript)
+![Supabase](https://img.shields.io/badge/Supabase-Postgres-3ECF8E?logo=supabase)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4-06B6D4?logo=tailwindcss)
+![Vercel](https://img.shields.io/badge/Deploy-Vercel-000000?logo=vercel)
+
+</div>
 
 ---
 
-## İşə salmaq
+## Xülasə
+
+Bilik Yolu — Azərbaycan orta məktəb şagirdləri üçün **B2C** öyrənmə platformasıdır: şagird özü
+qeydiyyatdan keçir, sinfini seçir və öz sürəti ilə öyrənir. Məzmun rəsmi kurikuluma uyğun qurulub və
+**1–8-ci sinifləri** əhatə edir.
+
+**Fənlər:** Riyaziyyat · Azərbaycan dili · İngilis dili
+
+## Əsas imkanlar
+
+- **Dərs axını və skill tree** — bölmə → dərs → tapşırıq; dərs bitəndə növbəti açılır (unlock).
+- **5 tapşırıq tipi** — çoxseçimli, boşluq doldur, rəqəm, söz sırası, dinləmə.
+- **Oyunlaşdırma** — XP, səviyyələr, gündəlik seriya (streak), nişanlar (achievements).
+- **Həftəlik liqalar** — Bürüncdən Almaza qədər 5 pillə; həftəlik kohort yarışı, avtomatik yüksəliş/enmə.
+- **Praktika mərkəzi** — səhvlər üzərində iş, qarışıq praktika, sürət raundu, bölmə üzrə, gündəlik çağırış.
+- **Sosial** — dost dəvəti, izləmə, ictimai profil, ümumi reytinq.
+- **Admin panel** — məzmun idarəetməsi (CRUD), analitika paneli, istifadəçi rəyləri.
+- **PWA + web push** — quraşdırıla bilən tətbiq və re-engagement bildirişləri.
+- **Çoxdillilik** — interfeys AZ / EN / RU.
+
+## Texnologiya
+
+| Sahə | Texnologiya |
+|------|-------------|
+| Frontend | Next.js 16 (App Router), React 19, TypeScript |
+| Üslub | Tailwind CSS v4, Framer Motion |
+| Backend | Supabase (Postgres, Auth, Row-Level Security) |
+| Analitika | PostHog |
+| Deploy | Vercel |
+
+## Sürətli başlanğıc
 
 ```bash
+git clone https://github.com/muhammedalakbarli/Self_Study_Education.git
+cd Self_Study_Education
 npm install
+cp .env.example .env.local   # dəyərləri doldur (aşağıya bax)
 npm run dev
 ```
 
-Sonra brauzerdə [http://localhost:3000](http://localhost:3000) aç.
+Brauzerdə [http://localhost:3000](http://localhost:3000) aç.
 
-1. Adını yaz → **Öyrənməyə başla**
-2. Dashboard-da fənn seç (məs. Riyaziyyat)
-3. Dərsə gir → izahı oxu → tapşırıqları həll et
-4. XP qazan, dərs bitəndə növbəti dərs açılır (unlock), streak artır
+## Mühit dəyişənləri
 
-Bütün proqres hələlik brauzerin **localStorage**-ında saxlanılır (server/DB lazım deyil).
+Bütün dəyişənlər və izahları [`.env.example`](.env.example) faylındadır: Supabase, PostHog (istəyə
+bağlı), web push (VAPID) və Vercel Cron. `.env.local` git-ə əlavə olunmur (gizli qalır).
 
----
+## Verilənlər bazası (Supabase)
+
+1. [supabase.com](https://supabase.com)-da layihə yarat; **Settings → API**-dən URL və `anon` açarı
+   `.env.local`-a yaz.
+2. **SQL Editor**-da `supabase/migrations/` fayllarını **sıra ilə** (0001 → …) işə sal.
+3. Məzmunu seed et:
+   ```bash
+   npx tsx supabase/seed.ts
+   ```
+   Seed idempotentdir (upsert) — təkrar işlətmək təhlükəsizdir, mövcud progresə toxunmur.
+
+Ətraflı: [`supabase/README.md`](supabase/README.md).
 
 ## Layihə strukturu
 
 ```
-app/
-  page.tsx              # Giriş (ad daxiletmə)
-  dashboard/            # Ana səhifə: XP, streak, fənn kartları
-  subjects/[slug]/      # Fənn → bölmələr və dərslər (skill tree)
-  lessons/[id]/         # Dərs: izah + tapşırıq axını
-components/
-  tasks/TaskInput.tsx   # Tapşırıq tipinə görə giriş sahəsi
-  lesson/LessonRunner.tsx # Dərsin uçdan-uca axını
+app/                 # Next.js App Router marşrutları
+  dashboard/         #   Ana səhifə: XP, streak, fənn kartları
+  subjects/[slug]/   #   Fənn → bölmələr və dərslər (skill tree)
+  lessons/[id]/      #   Dərs: izah + tapşırıq axını
+  praktika/          #   Praktika mərkəzi
+  liqa/              #   Həftəlik liqa
+  profil/  u/  dost/ #   Profil, ictimai profil, dost dəvəti
+  admin/             #   Admin: məzmun, analitika, rəylər
+  api/               #   Server marşrutları (cron və s.)
+components/          # UI komponentləri (lesson/, tasks/, ...)
 lib/
-  types.ts              # Məlumat tipləri
-  content.ts            # 5-ci sinif seed məzmunu (dərslər/tapşırıqlar)
-  grading.ts            # Cavab yoxlama məntiqi (mərkəzi funksiya)
-  progress.ts           # XP, streak, tamamlanmış dərslər (localStorage)
-  ui.ts                 # Fənn rəngləri
+  content/           #   Sinif üzrə məzmun (subjects → units → lessons → tasks)
+  grading.ts         #   Cavab yoxlama (mərkəzi məntiq)
+  grade.ts           #   Sinif filtri (subjectsForGrade)
+  leaderboard.ts     #   Liqa (kohort, rollover, həftə açarı)
+  progress.ts        #   XP, streak, tamamlanmış dərslər
+  i18n.ts            #   AZ / EN / RU tərcümələr
+  supabase/          #   Supabase client
+  types.ts           #   Məlumat tipləri
 supabase/
-  migrations/0001_init.sql  # Gələcək DB sxemi (persistensiya üçün)
+  migrations/        #   DB sxeması (sıra ilə işə sal)
+  seed.ts            #   Məzmun seed skripti
+tests/               # Vitest testləri
 ```
 
-## Yeni məzmun necə əlavə olunur
+## Skriptlər
 
-`lib/content.ts` faylında `subjects` massivinə yeni `unit`/`lesson`/`task` əlavə et.
-Tapşırıq tipləri: `multiple_choice`, `fill_blank`, `numeric`. Tiplər `lib/types.ts`-də.
+| Əmr | İş |
+|-----|-----|
+| `npm run dev` | Development server |
+| `npm run build` | Production build |
+| `npm run start` | Production server |
+| `npm run lint` | ESLint |
+| `npm run test` | Vitest testləri |
+| `npm run typecheck` | TypeScript tip yoxlaması |
 
----
+## Deploy
 
-## Yol xəritəsi (növbəti addımlar)
+Vercel-ə deploy olunur. Mühit dəyişənləri Vercel layihə parametrlərində təyin edilir; `main`-ə
+hər merge avtomatik production deploy tetikləyir.
 
-- [x] **Faza 1-5:** İşləyən MVP prototip (auth-lite, dərs axını, XP/streak, unlock)
-- [ ] **Supabase-ə keçid:** `supabase/migrations/0001_init.sql` sxemini işə sal,
-      `lib/progress.ts` funksiyalarını DB ilə əvəz et, real qeydiyyat/giriş (auth) qoş
-- [ ] Məzmunu genişləndir: AZ dili + İngilis dili üçün tam bölmələr
-- [ ] Yeni tapşırıq tipləri: `matching`, `short_text`
-- [ ] 6, 7, 8-ci siniflər
-- [ ] Vercel-ə deploy
+## İş axını və töhfə
 
-### Supabase qoşmaq (qısa)
+Branch → Pull Request axını üçün [`CONTRIBUTING.md`](CONTRIBUTING.md)-a bax. Memarlıq icmalı:
+[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 
-1. [supabase.com](https://supabase.com)-da pulsuz layihə yarat
-2. SQL Editor-da `supabase/migrations/0001_init.sql`-i işə sal
-3. `.env.local` faylına `NEXT_PUBLIC_SUPABASE_URL` və `NEXT_PUBLIC_SUPABASE_ANON_KEY` əlavə et
-4. `@supabase/ssr` ilə client yarat və `lib/progress.ts`-i DB sorğuları ilə əvəz et
-   (paketlər artıq quraşdırılıb)
+## Lisenziya
 
----
-
-## Komanda üçün qurulum (Getting started)
-
-1. Reponu klonla və qovluğa keç:
-   ```bash
-   git clone https://github.com/muhammedalakbarli/Self_Study_Education.git
-   cd Self_Study_Education
-   ```
-2. Paketləri qur: `npm install`
-3. Env faylını hazırla: `.env.example`-i `.env.local` kimi kopyala və dəyərləri yaz
-   (Supabase qoşulana qədər boş qala bilər — app localStorage ilə də işləyir):
-   ```bash
-   cp .env.example .env.local
-   ```
-4. İşə sal: `npm run dev` → brauzerdə [http://localhost:3000](http://localhost:3000)
-
-Yoxlama: `npx tsc --noEmit` (tip yoxlaması təmiz olmalıdır).
-
-## Git iş axını (branch + PR)
-
-Heç kim birbaşa `main`-ə push etmir. Hər iş belə gedir:
-
-1. `main`-dən yeni branch aç: `git checkout main && git pull && git checkout -b feature/qisa-ad`
-2. İşlə, kiçik commit-lər et, öz adınla: `git commit -m "..."`
-3. Branch-ı göndər: `git push -u origin feature/qisa-ad`
-4. GitHub-da **Pull Request** aç. **Mahammad** yoxlayıb `main`-ə merge edir.
-5. `main` həmişə işlək qalır. Kiçik və tez-tez PR-lar ver.
-
-Branch adı nümunələri: `feature/auth`, `feature/profil`, `content/riyaziyyat-u3`, `fix/mobil-sidebar`.
-
-## Supabase qurulumu (backend)
-
-1. [supabase.com](https://supabase.com)-da pulsuz layihə yarat.
-2. **Settings > API**-dən `Project URL` və `anon public` açarını götür, `.env.local`-a yaz.
-3. **SQL Editor**-da `supabase/migrations/0001_init.sql`-i işə sal (cədvəllər yaransın).
-4. Sonra: `@supabase/ssr` ilə client (`lib/supabase/`), auth və `lib/progress.ts`-in DB-yə köçürülməsi
-   (paketlər artıq quraşdırılıb).
-
----
-
-> Qeyd: "Bilik Yolu" işlək addır — dəyişdirilə bilər.
+Bu proqram təminatı proprietardır. Bütün hüquqlar qorunur — bax [`LICENSE`](LICENSE).
