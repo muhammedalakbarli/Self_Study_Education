@@ -339,7 +339,7 @@ const DICT: Dict = {
     en: "Solve 5 tasks, stay in shape.",
     ru: "Реши 5 заданий, будь в форме.",
   },
-  "practice.mistakes": { az: "Səhvlər üzərində iş", en: "Review mistakes", ru: "Работа над ошибками" },
+  "practice.mistakes": { az: "Təkrar vaxtıdır", en: "Time to review", ru: "Пора повторить" },
   "practice.mixed": { az: "Qarışıq praktika", en: "Mixed practice", ru: "Смешанная практика" },
   "practice.mixedDesc": {
     az: "Tamamladığın dərslərdən 10 təsadüfi tapşırıq",
@@ -354,7 +354,7 @@ const DICT: Dict = {
   },
   "practice.byUnit": { az: "Bölmə üzrə praktika", en: "Practice by unit", ru: "Практика по разделам" },
   "practice.tasks": { az: "tapşırıq", en: "tasks", ru: "заданий" },
-  "practice.noMistakes": { az: "Səhvin yoxdur — əla!", en: "No mistakes — great!", ru: "Ошибок нет — отлично!" },
+  "practice.noMistakes": { az: "Təkrar yoxdur — əla!", en: "Nothing to review — great!", ru: "Нечего повторять — отлично!" },
 
   // Profil
   "profile.progress": { az: "Fənlər üzrə irəliləyiş", en: "Progress by subject", ru: "Прогресс по предметам" },

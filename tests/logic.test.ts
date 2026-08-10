@@ -4,6 +4,17 @@ import { levelFromXp } from "@/lib/levels";
 import { weekKey } from "@/lib/leaderboard";
 import { monthlyBadgeTier, monthKey } from "@/lib/monthly";
 import { todaysQuests, questValue, isQuestDone } from "@/lib/quests";
+import {
+  scheduleCorrect,
+  scheduleWrong,
+  upsertWrong,
+  applyCorrect,
+  dueItems,
+  migrateFromMistakes,
+  INTERVALS_DAYS,
+  MAX_BOX,
+  type SrsItem,
+} from "@/lib/srs";
 import type {
   MultipleChoiceTask,
   FillBlankTask,
@@ -106,5 +117,58 @@ describe("todaysQuests", () => {
     const q = { id: "xp20", kind: "xp" as const, goal: 20, rewardXp: 10, labelKey: "quest.xp" };
     expect(isQuestDone(state, q)).toBe(true);
     expect(isQuestDone({ ...state, xp: 10 }, q)).toBe(false);
+  });
+});
+
+// ── SRS (aralıqlı təkrar) ──
+describe("srs", () => {
+  const DAY = 86_400_000;
+  const now = 1_700_000_000_000;
+
+  it("səhv → box 0, dərhal due", () => {
+    expect(scheduleWrong("t1", now)).toEqual({ id: "t1", box: 0, dueAt: now });
+  });
+
+  it("düz cavab qutunu irəli aparır və dueAt-i gələcəyə qoyur", () => {
+    const item: SrsItem = { id: "t1", box: 0, dueAt: now };
+    const next = scheduleCorrect(item, now);
+    expect(next.box).toBe(1);
+    expect(next.dueAt).toBe(now + INTERVALS_DAYS[1] * DAY);
+    // ardıcıl düz cavablar qutunu artırır
+    expect(scheduleCorrect(next, now).box).toBe(2);
+  });
+
+  it("box MAX_BOX-dan yuxarı qalxmır", () => {
+    const maxed: SrsItem = { id: "t1", box: MAX_BOX, dueAt: now };
+    expect(scheduleCorrect(maxed, now).box).toBe(MAX_BOX);
+  });
+
+  it("upsertWrong mövcud item-i sıfırlayır (dublikat yaratmır)", () => {
+    const items: SrsItem[] = [{ id: "t1", box: 3, dueAt: now + 10 * DAY }];
+    const out = upsertWrong(items, "t1", now);
+    expect(out).toHaveLength(1);
+    expect(out[0]).toEqual({ id: "t1", box: 0, dueAt: now });
+  });
+
+  it("applyCorrect MAX_BOX-da item-i mənimsənilmiş kimi çıxarır", () => {
+    const items: SrsItem[] = [{ id: "t1", box: MAX_BOX, dueAt: now }];
+    expect(applyCorrect(items, "t1", now)).toHaveLength(0);
+  });
+
+  it("dueItems yalnız vaxtı çatanları, erkəndən sıralı qaytarır", () => {
+    const items: SrsItem[] = [
+      { id: "gec", box: 2, dueAt: now + DAY },
+      { id: "due2", box: 0, dueAt: now - 100 },
+      { id: "due1", box: 0, dueAt: now - 200 },
+    ];
+    expect(dueItems(items, now).map((i) => i.id)).toEqual(["due1", "due2"]);
+  });
+
+  it("migrateFromMistakes köhnə siyahını due itemlərə çevirir", () => {
+    const out = migrateFromMistakes(["a", "b"], now);
+    expect(out).toEqual([
+      { id: "a", box: 0, dueAt: now },
+      { id: "b", box: 0, dueAt: now },
+    ]);
   });
 });

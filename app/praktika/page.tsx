@@ -9,7 +9,7 @@ import { useAuthUser } from "@/lib/useAuthUser";
 import { loadProgress, type ProgressState } from "@/lib/progress";
 import { useContent } from "@/components/ContentProvider";
 import { subjectsForGrade } from "@/lib/grade";
-import { loadMistakes, removeMistake } from "@/lib/mistakes";
+import { loadDueTaskIds, markCorrect } from "@/lib/srs";
 import { isPassageTask } from "@/lib/content";
 import { isDailyDone, markDailyDone } from "@/lib/daily";
 import { useT, hasKey } from "@/lib/i18n";
@@ -40,7 +40,7 @@ export default function PracticePage() {
     if (user) loadProgress(user.id).then(setState);
   }, [user]);
   useEffect(() => {
-    loadMistakes().then(setMistakes);
+    loadDueTaskIds().then(setMistakes);
   }, []);
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -85,9 +85,9 @@ export default function PracticePage() {
             timed={session.timed}
             onExit={() => {
               setSession(null);
-              loadMistakes().then(setMistakes);
+              loadDueTaskIds().then(setMistakes);
             }}
-            onCorrect={(id) => removeMistake(id)}
+            onCorrect={(id) => markCorrect(id)}
             onFinish={
               session.daily
                 ? () => {

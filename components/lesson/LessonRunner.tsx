@@ -12,7 +12,7 @@ import type { Lesson, Task } from "@/lib/types";
 import ResultSheet from "@/components/lesson/ResultSheet";
 import { gradeTask, type UserAnswer } from "@/lib/grading";
 import { completeLesson, loadProgress } from "@/lib/progress";
-import { addMistake, removeMistake } from "@/lib/mistakes";
+import { addWrong as addMistake, markCorrect as removeMistake } from "@/lib/srs";
 import { bumpQuest, bumpQuests } from "@/lib/quests";
 import { addWeeklyXp } from "@/lib/leaderboard";
 import { addMonthlyXp } from "@/lib/monthly";
