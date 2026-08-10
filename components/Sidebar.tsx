@@ -21,6 +21,7 @@ import {
 import Logo from "./Logo";
 import { signOut } from "@/lib/auth";
 import { checkIsAdmin } from "@/lib/adminApi";
+import { loadDueTaskIds } from "@/lib/srs";
 import { useT } from "@/lib/i18n";
 
 const NAV = [
@@ -36,13 +37,24 @@ export default function Sidebar() {
   const router = useRouter();
   const t = useT();
   const [isAdmin, setIsAdmin] = useState(false);
+  const [hasDue, setHasDue] = useState(false);
 
   useEffect(() => {
     checkIsAdmin().then(setIsAdmin);
   }, []);
+  // Təkrar vaxtı çatan tapşırıq varsa Praktika üzərində qırmızı nöqtə göstər.
+  useEffect(() => {
+    loadDueTaskIds()
+      .then((ids) => setHasDue(ids.length > 0))
+      .catch(() => {});
+  }, [pathname]);
 
   const isActive = (match: string[]) =>
     match.some((m) => pathname === m || pathname.startsWith(m + "/"));
+
+  // Praktika ikonunun küncündə "diqqət" nöqtəsi (təkrar var və o səhifədə deyil).
+  const showDot = (href: string, on: boolean) =>
+    href === "/praktika" && hasDue && !on;
 
   async function logout() {
     await signOut();
@@ -93,7 +105,12 @@ export default function Sidebar() {
 
             return (
               <Link key={href} href={href} className={cls}>
-                <Icon size={22} strokeWidth={on ? 2.6 : 2.2} />
+                <span className="relative">
+                  <Icon size={22} strokeWidth={on ? 2.6 : 2.2} />
+                  {showDot(href, on) && (
+                    <span className="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-panel" />
+                  )}
+                </span>
                 {label}
               </Link>
             );
@@ -122,7 +139,12 @@ export default function Sidebar() {
                 on ? "text-brand" : "text-muted"
               }`}
             >
-              <Icon size={22} strokeWidth={on ? 2.6 : 2.2} />
+              <span className="relative">
+                <Icon size={22} strokeWidth={on ? 2.6 : 2.2} />
+                {showDot(href, on) && (
+                  <span className="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-panel" />
+                )}
+              </span>
               {t(key)}
             </Link>
           );
