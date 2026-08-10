@@ -9,7 +9,7 @@ import { useAuthUser } from "@/lib/useAuthUser";
 import { loadProgress, type ProgressState } from "@/lib/progress";
 import { useContent } from "@/components/ContentProvider";
 import { subjectsForGrade } from "@/lib/grade";
-import { loadDueTaskIds, markCorrect } from "@/lib/srs";
+import { loadDueTaskIds, markCorrect, addWrong } from "@/lib/srs";
 import { isPassageTask } from "@/lib/content";
 import { isDailyDone, markDailyDone } from "@/lib/daily";
 import { useT, hasKey } from "@/lib/i18n";
@@ -88,6 +88,7 @@ export default function PracticePage() {
               loadDueTaskIds().then(setMistakes);
             }}
             onCorrect={(id) => markCorrect(id)}
+            onWrong={(id) => addWrong(id)}
             onFinish={
               session.daily
                 ? () => {

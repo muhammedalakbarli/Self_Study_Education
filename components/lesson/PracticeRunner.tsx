@@ -25,6 +25,7 @@ interface Props {
   timed?: boolean;
   onExit: () => void;
   onCorrect?: (taskId: string) => void;
+  onWrong?: (taskId: string) => void; // səhv cavab → zəif mövzu (SRS) qeydi
   onFinish?: () => void; // dəst bitəndə (nəticə ekranı) çağırılır
 }
 
@@ -33,7 +34,7 @@ export default function PracticeRunner(props: Props) {
 }
 
 // ── Adi praktika ──────────────────────────────────────────────
-function ReviewRunner({ tasks, onExit, onCorrect, onFinish }: Props) {
+function ReviewRunner({ tasks, onExit, onCorrect, onWrong, onFinish }: Props) {
   const [index, setIndex] = useState(0);
   const [answer, setAnswer] = useState<UserAnswer | null>(null);
   const [checked, setChecked] = useState(false);
@@ -60,6 +61,7 @@ function ReviewRunner({ tasks, onExit, onCorrect, onFinish }: Props) {
       playCorrect();
     } else {
       setStreak(0);
+      onWrong?.(task.id);
       playWrong();
     }
   }
