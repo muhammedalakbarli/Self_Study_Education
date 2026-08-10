@@ -1,11 +1,9 @@
 "use client";
 
-// "Bilik Yolu" öyrənmə xəritəsi — Duolingo-üslubu tək sütunlu, sinus-zigzaq yol.
-// Yuxarıdan-aşağı: 1-ci dərs yuxarıda, aşağı endikcə yeni mövzular açılır.
-// Düyünlər arası əyri "trail" (keçilmiş hissə rəngli, qarşıdakı boz-kəsik), cari
-// düyün nəfəs alır + halo + "BAŞLA", kiliddə düyün toxunanda titrəyir. Hər bölmə
-// başında rəngli banner (milestone). Fon boyu incə parıltılar. Hər şey
-// reduced-motion/.no-anim-ə tabedir.
+// "Bilik Yolu" öyrənmə xəritəsi — Duolingo-üslubu tək sütunlu zigzag yol.
+// Qalın 3D düyünlər (altında dərinlik kölgəsi), düyünlər arası xətt YOX (Duolingo kimi),
+// cari düyün qızılı + "BAŞLA" balonu + halo, kiliddə düyün toxunanda titrəyir. Hər bölmə
+// başında rəngli banner. Ulduz yolun yanında platformada. Reduced-motion/.no-anim tabedir.
 
 import Link from "next/link";
 import { useState } from "react";
@@ -26,63 +24,27 @@ export interface PathNode {
   unitTitle?: string; // dolu isə bu düyün yeni bölmənin başıdır (banner tetikləyir)
 }
 
-// Sabit en — connector həndəsəsi deterministik olsun deyə (mərkəz x = 150).
+// Sabit en; zigzag amplitudası (Duolingo kimi orta).
 const LANE = 300;
-const CENTER = LANE / 2;
-const AMPLITUDE = 90;
-const offsetAt = (i: number) => Math.round(Math.sin(i * 0.8) * AMPLITUDE);
+const AMPLITUDE = 78;
+const offsetAt = (i: number) => Math.round(Math.sin(i * 0.9) * AMPLITUDE);
 
-// Bölmələr üçün növbələşən rəng temaları (uşaq üçün rəngarəng, professional gradient).
+// Bölmələr üçün növbələşən rəng temaları.
 const UNIT_THEMES = [
-  "from-violet-500 to-indigo-600",
   "from-emerald-500 to-teal-600",
+  "from-violet-500 to-indigo-600",
   "from-amber-500 to-orange-600",
   "from-pink-500 to-rose-600",
   "from-sky-500 to-blue-600",
   "from-fuchsia-500 to-purple-600",
 ];
 
-// İki düyün arasında əyri yol seqmenti.
-function Connector({
-  topX,
-  bottomX,
-  reached,
-  brand,
-}: {
-  topX: number;
-  bottomX: number;
-  reached: boolean;
-  brand: boolean;
-}) {
-  const H = 46;
-  const x1 = CENTER + topX;
-  const x2 = CENTER + bottomX;
-  const d = `M ${x1} 0 C ${x1} ${H * 0.5}, ${x2} ${H * 0.5}, ${x2} ${H}`;
-  const stroke = reached
-    ? brand
-      ? "var(--color-brand)"
-      : "var(--color-success)"
-    : "var(--color-line)";
-  return (
-    <svg
-      width={LANE}
-      height={H}
-      viewBox={`0 0 ${LANE} ${H}`}
-      className="pointer-events-none -my-1 block"
-      aria-hidden
-    >
-      <path
-        d={d}
-        fill="none"
-        stroke={stroke}
-        strokeWidth={6}
-        strokeLinecap="round"
-        strokeDasharray={reached ? undefined : "1 13"}
-        className={reached ? undefined : "trail-dash"}
-      />
-    </svg>
-  );
-}
+// Düyünün 3D rəngləri (üz + alt dərinlik kölgəsi).
+const NODE_STYLE: Record<NodeState, { bg: string; depth: string; text: string }> = {
+  done: { bg: "#22c55e", depth: "#15803d", text: "#fff" },
+  current: { bg: "#f5b60a", depth: "#c98703", text: "#fff" },
+  locked: { bg: "var(--color-panel-2)", depth: "var(--color-line)", text: "var(--color-muted)" },
+};
 
 // Bölmə banneri — rəngli gradient, ikon + başlıq; keçilmişsə kubok. Görünəndə səs.
 function UnitBanner({
@@ -102,7 +64,7 @@ function UnitBanner({
       viewport={{ once: true, margin: "-30px" }}
       onViewportEnter={() => reached && playMilestone()}
       transition={{ type: "spring", stiffness: 240, damping: 22 }}
-      className="relative z-10 my-3 w-full"
+      className="relative z-10 my-4 w-full"
     >
       <div
         className={`flex items-center gap-3 rounded-2xl bg-gradient-to-r ${theme} px-4 py-3 shadow-lg`}
@@ -131,63 +93,35 @@ function NodeButton({ node }: { node: PathNode }) {
   const isCurrent = node.state === "current";
   const isLocked = node.state === "locked";
   const Icon = isDone ? Check : isCurrent ? Star : Lock;
-
-  // Rəngli gradient + 3D "pop" gölgə.
-  const cls = isDone
-    ? "bg-gradient-to-b from-emerald-400 to-emerald-600 text-white btn-pop btn-pop-green"
-    : isCurrent
-      ? "bg-gradient-to-b from-brand to-brand-dark text-white btn-pop"
-      : "bg-panel-2 text-muted/60 ring-1 ring-line";
+  const s = NODE_STYLE[node.state];
 
   const inner = (
     <motion.div
-      whileTap={!isLocked ? { scale: 0.9, y: 2 } : undefined}
-      whileHover={!isLocked ? { y: -3 } : undefined}
-      animate={
-        isCurrent
-          ? { boxShadow: ["0 0 0 0 rgba(91,75,245,0.5)", "0 0 0 14px rgba(91,75,245,0)"] }
-          : shake
-            ? { x: [0, -6, 6, -5, 5, 0] }
-            : undefined
-      }
-      transition={
-        isCurrent
-          ? { duration: 1.6, repeat: Infinity }
-          : shake
-            ? { duration: 0.4 }
-            : { type: "spring", stiffness: 500, damping: 18 }
-      }
-      className={`relative z-10 flex h-[74px] w-[74px] items-center justify-center rounded-full ${cls} ${
+      whileTap={!isLocked ? { y: 5, boxShadow: `0 1px 0 0 ${s.depth}` } : undefined}
+      whileHover={!isLocked ? { y: -2 } : undefined}
+      transition={{ type: "spring", stiffness: 500, damping: 20 }}
+      className={`relative z-10 flex h-[82px] w-[82px] items-center justify-center rounded-full ${
         isCurrent ? "node-bob" : ""
       }`}
+      style={{ background: s.bg, color: s.text, boxShadow: `0 7px 0 0 ${s.depth}` }}
     >
-      {/* Parlaq üst işıq (glossy) — kilidli deyilsə */}
+      {/* Parlaq üst işıq (glossy) */}
       {!isLocked && (
         <span
-          className="pointer-events-none absolute inset-x-3 top-2 h-3.5 rounded-full bg-white/35 blur-[2px]"
+          className="pointer-events-none absolute inset-x-4 top-2.5 h-4 rounded-full bg-white/35 blur-[2px]"
           aria-hidden
         />
       )}
-      <Icon size={32} strokeWidth={3} {...(isCurrent ? { fill: "currentColor" } : {})} />
+      <Icon size={36} strokeWidth={3.2} {...(isCurrent || isDone ? { fill: "currentColor" } : {})} />
 
-      {/* Tamamlanmış düyünlərdə qızıl parıltı */}
-      {isDone && (
-        <span
-          className="twinkle pointer-events-none absolute -right-1 -top-1 text-amber-300"
-          style={{ animationDelay: `${(node.id.charCodeAt(0) % 5) * 0.4}s` }}
-          aria-hidden
-        >
-          <Star size={14} fill="currentColor" strokeWidth={0} />
-        </span>
-      )}
       {/* Cari düyünün yanında oynayan qığılcımlar */}
       {isCurrent && (
         <>
-          <span className="twinkle pointer-events-none absolute -left-2 top-1 text-amber-300" aria-hidden>
+          <span className="twinkle pointer-events-none absolute -left-2 top-1 text-amber-200" aria-hidden>
             <Sparkles size={13} fill="currentColor" strokeWidth={0} />
           </span>
           <span
-            className="twinkle pointer-events-none absolute -right-2 bottom-1 text-amber-200"
+            className="twinkle pointer-events-none absolute -right-2 bottom-1 text-amber-100"
             style={{ animationDelay: "0.8s" }}
             aria-hidden
           >
@@ -198,7 +132,7 @@ function NodeButton({ node }: { node: PathNode }) {
     </motion.div>
   );
 
-  // Cari/tamamlanmış: keçid + yüngül səs. Kilidli: keçid yox, titrəmə + tooltip.
+  // Cari/tamamlanmış: keçid + səs. Kilidli: keçid yox, titrəmə + tooltip.
   if (node.href && !isLocked) {
     return (
       <NodeShell isCurrent={isCurrent}>
@@ -222,7 +156,9 @@ function NodeButton({ node }: { node: PathNode }) {
         className="cursor-default"
         aria-label={`${node.title} — kilidli`}
       >
-        {inner}
+        <motion.div animate={shake ? { x: [0, -6, 6, -5, 5, 0] } : undefined} transition={{ duration: 0.4 }}>
+          {inner}
+        </motion.div>
       </button>
       {shake && (
         <motion.span
@@ -248,20 +184,20 @@ function NodeShell({
   const t = useT();
   return (
     <div className="relative flex flex-col items-center">
-      {/* Cari düyünün arxasında yumşaq işıq halosu */}
+      {/* Cari düyünün arxasında qızılı işıq halosu */}
       {isCurrent && (
         <span
-          className="pointer-events-none absolute top-2 z-0 h-[74px] w-[74px] rounded-full bg-brand/30 blur-xl"
+          className="pointer-events-none absolute top-2 z-0 h-[82px] w-[82px] rounded-full bg-amber-400/40 blur-xl"
           aria-hidden
         />
       )}
       {/* Cari dərsin üstündə tullanan "BAŞLA" balonu */}
       {isCurrent && (
-        <div className="path-bounce absolute -top-12 z-10 flex flex-col items-center">
-          <span className="rounded-xl border-2 border-brand/30 bg-panel px-3 py-1 text-xs font-extrabold uppercase tracking-wide text-brand shadow-sm">
+        <div className="path-bounce absolute -top-12 z-20 flex flex-col items-center">
+          <span className="rounded-xl bg-white px-3 py-1 text-xs font-extrabold uppercase tracking-wide text-amber-600 shadow-md">
             {t("dash.start")}
           </span>
-          <span className="-mt-[3px] h-3 w-3 rotate-45 border-b-2 border-r-2 border-brand/30 bg-panel" />
+          <span className="-mt-[3px] h-3 w-3 rotate-45 bg-white shadow-md" />
         </div>
       )}
       {children}
@@ -272,12 +208,22 @@ function NodeShell({
 function NodeLabel({ node }: { node: PathNode }) {
   return (
     <span
-      className={`mt-2 max-w-[130px] text-center text-xs leading-tight ${
+      className={`mt-3 max-w-[130px] text-center text-xs leading-tight ${
         node.state === "locked" ? "text-muted" : "font-semibold text-fg"
       }`}
     >
       {node.title}
     </span>
+  );
+}
+
+// Ulduz yolun yanında kiçik platformada (Duolingo owl kimi).
+function MascotPerch() {
+  return (
+    <div className="pointer-events-none relative flex flex-col items-center">
+      <Mascot size={64} />
+      <span className="mt-1 h-2.5 w-14 rounded-[50%] bg-black/25 blur-[2px]" aria-hidden />
+    </div>
   );
 }
 
@@ -297,7 +243,7 @@ function Decor() {
       {DECOR.map((d, i) => (
         <span
           key={i}
-          className="twinkle absolute text-brand/25"
+          className="twinkle absolute text-brand/20"
           style={{ top: d.top, left: d.left, animationDelay: d.delay }}
         >
           <Sparkles size={d.size} fill="currentColor" strokeWidth={0} />
@@ -309,13 +255,12 @@ function Decor() {
 
 export default function LearningPath({ nodes }: { nodes: PathNode[] }) {
   const rows: React.ReactNode[] = [];
-  let prevOffset: number | null = null;
   let unitIndex = -1;
 
   nodes.forEach((node, i) => {
     const off = offsetAt(i);
 
-    // Yeni bölmə başı — banner əlavə et (zigzagı sıfırla).
+    // Yeni bölmə başı — banner əlavə et.
     if (node.unitTitle) {
       unitIndex += 1;
       rows.push(
@@ -326,26 +271,11 @@ export default function LearningPath({ nodes }: { nodes: PathNode[] }) {
           reached={node.state !== "locked"}
         />,
       );
-      prevOffset = null; // banner-dən sonra connector çəkmə
     }
 
-    // Bu düyünə gələn seqment (keçilmişsə rəngli, cari isə brand, yoxsa boz-kəsik).
-    if (prevOffset !== null) {
-      rows.push(
-        <Connector
-          key={`c-${node.id}`}
-          topX={prevOffset}
-          bottomX={off}
-          reached={node.state !== "locked"}
-          brand={node.state === "current"}
-        />,
-      );
-    }
-
-    // Ulduz-u aralıqlarda, düyünün əks tərəfində göstər.
-    const showMascot = i > 0 && i % 6 === 3 && node.state !== "current";
+    // Ulduz-u aralıqlarda, düyünün əks tərəfində platformada göstər.
+    const showMascot = i > 0 && i % 5 === 2 && node.state !== "current";
     const mascotSide = off >= 0 ? -1 : 1; // düyün sağdadırsa Ulduz solda
-    const extraTop = node.state === "current" ? "pt-10" : "";
 
     rows.push(
       <motion.div
@@ -354,26 +284,24 @@ export default function LearningPath({ nodes }: { nodes: PathNode[] }) {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-40px" }}
         transition={{ type: "spring", stiffness: 260, damping: 22 }}
-        className="flex w-full flex-col items-center"
+        className="flex w-full flex-col items-center py-3"
       >
         <div
-          className={`relative flex items-center justify-center py-2 ${extraTop}`}
+          className="relative flex items-center justify-center"
           style={{ transform: `translateX(${off}px)` }}
         >
           {showMascot && (
             <div
-              className="pointer-events-none absolute top-1/2 z-10 -translate-y-1/2"
-              style={{ [mascotSide < 0 ? "right" : "left"]: "104px" }}
+              className="absolute top-1/2 z-10 -translate-y-1/2"
+              style={{ [mascotSide < 0 ? "right" : "left"]: "108px" }}
             >
-              <Mascot size={66} />
+              <MascotPerch />
             </div>
           )}
           <NodeButton node={node} />
         </div>
       </motion.div>,
     );
-
-    prevOffset = off;
   });
 
   return (
