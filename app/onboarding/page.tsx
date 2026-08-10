@@ -11,9 +11,46 @@ import { track } from "@/lib/analytics";
 import Logo from "@/components/Logo";
 import Mascot from "@/components/Mascot";
 import { GRADES_WITH_CONTENT } from "@/lib/grade";
+import { useContent } from "@/components/ContentProvider";
+import { completeLesson } from "@/lib/progress";
+import { addWrong } from "@/lib/srs";
+import Diagnostic, {
+  type DiagnosticItem,
+  type DiagnosticResult,
+} from "@/components/onboarding/Diagnostic";
+import type { Subject, Task } from "@/lib/types";
 
 type Option = { value: string | number; label: string; note?: string };
 type Step = { key: string; q: string; options: Option[] };
+
+// Diaqnostik üçün nümunə tapşırıqları seç: fokus fənnin (və ya "hamısı" halında hər
+// fənnin) ilk dərslərindən dərs başına bir təmsilçi sual (çoxseçimli üstünlük). Cap 6.
+function buildDiagnosticItems(
+  subjects: Subject[],
+  grade: number,
+  focus: string,
+): DiagnosticItem[] {
+  const gradeSubjects = subjects.filter((s) => s.grade === grade);
+  const repTask = (tasks: Task[]): Task | undefined =>
+    tasks.find((t) => t.type === "multiple_choice") ?? tasks[0];
+  const lessonsOf = (s: Subject) => s.units.flatMap((u) => u.lessons);
+
+  const items: DiagnosticItem[] = [];
+  const pushFrom = (s: Subject | undefined, n: number) => {
+    if (!s) return;
+    for (const lesson of lessonsOf(s).slice(0, n)) {
+      const task = repTask(lesson.tasks);
+      if (task) items.push({ task, lessonId: lesson.id });
+    }
+  };
+
+  if (focus && focus !== "hamisi") {
+    pushFrom(gradeSubjects.find((s) => s.slug.startsWith(focus)), 6);
+  } else {
+    for (const s of gradeSubjects.slice(0, 3)) pushFrom(s, 2);
+  }
+  return items.slice(0, 6);
+}
 
 // Azərbaycan dilində sıra saylarının şəkilçisi (1-ci, 2-ci, 3-cü, 4-cü ...).
 const GRADE_ORDINAL: Record<number, string> = {
@@ -81,11 +118,17 @@ const STEPS: Step[] = [
 
 export default function OnboardingPage() {
   const router = useRouter();
+  const { subjects } = useContent();
   const [ready, setReady] = useState(false);
   const [name, setName] = useState("");
+  const [userId, setUserId] = useState("");
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string | number>>({});
   const [saving, setSaving] = useState(false);
+  // Faza: suallar → diaqnostik təklifi → diaqnostik test.
+  const [phase, setPhase] = useState<"questions" | "offer" | "diagnostic">("questions");
+  const [diagItems, setDiagItems] = useState<DiagnosticItem[]>([]);
+  const [finishing, setFinishing] = useState(false);
 
   useEffect(() => {
     getCurrentUser().then((u) => {
@@ -98,11 +141,58 @@ export default function OnboardingPage() {
         return;
       }
       setName(displayName(u));
+      setUserId(u.id);
       setReady(true);
     });
   }, [router]);
 
+  // ── Diaqnostik təklifi / test ──
+  function startDiagnostic() {
+    const grade = Number(answers.grade);
+    const items = buildDiagnosticItems(subjects, grade, String(answers.focus ?? ""));
+    if (items.length === 0) {
+      router.replace("/dashboard"); // məzmun yoxdursa birbaşa keç
+      return;
+    }
+    setDiagItems(items);
+    setPhase("diagnostic");
+  }
+
+  async function finishDiagnostic(r: DiagnosticResult) {
+    setFinishing(true);
+    try {
+      // Bildiyi dərsləri tamamlanmış işarələ (XP-siz), səhvləri SRS-ə əlavə et.
+      for (const lessonId of r.knownLessonIds) {
+        await completeLesson(userId, lessonId, 0).catch(() => {});
+      }
+      for (const taskId of r.wrongTaskIds) {
+        await addWrong(taskId).catch(() => {});
+      }
+      track("diagnostic_completed", {
+        known: r.knownLessonIds.length,
+        total: r.knownLessonIds.length + r.wrongTaskIds.length,
+      });
+    } finally {
+      router.replace("/dashboard");
+    }
+  }
+
   if (!ready) return null;
+
+  if (phase === "diagnostic") {
+    return <Diagnostic items={diagItems} onFinish={finishDiagnostic} />;
+  }
+
+  if (phase === "offer") {
+    return (
+      <OfferScreen
+        name={name}
+        busy={finishing}
+        onStart={startDiagnostic}
+        onSkip={() => router.replace("/dashboard")}
+      />
+    );
+  }
 
   const current = STEPS[step];
   const selected = answers[current.key];
@@ -119,14 +209,15 @@ export default function OnboardingPage() {
       setStep((s) => s + 1);
       return;
     }
-    // Son addım — cavabları yadda saxla
+    // Son addım — cavabları yadda saxla, sonra diaqnostik təklifini göstər
     setSaving(true);
     const supabase = createClient();
     await supabase.auth.updateUser({
       data: { ...answers, onboarded: true },
     });
     track("onboarding_completed", answers);
-    router.replace("/dashboard");
+    setSaving(false);
+    setPhase("offer");
   }
 
   function back() {
@@ -206,7 +297,59 @@ export default function OnboardingPage() {
             disabled={selected == null || saving}
             className="w-full rounded-2xl bg-brand px-5 py-3.5 text-lg font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-40"
           >
-            {saving ? "Hazırlanır..." : isLast ? "Başla" : "Davam et"}
+            {saving ? "Hazırlanır..." : "Davam et"}
+          </button>
+        </div>
+      </main>
+    </div>
+  );
+}
+
+// Diaqnostik təklifi — istifadəçi səviyyəsini yoxlaya və ya birbaşa başlaya bilər.
+function OfferScreen({
+  name,
+  busy,
+  onStart,
+  onSkip,
+}: {
+  name: string;
+  busy: boolean;
+  onStart: () => void;
+  onSkip: () => void;
+}) {
+  return (
+    <div className="flex min-h-screen flex-col bg-ink">
+      <header className="mx-auto flex w-full max-w-xl items-center justify-center px-5 py-5">
+        <Logo size={30} />
+      </header>
+      <main className="mx-auto flex w-full max-w-xl flex-1 flex-col items-center px-5 pb-8">
+        <div className="mt-6 flex flex-col items-center">
+          <Mascot size={100} mood="thinking" />
+          <h1 className="mt-5 text-center text-2xl font-extrabold text-fg sm:text-3xl">
+            Səviyyəni yoxlayaq, {name}?
+          </h1>
+          <p className="mt-3 max-w-md text-center text-muted">
+            Bir neçə sualla nələri bildiyini yoxlayaq — bildiyin dərsləri keçək ki, vaxtını
+            boş yerə sərf etməyəsən. İstəməsən, birbaşa başlaya bilərsən.
+          </p>
+        </div>
+
+        <div className="mt-auto w-full space-y-3 pt-8">
+          <button
+            type="button"
+            onClick={onStart}
+            disabled={busy}
+            className="w-full rounded-2xl bg-brand px-5 py-3.5 text-lg font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark disabled:opacity-40"
+          >
+            {busy ? "Hazırlanır..." : "Səviyyəni yoxla"}
+          </button>
+          <button
+            type="button"
+            onClick={onSkip}
+            disabled={busy}
+            className="w-full rounded-2xl border-2 border-line bg-panel px-5 py-3.5 text-lg font-extrabold text-fg btn-pop btn-pop-ghost hover:border-brand disabled:opacity-40"
+          >
+            Keç, birbaşa başla
           </button>
         </div>
       </main>
