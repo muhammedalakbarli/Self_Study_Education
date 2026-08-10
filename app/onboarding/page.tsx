@@ -159,7 +159,7 @@ export default function OnboardingPage() {
       <main className="mx-auto flex w-full max-w-xl flex-1 flex-col px-5 pb-8">
         {step === 0 && (
           <div className="mt-4 flex flex-col items-center">
-            <Mascot size={92} />
+            <Mascot size={92} mood="wave" />
             <p className="mt-3 text-center text-muted">
               Salam, mən <span className="font-extrabold text-brand">Ulduz</span>! Xoş
               gəldin, <span className="font-bold text-fg">{name}</span> — səni tanımaq

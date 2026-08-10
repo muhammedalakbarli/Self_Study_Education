@@ -9,6 +9,14 @@ import Mascot from "@/components/Mascot";
 import QuestionFeedback from "@/components/lesson/QuestionFeedback";
 import { useT } from "@/lib/i18n";
 
+// Nəticə lövhəsindəki kiçik konfeti (sabit mövqe/rəng — render başına stabil).
+const CONF_COLORS = ["#ff9500", "#5b4bf5", "#22c55e", "#ff4d6d", "#f5c518", "#38bdf8"];
+const CONFETTI = Array.from({ length: 10 }, (_, i) => ({
+  left: i * 10 + 4,
+  delay: (i % 5) * 0.05,
+  color: CONF_COLORS[i % CONF_COLORS.length],
+}));
+
 interface Props {
   correct: boolean;
   correctText?: string; // səhv olduqda düzgün cavab
@@ -41,7 +49,19 @@ export default function ResultSheet({
       }`}
     >
       <div className="mx-auto max-w-xl px-4 py-5">
-       <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+       <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center">
+        {/* Kiçik uğuru qeyd et — düzgün cavabda konfeti yağır */}
+        {correct && (
+          <div aria-hidden className="pointer-events-none absolute -top-2 left-4 h-0 w-40 overflow-visible">
+            {CONFETTI.map((c, i) => (
+              <span
+                key={i}
+                className="confetti-piece"
+                style={{ left: `${c.left}%`, backgroundColor: c.color, animationDelay: `${c.delay}s` }}
+              />
+            ))}
+          </div>
+        )}
         <motion.div
           initial={{ scale: 0.5, rotate: correct ? -12 : 0 }}
           animate={
@@ -51,14 +71,18 @@ export default function ResultSheet({
           className="flex items-center gap-3"
         >
           <span
-            className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full ${
+            className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full ${correct ? "pop-in" : "shake-x"} ${
               correct ? "bg-emerald-500 text-white" : "bg-red-500 text-white"
             }`}
           >
             {correct ? <Check size={26} strokeWidth={3.5} /> : <X size={26} strokeWidth={3.5} />}
           </span>
           <div className="hidden sm:block">
-            <Mascot size={44} mood={correct ? "celebrate" : "sad"} animate={false} />
+            <Mascot
+              size={44}
+              mood={correct ? (comboBonus > 0 ? "love" : "celebrate") : "sad"}
+              animate={correct}
+            />
           </div>
         </motion.div>
 
@@ -74,7 +98,7 @@ export default function ResultSheet({
             <div className="mt-0.5 font-bold text-fg">{correctText}</div>
           )}
           {correct && comboBonus > 0 && (
-            <div className="mt-0.5 text-sm font-extrabold text-orange-500">
+            <div className="xp-pop mt-0.5 inline-block text-sm font-extrabold text-orange-500">
               🔥 +{comboBonus} XP combo!
             </div>
           )}

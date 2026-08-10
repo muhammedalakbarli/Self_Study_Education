@@ -160,9 +160,45 @@ h1, h2, h3 {
   transform-origin: 15% 92%;
   animation: ulduz-wave 0.75s ease-in-out infinite;
 }
+/* Salamlama — daha canlı, daha geniş əl sallama */
+.ulduz-wave-strong {
+  animation-duration: 0.5s;
+}
+
+/* Göz qırpma (idle) — arada bir gözlər qapanıb açılır */
+@keyframes ulduz-blink {
+  0%,
+  92%,
+  100% {
+    transform: scaleY(1);
+  }
+  96% {
+    transform: scaleY(0.1);
+  }
+}
+.ulduz-blink {
+  animation: ulduz-blink 4.2s ease-in-out infinite;
+}
+
+/* Lipsync — audio çalınarkən ağız açılıb-bağlanır */
+@keyframes ulduz-talk {
+  0%,
+  100% {
+    transform: scaleY(0.28);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+.ulduz-talk {
+  animation: ulduz-talk 0.22s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .ulduz-float,
-  .ulduz-wave {
+  .ulduz-wave,
+  .ulduz-blink,
+  .ulduz-talk {
     animation: none;
   }
 }
@@ -234,12 +270,135 @@ h1, h2, h3 {
   }
 }
 
+/* ── Qələbə/rəy delight animasiyaları ── */
+
+/* Konfeti — kiçik uğur anını qeyd et (düzgün cavab, dərs bitmə) */
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-10px) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(120px) rotate(540deg);
+    opacity: 0;
+  }
+}
+.confetti-piece {
+  position: absolute;
+  top: 0;
+  width: 9px;
+  height: 14px;
+  border-radius: 2px;
+  animation: confetti-fall 0.9s ease-in forwards;
+}
+
+/* XP artımı — yuxarı süzülüb solan "+10 XP" balonu */
+@keyframes xp-pop {
+  0% {
+    transform: translateY(0) scale(0.6);
+    opacity: 0;
+  }
+  25% {
+    transform: translateY(-8px) scale(1.1);
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-34px) scale(1);
+    opacity: 0;
+  }
+}
+.xp-pop {
+  animation: xp-pop 1.1s ease-out forwards;
+}
+
+/* Instant feedback — düzgün/səhv anında elementin "canlanması" */
+@keyframes pop-in {
+  0% {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.06);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.pop-in {
+  animation: pop-in 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* Səhv cavab — yüngül titrəmə */
+@keyframes shake-x {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-7px);
+  }
+  40% {
+    transform: translateX(6px);
+  }
+  60% {
+    transform: translateX(-4px);
+  }
+  80% {
+    transform: translateX(3px);
+  }
+}
+.shake-x {
+  animation: shake-x 0.4s ease-in-out both;
+}
+
+/* Progress bar — dolma zolağında yumşaq parıltı axını */
+@keyframes progress-shine {
+  0% {
+    background-position: -120% 0;
+  }
+  100% {
+    background-position: 220% 0;
+  }
+}
+.progress-shine {
+  background-image: linear-gradient(
+    100deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.45) 50%,
+    transparent 80%
+  );
+  background-size: 60% 100%;
+  background-repeat: no-repeat;
+  animation: progress-shine 1.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .confetti-piece,
+  .xp-pop,
+  .pop-in,
+  .shake-x,
+  .progress-shine {
+    animation: none;
+  }
+}
+
 /* Ayarlardan animasiyalar söndürüləndə */
 .no-anim .ulduz-float,
 .no-anim .ulduz-wave,
+.no-anim .ulduz-blink,
+.no-anim .ulduz-talk,
 .no-anim .path-bounce,
 .no-anim .node-bob,
 .no-anim .twinkle,
-.no-anim .trail-dash {
+.no-anim .trail-dash,
+.no-anim .confetti-piece,
+.no-anim .xp-pop,
+.no-anim .pop-in,
+.no-anim .shake-x,
+.no-anim .progress-shine {
   animation: none !important;
 }
