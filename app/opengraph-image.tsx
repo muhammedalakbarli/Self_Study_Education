@@ -21,13 +21,20 @@ export default function OpengraphImage() {
           fontFamily: "sans-serif",
         }}
       >
-        {/* Loqo işarəsi — Imparo raketi */}
-        <svg width="150" height="150" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M24 33 L16 44 L26 40 Z" fill="#ffd166" />
-          <path d="M40 33 L48 44 L38 40 Z" fill="#ffd166" />
-          <path d="M27 41 L32 56 L37 41 Z" fill="#ff6b5e" />
-          <path d="M32 8 C38 13 41 21 41 29 C41 35 39 39 36 43 L28 43 C25 39 23 35 23 29 C23 21 26 13 32 8 Z" fill="#ffffff" />
-          <circle cx="32" cy="25" r="5.5" fill="#3b2723" />
+        {/* Loqo işarəsi — Zefi üzü */}
+        <svg width="170" height="170" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 30 L11 3 L34 18 Z" fill="#F47B3A" stroke="#B84E1F" stroke-width="2.5" stroke-linejoin="round" />
+          <path d="M48 30 L53 3 L30 18 Z" fill="#F47B3A" stroke="#B84E1F" stroke-width="2.5" stroke-linejoin="round" />
+          <path d="M18 24 L16 11 L28 19 Z" fill="#FF8F70" />
+          <path d="M46 24 L48 11 L36 19 Z" fill="#FF8F70" />
+          <circle cx="32" cy="36" r="23" fill="#F47B3A" stroke="#B84E1F" stroke-width="2.5" />
+          <path d="M32 27 C43 27 48 37 46 45 C43 53 38 57 32 57 C26 57 21 53 18 45 C16 37 21 27 32 27 Z" fill="#FFF4DF" />
+          <ellipse cx="24" cy="36" rx="4.6" ry="6" fill="#3B2723" />
+          <ellipse cx="40" cy="36" rx="4.6" ry="6" fill="#3B2723" />
+          <circle cx="22.5" cy="34" r="1.8" fill="#ffffff" />
+          <circle cx="38.5" cy="34" r="1.8" fill="#ffffff" />
+          <ellipse cx="32" cy="45" rx="3.4" ry="2.7" fill="#3B2723" />
+          <path d="M25 49 Q32 55 39 49" stroke="#3B2723" stroke-width="2.4" fill="none" stroke-linecap="round" />
         </svg>
         <div style={{ marginTop: 40, fontSize: 84, fontWeight: 800 }}>Imparo</div>
         <div style={{ marginTop: 12, fontSize: 36, opacity: 0.9 }}>

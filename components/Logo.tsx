@@ -1,6 +1,5 @@
-// "Imparo" loqosu — raket (öyrənmə səyahəti / yüksəliş). Gradient tile + ağ raket
-// gövdəsi + indigo pəncərə + amber qanadlar + gradient alov + qığılcımlar.
-// Brend: indigo + amber. Kiçik ölçüdə də oxunur (favicon ilə eyni marka).
+// "Imparo" loqosu — Zefi tülkünün üzü yumru-dördbucaqlı tile içində (Duolingo üslubu).
+// İsti palitra: Fox Orange tile + cream üz + cocoa gözlər/kontur + mərcan qulaq içi.
 
 export default function Logo({ size = 56 }: { size?: number }) {
   return (
@@ -14,39 +13,48 @@ export default function Logo({ size = 56 }: { size?: number }) {
       role="img"
     >
       <defs>
-        <linearGradient id="imparo-tile" x1="10" y1="6" x2="54" y2="58" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#ff9f43" />
-          <stop offset="1" stopColor="#f47b3a" />
+        <linearGradient id="imparo-tile" x1="8" y1="4" x2="56" y2="60" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#FF9F43" />
+          <stop offset="1" stopColor="#F47B3A" />
         </linearGradient>
-        <linearGradient id="imparo-flame" x1="32" y1="41" x2="32" y2="56" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#ffd166" />
-          <stop offset="1" stopColor="#ff6b5e" />
-        </linearGradient>
+        <radialGradient id="imparo-face" cx="40%" cy="30%" r="80%">
+          <stop offset="0" stopColor="#FFD3A0" />
+          <stop offset="60%" stopColor="#FFF4DF" />
+          <stop offset="1" stopColor="#F6E4C2" />
+        </radialGradient>
       </defs>
 
       {/* Tile + üst işıq */}
-      <rect x="6" y="6" width="52" height="52" rx="16" fill="url(#imparo-tile)" />
-      <rect x="11" y="10" width="42" height="15" rx="9" fill="#ffffff" opacity="0.14" />
+      <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#imparo-tile)" />
+      <rect x="7" y="6" width="50" height="16" rx="8" fill="#ffffff" opacity="0.14" />
 
-      {/* Qanadlar */}
-      <path d="M24 33 L16 44 L26 40 Z" fill="#ffd166" />
-      <path d="M40 33 L48 44 L38 40 Z" fill="#ffd166" />
-      {/* Alov */}
-      <path d="M27 41 L32 56 L37 41 Z" fill="url(#imparo-flame)" />
-      <path d="M30 41 L32 50 L34 41 Z" fill="#ffffff" opacity="0.65" />
+      {/* Qulaqlar */}
+      <path d="M16 30 L11 3 L34 18 Z" fill="#F47B3A" stroke="#B84E1F" strokeWidth="2.5" strokeLinejoin="round" />
+      <path d="M48 30 L53 3 L30 18 Z" fill="#F47B3A" stroke="#B84E1F" strokeWidth="2.5" strokeLinejoin="round" />
+      <path d="M18 24 L16 11 L28 19 Z" fill="#FF8F70" />
+      <path d="M46 24 L48 11 L36 19 Z" fill="#FF8F70" />
 
-      {/* Gövdə */}
+      {/* Baş + işıq + krem üz */}
+      <circle cx="32" cy="36" r="23" fill="#F47B3A" stroke="#B84E1F" strokeWidth="2.5" />
+      <ellipse cx="23" cy="24" rx="9" ry="6" fill="#ffffff" opacity="0.18" />
       <path
-        d="M32 8 C38 13 41 21 41 29 C41 35 39 39 36 43 L28 43 C25 39 23 35 23 29 C23 21 26 13 32 8 Z"
-        fill="#ffffff"
+        d="M32 27 C43 27 48 37 46 45 C43 53 38 57 32 57 C26 57 21 53 18 45 C16 37 21 27 32 27 Z"
+        fill="url(#imparo-face)"
       />
-      {/* Pəncərə */}
-      <circle cx="32" cy="25" r="5.5" fill="#3b2723" />
-      <circle cx="30.3" cy="23.3" r="1.7" fill="#ffffff" opacity="0.85" />
 
-      {/* Qığılcımlar */}
-      <path d="M14 16 l1.3 3 3 1.3 -3 1.3 -1.3 3 -1.3 -3 -3 -1.3 3 -1.3 z" fill="#ffd166" />
-      <path d="M50 31 l1 2.3 2.3 1 -2.3 1 -1 2.3 -1 -2.3 -2.3 -1 2.3 -1 z" fill="#ffd166" opacity="0.9" />
+      {/* Yanaqlar */}
+      <ellipse cx="21" cy="41" rx="3.2" ry="2.1" fill="#FF8F70" opacity="0.55" />
+      <ellipse cx="43" cy="41" rx="3.2" ry="2.1" fill="#FF8F70" opacity="0.55" />
+
+      {/* Gözlər */}
+      <ellipse cx="24" cy="36" rx="4.6" ry="6" fill="#3B2723" />
+      <ellipse cx="40" cy="36" rx="4.6" ry="6" fill="#3B2723" />
+      <circle cx="22.5" cy="34" r="1.8" fill="#ffffff" />
+      <circle cx="38.5" cy="34" r="1.8" fill="#ffffff" />
+
+      {/* Burun + təbəssüm */}
+      <ellipse cx="32" cy="45" rx="3.4" ry="2.7" fill="#3B2723" />
+      <path d="M25 49 Q32 55 39 49" stroke="#3B2723" strokeWidth="2.4" fill="none" strokeLinecap="round" />
     </svg>
   );
 }
