@@ -57,7 +57,7 @@ const POOL: Quest[] = [
 export function todaysQuests(dateKey: string = todayKey()): Quest[] {
   const seed = dateKey.split("-").reduce((a, p) => a + parseInt(p, 10), 0);
   const off = seed % POOL.length;
-  return [0, 2, 4].map((step) => POOL[(off + step) % POOL.length]);
+  return [0, 1, 2].map((step) => POOL[(off + step) % POOL.length]);
 }
 
 const EMPTY = (date: string): QuestState => ({
