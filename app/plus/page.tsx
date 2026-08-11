@@ -6,7 +6,7 @@
 import { useEffect, useState } from "react";
 import { Heart, Gem, Sparkles, BarChart3, Rocket, Crown } from "lucide-react";
 import { track } from "@/lib/analytics";
-import { loadPlus, activatePlus } from "@/lib/plus";
+import { loadPlus } from "@/lib/plus";
 import Mascot from "@/components/Mascot";
 
 const BENEFITS = [
@@ -32,13 +32,11 @@ export default function PlusPage() {
     loadPlus().then(setActive).catch(() => {});
   }, []);
 
-  async function subscribe() {
+  // Ödəniş sistemi hələ yoxdur — Plus PULSUZ aktivləşdirilmir, yalnız maraq qeyd olunur.
+  function subscribe() {
     if (busy) return;
     setBusy(true);
-    const months = PLANS.find((p) => p.id === plan)?.months ?? 1;
-    track("plus_subscribe", { plan });
-    await activatePlus(months).catch(() => {});
-    setActive(true);
+    track("plus_interest", { plan });
     setDone(true);
     setBusy(false);
   }
@@ -112,10 +110,18 @@ export default function PlusPage() {
               <Crown size={22} />
             </span>
             <div className="text-sm">
-              <div className="font-extrabold text-fg">
-                {done ? "Xoş gəldin, Plus üzvü! 🎉" : "Sən artıq Plus üzvüsən 👑"}
-              </div>
+              <div className="font-extrabold text-fg">Sən artıq Plus üzvüsən 👑</div>
               <div className="text-muted">Limitsiz can və 2× zümrüd aktivdir.</div>
+            </div>
+          </div>
+        ) : done ? (
+          <div className="mt-5 flex items-center gap-3 rounded-2xl border-2 border-emerald-500/40 bg-emerald-500/10 p-4">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-emerald-500 text-white">
+              <Sparkles size={20} fill="currentColor" strokeWidth={0} />
+            </span>
+            <div className="text-sm">
+              <div className="font-extrabold text-fg">Maraq qeyd olundu 🎉</div>
+              <div className="text-muted">Ödəniş yaxında əlavə olunacaq — səni xəbərdar edəcəyik.</div>
             </div>
           </div>
         ) : (
@@ -125,11 +131,11 @@ export default function PlusPage() {
             disabled={busy}
             className="mt-5 w-full rounded-2xl bg-brand py-4 text-lg font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark disabled:opacity-60"
           >
-            {busy ? "Aktivləşir…" : "Plus-a başla"}
+            Plus-a başla
           </button>
         )}
         <p className="mt-2 text-center text-xs text-muted">
-          İstənilən vaxt ləğv edə bilərsən. (Ödəniş sistemi tezliklə əlavə olunacaq.)
+          Ödəniş sistemi tezliklə əlavə olunacaq. Plus yalnız ödənişdən sonra aktivləşir.
         </p>
       </main>
     </div>
