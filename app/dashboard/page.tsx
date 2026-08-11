@@ -10,7 +10,6 @@ import { useContent } from "@/components/ContentProvider";
 import { loadProgress, loadActiveDays, lessonState, grantStreakFreeze, type ProgressState } from "@/lib/progress";
 import StreakCalendar from "@/components/StreakCalendar";
 import { useAuthUser } from "@/lib/useAuthUser";
-import { displayName } from "@/lib/auth";
 import { userGrade, subjectsForGrade } from "@/lib/grade";
 import { track } from "@/lib/analytics";
 import { useT } from "@/lib/i18n";
@@ -30,7 +29,6 @@ import RadialProgress from "@/components/RadialProgress";
 import LearningPath, { type PathNode } from "@/components/LearningPath";
 import { PageSkeleton } from "@/components/Skeleton";
 import Mascot from "@/components/Mascot";
-import SpeechBubble from "@/components/SpeechBubble";
 
 export default function DashboardPage() {
   const { user, ready } = useAuthUser();
@@ -123,14 +121,7 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-ink">
       <main className="mx-auto max-w-4xl px-4 py-6">
-        {/* Salamlama — Ulduz + danışıq balonu */}
-        <div className="flex items-end gap-3">
-          <Mascot size={72} />
-          <SpeechBubble className="mb-2 flex-1 font-semibold" tail="left">
-            {t("dash.greeting")}, {displayName(user)}! {t("dash.continue")} 🌟
-          </SpeechBubble>
-        </div>
-        <h1 className="mt-4 text-3xl font-bold text-fg">{t("dash.title")}</h1>
+        <h1 className="text-3xl font-bold text-fg">{t("dash.title")}</h1>
 
         {/* Statistika zolağı */}
         <div className="mt-5 grid grid-cols-3 gap-3">
