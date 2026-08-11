@@ -45,3 +45,8 @@ next-env.d.ts
 CLAUDE.md
 AGENTS.md
 .claude/
+
+# Mobil app
+mobile/node_modules
+mobile/.env
+mobile/.expo
