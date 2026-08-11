@@ -48,6 +48,14 @@ export default function ResultSheet({
           : "border-red-400/40 bg-red-50 dark:bg-red-500/10"
       }`}
     >
+      {/* Zefi lövhənin üstündən boylanır — böyük, ayrıca (ikonun yanında sıxışmır) */}
+      <div className="pointer-events-none absolute -top-[68px] right-4 z-10 sm:right-8">
+        <Mascot
+          size={100}
+          mood={correct ? (comboBonus > 0 ? "love" : "celebrate") : "sad"}
+          animate={correct}
+        />
+      </div>
       <div className="mx-auto max-w-xl px-4 py-5">
        <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center">
         {/* Kiçik uğuru qeyd et — düzgün cavabda konfeti yağır */}
@@ -77,13 +85,6 @@ export default function ResultSheet({
           >
             {correct ? <Check size={26} strokeWidth={3.5} /> : <X size={26} strokeWidth={3.5} />}
           </span>
-          <div className="block">
-            <Mascot
-              size={44}
-              mood={correct ? (comboBonus > 0 ? "love" : "celebrate") : "sad"}
-              animate={correct}
-            />
-          </div>
         </motion.div>
 
         <div className="flex-1">
