@@ -11,7 +11,7 @@ import { motion } from "framer-motion";
 import { Star, Check, Lock, Flag, Trophy, Sparkles } from "lucide-react";
 import Mascot from "@/components/Mascot";
 import { useT } from "@/lib/i18n";
-import { playStep, playMilestone } from "@/lib/sound";
+import { playStep } from "@/lib/sound";
 import { vibrateWrong } from "@/lib/haptics";
 
 export type NodeState = "done" | "current" | "locked";
@@ -62,7 +62,6 @@ function UnitBanner({
       initial={{ opacity: 0, y: 10, scale: 0.96 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, margin: "-30px" }}
-      onViewportEnter={() => reached && playMilestone()}
       transition={{ type: "spring", stiffness: 240, damping: 22 }}
       className="relative z-10 my-4 w-full"
     >

@@ -28,6 +28,9 @@ import { useT } from "@/lib/i18n";
 
 // Hər bölmənin öz rəngi — uşaqlar üçün rəngarəng, cəlbedici naviqasiya.
 // icon: həmişə rəngli ikon; activeBg/activeText: aktiv olanda rəngli fon+mətn.
+// Mobil alt paneldə yalnız bunlar görünür (Praktika/Profil "Daha çoxu"nun içindədir).
+const MOBILE_HREFS = ["/dashboard", "/liqa", "/daha"];
+
 // Hər bölmənin öz rəngli qrafik ikonu (NavIcons) + aktiv fon/mətn rəngi.
 const NAV = [
   {
@@ -172,28 +175,32 @@ export default function Sidebar() {
         </button>
       </aside>
 
-      {/* Mobil — alt panel */}
-      <nav className="fixed inset-x-0 bottom-0 z-30 flex justify-around border-t border-line bg-panel py-1.5 lg:hidden">
-        {NAV.map(({ href, key, Icon, match, activeText }) => {
-          const on = isActive(match);
-          return (
-            <Link
-              key={href}
-              href={href}
-              className={`flex flex-1 flex-col items-center gap-0.5 rounded-2xl py-1 text-[11px] font-extrabold transition ${
-                on ? activeText : "text-muted"
-              }`}
-            >
-              <span className={`relative transition ${on ? "" : "opacity-70"}`}>
-                <Icon size={30} />
-                {showDot(href, on) && (
-                  <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-panel" />
-                )}
-              </span>
-              {t(key)}
-            </Link>
-          );
-        })}
+      {/* Mobil — alt panel: yalnız ikonlar (yazısız). Praktika/Profil "Daha çoxu"nun içindədir. */}
+      <nav className="fixed inset-x-0 bottom-0 z-30 flex justify-around border-t border-line bg-panel py-2 lg:hidden">
+        {NAV.filter(({ href }) => MOBILE_HREFS.includes(href)).map(
+          ({ href, Icon, match, activeBg }) => {
+            const on = isActive(match);
+            return (
+              <Link
+                key={href}
+                href={href}
+                aria-label={t(NAV.find((n) => n.href === href)!.key)}
+                className="flex flex-1 flex-col items-center"
+              >
+                <span
+                  className={`relative flex h-12 w-12 items-center justify-center rounded-2xl transition ${
+                    on ? activeBg : "opacity-80"
+                  }`}
+                >
+                  <Icon size={34} />
+                  {showDot(href, on) && (
+                    <span className="absolute right-1 top-1 h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-panel" />
+                  )}
+                </span>
+              </Link>
+            );
+          },
+        )}
       </nav>
     </>
   );

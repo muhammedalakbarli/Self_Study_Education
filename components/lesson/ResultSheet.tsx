@@ -77,7 +77,7 @@ export default function ResultSheet({
           >
             {correct ? <Check size={26} strokeWidth={3.5} /> : <X size={26} strokeWidth={3.5} />}
           </span>
-          <div className="hidden sm:block">
+          <div className="block">
             <Mascot
               size={44}
               mood={correct ? (comboBonus > 0 ? "love" : "celebrate") : "sad"}
