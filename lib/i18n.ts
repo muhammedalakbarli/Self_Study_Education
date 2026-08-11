@@ -324,6 +324,7 @@ const DICT: Dict = {
   "dash.start": { az: "Başla", en: "Start", ru: "Начать" },
   "path.locked": { az: "Kilidli", en: "Locked", ru: "Закрыто" },
   "dash.next": { az: "Növbəti", en: "Next", ru: "Далее" },
+  "dash.leagueHint": { az: "Reytinqinə bax", en: "See your ranking", ru: "Посмотреть рейтинг" },
   "dash.allDone": {
     az: "Bütün dərslər bitdi!",
     en: "All lessons complete!",

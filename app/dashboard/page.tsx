@@ -5,7 +5,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { Flame, Gift, Shield, Heart, Gem } from "lucide-react";
+import { Flame, Gift, Shield, Heart, Gem, Trophy, ChevronRight } from "lucide-react";
 import { useContent } from "@/components/ContentProvider";
 import { loadProgress, loadActiveDays, lessonState, grantStreakFreeze, type ProgressState } from "@/lib/progress";
 import { loadHearts, MAX_HEARTS } from "@/lib/hearts";
@@ -123,17 +123,12 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-ink">
-      <main className="mx-auto max-w-4xl px-4 py-6">
-        <h1 className="text-3xl font-bold text-fg">{t("dash.title")}</h1>
-
-        {/* Statistika zolağı — Canlar · Zümrüd · Streak (bir xətdə) */}
-        <div className="mt-5 grid grid-cols-3 gap-3">
-          <StatChip Icon={Heart} value={hearts} label={t("stat.hearts")} color="text-red-500" />
-          <StatChip Icon={Gem} value={state.gems} label={t("stat.gems")} color="text-emerald-500" />
-          <StatChip
+      <main className="mx-auto max-w-5xl px-4 py-6">
+        {/* Üst stat zolağı — Streak · Zümrüd · Can (Duolingo kimi sağ yuxarı) */}
+        <div className="mb-5 flex items-center justify-center gap-6 lg:justify-end">
+          <StatMini
             Icon={Flame}
             value={state.streakDays}
-            label={t("stat.streak")}
             color="text-orange-500"
             badge={state.streakFreezes}
             onClick={() => {
@@ -141,6 +136,8 @@ export default function DashboardPage() {
               if (user) loadActiveDays(user.id).then(setActiveDays);
             }}
           />
+          <StatMini Icon={Gem} value={state.gems} color="text-emerald-500" />
+          <StatMini Icon={Heart} value={hearts} color="text-red-500" />
         </div>
 
         {calOpen && (
@@ -151,61 +148,123 @@ export default function DashboardPage() {
           />
         )}
 
-        {/* Səviyyə + gündəlik questlər */}
-        <div className="mt-4 rounded-2xl border border-line bg-panel p-5">
-          <LevelBar xp={state.totalXp} t={t} />
-          {quests && (
-            <div className="mt-5 space-y-3">
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-extrabold text-fg">{t("quest.title")}</span>
-              </div>
-              {todaysQuests(quests.date).map((q) => {
-                const val = questValue(quests, q.kind);
-                const done = isQuestDone(quests, q);
-                const label = t(q.labelKey).replace("{n}", String(q.goal));
+        <div className="lg:grid lg:grid-cols-[1fr_20rem] lg:items-start lg:gap-6">
+          {/* ── Mərkəz: fənn tabları + bölmə başlığı + yol ── */}
+          <div className="min-w-0">
+            {/* Fənn tab-ları (yalnız cari sinif) */}
+            <div className="flex flex-wrap gap-2">
+              {shown.map((s) => {
+                const on = s.slug === activeSlug;
                 return (
-                  <div key={q.id} className="flex items-center gap-3">
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between text-sm">
-                        <span className={done ? "font-bold text-emerald-600" : "font-semibold text-fg"}>
-                          {label}
-                        </span>
-                        <span className="text-xs text-muted">
-                          {Math.min(val, q.goal)}/{q.goal}
-                        </span>
-                      </div>
-                      <div className="mt-1.5 h-2.5 overflow-hidden rounded-full bg-panel-2">
-                        <div
-                          className={`h-full rounded-full transition-all ${done ? "bg-emerald-500" : "bg-brand"}`}
-                          style={{ width: `${Math.min((val / q.goal) * 100, 100)}%` }}
-                        />
-                      </div>
-                    </div>
-                    <span className="w-14 shrink-0 text-right text-xs font-bold text-accent">
-                      +{q.rewardXp} XP
-                    </span>
-                  </div>
+                  <button
+                    key={s.slug}
+                    onClick={() => setActiveSlug(s.slug)}
+                    className={`rounded-2xl px-4 py-2 text-sm font-extrabold uppercase tracking-wide transition ${
+                      on
+                        ? "bg-brand text-white btn-pop"
+                        : "border-2 border-line bg-panel text-muted hover:bg-panel-2"
+                    }`}
+                  >
+                    {t(`subject.${s.slug}`)}
+                  </button>
                 );
               })}
+            </div>
 
-              {/* Bütün görevlər bitəndə — mükafat sandığı */}
-              {quests && chestAvailable(quests) && (
-                <button
-                  type="button"
-                  onClick={() => setChestOpen(true)}
-                  className="mt-1 flex w-full items-center gap-3 rounded-2xl border-2 border-accent/40 bg-accent/10 px-4 py-3 text-left transition hover:bg-accent/15"
+            {/* Bölmə başlığı (Duolingo yaşıl banner üslubu) */}
+            <div className="mt-4 flex items-center gap-4 rounded-2xl bg-gradient-to-r from-brand to-brand-dark p-5 text-white shadow-lg">
+              <RadialProgress value={scorePct} size={64} stroke={6} />
+              <div className="min-w-0 flex-1">
+                <h2 className="truncate text-lg font-extrabold">{t(`subject.${active.slug}`)}</h2>
+                <p className="truncate text-sm text-white/80">
+                  {currentLesson ? `${t("dash.next")}: ${currentLesson.title}` : t("dash.allDone")}
+                </p>
+              </div>
+              {currentLesson && (
+                <Link
+                  href={`/lessons/${currentLesson.id}`}
+                  className="shrink-0 rounded-2xl bg-white px-5 py-2.5 text-sm font-extrabold uppercase tracking-wide text-brand btn-pop [--pop:#c9c2f5] hover:bg-white/90"
                 >
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-amber-300 to-accent text-white shadow-sm">
-                    <Gift size={24} />
-                  </span>
-                  <span className="flex-1">
-                    <span className="block text-sm font-extrabold text-fg">{t("chest.readyShort")}</span>
-                    <span className="block text-xs text-muted">{t("chest.open")} →</span>
-                  </span>
-                </button>
+                  {t("dash.resume")}
+                </Link>
               )}
             </div>
-          )}
+
+            {/* Öyrənmə yolu */}
+            <div className="mt-4">
+              <LearningPath nodes={nodes} />
+            </div>
+          </div>
+
+          {/* ── Sağ sütun: səviyyə · liqa · gündəlik tapşırıqlar ── */}
+          <aside className="mt-6 space-y-4 lg:mt-0 lg:sticky lg:top-4">
+            <div className="rounded-2xl border border-line bg-panel p-5">
+              <LevelBar xp={state.totalXp} t={t} />
+            </div>
+
+            {/* Liqa kartı */}
+            <Link
+              href="/liqa"
+              className="flex items-center gap-3 rounded-2xl border border-line bg-panel p-5 transition hover:bg-panel-2"
+            >
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 text-white shadow-sm">
+                <Trophy size={22} />
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="block text-sm font-extrabold text-fg">{t("nav.league")}</span>
+                <span className="block text-xs text-muted">{t("dash.leagueHint")}</span>
+              </span>
+              <ChevronRight size={18} className="shrink-0 text-muted" />
+            </Link>
+
+            {/* Gündəlik tapşırıqlar */}
+            {quests && (
+              <div className="rounded-2xl border border-line bg-panel p-5">
+                <div className="mb-3 text-sm font-extrabold text-fg">{t("quest.title")}</div>
+                <div className="space-y-3">
+                  {todaysQuests(quests.date).map((q) => {
+                    const val = questValue(quests, q.kind);
+                    const done = isQuestDone(quests, q);
+                    const label = t(q.labelKey).replace("{n}", String(q.goal));
+                    return (
+                      <div key={q.id}>
+                        <div className="flex items-center justify-between text-sm">
+                          <span className={done ? "font-bold text-emerald-600" : "font-semibold text-fg"}>
+                            {label}
+                          </span>
+                          <span className="text-xs text-muted">
+                            {Math.min(val, q.goal)}/{q.goal}
+                          </span>
+                        </div>
+                        <div className="mt-1.5 h-2.5 overflow-hidden rounded-full bg-panel-2">
+                          <div
+                            className={`h-full rounded-full transition-all ${done ? "bg-emerald-500" : "bg-brand"}`}
+                            style={{ width: `${Math.min((val / q.goal) * 100, 100)}%` }}
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
+
+                  {chestAvailable(quests) && (
+                    <button
+                      type="button"
+                      onClick={() => setChestOpen(true)}
+                      className="mt-1 flex w-full items-center gap-3 rounded-2xl border-2 border-accent/40 bg-accent/10 px-4 py-3 text-left transition hover:bg-accent/15"
+                    >
+                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-amber-300 to-accent text-white shadow-sm">
+                        <Gift size={24} />
+                      </span>
+                      <span className="flex-1">
+                        <span className="block text-sm font-extrabold text-fg">{t("chest.readyShort")}</span>
+                        <span className="block text-xs text-muted">{t("chest.open")} →</span>
+                      </span>
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
+          </aside>
         </div>
 
         {chestOpen && user && (
@@ -222,57 +281,44 @@ export default function DashboardPage() {
             onClose={() => setChestOpen(false)}
           />
         )}
-
-        {/* Fənn tab-ları (yalnız cari sinif) */}
-        <div className="mt-6 flex flex-wrap gap-2">
-          {shown.map((s) => {
-            const on = s.slug === activeSlug;
-            return (
-              <button
-                key={s.slug}
-                onClick={() => setActiveSlug(s.slug)}
-                className={`rounded-2xl px-4 py-2 text-sm font-extrabold uppercase tracking-wide transition ${
-                  on
-                    ? "bg-brand text-white btn-pop"
-                    : "border-2 border-line bg-panel text-muted hover:bg-panel-2"
-                }`}
-              >
-                {t(`subject.${s.slug}`)}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Öyrənmə yolu */}
-        <div className="mt-4 rounded-2xl border border-line bg-panel p-5">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center gap-4">
-              <RadialProgress value={scorePct} size={72} stroke={7} />
-              <div>
-                <h2 className="text-lg font-bold text-fg">{t(`subject.${active.slug}`)}</h2>
-                <p className="text-sm text-muted">
-                  {currentLesson
-                    ? `${t("dash.next")}: ${currentLesson.title}`
-                    : t("dash.allDone")}
-                </p>
-              </div>
-            </div>
-            {currentLesson && (
-              <Link
-                href={`/lessons/${currentLesson.id}`}
-                className="rounded-2xl bg-brand px-5 py-2.5 text-sm font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark"
-              >
-                {t("dash.resume")}
-              </Link>
-            )}
-          </div>
-
-          <div className="mt-6">
-            <LearningPath nodes={nodes} />
-          </div>
-        </div>
       </main>
     </div>
+  );
+}
+
+// Üst stat zolağı üçün kompakt element (ikon + rəqəm) — Duolingo top-bar üslubu.
+function StatMini({
+  Icon,
+  value,
+  color,
+  badge,
+  onClick,
+}: {
+  Icon: React.ComponentType<{ size?: number; className?: string; fill?: string; strokeWidth?: number }>;
+  value: number;
+  color: string;
+  badge?: number;
+  onClick?: () => void;
+}) {
+  const inner = (
+    <>
+      <Icon size={26} className={color} fill="currentColor" strokeWidth={0} />
+      <span className="text-lg font-extrabold text-fg">{value}</span>
+      {badge != null && badge > 0 && (
+        <span className="absolute -right-2 -top-1.5 flex items-center gap-0.5 rounded-full bg-sky-500 px-1.5 py-0.5 text-[10px] font-extrabold text-white shadow">
+          <Shield size={10} strokeWidth={2.5} />
+          {badge}
+        </span>
+      )}
+    </>
+  );
+  const cls = "relative flex items-center gap-1.5";
+  return onClick ? (
+    <button type="button" onClick={onClick} className={`${cls} transition active:scale-95`}>
+      {inner}
+    </button>
+  ) : (
+    <div className={cls}>{inner}</div>
   );
 }
 
@@ -304,48 +350,4 @@ function LevelBar({ xp, t }: { xp: number; t: (k: string) => string }) {
       </div>
     </div>
   );
-}
-
-function StatChip({
-  Icon,
-  value,
-  label,
-  color,
-  onClick,
-  badge,
-}: {
-  Icon: React.ComponentType<{ size?: number; className?: string }>;
-  value: number;
-  label: string;
-  color: string;
-  onClick?: () => void;
-  badge?: number; // >0 olanda küncdə qalxan (freeze) nişanı
-}) {
-  const inner = (
-    <>
-      <Icon size={22} className={color} />
-      <div className="leading-tight">
-        <div className="text-lg font-extrabold text-fg">{value}</div>
-        <div className="text-[11px] text-muted">{label}</div>
-      </div>
-      {badge != null && badge > 0 && (
-        <span
-          title="Seriya qoruyucu"
-          className="absolute -right-1.5 -top-1.5 flex items-center gap-0.5 rounded-full bg-sky-500 px-1.5 py-0.5 text-[10px] font-extrabold text-white shadow"
-        >
-          <Shield size={10} strokeWidth={2.5} />
-          {badge}
-        </span>
-      )}
-    </>
-  );
-  const cls = "relative flex items-center gap-2.5 rounded-2xl border border-line bg-panel px-4 py-3";
-  if (onClick) {
-    return (
-      <button type="button" onClick={onClick} className={`${cls} text-left transition hover:border-orange-400 active:scale-[0.97]`}>
-        {inner}
-      </button>
-    );
-  }
-  return <div className={cls}>{inner}</div>;
 }
