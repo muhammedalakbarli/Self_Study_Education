@@ -1,28 +1,29 @@
 "use client";
 
-// "Ulduz" — Imparo-nun mascotu. Amber ulduz + dostyana üz + ifadələr.
+// "Zefi" — Imparo-nun tülkü mascotu. Böyük baş, iri qulaqlar (mərcan içli), iri cocoa
+// gözlər (ağ işıq əksi ilə), krem üz/sinə, tüklü quyruq, sarı bel çantası kirişi.
+// İsti palitra: Fox Orange + Cream + Coral + Cocoa.
 //
 // mood:
-//   happy      — dostyana təbəssüm + əl sallama (default)
-//   celebrate  — sevinc (^ ^ gözlər, geniş təbəssüm)
-//   sad        — ruhlandıran/təəssüf (səhv cavabda)
-//   thinking   — düşünür (yuxarı baxan gözlər, kiçik "hmm" ağız)
-//   wave       — canlı salamlama (güclü əl sallama)
-//   love       — ürək gözlər (böyük uğur/sevgi anı)
+//   happy      — dostyana gülümsəmə (default)
+//   celebrate  — sevincli (level/uğur): qıyılmış gözlər + açıq təbəssüm
+//   sad        — "bir də yoxlayaq" (səhv): narahat qaşlar + yumşaq ağız
+//   thinking   — düşünür (çətin sual): yuxarı baxan gözlər + qalxmış qaş
+//   wave       — salamlayır: pəncə yelləyir
+//   love       — "böyük nailiyyət" 😎: günəş eynəyi + smirk
 //
-// idle animasiyaları: "üzmə" (nəfəs alma) + dövri göz qırpma.
-// speaking=true → audio ilə sinxron lipsync (ağız açılıb-bağlanır).
-// prefers-reduced-motion / .no-anim → bütün hərəkət söndürülür.
+// idle: yumşaq üzmə + dövri göz qırpma. speaking=true → audio ilə lipsync.
+// prefers-reduced-motion / .no-anim → hərəkət söndürülür.
 
 import { useSpeaking } from "@/lib/tts";
 
-export type MascotMood =
-  | "happy"
-  | "celebrate"
-  | "sad"
-  | "thinking"
-  | "wave"
-  | "love";
+export type MascotMood = "happy" | "celebrate" | "sad" | "thinking" | "wave" | "love";
+
+const FOX = "#F47B3A";
+const CREAM = "#FFF4DF";
+const CORAL = "#FF8F70";
+const COCOA = "#3B2723";
+const HONEY = "#FFD166";
 
 export default function Mascot({
   size = 120,
@@ -33,142 +34,135 @@ export default function Mascot({
   size?: number;
   mood?: MascotMood;
   animate?: boolean;
-  /** Audio ilə lipsync. Verilməsə, qlobal TTS vəziyyətinə avtomatik qoşulur. */
   speaking?: boolean;
 }) {
-  // speaking açıq verilməyibsə → qlobal TTS "danışır" vəziyyətini izlə (avto-lipsync).
   const ttsSpeaking = useSpeaking();
   const isSpeaking = animate && (speaking ?? ttsSpeaking);
 
-  // 5-guşəli ulduz nöqtələri (mərkəz 60,60) — kənarlar stroke ilə yumrulanır.
-  const star = "60,18 71,44 100,46 77,65 86,96 60,79 34,96 43,65 20,46 49,44";
-  const showArm = mood !== "sad";
-  const strongWave = mood === "wave";
-  const waveClass =
-    animate && (mood === "happy" || mood === "wave")
-      ? strongWave
-        ? "ulduz-wave ulduz-wave-strong"
-        : "ulduz-wave"
-      : "";
-  const blinkClass = animate ? "ulduz-blink" : "";
-
-  const closedEyes = mood === "celebrate";
-  const loveEyes = mood === "love";
+  const squint = mood === "celebrate";
+  const shades = mood === "love";
   const lookUp = mood === "thinking";
+  const blinkClass = animate && !squint && !shades ? "ulduz-blink" : "";
+  const cheeks = mood === "happy" || mood === "celebrate" || mood === "wave" || mood === "love";
 
   return (
-    <span
-      className={animate ? "ulduz-float" : "inline-block"}
-      style={{ lineHeight: 0 }}
-    >
+    <span className={animate ? "ulduz-float" : "inline-block"} style={{ lineHeight: 0 }}>
       <svg
         width={size}
         height={size}
         viewBox="0 0 120 120"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        aria-label="Ulduz"
+        aria-label="Zefi"
         role="img"
         style={{ overflow: "visible" }}
       >
-        {/* kiçik parıltı (brend detalı) — sol yuxarı */}
+        {/* Quyruq (arxada, sol) — tüklü, krem uclu */}
         <path
-          d="M18 24 l2.2 5.2 5.2 2.2 -5.2 2.2 -2.2 5.2 -2.2 -5.2 -5.2 -2.2 5.2 -2.2 z"
-          fill="#5b4bf5"
+          d="M36 98 C8 94 2 62 20 46 C28 39 38 44 34 56 C30 70 42 84 48 90 Z"
+          fill={FOX}
+          stroke={COCOA}
+          strokeWidth="3"
+          strokeLinejoin="round"
         />
+        <path d="M20 46 C28 39 38 44 34 56 C32 62 33 68 37 73 C26 71 18 58 20 46 Z" fill={CREAM} />
 
-        {/* qaldırılmış əl (sağ yuxarı, sallanır) */}
-        {showArm && (
-          <g className={waveClass}>
-            <path
-              d="M80 51 Q98 47 104 35"
-              stroke="#ff9f43"
-              strokeWidth="9"
-              strokeLinecap="round"
-              fill="none"
-            />
-            <circle cx="105" cy="33" r="8" fill="#ff9f43" />
+        {/* Bədən + krem qarın */}
+        <ellipse cx="60" cy="92" rx="27" ry="23" fill={FOX} stroke={COCOA} strokeWidth="3" />
+        <ellipse cx="60" cy="97" rx="16" ry="15" fill={CREAM} />
+        {/* Sarı bel çantası kirişi */}
+        <path d="M45 82 Q60 90 75 82" stroke={HONEY} strokeWidth="5" fill="none" strokeLinecap="round" />
+
+        {/* Salamlama pəncəsi (yalnız wave) */}
+        {mood === "wave" && (
+          <g
+            className={animate ? "ulduz-wave" : ""}
+            style={{ transformBox: "fill-box", transformOrigin: "50% 90%" }}
+          >
+            <ellipse cx="94" cy="60" rx="8" ry="9" fill={FOX} stroke={COCOA} strokeWidth="3" />
           </g>
         )}
 
-        {/* ulduz gövdəsi (yumru künclər üçün eyni rəngli qalın stroke) */}
-        <polygon
-          points={star}
-          fill="#ff9f43"
-          stroke="#ff9f43"
-          strokeWidth="11"
-          strokeLinejoin="round"
-          strokeLinecap="round"
+        {/* Qulaqlar */}
+        <path d="M33 42 L30 8 L55 27 Z" fill={FOX} stroke={COCOA} strokeWidth="3" strokeLinejoin="round" />
+        <path d="M87 42 L90 8 L65 27 Z" fill={FOX} stroke={COCOA} strokeWidth="3" strokeLinejoin="round" />
+        <path d="M37 35 L35 17 L49 28 Z" fill={CORAL} />
+        <path d="M83 35 L85 17 L71 28 Z" fill={CORAL} />
+
+        {/* Baş + krem üz */}
+        <circle cx="60" cy="50" r="33" fill={FOX} stroke={COCOA} strokeWidth="3" />
+        <path
+          d="M60 40 C75 40 81 53 78 63 C75 73 68 79 60 79 C52 79 45 73 42 63 C39 53 45 40 60 40 Z"
+          fill={CREAM}
         />
 
-        {/* yanaqlar — sevinc/sevgi anında daha qabarıq */}
-        <circle
-          cx="44"
-          cy="64"
-          r={mood === "celebrate" || loveEyes ? 6 : 5}
-          fill="#ff6b6b"
-          opacity={mood === "celebrate" || loveEyes ? 0.7 : 0.55}
-        />
-        <circle
-          cx="76"
-          cy="64"
-          r={mood === "celebrate" || loveEyes ? 6 : 5}
-          fill="#ff6b6b"
-          opacity={mood === "celebrate" || loveEyes ? 0.7 : 0.55}
-        />
-
-        {/* ── GÖZLƏR ── */}
-        {closedEyes ? (
+        {/* Yanaqlar */}
+        {cheeks && (
           <>
-            {/* sevincli qapalı gözlər (^ ^) */}
-            <path d="M44 54 q5 -6 10 0" stroke="#2a2340" strokeWidth="3.5" strokeLinecap="round" fill="none" />
-            <path d="M66 54 q5 -6 10 0" stroke="#2a2340" strokeWidth="3.5" strokeLinecap="round" fill="none" />
+            <ellipse cx="47" cy="55" rx="4" ry="2.6" fill={CORAL} opacity="0.6" />
+            <ellipse cx="73" cy="55" rx="4" ry="2.6" fill={CORAL} opacity="0.6" />
           </>
-        ) : loveEyes ? (
+        )}
+
+        {/* Qaşlar */}
+        {lookUp && (
           <>
-            {/* ürək gözlər */}
-            <path d="M49 51 a3.2 3.2 0 0 1 5.4 3.3 l-5.4 5.2 -5.4 -5.2 a3.2 3.2 0 0 1 5.4 -3.3 z" fill="#ff4d6d" />
-            <path d="M71 51 a3.2 3.2 0 0 1 5.4 3.3 l-5.4 5.2 -5.4 -5.2 a3.2 3.2 0 0 1 5.4 -3.3 z" fill="#ff4d6d" />
+            <path d="M43 39 q6 -3 12 -1" stroke={COCOA} strokeWidth="2.6" strokeLinecap="round" fill="none" />
+            <path d="M65 36 q6 -2 12 1" stroke={COCOA} strokeWidth="2.6" strokeLinecap="round" fill="none" />
+          </>
+        )}
+        {mood === "sad" && (
+          <>
+            <path d="M44 42 L54 39" stroke={COCOA} strokeWidth="2.6" strokeLinecap="round" />
+            <path d="M76 42 L66 39" stroke={COCOA} strokeWidth="2.6" strokeLinecap="round" />
+          </>
+        )}
+
+        {/* ── Gözlər ── */}
+        {squint ? (
+          <>
+            <path d="M43 52 q6 -8 12 0" stroke={COCOA} strokeWidth="3.2" fill="none" strokeLinecap="round" />
+            <path d="M65 52 q6 -8 12 0" stroke={COCOA} strokeWidth="3.2" fill="none" strokeLinecap="round" />
+          </>
+        ) : shades ? (
+          <>
+            <rect x="41" y="45" width="16" height="11" rx="4" fill={COCOA} />
+            <rect x="63" y="45" width="16" height="11" rx="4" fill={COCOA} />
+            <path d="M57 49 h6" stroke={COCOA} strokeWidth="3" />
           </>
         ) : (
           <g className={blinkClass} style={{ transformBox: "fill-box", transformOrigin: "center" }}>
-            {/* açıq gözlər — sad/thinking-də bəbək yeri dəyişir */}
-            <ellipse cx="49" cy="55" rx="6.5" ry="7.5" fill="#fff" />
-            <ellipse cx="71" cy="55" rx="6.5" ry="7.5" fill="#fff" />
-            <circle cx={lookUp ? 50 : 50.5} cy={lookUp ? 52 : mood === "sad" ? 57 : 56} r="3.4" fill="#2a2340" />
-            <circle cx={lookUp ? 72 : 72.5} cy={lookUp ? 52 : mood === "sad" ? 57 : 56} r="3.4" fill="#2a2340" />
-            <circle cx="49" cy="54" r="1.1" fill="#fff" />
-            <circle cx="71" cy="54" r="1.1" fill="#fff" />
+            <ellipse cx="49" cy="50" rx="6" ry="7.5" fill={COCOA} />
+            <ellipse cx="71" cy="50" rx="6" ry="7.5" fill={COCOA} />
+            <circle cx="47" cy={lookUp ? 46 : 47.5} r="2.1" fill="#fff" />
+            <circle cx="69" cy={lookUp ? 46 : 47.5} r="2.1" fill="#fff" />
           </g>
         )}
 
-        {/* qaşlar — düşünəndə bir qaş qalxır */}
-        {lookUp && (
-          <>
-            <path d="M43 46 q6 -3 12 -1" stroke="#2a2340" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-            <path d="M65 44 q6 -2 12 1" stroke="#2a2340" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-          </>
-        )}
+        {/* Burun */}
+        <ellipse cx="60" cy="60" rx="4.6" ry="3.6" fill={COCOA} />
 
-        {/* ── AĞIZ ── danışarkən lipsync, əks halda əhval-vari */}
+        {/* ── Ağız ── */}
         {isSpeaking ? (
           <ellipse
             className="ulduz-talk"
             cx="60"
-            cy="69"
-            rx="7"
-            ry="6"
-            fill="#2a2340"
+            cy="67"
+            rx="6"
+            ry="5"
+            fill={COCOA}
             style={{ transformBox: "fill-box", transformOrigin: "center" }}
           />
-        ) : mood === "celebrate" || mood === "love" ? (
-          <path d="M49 66 q11 12 22 0 q-11 6 -22 0 z" fill="#2a2340" />
+        ) : mood === "celebrate" ? (
+          <path d="M50 63 q10 12 20 0 q-10 6 -20 0 z" fill={COCOA} />
         ) : mood === "sad" ? (
-          <path d="M51 71 q9 -6 18 0" stroke="#2a2340" strokeWidth="3.5" strokeLinecap="round" fill="none" />
-        ) : lookUp ? (
-          <path d="M53 70 q7 -3 14 0" stroke="#2a2340" strokeWidth="3.5" strokeLinecap="round" fill="none" />
+          <path d="M53 67 q7 -2 14 0" stroke={COCOA} strokeWidth="2.6" fill="none" strokeLinecap="round" />
+        ) : mood === "thinking" ? (
+          <path d="M54 66 q6 1 11 -1" stroke={COCOA} strokeWidth="2.6" fill="none" strokeLinecap="round" />
+        ) : mood === "love" ? (
+          <path d="M53 65 q7 5 14 -1" stroke={COCOA} strokeWidth="2.8" fill="none" strokeLinecap="round" />
         ) : (
-          <path d="M51 67 q9 8 18 0" stroke="#2a2340" strokeWidth="3.5" strokeLinecap="round" fill="none" />
+          <path d="M52 64 Q60 70 68 64" stroke={COCOA} strokeWidth="2.8" fill="none" strokeLinecap="round" />
         )}
       </svg>
     </span>
