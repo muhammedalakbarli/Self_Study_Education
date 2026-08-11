@@ -30,8 +30,8 @@ const SITE_URL = "https://self-study-education.vercel.app";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Bilik Yolu — 1–8-ci siniflər üçün interaktiv öyrənmə",
-    template: "%s · Bilik Yolu",
+    default: "Imparo — 1–8-ci siniflər üçün interaktiv öyrənmə",
+    template: "%s · Imparo",
   },
   description:
     "Riyaziyyat, Azərbaycan dili və İngilis dilini oyun kimi öyrən. Azərbaycan məktəbliləri üçün pulsuz, interaktiv platforma.",
@@ -43,12 +43,12 @@ export const metadata: Metadata = {
     "Azərbaycan dili",
     "İngilis dili",
     "onlayn öyrənmə",
-    "Bilik Yolu",
+    "Imparo",
   ],
-  applicationName: "Bilik Yolu",
-  authors: [{ name: "Bilik Yolu" }],
-  creator: "Bilik Yolu",
-  publisher: "Bilik Yolu",
+  applicationName: "Imparo",
+  authors: [{ name: "Imparo" }],
+  creator: "Imparo",
+  publisher: "Imparo",
   category: "education",
   // Telefon nömrəsi kimi mətnləri avtomatik linkə çevirmə.
   formatDetection: { telephone: false, email: false, address: false },
@@ -77,24 +77,24 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "Bilik Yolu",
+    title: "Imparo",
   },
   icons: {
     apple: "/apple-touch-icon.png",
   },
   openGraph: {
-    title: "Bilik Yolu — öyrənməyi əyləncəyə çevir",
+    title: "Imparo — öyrənməyi əyləncəyə çevir",
     description:
       "1–8-ci siniflər üçün Riyaziyyat, Azərbaycan dili və İngilis dili — oyun kimi, pulsuz.",
     url: "/",
-    siteName: "Bilik Yolu",
+    siteName: "Imparo",
     locale: "az_AZ",
     alternateLocale: ["en_US", "ru_RU"],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Bilik Yolu — öyrənməyi əyləncəyə çevir",
+    title: "Imparo — öyrənməyi əyləncəyə çevir",
     description:
       "1–8-ci siniflər üçün interaktiv öyrənmə platforması. Pulsuz və maraqlı.",
   },
@@ -107,7 +107,7 @@ const jsonLd = {
     {
       "@type": "EducationalOrganization",
       "@id": `${SITE_URL}/#organization`,
-      name: "Bilik Yolu",
+      name: "Imparo",
       url: SITE_URL,
       description:
         "Azərbaycan məktəbliləri (1–8-ci siniflər) üçün oyunlaşdırılmış öyrənmə platforması.",
@@ -117,7 +117,7 @@ const jsonLd = {
       "@type": "WebSite",
       "@id": `${SITE_URL}/#website`,
       url: SITE_URL,
-      name: "Bilik Yolu",
+      name: "Imparo",
       inLanguage: ["az", "en", "ru"],
       publisher: { "@id": `${SITE_URL}/#organization` },
     },

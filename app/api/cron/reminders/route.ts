@@ -35,7 +35,7 @@ export async function GET(req: Request) {
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   const vapidPublic = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
   const vapidPrivate = process.env.VAPID_PRIVATE_KEY;
-  const vapidSubject = process.env.VAPID_SUBJECT || "mailto:info@bilikyolu.az";
+  const vapidSubject = process.env.VAPID_SUBJECT || "mailto:info@imparo.az";
   if (!url || !serviceKey || !vapidPublic || !vapidPrivate) {
     return Response.json({ ok: false, error: "missing_env" }, { status: 500 });
   }
@@ -83,7 +83,7 @@ export async function GET(req: Request) {
             tag: "streak-reminder",
           }
         : {
-            title: "Bilik Yolu səni gözləyir 📚",
+            title: "Imparo səni gözləyir 📚",
             body: "Bugünkü dərsini et və XP qazan!",
             url: "/dashboard",
             tag: "daily-reminder",

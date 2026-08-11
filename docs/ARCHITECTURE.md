@@ -1,6 +1,6 @@
 # Memarlıq icmalı
 
-Bilik Yolu-nun yüksək səviyyəli quruluşu — yeni komanda üzvləri üçün.
+Imparo-nun yüksək səviyyəli quruluşu — yeni komanda üzvləri üçün.
 
 ## Ümumi baxış
 

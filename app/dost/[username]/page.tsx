@@ -50,7 +50,7 @@ export default function FriendInvitePage({
     <div className="flex min-h-screen flex-col items-center bg-ink px-4 py-10">
       <Link href="/" className="flex items-center gap-2">
         <Logo size={28} />
-        <span className="font-extrabold text-fg">Bilik Yolu</span>
+        <span className="font-extrabold text-fg">Imparo</span>
       </Link>
 
       <div className="mt-8 w-full max-w-sm rounded-3xl border border-line bg-panel p-8 text-center">

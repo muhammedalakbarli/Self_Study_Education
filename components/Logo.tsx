@@ -1,4 +1,4 @@
-// "Bilik Yolu" loqosu — yüksələn pillələr/yol motivi: öyrənmədə irəliləyiş.
+// "Imparo" loqosu — yüksələn pillələr/yol motivi: öyrənmədə irəliləyiş.
 // İndigo pillələr + isti amber yüksəliş oxu.
 
 export default function Logo({ size = 56 }: { size?: number }) {
@@ -9,7 +9,7 @@ export default function Logo({ size = 56 }: { size?: number }) {
       viewBox="0 0 64 64"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      aria-label="Bilik Yolu"
+      aria-label="Imparo"
     >
       {/* yüksələn pillələr */}
       <rect x="10" y="40" width="12" height="14" rx="3" fill="#5b4bf5" />

@@ -38,7 +38,7 @@ export default function ShareProfile({
 
   async function nativeShare() {
     try {
-      if (navigator.share) await navigator.share({ url, title: "Bilik Yolu" });
+      if (navigator.share) await navigator.share({ url, title: "Imparo" });
       else copy();
     } catch {
       /* ötür */

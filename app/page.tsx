@@ -73,7 +73,7 @@ export default function LandingPage() {
           <div className="flex items-center gap-2.5">
             <Logo size={34} />
             <span className="gradient-pan bg-gradient-to-r from-indigo-400 via-pink-400 to-amber-400 bg-clip-text text-lg font-extrabold text-transparent">
-              Bilik Yolu
+              Imparo
             </span>
           </div>
           <div className="flex items-center gap-2.5">
@@ -184,7 +184,7 @@ export default function LandingPage() {
           </div>
         </Reveal>
 
-        {/* ── Niyə Bilik Yolu — növbələşən bölmələr ── */}
+        {/* ── Niyə Imparo — növbələşən bölmələr ── */}
         <section className="space-y-16 py-6 sm:space-y-24">
           <Row reverse={false} tag={t("home.r1.tag")} title={t("home.r1.title")} body={t("home.r1.body")} media={<GameMedia />} />
           <Row reverse={true} tag={t("home.r2.tag")} title={t("home.r2.title")} body={t("home.r2.body")} media={<PathMedia />} />
@@ -244,7 +244,7 @@ export default function LandingPage() {
       <footer className="relative z-10 mx-auto max-w-6xl px-5 py-8 text-center text-sm text-muted">
         <div className="flex items-center justify-center gap-2">
           <Logo size={22} />
-          <span className="font-bold text-fg">Bilik Yolu</span>
+          <span className="font-bold text-fg">Imparo</span>
         </div>
         <p className="mt-2">{t("auth.tagline")}</p>
       </footer>

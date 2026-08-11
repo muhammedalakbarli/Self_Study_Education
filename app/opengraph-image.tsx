@@ -3,7 +3,7 @@ import { ImageResponse } from "next/og";
 // Link paylaşılanda görünən sosial önizləmə şəkli (1200×630).
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = "Bilik Yolu — 1–8-ci siniflər üçün interaktiv öyrənmə";
+export const alt = "Imparo — 1–8-ci siniflər üçün interaktiv öyrənmə";
 
 export default function OpengraphImage() {
   return new ImageResponse(
@@ -27,7 +27,7 @@ export default function OpengraphImage() {
           <div style={{ width: 26, height: 64, background: "white", borderRadius: 8 }} />
           <div style={{ width: 26, height: 92, background: "#ff9500", borderRadius: 8 }} />
         </div>
-        <div style={{ marginTop: 40, fontSize: 84, fontWeight: 800 }}>Bilik Yolu</div>
+        <div style={{ marginTop: 40, fontSize: 84, fontWeight: 800 }}>Imparo</div>
         <div style={{ marginTop: 12, fontSize: 36, opacity: 0.9 }}>
           Öyrənməyi əyləncəyə çevir
         </div>

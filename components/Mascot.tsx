@@ -1,6 +1,6 @@
 "use client";
 
-// "Ulduz" — Bilik Yolu-nun mascotu. Amber ulduz + dostyana üz + ifadələr.
+// "Ulduz" — Imparo-nun mascotu. Amber ulduz + dostyana üz + ifadələr.
 //
 // mood:
 //   happy      — dostyana təbəssüm + əl sallama (default)

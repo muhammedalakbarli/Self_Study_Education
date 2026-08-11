@@ -139,7 +139,7 @@ export default function Sidebar() {
         <Link href="/dashboard" className="flex items-center gap-2.5 px-2">
           <Logo size={32} />
           <span className="bg-gradient-to-r from-indigo-500 via-pink-500 to-amber-500 bg-clip-text text-lg font-extrabold text-transparent">
-            Bilik Yolu
+            Imparo
           </span>
         </Link>
 

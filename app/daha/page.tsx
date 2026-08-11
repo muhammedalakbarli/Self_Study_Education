@@ -83,7 +83,7 @@ export default function MorePage() {
         {/* Alt */}
         <div className="mt-10 flex flex-col items-center gap-1.5 text-center text-xs text-muted">
           <Logo size={24} />
-          <span className="font-bold text-fg">Bilik Yolu</span>
+          <span className="font-bold text-fg">Imparo</span>
           <span>{t("more.tagline")}</span>
         </div>
       </main>

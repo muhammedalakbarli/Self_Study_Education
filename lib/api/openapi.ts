@@ -1,4 +1,4 @@
-// Bilik Yolu REST API-nin OpenAPI 3.0 spesifikasiyası.
+// Imparo REST API-nin OpenAPI 3.0 spesifikasiyası.
 // /api/openapi bunu JSON kimi verir; /api-docs Swagger UI ilə göstərir.
 // Yeni endpoint əlavə edəndə burada da sənədləşdir.
 
@@ -16,7 +16,7 @@ function pathParam(name: string, description: string) {
 export const openApiSpec = {
   openapi: "3.0.3",
   info: {
-    title: "Bilik Yolu API",
+    title: "Imparo API",
     version: "1.0.0",
     description:
       "1–8-ci siniflər üçün özünütədris platformasının REST API-si. " +

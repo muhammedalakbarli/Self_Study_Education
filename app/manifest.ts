@@ -4,8 +4,8 @@ import type { MetadataRoute } from "next";
 // tam ekran, ikonlu tətbiq kimi quraşdırmağa imkan verir (PWA).
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Bilik Yolu — 1–8-ci siniflər üçün interaktiv öyrənmə",
-    short_name: "Bilik Yolu",
+    name: "Imparo — 1–8-ci siniflər üçün interaktiv öyrənmə",
+    short_name: "Imparo",
     description:
       "Riyaziyyat, Azərbaycan dili və İngilis dilini oyun kimi öyrən. 1–8-ci siniflər üçün pulsuz, interaktiv platforma.",
     start_url: "/",

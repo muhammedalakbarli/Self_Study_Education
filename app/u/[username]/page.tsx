@@ -86,7 +86,7 @@ export default function PublicProfilePage({
         <Logo size={40} />
         <p className="text-lg font-bold text-fg">{t("profile.notFound")}</p>
         <Link href="/" className="rounded-2xl bg-brand px-5 py-3 font-extrabold text-white btn-pop">
-          Bilik Yolu
+          Imparo
         </Link>
       </div>
     );
@@ -107,7 +107,7 @@ export default function PublicProfilePage({
       <main className="mx-auto max-w-lg px-4 py-8">
         <Link href="/" className="flex items-center gap-2">
           <Logo size={28} />
-          <span className="font-extrabold text-fg">Bilik Yolu</span>
+          <span className="font-extrabold text-fg">Imparo</span>
         </Link>
 
         {/* Kimlik */}

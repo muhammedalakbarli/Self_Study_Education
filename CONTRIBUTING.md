@@ -1,6 +1,6 @@
 # Töhfə qaydaları
 
-Bilik Yolu komandası üçün iş axını və standartlar.
+Imparo komandası üçün iş axını və standartlar.
 
 ## İş axını (branch → Pull Request)
 

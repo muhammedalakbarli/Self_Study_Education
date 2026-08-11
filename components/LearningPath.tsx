@@ -1,6 +1,6 @@
 "use client";
 
-// "Bilik Yolu" öyrənmə xəritəsi — Duolingo-üslubu tək sütunlu zigzag yol.
+// "Imparo" öyrənmə xəritəsi — Duolingo-üslubu tək sütunlu zigzag yol.
 // Qalın 3D düyünlər (altında dərinlik kölgəsi), düyünlər arası xətt YOX (Duolingo kimi),
 // cari düyün qızılı + "BAŞLA" balonu + halo, kiliddə düyün toxunanda titrəyir. Hər bölmə
 // başında rəngli banner. Ulduz yolun yanında platformada. Reduced-motion/.no-anim tabedir.

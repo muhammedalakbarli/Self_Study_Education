@@ -13,7 +13,7 @@ type Category = { title: string; items: { q: string; a: string }[] };
 const FAQ: Record<Lang, Category[]> = {
   az: [
     {
-      title: "Bilik Yolu-dan istifadə",
+      title: "Imparo-dan istifadə",
       items: [
         {
           q: "Necə başlayım?",
@@ -62,7 +62,7 @@ const FAQ: Record<Lang, Category[]> = {
         },
         {
           q: "Hesabımı necə silim?",
-          a: "Hesabını və məlumatlarını silmək üçün destek@bilikyolu.az ünvanına yaz — tələbini emal edəcəyik.",
+          a: "Hesabını və məlumatlarını silmək üçün destek@imparo.az ünvanına yaz — tələbini emal edəcəyik.",
         },
       ],
     },
@@ -70,7 +70,7 @@ const FAQ: Record<Lang, Category[]> = {
       title: "Qiymət",
       items: [
         {
-          q: "Bilik Yolu pulsuzdur?",
+          q: "Imparo pulsuzdur?",
           a: "Bəli, tamamilə pulsuzdur. Kart məlumatı və ya ödəniş tələb olunmur.",
         },
         {
@@ -86,7 +86,7 @@ const FAQ: Record<Lang, Category[]> = {
   ],
   en: [
     {
-      title: "Using Bilik Yolu",
+      title: "Using Imparo",
       items: [
         {
           q: "How do I start?",
@@ -135,7 +135,7 @@ const FAQ: Record<Lang, Category[]> = {
         },
         {
           q: "How do I delete my account?",
-          a: "To delete your account and data, write to destek@bilikyolu.az and we'll process your request.",
+          a: "To delete your account and data, write to destek@imparo.az and we'll process your request.",
         },
       ],
     },
@@ -143,7 +143,7 @@ const FAQ: Record<Lang, Category[]> = {
       title: "Pricing",
       items: [
         {
-          q: "Is Bilik Yolu free?",
+          q: "Is Imparo free?",
           a: "Yes, completely free. No card details or payment required.",
         },
         {
@@ -159,7 +159,7 @@ const FAQ: Record<Lang, Category[]> = {
   ],
   ru: [
     {
-      title: "Использование Bilik Yolu",
+      title: "Использование Imparo",
       items: [
         {
           q: "С чего начать?",
@@ -208,7 +208,7 @@ const FAQ: Record<Lang, Category[]> = {
         },
         {
           q: "Как удалить аккаунт?",
-          a: "Чтобы удалить аккаунт и данные, напиши на destek@bilikyolu.az — мы обработаем запрос.",
+          a: "Чтобы удалить аккаунт и данные, напиши на destek@imparo.az — мы обработаем запрос.",
         },
       ],
     },
@@ -216,7 +216,7 @@ const FAQ: Record<Lang, Category[]> = {
       title: "Цена",
       items: [
         {
-          q: "Bilik Yolu бесплатный?",
+          q: "Imparo бесплатный?",
           a: "Да, полностью бесплатный. Данные карты или оплата не требуются.",
         },
         {
@@ -290,7 +290,7 @@ export default function HelpPage() {
           <h2 className="text-lg font-extrabold text-fg">{t("help.stillQ")}</h2>
           <p className="mt-1 text-sm text-muted">{t("help.stillDesc")}</p>
           <a
-            href="mailto:destek@bilikyolu.az"
+            href="mailto:destek@imparo.az"
             className="mt-4 inline-block rounded-2xl bg-brand px-6 py-3 font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark"
           >
             {t("help.writeUs")}

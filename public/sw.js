@@ -1,22 +1,22 @@
-// Bilik Yolu — service worker (PWA offline dəstəyi).
+// Imparo — service worker (PWA offline dəstəyi).
 // Strategiya (təhlükəsiz, dinamik məzmunu pozmadan):
 //   - Yalnız GET + eyni-mənbə (same-origin) sorğularına toxunur.
 //   - API, auth və Supabase sorğuları HEÇ VAXT keşlənmir → həmişə şəbəkə.
 //   - Naviqasiya (səhifə): əvvəlcə şəbəkə, offline olsa keşdən/ana səhifədən.
 //   - Statik fayllar (_next/static, şəkil, şrift): stale-while-revalidate.
 
-const CACHE = "bilik-yolu-v9";
+const CACHE = "bilik-yolu-v10";
 const OFFLINE_URL = "/";
 
 // Şəbəkə çatmayanda göstəriləcək minimal offline HTML.
 const OFFLINE_HTML = `<!doctype html><html lang="az"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Bilik Yolu — offline</title>
+<title>Imparo — offline</title>
 <style>body{margin:0;height:100vh;display:flex;flex-direction:column;align-items:center;
 justify-content:center;font-family:system-ui,sans-serif;background:#f4f3fb;color:#2a2340;text-align:center;padding:24px}
 h1{font-size:20px;margin:16px 0 8px}p{color:#6b6880;max-width:280px}</style></head>
 <body><div style="font-size:56px">⭐</div><h1>İnternet bağlantısı yoxdur</h1>
-<p>Bilik Yolu-nu işlətmək üçün internetə qoşul. Bağlantı bərpa olunanda səhifəni yenilə.</p></body></html>`;
+<p>Imparo-nu işlətmək üçün internetə qoşul. Bağlantı bərpa olunanda səhifəni yenilə.</p></body></html>`;
 
 // Səhifə "Yenilə" deyəndə gözləyən SW-i dərhal aktiv et (yeni versiyaya keç).
 self.addEventListener("message", (event) => {
@@ -32,7 +32,7 @@ self.addEventListener("push", (event) => {
   } catch {
     data = {};
   }
-  const title = data.title || "Bilik Yolu";
+  const title = data.title || "Imparo";
   const options = {
     body: data.body || "Öyrənməyə davam et! 🔥",
     icon: "/icon-192.png",

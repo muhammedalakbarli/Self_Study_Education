@@ -1,6 +1,6 @@
 <div align="center">
 
-# Bilik Yolu
+# Imparo
 
 **Azərbaycan məktəbliləri üçün oyunlaşdırılmış öyrənmə platforması**
 
@@ -20,7 +20,7 @@ Holberton + Duolingo hibrid modeli əsasında qurulub.
 
 ## Xülasə
 
-Bilik Yolu — Azərbaycan orta məktəb şagirdləri üçün **B2C** öyrənmə platformasıdır: şagird özü
+Imparo — Azərbaycan orta məktəb şagirdləri üçün **B2C** öyrənmə platformasıdır: şagird özü
 qeydiyyatdan keçir, sinfini seçir və öz sürəti ilə öyrənir. Məzmun rəsmi kurikuluma uyğun qurulub və
 **1–8-ci sinifləri** əhatə edir.
 

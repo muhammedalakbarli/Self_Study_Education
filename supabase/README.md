@@ -1,6 +1,6 @@
 # Supabase
 
-Bilik Yolu-nun verilənlər bazası (Postgres) və məzmun seed-i.
+Imparo-nun verilənlər bazası (Postgres) və məzmun seed-i.
 
 ## Struktur
 

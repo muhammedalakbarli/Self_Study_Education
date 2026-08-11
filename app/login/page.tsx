@@ -57,7 +57,7 @@ export default function LoginPage() {
           <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white">
             <Logo size={26} />
           </span>
-          <span className="text-xl font-extrabold">Bilik Yolu</span>
+          <span className="text-xl font-extrabold">Imparo</span>
         </Link>
 
         <div>
@@ -93,7 +93,7 @@ export default function LoginPage() {
             aria-label={t("auth.homeAria")}
           >
             <Logo size={40} />
-            <span className="text-xl font-extrabold text-slate-900">Bilik Yolu</span>
+            <span className="text-xl font-extrabold text-slate-900">Imparo</span>
           </Link>
 
           <h1 className="text-2xl font-extrabold text-slate-900">{t("auth.login.title")}</h1>
