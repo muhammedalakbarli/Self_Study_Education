@@ -37,13 +37,13 @@ function Tile({
 // Öyrən — açıq kitab
 export function IconLearn({ size }: IconProps) {
   return (
-    <Tile id="ni-learn" from="#6b5bff" to="#4636cf" size={size}>
+    <Tile id="ni-learn" from="#FF9F43" to="#F47B3A" size={size}>
       <g fill="#fff">
         <path d="M23 18.5c-2.2-1.6-5.2-2.3-8.5-2.2-.9 0-1.5.7-1.5 1.6v11.7c0 .9.8 1.6 1.7 1.5 2.9-.1 5.6.5 7.6 1.9.4.3 1 .3 1.4 0 2-1.4 4.7-2 7.6-1.9.9 0 1.7-.6 1.7-1.5V17.9c0-.9-.6-1.6-1.5-1.6-3.3-.1-6.3.6-8.5 2.2z" />
       </g>
       <path
         d="M24 19v14"
-        stroke="#4636cf"
+        stroke="#F47B3A"
         strokeWidth="1.6"
         strokeLinecap="round"
         opacity="0.5"
@@ -55,7 +55,7 @@ export function IconLearn({ size }: IconProps) {
 // Praktika — qantel
 export function IconPractice({ size }: IconProps) {
   return (
-    <Tile id="ni-practice" from="#6b5bff" to="#4636cf" size={size}>
+    <Tile id="ni-practice" from="#FF9F43" to="#F47B3A" size={size}>
       <g fill="#fff">
         <rect x="15" y="22" width="18" height="4.5" rx="2.25" />
         <rect x="10.5" y="17" width="5.5" height="14" rx="2.5" />
@@ -70,7 +70,7 @@ export function IconPractice({ size }: IconProps) {
 // Liqa — kubok
 export function IconLeague({ size }: IconProps) {
   return (
-    <Tile id="ni-league" from="#6b5bff" to="#4636cf" size={size}>
+    <Tile id="ni-league" from="#FF9F43" to="#F47B3A" size={size}>
       <g fill="#fff">
         <path d="M18 14h12v6a6 6 0 0 1-12 0z" />
         <path
@@ -97,7 +97,7 @@ export function IconLeague({ size }: IconProps) {
 // Profil — insan
 export function IconProfile({ size }: IconProps) {
   return (
-    <Tile id="ni-profile" from="#6b5bff" to="#4636cf" size={size}>
+    <Tile id="ni-profile" from="#FF9F43" to="#F47B3A" size={size}>
       <g fill="#fff">
         <circle cx="24" cy="19.5" r="5.5" />
         <path d="M14 33.5a10 10 0 0 1 20 0 1.5 1.5 0 0 1-1.5 1.5h-17a1.5 1.5 0 0 1-1.5-1.5z" />
@@ -109,7 +109,7 @@ export function IconProfile({ size }: IconProps) {
 // Görevlər — nişangah (target)
 export function IconQuests({ size }: IconProps) {
   return (
-    <Tile id="ni-quests" from="#6b5bff" to="#4636cf" size={size}>
+    <Tile id="ni-quests" from="#FF9F43" to="#F47B3A" size={size}>
       <g fill="none" stroke="#fff" strokeWidth="3.4">
         <circle cx="24" cy="24" r="9.5" />
         <circle cx="24" cy="24" r="4.8" />
@@ -122,7 +122,7 @@ export function IconQuests({ size }: IconProps) {
 // Mağaza — alış-veriş çantası
 export function IconShop({ size }: IconProps) {
   return (
-    <Tile id="ni-shop" from="#6b5bff" to="#4636cf" size={size}>
+    <Tile id="ni-shop" from="#FF9F43" to="#F47B3A" size={size}>
       <path
         d="M18.5 19 v-1.2 a5.5 5.5 0 0 1 11 0 V19"
         fill="none"
@@ -141,7 +141,7 @@ export function IconShop({ size }: IconProps) {
 // Daha çoxu — rəngli xanalar
 export function IconMore({ size }: IconProps) {
   return (
-    <Tile id="ni-more" from="#6b5bff" to="#4636cf" size={size}>
+    <Tile id="ni-more" from="#FF9F43" to="#F47B3A" size={size}>
       <g fill="#fff">
         <rect x="14.5" y="14.5" width="8" height="8" rx="2.4" />
         <rect x="25.5" y="14.5" width="8" height="8" rx="2.4" />
