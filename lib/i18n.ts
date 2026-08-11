@@ -24,7 +24,7 @@ const DICT: Dict = {
   "nav.league": { az: "Liqa", en: "League", ru: "Лига" },
   "nav.quests": { az: "Görevlər", en: "Quests", ru: "Задания" },
   "nav.shop": { az: "Mağaza", en: "Shop", ru: "Магазин" },
-  "nav.schools": { az: "Məktəblər üçün", en: "For Schools", ru: "Для школ" },
+  "nav.schools": { az: "Məktəb", en: "Schools", ru: "Школа" },
   "nav.profile": { az: "Profil", en: "Profile", ru: "Профиль" },
   "nav.more": { az: "Daha çoxu", en: "More", ru: "Ещё" },
 
