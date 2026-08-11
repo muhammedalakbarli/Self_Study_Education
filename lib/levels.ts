@@ -22,7 +22,7 @@ function titleKeyForLevel(level: number): string {
 }
 
 export function levelFromXp(xp: number): LevelInfo {
-  const safeXp = Math.max(0, Math.floor(xp || 0));
+  const safeXp = Math.max(0, Math.min(Math.floor(xp || 0), 1_000_000_000));
   // cumulative(L) <= xp şərtini ödəyən ən böyük L.
   let level = Math.floor((1 + Math.sqrt(1 + safeXp / 12.5)) / 2);
   if (level < 1) level = 1;
