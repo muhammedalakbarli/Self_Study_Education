@@ -13,6 +13,7 @@ import ResultSheet from "@/components/lesson/ResultSheet";
 import { gradeTask, type UserAnswer } from "@/lib/grading";
 import { completeLesson, loadProgress } from "@/lib/progress";
 import { loadHearts, loseHeart, MAX_HEARTS } from "@/lib/hearts";
+import { addGems, GEMS_PER_LESSON } from "@/lib/gems";
 import { addWrong as addMistake, markCorrect as removeMistake } from "@/lib/srs";
 import { bumpQuest, bumpQuests } from "@/lib/quests";
 import { addWeeklyXp } from "@/lib/leaderboard";
@@ -176,6 +177,7 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
     completeLesson(userId, lesson.id, finalXp)
       .then(() => touchFriendStreaks())
       .catch(() => {});
+    addGems(GEMS_PER_LESSON).catch(() => {}); // dərsə görə zümrüd
     bumpQuests({ xp: finalXp, lessons: 1 });
     addWeeklyXp(finalXp);
     addMonthlyXp(finalXp);

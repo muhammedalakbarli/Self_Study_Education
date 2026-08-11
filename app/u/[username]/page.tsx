@@ -99,6 +99,7 @@ export default function PublicProfilePage({
     completedLessons: [],
     lastActiveDate: null,
     streakFreezes: 0,
+    gems: 0,
   }).filter((a) => a.kind !== "lessons");
 
   return (

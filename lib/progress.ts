@@ -9,6 +9,7 @@ export interface ProgressState {
   streakDays: number;
   lastActiveDate: string | null; // "YYYY-MM-DD"
   streakFreezes: number; // seriya qoruyucuları (buraxılmış günü örtür)
+  gems: number; // zümrüd (oyun valyutası)
   completedLessons: string[]; // tamamlanmış dərs id-ləri
 }
 
@@ -17,6 +18,7 @@ const emptyState: ProgressState = {
   streakDays: 0,
   lastActiveDate: null,
   streakFreezes: 0,
+  gems: 0,
   completedLessons: [],
 };
 
@@ -63,7 +65,7 @@ export async function loadProgress(userId: string): Promise<ProgressState> {
   const [statsRes, progRes] = await Promise.all([
     supabase
       .from("user_stats")
-      .select("total_xp, streak_days, last_active_date, streak_freezes")
+      .select("total_xp, streak_days, last_active_date, streak_freezes, gems")
       .eq("user_id", userId)
       .maybeSingle(),
     supabase.from("user_progress").select("lesson_id").eq("user_id", userId),
@@ -79,6 +81,7 @@ export async function loadProgress(userId: string): Promise<ProgressState> {
     streakDays: effectiveStreak(stats?.streak_days ?? 0, lastActiveDate, streakFreezes),
     lastActiveDate,
     streakFreezes,
+    gems: stats?.gems ?? 0,
     completedLessons: rows.map((r: { lesson_id: string }) => r.lesson_id),
   };
 }

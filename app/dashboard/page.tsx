@@ -5,7 +5,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { Star, Flame, CircleCheck, Gift, Shield, Heart } from "lucide-react";
+import { Flame, Gift, Shield, Heart, Gem } from "lucide-react";
 import { useContent } from "@/components/ContentProvider";
 import { loadProgress, loadActiveDays, lessonState, grantStreakFreeze, type ProgressState } from "@/lib/progress";
 import { loadHearts, MAX_HEARTS } from "@/lib/hearts";
@@ -121,26 +121,15 @@ export default function DashboardPage() {
     );
   }
 
-  const totalCompleted = state.completedLessons.length;
-
   return (
     <div className="min-h-screen bg-ink">
       <main className="mx-auto max-w-4xl px-4 py-6">
-        <div className="flex items-center justify-between gap-3">
-          <h1 className="text-3xl font-bold text-fg">{t("dash.title")}</h1>
-          <span
-            className="flex shrink-0 items-center gap-1.5 rounded-full bg-red-500/10 px-3 py-1.5 text-base font-extrabold text-red-500"
-            aria-label={`${hearts} can`}
-            title="Canlar"
-          >
-            <Heart size={18} fill="currentColor" strokeWidth={0} />
-            {hearts}
-          </span>
-        </div>
+        <h1 className="text-3xl font-bold text-fg">{t("dash.title")}</h1>
 
-        {/* Statistika zolağı */}
+        {/* Statistika zolağı — Canlar · Zümrüd · Streak (bir xətdə) */}
         <div className="mt-5 grid grid-cols-3 gap-3">
-          <StatChip Icon={Star} value={state.totalXp} label={t("stat.xp")} color="text-accent" />
+          <StatChip Icon={Heart} value={hearts} label={t("stat.hearts")} color="text-red-500" />
+          <StatChip Icon={Gem} value={state.gems} label={t("stat.gems")} color="text-emerald-500" />
           <StatChip
             Icon={Flame}
             value={state.streakDays}
@@ -151,12 +140,6 @@ export default function DashboardPage() {
               setCalOpen(true);
               if (user) loadActiveDays(user.id).then(setActiveDays);
             }}
-          />
-          <StatChip
-            Icon={CircleCheck}
-            value={totalCompleted}
-            label={t("stat.completed")}
-            color="text-brand"
           />
         </div>
 

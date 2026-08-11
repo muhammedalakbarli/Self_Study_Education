@@ -292,6 +292,8 @@ const DICT: Dict = {
 
   // Ortaq statistikalar
   "stat.xp": { az: "XP", en: "XP", ru: "XP" },
+  "stat.hearts": { az: "can", en: "hearts", ru: "жизни" },
+  "stat.gems": { az: "zümrüd", en: "gems", ru: "кристаллы" },
   "stat.streak": { az: "gün seriya", en: "day streak", ru: "дней подряд" },
   "stat.completed": { az: "tamamlandı", en: "completed", ru: "завершено" },
 
