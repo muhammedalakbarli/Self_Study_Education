@@ -7,7 +7,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { Flame, Gift, Shield, Heart, Gem, Trophy, ChevronRight } from "lucide-react";
 import { useContent } from "@/components/ContentProvider";
-import { loadProgress, loadActiveDays, lessonState, grantStreakFreeze, type ProgressState } from "@/lib/progress";
+import { loadProgress, loadActiveDays, lessonState, type ProgressState } from "@/lib/progress";
 import { loadHearts, MAX_HEARTS } from "@/lib/hearts";
 import StreakCalendar from "@/components/StreakCalendar";
 import { useAuthUser } from "@/lib/useAuthUser";
@@ -271,10 +271,10 @@ export default function DashboardPage() {
           <ChestModal
             onOpen={async () => {
               const reward = await openChest(user.id);
-              track("chest_opened", { reward });
-              // Sandıqdan həm də seriya qoruyucu (freeze) qazan — cap 2.
-              await grantStreakFreeze().catch(() => 0);
+              track("chest_opened", { reward: reward.kind });
+              // Sandıq mükafatı (zümrüd/can/qoruyucu) tətbiq olundu — statistikanı yenilə.
               await loadProgress(user.id).then(setState).catch(() => {});
+              await loadHearts().then(setHearts).catch(() => {});
               await loadQuestState().then(setQuests).catch(() => {});
               return reward;
             }}

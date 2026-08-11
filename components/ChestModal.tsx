@@ -5,29 +5,30 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Gift, X } from "lucide-react";
+import { Gift, X, Gem, Heart, Shield } from "lucide-react";
 import { useT } from "@/lib/i18n";
 import Mascot from "@/components/Mascot";
 import Confetti from "@/components/Confetti";
 import { playLevelUp, playSelect } from "@/lib/sound";
 import { vibrateCelebrate } from "@/lib/haptics";
+import type { ChestReward } from "@/lib/quests";
 
 interface Props {
-  onOpen: () => Promise<number>; // sandığı açır, qazanılan XP-ni qaytarır
+  onOpen: () => Promise<ChestReward>; // sandığı açır, mükafatı qaytarır
   onClose: () => void;
 }
 
 export default function ChestModal({ onOpen, onClose }: Props) {
   const t = useT();
   const [phase, setPhase] = useState<"closed" | "opened">("closed");
-  const [reward, setReward] = useState(0);
+  const [reward, setReward] = useState<ChestReward | null>(null);
   const [busy, setBusy] = useState(false);
 
   async function handleOpen() {
     if (busy) return;
     setBusy(true);
     playSelect();
-    const r = await onOpen().catch(() => 0);
+    const r = await onOpen().catch(() => null);
     setReward(r);
     setPhase("opened");
     playLevelUp();
@@ -91,12 +92,28 @@ export default function ChestModal({ onOpen, onClose }: Props) {
               </div>
               <div className="mt-3 text-lg font-extrabold text-fg">{t("chest.reward")}</div>
               <motion.div
-                className="my-4 text-4xl font-black text-accent"
+                className="my-4 flex items-center justify-center gap-2 text-3xl font-black"
                 initial={{ scale: 0.4, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ type: "spring", stiffness: 320, damping: 14 }}
               >
-                +{reward} XP
+                {reward?.kind === "gems" && (
+                  <span className="flex items-center gap-2 text-emerald-500">
+                    <Gem size={34} fill="currentColor" strokeWidth={0} />+{reward.amount}
+                  </span>
+                )}
+                {reward?.kind === "hearts" && (
+                  <span className="flex items-center gap-2 text-red-500">
+                    <Heart size={34} fill="currentColor" strokeWidth={0} />
+                    <span className="text-2xl">{t("chest.wonHearts")}</span>
+                  </span>
+                )}
+                {reward?.kind === "freeze" && (
+                  <span className="flex items-center gap-2 text-sky-500">
+                    <Shield size={34} fill="currentColor" strokeWidth={0} />
+                    <span className="text-2xl">{t("chest.wonFreeze")}</span>
+                  </span>
+                )}
               </motion.div>
               <button
                 type="button"

@@ -3,8 +3,10 @@
 // user_stats-a əlavə olunur (bax addXp). Deterministik seçim → hamıda eyni gündəlik questlər.
 
 import { createClient } from "./supabase/client";
-import { addXp } from "./progress";
+import { addXp, grantStreakFreeze } from "./progress";
 import { addWeeklyXp } from "./leaderboard";
+import { addGems } from "./gems";
+import { refillHearts } from "./hearts";
 import { todayKey } from "./daily";
 
 export type QuestKind = "xp" | "lessons" | "correct";
@@ -26,8 +28,20 @@ export interface QuestState {
   chestOpened: boolean; // bugünkü sandıq açılıbmı
 }
 
-// Sandıq mükafatı (bonus XP) — həvəsləndirmək üçün random "loot".
-const CHEST_REWARDS = [15, 25, 40];
+// Sandıq mükafatı — XP DEYİL, motivasiya edən əşyalar (zümrüd / can / seriya qoruyucu).
+export type ChestReward =
+  | { kind: "gems"; amount: number }
+  | { kind: "hearts" }
+  | { kind: "freeze" };
+
+// Random loot hovuzu (zümrüd daha tez-tez, can/qoruyucu bəzən).
+const CHEST_LOOT: ChestReward[] = [
+  { kind: "gems", amount: 20 },
+  { kind: "gems", amount: 30 },
+  { kind: "gems", amount: 50 },
+  { kind: "hearts" },
+  { kind: "freeze" },
+];
 
 // Quest hovuzu — gündən-günə fırlanır.
 const POOL: Quest[] = [
@@ -163,17 +177,19 @@ export function chestAvailable(state: QuestState): boolean {
   return todaysQuests(state.date).every((q) => state.claimed.includes(q.id));
 }
 
-// Sandığı aç: random bonus XP ver (user_stats + həftəlik liqa), bir dəfə (chestOpened).
-// Qazanılan XP-ni qaytarır; artıq açılıbsa və ya hazır deyilsə 0.
-export async function openChest(userId: string): Promise<number> {
-  let reward = 0;
+// Sandığı aç: random motivasiya mükafatı ver (zümrüd / can / seriya qoruyucu),
+// bir dəfə (chestOpened). Verilən mükafatı qaytarır.
+// (userId artıq lazım deyil — mükafatlar auth.uid() ilə işləyir; imza uyğunluq üçün qalır.)
+export async function openChest(_userId?: string): Promise<ChestReward> {
+  let reward: ChestReward = { kind: "gems", amount: 20 };
   await enqueue(async () => {
     const s = await readState();
     if (!chestAvailable(s)) return;
-    reward = CHEST_REWARDS[Math.floor(Math.random() * CHEST_REWARDS.length)];
+    reward = CHEST_LOOT[Math.floor(Math.random() * CHEST_LOOT.length)];
     s.chestOpened = true;
-    await addXp(userId, reward).catch(() => {});
-    await addWeeklyXp(reward);
+    if (reward.kind === "gems") await addGems(reward.amount).catch(() => {});
+    else if (reward.kind === "hearts") await refillHearts().catch(() => {});
+    else await grantStreakFreeze().catch(() => {});
     await writeState(s);
   });
   return reward;

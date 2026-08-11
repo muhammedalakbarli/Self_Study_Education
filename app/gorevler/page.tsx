@@ -15,8 +15,6 @@ import {
   openChest,
   type QuestState,
 } from "@/lib/quests";
-import { loadProgress } from "@/lib/progress";
-import { grantStreakFreeze } from "@/lib/progress";
 import { track } from "@/lib/analytics";
 import { useT } from "@/lib/i18n";
 import { PageSkeleton } from "@/components/Skeleton";
@@ -107,9 +105,7 @@ export default function QuestsPage() {
         <ChestModal
           onOpen={async () => {
             const reward = await openChest(user.id);
-            track("chest_opened", { reward });
-            await grantStreakFreeze().catch(() => 0);
-            await loadProgress(user.id).catch(() => {});
+            track("chest_opened", { reward: reward.kind });
             await loadQuestState().then(setQuests).catch(() => {});
             return reward;
           }}

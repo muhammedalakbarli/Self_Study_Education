@@ -238,6 +238,8 @@ const DICT: Dict = {
   },
   "quest.lessons": { az: "{n} dərs bitir", en: "Finish {n} lessons", ru: "Заверши {n} уроков" },
   "chest.title": { az: "Gündəlik sandıq", en: "Daily chest", ru: "Ежедневный сундук" },
+  "chest.wonHearts": { az: "Canlar doldu!", en: "Hearts refilled!", ru: "Жизни восстановлены!" },
+  "chest.wonFreeze": { az: "Seriya qoruyucu!", en: "Streak freeze!", ru: "Заморозка серии!" },
   "chest.ready": {
     az: "Bütün gündəlik görevləri bitirdin! Sandığı aç.",
     en: "You finished all daily goals! Open the chest.",
