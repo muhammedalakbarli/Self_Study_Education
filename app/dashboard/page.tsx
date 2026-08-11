@@ -304,8 +304,9 @@ function SubjectSwitcher({
           {/* kənara toxununca bağla */}
           <div className="fixed inset-0 z-10" onClick={() => setOpen(false)} aria-hidden />
           {/* Aşağı açılan bar — yana sürüşən fənlər */}
-          <div className="absolute left-0 right-0 top-full z-20 mt-2 rounded-2xl border border-line bg-panel p-3 shadow-xl sm:right-auto sm:min-w-[320px]">
-            <div className="flex gap-3 overflow-x-auto pb-1">
+          <div className="absolute left-0 right-0 top-full z-20 mt-2 rounded-2xl border border-line bg-panel p-3 shadow-xl sm:right-auto sm:min-w-[300px]">
+            {/* Mobil: sağa-sola sürüşən · Desktop: aşağı-yuxarı sürüşən siyahı */}
+            <div className="flex gap-3 overflow-x-auto pb-1 lg:max-h-80 lg:flex-col lg:gap-1 lg:overflow-x-visible lg:overflow-y-auto lg:pb-0">
               {subjects.map((s) => {
                 const on = s.slug === activeSlug;
                 return (
@@ -316,18 +317,22 @@ function SubjectSwitcher({
                       onSelect(s.slug);
                       setOpen(false);
                     }}
-                    className="flex w-20 shrink-0 flex-col items-center gap-1.5"
+                    className="flex w-20 shrink-0 flex-col items-center gap-1.5 lg:w-full lg:flex-row lg:items-center lg:gap-3 lg:rounded-xl lg:px-2 lg:py-1.5 lg:transition lg:hover:bg-panel-2"
                   >
                     <span
-                      className={`flex h-16 w-16 items-center justify-center rounded-2xl text-2xl font-bold transition ${
+                      className={`flex h-16 w-16 items-center justify-center rounded-2xl text-2xl font-bold transition lg:h-11 lg:w-11 lg:text-lg ${
                         on
-                          ? "bg-brand text-white ring-2 ring-brand ring-offset-2 ring-offset-panel"
+                          ? "bg-brand text-white ring-2 ring-brand ring-offset-2 ring-offset-panel lg:ring-0 lg:ring-offset-0"
                           : "bg-brand/10 text-brand hover:bg-brand/20"
                       }`}
                     >
                       {s.icon}
                     </span>
-                    <span className={`text-center text-xs leading-tight ${on ? "font-bold text-fg" : "text-muted"}`}>
+                    <span
+                      className={`text-center text-xs leading-tight lg:flex-1 lg:text-left lg:text-sm ${
+                        on ? "font-bold text-fg" : "text-muted"
+                      }`}
+                    >
                       {t(`subject.${s.slug}`)}
                     </span>
                   </button>
