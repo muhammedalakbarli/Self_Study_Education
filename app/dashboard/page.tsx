@@ -305,7 +305,7 @@ function SubjectSwitcher({
           {/* kənara toxununca bağla */}
           <div className="fixed inset-0 z-10" onClick={() => setOpen(false)} aria-hidden />
           {/* Aşağı açılan bar — yana sürüşən fənlər */}
-          <div className="absolute left-0 right-0 top-full z-20 mt-2 rounded-2xl border border-line bg-panel p-3 shadow-xl sm:right-auto sm:min-w-[300px]">
+          <div className="absolute left-0 top-full z-20 mt-2 w-[calc(100vw-2rem)] max-w-[460px] rounded-2xl border border-line bg-panel p-4 shadow-xl sm:w-[360px]">
             {/* Mobil: sağa-sola sürüşən · Desktop: aşağı-yuxarı sürüşən siyahı */}
             <div className="flex gap-3 overflow-x-auto pb-1 lg:max-h-80 lg:flex-col lg:gap-1 lg:overflow-x-visible lg:overflow-y-auto lg:pb-0">
               {subjects.map((s) => {
