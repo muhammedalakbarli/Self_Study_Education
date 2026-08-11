@@ -284,15 +284,16 @@ function SubjectSwitcher({
   return (
     <div className="relative">
       {/* Cari fənn — trigger */}
+      {/* Trigger — yalnız fənnin şəkli (ikonu) + ox; ad açılan bardadır */}
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="flex min-w-0 max-w-[58%] items-center gap-2.5 rounded-2xl border-2 border-line bg-panel px-3 py-2 transition hover:border-brand sm:max-w-none"
+        aria-label={t(`subject.${active.slug}`)}
+        className="flex items-center gap-1 rounded-2xl border-2 border-line bg-panel p-1.5 pr-2 transition hover:border-brand"
       >
-        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand text-lg font-bold text-white">
+        <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand text-xl font-bold text-white">
           {active.icon}
         </span>
-        <span className="truncate text-left font-extrabold text-fg">{t(`subject.${active.slug}`)}</span>
         <ChevronDown
           size={18}
           className={`shrink-0 text-muted transition-transform ${open ? "rotate-180" : ""}`}
