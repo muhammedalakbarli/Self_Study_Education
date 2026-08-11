@@ -72,7 +72,7 @@ export default function LandingPage() {
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3.5">
           <div className="flex items-center gap-2.5">
             <Logo size={34} />
-            <span className="gradient-pan bg-gradient-to-r from-brand to-accent bg-clip-text text-lg font-extrabold text-transparent">
+            <span className="text-lg font-extrabold text-brand">
               Imparo
             </span>
           </div>

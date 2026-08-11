@@ -126,7 +126,7 @@ const jsonLd = {
 
 // Mobil brauzer üst zolağının rəngi (brend narıncı).
 export const viewport: Viewport = {
-  themeColor: "#ff9500",
+  themeColor: "#f47b3a",
 };
 
 export default function RootLayout({

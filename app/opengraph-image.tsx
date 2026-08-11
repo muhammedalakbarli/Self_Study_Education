@@ -16,19 +16,18 @@ export default function OpengraphImage() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          background: "linear-gradient(135deg, #5b4bf5 0%, #4636cf 100%)",
+          background: "linear-gradient(135deg, #ff9f43 0%, #de6428 100%)",
           color: "white",
           fontFamily: "sans-serif",
         }}
       >
         {/* Loqo işarəsi — Imparo raketi */}
-        <svg width="130" height="130" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="6" y="6" width="52" height="52" rx="16" fill="#5b4bf5" />
-          <path d="M24 33 L16 44 L26 40 Z" fill="#ff9500" />
-          <path d="M40 33 L48 44 L38 40 Z" fill="#ff9500" />
-          <path d="M27 41 L32 56 L37 41 Z" fill="#ff6a00" />
+        <svg width="150" height="150" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M24 33 L16 44 L26 40 Z" fill="#ffd166" />
+          <path d="M40 33 L48 44 L38 40 Z" fill="#ffd166" />
+          <path d="M27 41 L32 56 L37 41 Z" fill="#ff6b5e" />
           <path d="M32 8 C38 13 41 21 41 29 C41 35 39 39 36 43 L28 43 C25 39 23 35 23 29 C23 21 26 13 32 8 Z" fill="#ffffff" />
-          <circle cx="32" cy="25" r="5.5" fill="#4636cf" />
+          <circle cx="32" cy="25" r="5.5" fill="#3b2723" />
         </svg>
         <div style={{ marginTop: 40, fontSize: 84, fontWeight: 800 }}>Imparo</div>
         <div style={{ marginTop: 12, fontSize: 36, opacity: 0.9 }}>

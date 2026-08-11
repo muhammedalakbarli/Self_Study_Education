@@ -138,7 +138,7 @@ export default function Sidebar() {
       <aside className="fixed inset-y-0 left-0 z-30 hidden w-56 flex-col border-r border-line bg-panel px-3 py-5 lg:flex">
         <Link href="/dashboard" className="flex items-center gap-2.5 px-2">
           <Logo size={32} />
-          <span className="bg-gradient-to-r from-brand to-accent bg-clip-text text-lg font-extrabold text-transparent">
+          <span className="text-lg font-extrabold text-brand">
             Imparo
           </span>
         </Link>

@@ -82,20 +82,20 @@ export default function Mascot({
           <g className={waveClass}>
             <path
               d="M80 51 Q98 47 104 35"
-              stroke="#ff9500"
+              stroke="#ff9f43"
               strokeWidth="9"
               strokeLinecap="round"
               fill="none"
             />
-            <circle cx="105" cy="33" r="8" fill="#ff9500" />
+            <circle cx="105" cy="33" r="8" fill="#ff9f43" />
           </g>
         )}
 
         {/* ulduz gövdəsi (yumru künclər üçün eyni rəngli qalın stroke) */}
         <polygon
           points={star}
-          fill="#ff9500"
-          stroke="#ff9500"
+          fill="#ff9f43"
+          stroke="#ff9f43"
           strokeWidth="11"
           strokeLinejoin="round"
           strokeLinecap="round"
