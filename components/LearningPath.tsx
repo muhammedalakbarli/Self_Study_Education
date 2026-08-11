@@ -283,7 +283,9 @@ export default function LearningPath({ nodes }: { nodes: PathNode[] }) {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-40px" }}
         transition={{ type: "spring", stiffness: 260, damping: 22 }}
-        className="flex w-full flex-col items-center py-3"
+        className={`flex w-full flex-col items-center py-3 ${
+          node.state === "current" ? "pt-14" : ""
+        }`}
       >
         <div
           className="relative flex items-center justify-center"

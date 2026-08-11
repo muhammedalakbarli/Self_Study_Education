@@ -302,14 +302,16 @@ function StatMini({
 }) {
   const inner = (
     <>
-      <Icon size={26} className={color} fill="currentColor" strokeWidth={0} />
+      <span className="relative">
+        <Icon size={26} className={color} fill="currentColor" strokeWidth={0} />
+        {badge != null && badge > 0 && (
+          <span className="absolute -left-2 -top-2 flex items-center gap-0.5 rounded-full bg-sky-500 px-1 py-0.5 text-[9px] font-extrabold text-white shadow ring-2 ring-ink">
+            <Shield size={9} strokeWidth={2.5} />
+            {badge}
+          </span>
+        )}
+      </span>
       <span className="text-lg font-extrabold text-fg">{value}</span>
-      {badge != null && badge > 0 && (
-        <span className="absolute -right-2 -top-1.5 flex items-center gap-0.5 rounded-full bg-sky-500 px-1.5 py-0.5 text-[10px] font-extrabold text-white shadow">
-          <Shield size={10} strokeWidth={2.5} />
-          {badge}
-        </span>
-      )}
     </>
   );
   const cls = "relative flex items-center gap-1.5";
