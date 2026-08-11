@@ -7,7 +7,14 @@ import { useEffect, useState } from "react";
 import { Heart, Gem, Sparkles, BarChart3, Rocket, Crown } from "lucide-react";
 import { track } from "@/lib/analytics";
 import { loadPlus } from "@/lib/plus";
+import { useAuthUser } from "@/lib/useAuthUser";
 import Mascot from "@/components/Mascot";
+
+// LemonSqueezy hosted checkout linkləri (.env-də təyin olunur; yoxdursa maraq qeyd edilir).
+const CHECKOUT: Record<string, string | undefined> = {
+  yearly: process.env.NEXT_PUBLIC_LS_CHECKOUT_YEARLY,
+  monthly: process.env.NEXT_PUBLIC_LS_CHECKOUT_MONTHLY,
+};
 
 const BENEFITS = [
   { Icon: Heart, title: "Limitsiz can", desc: "Səhv etməkdən qorxma — canlar bitmir." },
@@ -23,6 +30,7 @@ const PLANS = [
 ];
 
 export default function PlusPage() {
+  const { user } = useAuthUser();
   const [plan, setPlan] = useState("yearly");
   const [done, setDone] = useState(false);
   const [active, setActive] = useState(false);
@@ -32,13 +40,23 @@ export default function PlusPage() {
     loadPlus().then(setActive).catch(() => {});
   }, []);
 
-  // Ödəniş sistemi hələ yoxdur — Plus PULSUZ aktivləşdirilmir, yalnız maraq qeyd olunur.
+  // Checkout linki varsa → LemonSqueezy hosted checkout-a yönləndir (user_id + plan + email).
+  // Yoxdursa (hələ konfiqurasiya edilməyib) → yalnız maraq qeyd olunur (pulsuz plus YOX).
   function subscribe() {
     if (busy) return;
-    setBusy(true);
-    track("plus_interest", { plan });
+    const url = CHECKOUT[plan];
+    track("plus_checkout", { plan, configured: !!url });
+    if (url && user) {
+      setBusy(true);
+      const sep = url.includes("?") ? "&" : "?";
+      const params =
+        `checkout[custom][user_id]=${encodeURIComponent(user.id)}` +
+        `&checkout[custom][plan]=${plan}` +
+        (user.email ? `&checkout[email]=${encodeURIComponent(user.email)}` : "");
+      window.location.href = `${url}${sep}${params}`;
+      return;
+    }
     setDone(true);
-    setBusy(false);
   }
 
   return (
