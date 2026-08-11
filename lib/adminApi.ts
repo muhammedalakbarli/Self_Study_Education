@@ -173,3 +173,47 @@ export async function reorderLevel(
     return { ok: false, error: e instanceof Error ? e.message : "error" };
   }
 }
+
+// ── Admin · İstifadəçi datası (yalnız is_admin; bax 0026 migration) ──
+export interface AdminUserRow {
+  user_id: string;
+  email: string;
+  name: string;
+  created_at: string;
+  total_xp: number;
+  streak_days: number;
+  last_active_date: string | null;
+  gems: number;
+  is_plus: boolean;
+  completed: number;
+}
+export interface AdminUserStats {
+  total: number;
+  active7: number;
+  active30: number;
+  plus_count: number;
+  new7: number;
+  total_xp: number;
+}
+
+export async function adminUserStats(): Promise<AdminUserStats | null> {
+  try {
+    const { data } = await createClient().rpc("admin_user_stats");
+    return (data?.[0] as AdminUserStats) ?? null;
+  } catch {
+    return null;
+  }
+}
+
+export async function adminUsers(search = "", limit = 200, offset = 0): Promise<AdminUserRow[]> {
+  try {
+    const { data } = await createClient().rpc("admin_users", {
+      p_search: search,
+      p_limit: limit,
+      p_offset: offset,
+    });
+    return (data as AdminUserRow[]) ?? [];
+  } catch {
+    return [];
+  }
+}
