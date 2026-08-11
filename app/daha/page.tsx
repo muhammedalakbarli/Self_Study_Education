@@ -4,7 +4,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { BookOpen, User, Dumbbell, LogOut, ChevronRight, Settings, HelpCircle } from "lucide-react";
+import { BookOpen, User, Dumbbell, LogOut, ChevronRight, Settings, HelpCircle, School, Crown } from "lucide-react";
 import { useAuthUser } from "@/lib/useAuthUser";
 import { signOut } from "@/lib/auth";
 import { useContent } from "@/components/ContentProvider";
@@ -61,6 +61,12 @@ export default function MorePage() {
           <Row href="/profil" Icon={User} label={t("nav.profile")} />
           <Row href="/praktika" Icon={Dumbbell} label={t("nav.practice")} />
           <Row href="/dashboard" Icon={BookOpen} label={t("nav.learn")} />
+        </div>
+
+        {/* Imparo dünyası */}
+        <div className="mt-6 overflow-hidden rounded-2xl border border-line bg-panel">
+          <Row href="/mekteb" Icon={School} label={t("nav.schools")} />
+          <Row href="/plus" Icon={Crown} label="Imparo Plus" />
         </div>
 
         {/* Tənzimləmə */}

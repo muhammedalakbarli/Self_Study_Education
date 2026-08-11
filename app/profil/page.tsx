@@ -17,6 +17,7 @@ import {
   Settings,
   HelpCircle,
   ChevronRight,
+  School,
   type LucideIcon,
 } from "lucide-react";
 import { useAuthUser } from "@/lib/useAuthUser";
@@ -248,8 +249,18 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        {/* Ayarlar / Yardım (mobil üçün — bura köçürüldü) */}
+        {/* Daha çoxu — Məktəblər üçün · Plus · Ayarlar · Yardım (mobil giriş) */}
         <div className="mt-6 overflow-hidden rounded-2xl border border-line bg-panel">
+          <Link href="/mekteb" className="flex items-center gap-3 border-b border-line px-4 py-3.5 transition hover:bg-panel-2">
+            <School size={20} className="text-brand" />
+            <span className="flex-1 font-bold text-fg">{t("nav.schools")}</span>
+            <ChevronRight size={18} className="text-muted" />
+          </Link>
+          <Link href="/plus" className="flex items-center gap-3 border-b border-line px-4 py-3.5 transition hover:bg-panel-2">
+            <Crown size={20} className="text-amber-500" />
+            <span className="flex-1 font-bold text-fg">Imparo Plus</span>
+            <ChevronRight size={18} className="text-muted" />
+          </Link>
           <Link href="/ayarlar" className="flex items-center gap-3 border-b border-line px-4 py-3.5 transition hover:bg-panel-2">
             <Settings size={20} className="text-muted" />
             <span className="flex-1 font-bold text-fg">{t("nav.settings")}</span>

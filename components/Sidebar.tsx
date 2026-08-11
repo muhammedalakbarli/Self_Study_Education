@@ -17,6 +17,8 @@ import {
   User,
   Target,
   ShoppingBag,
+  School,
+  Crown,
 } from "lucide-react";
 import Logo from "./Logo";
 import {
@@ -173,6 +175,8 @@ export default function Sidebar() {
                   {/* Flyout */}
                   <div className="invisible absolute left-full top-0 z-40 pl-2 opacity-0 transition group-hover:visible group-hover:opacity-100">
                     <div className="w-56 rounded-2xl border border-line bg-panel p-1.5 shadow-xl">
+                      <FlyoutLink href="/mekteb" Icon={School} label={t("nav.schools")} />
+                      <FlyoutLink href="/plus" Icon={Crown} label="Imparo Plus" />
                       <FlyoutLink href="/ayarlar" Icon={Settings} label={t("nav.settings")} />
                       <FlyoutLink href="/yardim" Icon={HelpCircle} label={t("nav.help")} />
                       {isAdmin && (
