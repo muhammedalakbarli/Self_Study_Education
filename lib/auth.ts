@@ -47,6 +47,8 @@ export async function signInWithGoogle(): Promise<AuthResult> {
     provider: "google",
     options: {
       redirectTo: `${window.location.origin}/auth/callback`,
+      // Hər dəfə hesab seçimi göstər (birbaşa köhnə hesaba girməsin).
+      queryParams: { prompt: "select_account" },
     },
   });
   if (error) return { ok: false, error: error.message };
