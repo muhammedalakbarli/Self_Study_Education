@@ -6,12 +6,15 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   LogOut,
   Settings,
   HelpCircle,
   ChevronRight,
   ShieldCheck,
+  Dumbbell,
+  User,
 } from "lucide-react";
 import Logo from "./Logo";
 import {
@@ -81,10 +84,15 @@ export default function Sidebar() {
   const t = useT();
   const [isAdmin, setIsAdmin] = useState(false);
   const [hasDue, setHasDue] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
 
   useEffect(() => {
     checkIsAdmin().then(setIsAdmin);
   }, []);
+  // Səhifə dəyişəndə mobil "Daha çoxu" vərəqini bağla.
+  useEffect(() => {
+    setMoreOpen(false);
+  }, [pathname]);
   // Təkrar vaxtı çatan tapşırıq varsa Praktika üzərində qırmızı nöqtə göstər.
   useEffect(() => {
     loadDueTaskIds()
@@ -175,34 +183,123 @@ export default function Sidebar() {
         </button>
       </aside>
 
-      {/* Mobil — alt panel: yalnız ikonlar (yazısız). Praktika/Profil "Daha çoxu"nun içindədir. */}
-      <nav className="fixed inset-x-0 bottom-0 z-30 flex justify-around border-t border-line bg-panel py-2 lg:hidden">
+      {/* Mobil "Daha çoxu" vərəqi — alt paneldən yuxarı açılır */}
+      <AnimatePresence>
+        {moreOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setMoreOpen(false)}
+              className="fixed inset-0 z-30 bg-black/50 lg:hidden"
+              aria-hidden
+            />
+            <motion.div
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ type: "spring", stiffness: 340, damping: 34 }}
+              className="fixed inset-x-0 bottom-[68px] z-40 mx-3 rounded-3xl border border-line bg-panel p-2 shadow-2xl lg:hidden"
+            >
+              <SheetLink href="/praktika" Icon={Dumbbell} label={t("nav.practice")} dot={hasDue} onNavigate={() => setMoreOpen(false)} />
+              <SheetLink href="/profil" Icon={User} label={t("nav.profile")} onNavigate={() => setMoreOpen(false)} />
+              <SheetLink href="/ayarlar" Icon={Settings} label={t("nav.settings")} onNavigate={() => setMoreOpen(false)} />
+              <SheetLink href="/yardim" Icon={HelpCircle} label={t("nav.help")} onNavigate={() => setMoreOpen(false)} />
+              {isAdmin && (
+                <SheetLink href="/admin" Icon={ShieldCheck} label="Admin" onNavigate={() => setMoreOpen(false)} />
+              )}
+              <button
+                type="button"
+                onClick={logout}
+                className="flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-sm font-bold text-red-500 transition hover:bg-red-500/10"
+              >
+                <LogOut size={20} /> {t("nav.logout")}
+              </button>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* Mobil — alt panel: yalnız ikonlar (yazısız). "Daha çoxu" vərəq açır. */}
+      <nav className="fixed inset-x-0 bottom-0 z-40 flex justify-around border-t border-line bg-panel py-2 lg:hidden">
         {NAV.filter(({ href }) => MOBILE_HREFS.includes(href)).map(
           ({ href, Icon, match, activeBg }) => {
-            const on = isActive(match);
-            return (
+            const isMore = href === "/daha";
+            const on = isMore ? moreOpen : isActive(match);
+            const iconSpan = (
+              <span
+                className={`relative flex h-12 w-12 items-center justify-center rounded-2xl transition ${
+                  on ? activeBg : "opacity-80"
+                }`}
+              >
+                <Icon size={34} />
+                {!isMore && showDot(href, on) && (
+                  <span className="absolute right-1 top-1 h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-panel" />
+                )}
+                {/* Daha çoxu içindəki Praktika üçün diqqət nöqtəsi */}
+                {isMore && hasDue && !moreOpen && (
+                  <span className="absolute right-1 top-1 h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-panel" />
+                )}
+              </span>
+            );
+            const aria = t(NAV.find((n) => n.href === href)!.key);
+            return isMore ? (
+              <button
+                key={href}
+                type="button"
+                onClick={() => setMoreOpen((v) => !v)}
+                aria-label={aria}
+                className="flex flex-1 flex-col items-center"
+              >
+                {iconSpan}
+              </button>
+            ) : (
               <Link
                 key={href}
                 href={href}
-                aria-label={t(NAV.find((n) => n.href === href)!.key)}
+                aria-label={aria}
                 className="flex flex-1 flex-col items-center"
               >
-                <span
-                  className={`relative flex h-12 w-12 items-center justify-center rounded-2xl transition ${
-                    on ? activeBg : "opacity-80"
-                  }`}
-                >
-                  <Icon size={34} />
-                  {showDot(href, on) && (
-                    <span className="absolute right-1 top-1 h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-panel" />
-                  )}
-                </span>
+                {iconSpan}
               </Link>
             );
           },
         )}
       </nav>
     </>
+  );
+}
+
+// Mobil "Daha çoxu" vərəqindəki sətir.
+function SheetLink({
+  href,
+  Icon,
+  label,
+  dot,
+  onNavigate,
+}: {
+  href: string;
+  Icon: React.ComponentType<{ size?: number; className?: string }>;
+  label: string;
+  dot?: boolean;
+  onNavigate: () => void;
+}) {
+  return (
+    <Link
+      href={href}
+      onClick={onNavigate}
+      className="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-bold text-fg transition hover:bg-panel-2"
+    >
+      <span className="relative">
+        <Icon size={22} className="text-muted" />
+        {dot && (
+          <span className="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-panel" />
+        )}
+      </span>
+      <span className="flex-1">{label}</span>
+      <ChevronRight size={18} className="text-muted" />
+    </Link>
   );
 }
 
