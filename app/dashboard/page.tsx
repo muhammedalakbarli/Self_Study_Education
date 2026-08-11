@@ -122,20 +122,28 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-ink">
       <main className="mx-auto max-w-5xl px-4 py-6">
-        {/* Üst stat zolağı — mobil: mərkəz · desktop: sağ (Duolingo kimi) */}
-        <div className="mb-5 flex items-center justify-center gap-8 lg:justify-end">
-          <StatMini
-            Icon={Flame}
-            value={state.streakDays}
-            color="text-orange-500"
-            badge={state.streakFreezes}
-            onClick={() => {
-              setCalOpen(true);
-              if (user) loadActiveDays(user.id).then(setActiveDays);
-            }}
+        {/* Üst zolaq — sol: fənn seçici · sağ: streak/zümrüd/can (Duolingo kimi) */}
+        <div className="mb-5 flex items-center justify-between gap-3">
+          <SubjectSwitcher
+            subjects={shown}
+            activeSlug={active.slug}
+            onSelect={setActiveSlug}
+            t={t}
           />
-          <StatMini Icon={Gem} value={state.gems} color="text-emerald-500" />
-          <StatMini Icon={Heart} value={hearts} color="text-red-500" />
+          <div className="flex shrink-0 items-center gap-5 sm:gap-6">
+            <StatMini
+              Icon={Flame}
+              value={state.streakDays}
+              color="text-orange-500"
+              badge={state.streakFreezes}
+              onClick={() => {
+                setCalOpen(true);
+                if (user) loadActiveDays(user.id).then(setActiveDays);
+              }}
+            />
+            <StatMini Icon={Gem} value={state.gems} color="text-emerald-500" />
+            <StatMini Icon={Heart} value={hearts} color="text-red-500" />
+          </div>
         </div>
 
         {calOpen && (
@@ -149,14 +157,6 @@ export default function DashboardPage() {
         {/* Mobil: tək sütun · Desktop: mərkəz yol + sağ sütun */}
         <div className="lg:grid lg:grid-cols-[1fr_20rem] lg:items-start lg:gap-6">
           <div className="min-w-0">
-            {/* Fənn seçici (Duolingo dil seçici üslubu — aşağı açılan yana-sürüşən bar) */}
-            <SubjectSwitcher
-              subjects={shown}
-              activeSlug={active.slug}
-              onSelect={setActiveSlug}
-              t={t}
-            />
-
             {/* Bölmə başlığı (Duolingo banner üslubu) */}
             <div className="mt-4 flex items-center gap-4 rounded-2xl bg-gradient-to-r from-brand to-brand-dark p-5 text-white shadow-lg">
               <RadialProgress value={scorePct} size={64} stroke={6} />
@@ -287,15 +287,15 @@ function SubjectSwitcher({
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="flex w-full items-center gap-3 rounded-2xl border-2 border-line bg-panel px-4 py-2.5 transition hover:border-brand sm:w-auto"
+        className="flex min-w-0 max-w-[58%] items-center gap-2.5 rounded-2xl border-2 border-line bg-panel px-3 py-2 transition hover:border-brand sm:max-w-none"
       >
-        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand text-lg font-bold text-white">
+        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand text-lg font-bold text-white">
           {active.icon}
         </span>
-        <span className="flex-1 text-left font-extrabold text-fg">{t(`subject.${active.slug}`)}</span>
+        <span className="truncate text-left font-extrabold text-fg">{t(`subject.${active.slug}`)}</span>
         <ChevronDown
           size={18}
-          className={`text-muted transition-transform ${open ? "rotate-180" : ""}`}
+          className={`shrink-0 text-muted transition-transform ${open ? "rotate-180" : ""}`}
         />
       </button>
 
