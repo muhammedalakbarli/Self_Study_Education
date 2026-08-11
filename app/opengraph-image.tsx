@@ -21,12 +21,12 @@ export default function OpengraphImage() {
           fontFamily: "sans-serif",
         }}
       >
-        {/* Loqo işarəsi (yüksələn pillələr) */}
-        <div style={{ display: "flex", alignItems: "flex-end", gap: 10 }}>
-          <div style={{ width: 26, height: 36, background: "white", borderRadius: 8 }} />
-          <div style={{ width: 26, height: 64, background: "white", borderRadius: 8 }} />
-          <div style={{ width: 26, height: 92, background: "#ff9500", borderRadius: 8 }} />
-        </div>
+        {/* Loqo işarəsi — Imparo markası */}
+        <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="8" width="104" height="104" rx="30" fill="#5b4bf5" />
+          <rect x="52" y="54" width="16" height="40" rx="8" fill="#ffffff" />
+          <path d="M60 18 L64.5 29.5 L76 34 L64.5 38.5 L60 50 L55.5 38.5 L44 34 L55.5 29.5 Z" fill="#ff9500" />
+        </svg>
         <div style={{ marginTop: 40, fontSize: 84, fontWeight: 800 }}>Imparo</div>
         <div style={{ marginTop: 12, fontSize: 36, opacity: 0.9 }}>
           Öyrənməyi əyləncəyə çevir
