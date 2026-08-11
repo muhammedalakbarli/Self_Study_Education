@@ -46,8 +46,10 @@ export function effectiveStreak(
   if (lastActiveDate === today || lastActiveDate === yesterday) return streakDays;
   // 1 gün buraxılıb, amma freeze var → seriya hələ də sağdır (növbəti aktivlikdə freeze
   // serverdə işlədiləcək). Beləcə istifadəçi bir gün buraxsa da 0-a düşdüyünü görmür.
-  if (streakFreezes > 0 && lastActiveDate === dayBefore(today, 2)) return streakDays;
-  return 0; // seriya qırılıb
+  for (let skip = 1; skip <= streakFreezes + 1; skip++) {
+    if (lastActiveDate === dayBefore(today, skip + 1)) return streakDays;
+  }
+  return 0;
 }
 
 // Profil sətrini yaradır (user_progress/user_stats ona FK ilə bağlıdır).
