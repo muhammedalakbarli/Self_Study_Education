@@ -72,7 +72,7 @@ export default function LandingPage() {
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3.5">
           <div className="flex items-center gap-2.5">
             <Logo size={34} />
-            <span className="gradient-pan bg-gradient-to-r from-indigo-400 via-pink-400 to-amber-400 bg-clip-text text-lg font-extrabold text-transparent">
+            <span className="gradient-pan bg-gradient-to-r from-brand to-accent bg-clip-text text-lg font-extrabold text-transparent">
               Imparo
             </span>
           </div>
@@ -98,7 +98,7 @@ export default function LandingPage() {
         >
           {/* Ulduz */}
           <motion.div variants={fadeUp} className="order-1 flex justify-center lg:order-2">
-            <div className="float-slow relative flex aspect-square w-64 items-center justify-center rounded-full bg-gradient-to-br from-brand/20 via-accent/15 to-pink-500/15 sm:w-80">
+            <div className="float-slow relative flex aspect-square w-64 items-center justify-center rounded-full bg-gradient-to-br from-brand/20 to-accent/15 sm:w-80">
               {/* radial işıq */}
               <span className="pointer-events-none absolute inset-6 rounded-full bg-brand/10 blur-2xl" aria-hidden />
               <Mascot size={210} mood="wave" />
@@ -107,7 +107,7 @@ export default function LandingPage() {
                 <Sparkles size={22} fill="currentColor" strokeWidth={0} />
               </span>
               <span
-                className="twinkle pointer-events-none absolute bottom-12 right-8 text-pink-400"
+                className="twinkle pointer-events-none absolute bottom-12 right-8 text-amber-300"
                 style={{ animationDelay: "1s" }}
                 aria-hidden
               >
@@ -129,7 +129,7 @@ export default function LandingPage() {
             </span>
             <h1 className="mt-5 text-4xl font-extrabold leading-tight text-fg sm:text-5xl lg:text-6xl">
               {t("home.hero1")}
-              <span className="gradient-pan bg-gradient-to-r from-brand via-pink-500 to-accent bg-clip-text text-transparent">
+              <span className="gradient-pan bg-gradient-to-r from-brand to-accent bg-clip-text text-transparent">
                 {t("home.hero2")}
               </span>
               {t("home.hero3")}
@@ -165,19 +165,19 @@ export default function LandingPage() {
           <div className="mt-8 grid gap-4 sm:grid-cols-3">
             <SubjectCard
               Icon={Calculator}
-              grad="from-indigo-500 to-violet-600"
+              grad="from-brand to-brand-dark"
               title={t("home.subjects.math")}
               desc={t("home.subjects.mathDesc")}
             />
             <SubjectCard
               Icon={BookText}
-              grad="from-emerald-500 to-teal-600"
+              grad="from-brand to-brand-dark"
               title={t("home.subjects.az")}
               desc={t("home.subjects.azDesc")}
             />
             <SubjectCard
               Icon={Languages}
-              grad="from-amber-500 to-orange-600"
+              grad="from-brand to-brand-dark"
               title={t("home.subjects.en")}
               desc={t("home.subjects.enDesc")}
             />
@@ -195,10 +195,10 @@ export default function LandingPage() {
         <Reveal className="py-14 sm:py-20">
           <SectionHead title={t("home.feat.title")} />
           <motion.div variants={stagger} className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
-            <FeatureChip Icon={Star} tint="text-amber-500" label={t("home.feat.xp")} />
+            <FeatureChip Icon={Star} tint="text-brand" label={t("home.feat.xp")} />
             <FeatureChip Icon={Flame} tint="text-orange-500" label={t("home.feat.streak")} />
-            <FeatureChip Icon={Trophy} tint="text-yellow-500" label={t("home.feat.league")} />
-            <FeatureChip Icon={Award} tint="text-pink-500" label={t("home.feat.badge")} />
+            <FeatureChip Icon={Trophy} tint="text-brand" label={t("home.feat.league")} />
+            <FeatureChip Icon={Award} tint="text-brand" label={t("home.feat.badge")} />
           </motion.div>
         </Reveal>
 
@@ -206,9 +206,9 @@ export default function LandingPage() {
         <Reveal className="pb-14 sm:pb-20">
           <SectionHead title={t("home.how.title")} />
           <motion.div variants={stagger} className="mt-8 grid gap-4 sm:grid-cols-3">
-            <StepCard n={1} tint="from-indigo-500 to-violet-600" title={t("home.how.s1.t")} desc={t("home.how.s1.d")} />
-            <StepCard n={2} tint="from-emerald-500 to-teal-600" title={t("home.how.s2.t")} desc={t("home.how.s2.d")} />
-            <StepCard n={3} tint="from-amber-500 to-orange-600" title={t("home.how.s3.t")} desc={t("home.how.s3.d")} />
+            <StepCard n={1} tint="from-brand to-brand-dark" title={t("home.how.s1.t")} desc={t("home.how.s1.d")} />
+            <StepCard n={2} tint="from-brand to-brand-dark" title={t("home.how.s2.t")} desc={t("home.how.s2.d")} />
+            <StepCard n={3} tint="from-brand to-brand-dark" title={t("home.how.s3.t")} desc={t("home.how.s3.d")} />
           </motion.div>
         </Reveal>
 
@@ -258,7 +258,7 @@ function Blobs() {
     <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden" aria-hidden>
       <div className="blob-float absolute -left-20 -top-24 h-72 w-72 rounded-full bg-brand/25 blur-3xl" />
       <div
-        className="blob-float absolute right-[-60px] top-40 h-80 w-80 rounded-full bg-pink-500/15 blur-3xl"
+        className="blob-float absolute right-[-60px] top-40 h-80 w-80 rounded-full bg-accent/15 blur-3xl"
         style={{ animationDelay: "3s" }}
       />
       <div

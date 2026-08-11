@@ -30,14 +30,8 @@ const AMPLITUDE = 78;
 const offsetAt = (i: number) => Math.round(Math.sin(i * 0.9) * AMPLITUDE);
 
 // Bölmələr üçün növbələşən rəng temaları.
-const UNIT_THEMES = [
-  "from-emerald-500 to-teal-600",
-  "from-violet-500 to-indigo-600",
-  "from-amber-500 to-orange-600",
-  "from-pink-500 to-rose-600",
-  "from-sky-500 to-blue-600",
-  "from-fuchsia-500 to-purple-600",
-];
+// Vahid palitra: indiqo (brend) və amber növbələşir — göy qurşağı yox.
+const UNIT_THEMES = ["from-brand to-brand-dark", "from-amber-500 to-orange-500"];
 
 // Düyünün 3D rəngləri (üz + alt dərinlik kölgəsi).
 const NODE_STYLE: Record<NodeState, { bg: string; depth: string; text: string }> = {

@@ -81,7 +81,7 @@ export default function ShopPage() {
     <div className="min-h-screen bg-ink">
       <main className="mx-auto max-w-2xl px-4 py-6">
         {/* Başlıq + balans */}
-        <div className="flex items-center justify-between gap-4 rounded-3xl bg-gradient-to-r from-cyan-500 to-teal-600 p-5 text-white shadow-lg">
+        <div className="flex items-center justify-between gap-4 rounded-3xl bg-gradient-to-r from-brand to-brand-dark p-5 text-white shadow-lg">
           <div>
             <h1 className="text-xl font-extrabold">{t("shop.title")}</h1>
             <p className="text-sm text-white/85">{t("shop.subtitle")}</p>

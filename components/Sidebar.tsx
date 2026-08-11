@@ -45,56 +45,56 @@ const NAV = [
     key: "nav.learn",
     Icon: IconLearn,
     match: ["/dashboard", "/subjects", "/lessons"],
-    activeBg: "bg-indigo-500/15",
-    activeText: "text-indigo-600 dark:text-indigo-400",
+    activeBg: "bg-brand/12",
+    activeText: "text-brand",
   },
   {
     href: "/praktika",
     key: "nav.practice",
     Icon: IconPractice,
     match: ["/praktika"],
-    activeBg: "bg-emerald-500/15",
-    activeText: "text-emerald-600 dark:text-emerald-400",
+    activeBg: "bg-brand/12",
+    activeText: "text-brand",
   },
   {
     href: "/liqa",
     key: "nav.league",
     Icon: IconLeague,
     match: ["/liqa"],
-    activeBg: "bg-amber-500/15",
-    activeText: "text-amber-600 dark:text-amber-400",
+    activeBg: "bg-brand/12",
+    activeText: "text-brand",
   },
   {
     href: "/gorevler",
     key: "nav.quests",
     Icon: IconQuests,
     match: ["/gorevler"],
-    activeBg: "bg-rose-500/15",
-    activeText: "text-rose-600 dark:text-rose-400",
+    activeBg: "bg-brand/12",
+    activeText: "text-brand",
   },
   {
     href: "/magaza",
     key: "nav.shop",
     Icon: IconShop,
     match: ["/magaza"],
-    activeBg: "bg-teal-500/15",
-    activeText: "text-teal-600 dark:text-teal-400",
+    activeBg: "bg-brand/12",
+    activeText: "text-brand",
   },
   {
     href: "/profil",
     key: "nav.profile",
     Icon: IconProfile,
     match: ["/profil"],
-    activeBg: "bg-pink-500/15",
-    activeText: "text-pink-600 dark:text-pink-400",
+    activeBg: "bg-brand/12",
+    activeText: "text-brand",
   },
   {
     href: "/daha",
     key: "nav.more",
     Icon: IconMore,
     match: ["/daha"],
-    activeBg: "bg-sky-500/15",
-    activeText: "text-sky-600 dark:text-sky-400",
+    activeBg: "bg-brand/12",
+    activeText: "text-brand",
   },
 ];
 
@@ -138,7 +138,7 @@ export default function Sidebar() {
       <aside className="fixed inset-y-0 left-0 z-30 hidden w-56 flex-col border-r border-line bg-panel px-3 py-5 lg:flex">
         <Link href="/dashboard" className="flex items-center gap-2.5 px-2">
           <Logo size={32} />
-          <span className="bg-gradient-to-r from-indigo-500 via-pink-500 to-amber-500 bg-clip-text text-lg font-extrabold text-transparent">
+          <span className="bg-gradient-to-r from-brand to-accent bg-clip-text text-lg font-extrabold text-transparent">
             Imparo
           </span>
         </Link>

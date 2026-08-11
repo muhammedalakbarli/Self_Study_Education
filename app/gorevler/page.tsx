@@ -44,7 +44,7 @@ export default function QuestsPage() {
     <div className="min-h-screen bg-ink">
       <main className="mx-auto max-w-2xl px-4 py-6">
         {/* Başlıq */}
-        <div className="flex items-center gap-4 rounded-3xl bg-gradient-to-r from-rose-500 to-pink-600 p-5 text-white shadow-lg">
+        <div className="flex items-center gap-4 rounded-3xl bg-gradient-to-r from-brand to-brand-dark p-5 text-white shadow-lg">
           <Mascot size={64} mood={doneCount === list.length ? "celebrate" : "happy"} />
           <div>
             <h1 className="text-xl font-extrabold">{t("quest.title")}</h1>
