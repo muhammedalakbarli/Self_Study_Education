@@ -1,33 +1,33 @@
 "use client";
 
-// "Zefi" — Imparo-nun tülkü mascotu (rəsmi brend illüstrasiyası, PNG asset).
-// API əvvəlki kimi saxlanılır (mood/animate/speaking) ki, bütün çağırış yerləri işləsin.
-// Peşəkar illüstrasiya olduğu üçün əl-SVG əvəzinə hazır şəkil göstərilir.
+// "Zefi" — Imparo mascotu. Bu nazik wrapper köhnə `mood` API-ni ZefiMascot-un
+// `emotion`-una çevirir ki, bütün çağırış yerləri dəyişmədən işləsin.
+// ANİMASİYA YOX — maskot artıq havada üzmür/tərpənmir (statik peşəkar vektor).
+
+import ZefiMascot, { type ZefiEmotion } from "./ZefiMascot";
 
 export type MascotMood = "happy" | "celebrate" | "sad" | "thinking" | "wave" | "love";
 
-const RATIO = 397 / 260; // orijinal şəkil nisbəti
+const MOOD_TO_EMOTION: Record<MascotMood, ZefiEmotion> = {
+  happy: "happy",
+  celebrate: "celebrating",
+  love: "celebrating",
+  sad: "worried",
+  thinking: "learning",
+  wave: "welcome",
+};
 
 export default function Mascot({
   size = 120,
-  animate = true,
+  mood = "happy",
+  badge,
 }: {
   size?: number;
   mood?: MascotMood;
+  // köhnə proplar qəbul edilir amma istifadə olunmur (statik):
   animate?: boolean;
   speaking?: boolean;
+  badge?: string;
 }) {
-  return (
-    <span className={animate ? "ulduz-float" : "inline-block"} style={{ lineHeight: 0 }}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src="/zefi.png"
-        alt="Zefi"
-        width={size}
-        height={Math.round(size * RATIO)}
-        style={{ width: size, height: Math.round(size * RATIO), objectFit: "contain" }}
-        draggable={false}
-      />
-    </span>
-  );
+  return <ZefiMascot emotion={MOOD_TO_EMOTION[mood]} size={size} badge={badge} />;
 }

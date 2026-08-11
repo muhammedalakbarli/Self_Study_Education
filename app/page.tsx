@@ -98,7 +98,7 @@ export default function LandingPage() {
         >
           {/* Ulduz */}
           <motion.div variants={fadeUp} className="order-1 flex justify-center lg:order-2">
-            <div className="float-slow relative flex aspect-square w-64 items-center justify-center rounded-full bg-gradient-to-br from-brand/20 to-accent/15 sm:w-80">
+            <div className="relative flex aspect-square w-64 items-center justify-center rounded-full bg-gradient-to-br from-brand/20 to-accent/15 sm:w-80">
               {/* radial işıq */}
               <span className="pointer-events-none absolute inset-6 rounded-full bg-brand/10 blur-2xl" aria-hidden />
               <Mascot size={210} mood="wave" />
@@ -419,7 +419,7 @@ function GameMedia() {
   const t = useT();
   return (
     <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-3xl border border-line bg-brand/5">
-      <div className="float-slow">
+      <div>
         <Mascot size={150} mood="celebrate" />
       </div>
       <span className="xp-pop absolute left-6 top-6 rounded-2xl bg-accent px-3 py-1.5 text-sm font-extrabold text-white shadow">
