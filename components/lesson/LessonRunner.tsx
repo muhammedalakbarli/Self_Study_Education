@@ -14,6 +14,7 @@ import { gradeTask, type UserAnswer } from "@/lib/grading";
 import { completeLesson, loadProgress } from "@/lib/progress";
 import { loadHearts, loseHeart, MAX_HEARTS } from "@/lib/hearts";
 import { addGems, GEMS_PER_LESSON } from "@/lib/gems";
+import { loadPlus } from "@/lib/plus";
 import { addWrong as addMistake, markCorrect as removeMistake } from "@/lib/srs";
 import { bumpQuest, bumpQuests } from "@/lib/quests";
 import { addWeeklyXp } from "@/lib/leaderboard";
@@ -68,6 +69,8 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
   // Canlar (hearts) — səhv cavab 1 can aparır; 0 olanda mülayim xəbərdarlıq.
   const [hearts, setHearts] = useState(MAX_HEARTS);
   const [heartsOut, setHeartsOut] = useState(false);
+  // Imparo Plus: limitsiz can + 2× zümrüd.
+  const [plus, setPlus] = useState(false);
 
   // Level-up aşkarı üçün dərsə başlamazdan əvvəlki XP.
   useEffect(() => {
@@ -76,6 +79,10 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
   // Cari can sayını yüklə (zaman əsaslı bərpa serverdə tətbiq olunur).
   useEffect(() => {
     loadHearts().then(setHearts).catch(() => {});
+  }, [userId]);
+  // Plus statusu (limitsiz can / 2× zümrüd).
+  useEffect(() => {
+    loadPlus().then(setPlus).catch(() => {});
   }, [userId]);
 
   // Analitika: dərs başlandı (funnel — signup→onboarding→dərs).
@@ -136,13 +143,15 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
       addMistake(task.id);
       // Bölmə sonunda təkrar üçün səhv tapşırığı yadda saxla (təkrarsız).
       setWrongIds((w) => (w.includes(task.id) ? w : [...w, task.id]));
-      // Bir can apar (server bərpanı da idarə edir); 0 olanda mülayim xəbərdarlıq.
-      loseHeart()
-        .then((h) => {
-          setHearts(h);
-          if (h <= 0) setHeartsOut(true);
-        })
-        .catch(() => {});
+      // Plus: limitsiz can (can aparılmır). Əks halda bir can apar.
+      if (!plus) {
+        loseHeart()
+          .then((h) => {
+            setHearts(h);
+            if (h <= 0) setHeartsOut(true);
+          })
+          .catch(() => {});
+      }
       playWrong();
       vibrateWrong();
     }
@@ -177,7 +186,7 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
     completeLesson(userId, lesson.id, finalXp)
       .then(() => touchFriendStreaks())
       .catch(() => {});
-    addGems(GEMS_PER_LESSON).catch(() => {}); // dərsə görə zümrüd
+    addGems(GEMS_PER_LESSON * (plus ? 2 : 1)).catch(() => {}); // dərsə görə zümrüd (Plus: 2×)
     bumpQuests({ xp: finalXp, lessons: 1 });
     addWeeklyXp(finalXp);
     addMonthlyXp(finalXp);
@@ -373,7 +382,7 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
           aria-label={`${hearts} can`}
         >
           <Heart size={16} fill="currentColor" strokeWidth={0} />
-          {hearts}
+          {plus ? "∞" : hearts}
         </span>
       </div>
 

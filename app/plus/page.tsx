@@ -3,9 +3,10 @@
 // Imparo Plus — premium abunə marketinq səhifəsi (Duolingo Super üslubu).
 // Ödəniş inteqrasiyası hələ yoxdur; CTA marağı qeyd edir + "tezliklə".
 
-import { useState } from "react";
-import { Heart, Gem, Sparkles, BarChart3, Rocket, Check } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Heart, Gem, Sparkles, BarChart3, Rocket, Crown } from "lucide-react";
 import { track } from "@/lib/analytics";
+import { loadPlus, activatePlus } from "@/lib/plus";
 import Mascot from "@/components/Mascot";
 
 const BENEFITS = [
@@ -17,17 +18,29 @@ const BENEFITS = [
 ];
 
 const PLANS = [
-  { id: "yearly", name: "İllik", price: "39.99 ₼", per: "il", note: "2 ay pulsuz", best: true },
-  { id: "monthly", name: "Aylıq", price: "4.99 ₼", per: "ay", note: "", best: false },
+  { id: "yearly", name: "İllik", price: "24.90 ₼", per: "il", note: "2 ay pulsuz", best: true, months: 12 },
+  { id: "monthly", name: "Aylıq", price: "2.99 ₼", per: "ay", note: "", best: false, months: 1 },
 ];
 
 export default function PlusPage() {
   const [plan, setPlan] = useState("yearly");
   const [done, setDone] = useState(false);
+  const [active, setActive] = useState(false);
+  const [busy, setBusy] = useState(false);
 
-  function subscribe() {
-    track("plus_interest", { plan });
+  useEffect(() => {
+    loadPlus().then(setActive).catch(() => {});
+  }, []);
+
+  async function subscribe() {
+    if (busy) return;
+    setBusy(true);
+    const months = PLANS.find((p) => p.id === plan)?.months ?? 1;
+    track("plus_subscribe", { plan });
+    await activatePlus(months).catch(() => {});
+    setActive(true);
     setDone(true);
+    setBusy(false);
   }
 
   return (
@@ -93,27 +106,30 @@ export default function PlusPage() {
         </div>
 
         {/* CTA */}
-        {done ? (
-          <div className="mt-5 flex items-center gap-3 rounded-2xl border-2 border-emerald-500/40 bg-emerald-500/10 p-4">
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-emerald-500 text-white">
-              <Check size={22} strokeWidth={3} />
+        {active ? (
+          <div className="mt-5 flex items-center gap-3 rounded-2xl border-2 border-amber-400/50 bg-gradient-to-br from-amber-400/15 to-brand/10 p-4">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-amber-400 to-brand text-white">
+              <Crown size={22} />
             </span>
             <div className="text-sm">
-              <div className="font-extrabold text-fg">Maraq qeyd olundu 🎉</div>
-              <div className="text-muted">Imparo Plus tezliklə əlçatan olacaq — səni xəbərdar edəcəyik.</div>
+              <div className="font-extrabold text-fg">
+                {done ? "Xoş gəldin, Plus üzvü! 🎉" : "Sən artıq Plus üzvüsən 👑"}
+              </div>
+              <div className="text-muted">Limitsiz can və 2× zümrüd aktivdir.</div>
             </div>
           </div>
         ) : (
           <button
             type="button"
             onClick={subscribe}
-            className="mt-5 w-full rounded-2xl bg-brand py-4 text-lg font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark"
+            disabled={busy}
+            className="mt-5 w-full rounded-2xl bg-brand py-4 text-lg font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark disabled:opacity-60"
           >
-            Plus-a başla
+            {busy ? "Aktivləşir…" : "Plus-a başla"}
           </button>
         )}
         <p className="mt-2 text-center text-xs text-muted">
-          İstənilən vaxt ləğv edə bilərsən. Ödəniş tezliklə əlavə olunacaq.
+          İstənilən vaxt ləğv edə bilərsən. (Ödəniş sistemi tezliklə əlavə olunacaq.)
         </p>
       </main>
     </div>

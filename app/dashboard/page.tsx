@@ -9,6 +9,7 @@ import { Flame, Shield, Heart, Gem, Gift, Trophy, ChevronRight, ChevronDown, Cro
 import { useContent } from "@/components/ContentProvider";
 import { loadProgress, loadActiveDays, lessonState, type ProgressState } from "@/lib/progress";
 import { loadHearts, MAX_HEARTS } from "@/lib/hearts";
+import { loadPlus } from "@/lib/plus";
 import StreakCalendar from "@/components/StreakCalendar";
 import { useAuthUser } from "@/lib/useAuthUser";
 import { userGrade, subjectsForGrade } from "@/lib/grade";
@@ -42,6 +43,7 @@ export default function DashboardPage() {
   const [calOpen, setCalOpen] = useState(false);
   const [activeDays, setActiveDays] = useState<string[]>([]);
   const [hearts, setHearts] = useState(MAX_HEARTS);
+  const [plus, setPlus] = useState(false);
   const [quests, setQuests] = useState<QuestState | null>(null);
   const [chestOpen, setChestOpen] = useState(false);
   const t = useT();
@@ -51,6 +53,9 @@ export default function DashboardPage() {
   }, [user]);
   useEffect(() => {
     if (user) loadHearts().then(setHearts).catch(() => {});
+  }, [user]);
+  useEffect(() => {
+    if (user) loadPlus().then(setPlus).catch(() => {});
   }, [user]);
   // Gündəlik quest mükafatını ver + cari halı yüklə (desktop sağ sütun üçün).
   useEffect(() => {
@@ -142,7 +147,7 @@ export default function DashboardPage() {
               }}
             />
             <StatMini Icon={Gem} value={state.gems} color="text-emerald-500" />
-            <StatMini Icon={Heart} value={hearts} color="text-red-500" />
+            <StatMini Icon={Heart} value={hearts} display={plus ? "∞" : undefined} color="text-red-500" />
           </div>
         </div>
 
@@ -184,20 +189,31 @@ export default function DashboardPage() {
 
           {/* ── Sağ sütun (YALNIZ desktop) — Plus + Liqa + Gündəlik tapşırıqlar ── */}
           <aside className="hidden space-y-4 lg:block lg:sticky lg:top-4">
-            {/* Imparo Plus promo */}
+            {/* Imparo Plus promo (Plus üzvüsə — aktiv nişanı) */}
             <div className="overflow-hidden rounded-2xl border-2 border-amber-400/40 bg-gradient-to-br from-amber-400/15 to-brand/10 p-5">
               <div className="flex items-center gap-2 text-sm font-extrabold text-brand">
                 <Crown size={18} /> Imparo Plus
               </div>
-              <p className="mt-1 text-xs text-muted">
-                Limitsiz can, 2× zümrüd, valideyn hesabatı və daha çoxu.
-              </p>
-              <Link
-                href="/plus"
-                className="mt-3 block rounded-xl bg-brand py-2.5 text-center text-sm font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark"
-              >
-                Əldə et
-              </Link>
+              {plus ? (
+                <>
+                  <p className="mt-1 text-xs text-muted">Aktivdir — limitsiz can, 2× zümrüd 👑</p>
+                  <Link href="/plus" className="mt-3 block text-center text-sm font-bold text-brand hover:underline">
+                    Ətraflı
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <p className="mt-1 text-xs text-muted">
+                    Limitsiz can, 2× zümrüd, valideyn hesabatı və daha çoxu.
+                  </p>
+                  <Link
+                    href="/plus"
+                    className="mt-3 block rounded-xl bg-brand py-2.5 text-center text-sm font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark"
+                  >
+                    Əldə et
+                  </Link>
+                </>
+              )}
             </div>
 
             <Link
@@ -370,12 +386,14 @@ function StatMini({
   color,
   badge,
   onClick,
+  display,
 }: {
   Icon: React.ComponentType<{ size?: number; className?: string; fill?: string; strokeWidth?: number }>;
   value: number;
   color: string;
   badge?: number;
   onClick?: () => void;
+  display?: string;
 }) {
   const inner = (
     <>
@@ -388,7 +406,7 @@ function StatMini({
           </span>
         )}
       </span>
-      <span className="text-lg font-extrabold text-fg">{value}</span>
+      <span className="text-lg font-extrabold text-fg">{display ?? value}</span>
     </>
   );
   const cls = "relative flex items-center gap-1.5";
