@@ -25,8 +25,10 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const SITE_URL = "https://self-study-education.vercel.app";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://self-study-education.vercel.app"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Bilik Yolu — 1–8-ci siniflər üçün interaktiv öyrənmə",
     template: "%s · Bilik Yolu",
@@ -44,7 +46,34 @@ export const metadata: Metadata = {
     "Bilik Yolu",
   ],
   applicationName: "Bilik Yolu",
-  // PWA: iOS ana ekranda tam ekran açılış + toxunma ikonu.
+  authors: [{ name: "Bilik Yolu" }],
+  creator: "Bilik Yolu",
+  publisher: "Bilik Yolu",
+  category: "education",
+  // Telefon nömrəsi kimi mətnləri avtomatik linkə çevirmə.
+  formatDetection: { telephone: false, email: false, address: false },
+  // Axtarış motorları: indeksləşdir + izlə (böyük önizləmələr).
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  // Kanonik ünvan + dil alternativləri (eyni səhifə, ?lang ilə).
+  alternates: {
+    canonical: "/",
+    languages: {
+      az: "/?lang=az",
+      en: "/?lang=en",
+      ru: "/?lang=ru",
+      "x-default": "/",
+    },
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
@@ -60,6 +89,7 @@ export const metadata: Metadata = {
     url: "/",
     siteName: "Bilik Yolu",
     locale: "az_AZ",
+    alternateLocale: ["en_US", "ru_RU"],
     type: "website",
   },
   twitter: {
@@ -68,6 +98,30 @@ export const metadata: Metadata = {
     description:
       "1–8-ci siniflər üçün interaktiv öyrənmə platforması. Pulsuz və maraqlı.",
   },
+};
+
+// Axtarış motorları üçün strukturlaşdırılmış data (JSON-LD): təşkilat + veb-sayt.
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "EducationalOrganization",
+      "@id": `${SITE_URL}/#organization`,
+      name: "Bilik Yolu",
+      url: SITE_URL,
+      description:
+        "Azərbaycan məktəbliləri (1–8-ci siniflər) üçün oyunlaşdırılmış öyrənmə platforması.",
+      logo: `${SITE_URL}/apple-touch-icon.png`,
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: "Bilik Yolu",
+      inLanguage: ["az", "en", "ru"],
+      publisher: { "@id": `${SITE_URL}/#organization` },
+    },
+  ],
 };
 
 // Mobil brauzer üst zolağının rəngi (brend narıncı).
@@ -86,6 +140,11 @@ export default function RootLayout({
       className={`${nunito.variable} ${baloo.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        {/* Strukturlaşdırılmış data (SEO / zəngin nəticələr) */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <ContentProvider>
           <AppChrome>{children}</AppChrome>
         </ContentProvider>
