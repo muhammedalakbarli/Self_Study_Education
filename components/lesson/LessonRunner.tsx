@@ -274,7 +274,7 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
             onClick={maybeRetryOrFinish}
             className="rounded-2xl border-2 border-line px-5 py-3 font-bold text-fg btn-pop btn-pop-ghost hover:border-brand"
           >
-            {t("run.finish")}
+            {wrongIds.length > 0 ? t("run.continue") : t("run.finish")}
           </button>
         </div>
       </div>
@@ -298,13 +298,19 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
     );
   }
 
+  // Sonda hələ təkrarlanacaq səhv varsa "Bitir" yox, "Davam et" göstər
+  // (əvvəl "Bitir"ə basandan sonra təkrar gəlirdi — indi əvvəl təkrar, sonra bitir).
+  const willRetry = wrongIds.length > 0;
+
   // ── Tapşırıq (main və ya bonus) — immersiv tam-ekran ──
   const ctaText = inRetry
     ? t("run.next")
     : index + 1 < total
       ? t("run.next")
       : inBonus
-        ? t("run.finish")
+        ? willRetry
+          ? t("run.continue")
+          : t("run.finish")
         : t("run.continue");
 
   return (

@@ -5,9 +5,10 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { Star, Flame, CircleCheck, Gift, Shield } from "lucide-react";
+import { Star, Flame, CircleCheck, Gift, Shield, Heart } from "lucide-react";
 import { useContent } from "@/components/ContentProvider";
 import { loadProgress, loadActiveDays, lessonState, grantStreakFreeze, type ProgressState } from "@/lib/progress";
+import { loadHearts, MAX_HEARTS } from "@/lib/hearts";
 import StreakCalendar from "@/components/StreakCalendar";
 import { useAuthUser } from "@/lib/useAuthUser";
 import { userGrade, subjectsForGrade } from "@/lib/grade";
@@ -42,10 +43,14 @@ export default function DashboardPage() {
   const [calOpen, setCalOpen] = useState(false);
   const [activeDays, setActiveDays] = useState<string[]>([]);
   const [chestOpen, setChestOpen] = useState(false);
+  const [hearts, setHearts] = useState(MAX_HEARTS);
   const t = useT();
 
   useEffect(() => {
     if (user) loadProgress(user.id).then(setState);
+  }, [user]);
+  useEffect(() => {
+    if (user) loadHearts().then(setHearts).catch(() => {});
   }, [user]);
 
   // Gündəlik questlər: tamamlananların mükafatını ver + cari halı yüklə.
@@ -121,7 +126,17 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-ink">
       <main className="mx-auto max-w-4xl px-4 py-6">
-        <h1 className="text-3xl font-bold text-fg">{t("dash.title")}</h1>
+        <div className="flex items-center justify-between gap-3">
+          <h1 className="text-3xl font-bold text-fg">{t("dash.title")}</h1>
+          <span
+            className="flex shrink-0 items-center gap-1.5 rounded-full bg-red-500/10 px-3 py-1.5 text-base font-extrabold text-red-500"
+            aria-label={`${hearts} can`}
+            title="Canlar"
+          >
+            <Heart size={18} fill="currentColor" strokeWidth={0} />
+            {hearts}
+          </span>
+        </div>
 
         {/* Statistika zolağı */}
         <div className="mt-5 grid grid-cols-3 gap-3">
