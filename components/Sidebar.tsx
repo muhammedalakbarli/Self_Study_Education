@@ -35,8 +35,8 @@ import { useT } from "@/lib/i18n";
 
 // Hər bölmənin öz rəngi — uşaqlar üçün rəngarəng, cəlbedici naviqasiya.
 // icon: həmişə rəngli ikon; activeBg/activeText: aktiv olanda rəngli fon+mətn.
-// Mobil alt paneldə yalnız bunlar görünür (Praktika/Profil "Daha çoxu"nun içindədir).
-const MOBILE_HREFS = ["/dashboard", "/liqa", "/daha"];
+// Mobil alt panel — Duolingo kimi əsas bölmələr (Ayarlar/Yardım Profil içindədir).
+const MOBILE_HREFS = ["/dashboard", "/praktika", "/liqa", "/gorevler", "/magaza", "/profil"];
 
 // Hər bölmənin öz rəngli qrafik ikonu (NavIcons) + aktiv fon/mətn rəngi.
 const NAV = [
