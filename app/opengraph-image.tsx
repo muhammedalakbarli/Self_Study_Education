@@ -21,11 +21,14 @@ export default function OpengraphImage() {
           fontFamily: "sans-serif",
         }}
       >
-        {/* Loqo işarəsi — Imparo markası */}
-        <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="8" y="8" width="104" height="104" rx="30" fill="#5b4bf5" />
-          <rect x="52" y="54" width="16" height="40" rx="8" fill="#ffffff" />
-          <path d="M60 18 L64.5 29.5 L76 34 L64.5 38.5 L60 50 L55.5 38.5 L44 34 L55.5 29.5 Z" fill="#ff9500" />
+        {/* Loqo işarəsi — Imparo raketi */}
+        <svg width="130" height="130" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="6" y="6" width="52" height="52" rx="16" fill="#5b4bf5" />
+          <path d="M24 33 L16 44 L26 40 Z" fill="#ff9500" />
+          <path d="M40 33 L48 44 L38 40 Z" fill="#ff9500" />
+          <path d="M27 41 L32 56 L37 41 Z" fill="#ff6a00" />
+          <path d="M32 8 C38 13 41 21 41 29 C41 35 39 39 36 43 L28 43 C25 39 23 35 23 29 C23 21 26 13 32 8 Z" fill="#ffffff" />
+          <circle cx="32" cy="25" r="5.5" fill="#4636cf" />
         </svg>
         <div style={{ marginTop: 40, fontSize: 84, fontWeight: 800 }}>Imparo</div>
         <div style={{ marginTop: 12, fontSize: 36, opacity: 0.9 }}>
