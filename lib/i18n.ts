@@ -298,6 +298,14 @@ const DICT: Dict = {
   // Öyrən (dashboard)
   "dash.title": { az: "Öyrən", en: "Learn", ru: "Учёба" },
   "dash.greeting": { az: "Salam", en: "Hi", ru: "Привет" },
+  "hearts.outTitle": { az: "Canların bitdi!", en: "Out of hearts!", ru: "Жизни закончились!" },
+  "hearts.outBody": {
+    az: "Canlar zamanla bərpa olunur. Praktika edərək məşq et və ya davam et.",
+    en: "Hearts refill over time. Practice to warm up, or keep going.",
+    ru: "Жизни восстанавливаются со временем. Потренируйся или продолжай.",
+  },
+  "hearts.practice": { az: "Praktika et", en: "Practice", ru: "Практика" },
+  "hearts.continue": { az: "Davam et", en: "Keep going", ru: "Продолжить" },
   "dash.gradeSoonTitle": { az: "Tezliklə!", en: "Coming soon!", ru: "Скоро!" },
   "dash.gradeSoon": {
     az: "{n}-ci sinif proqramı hazırlanır. Ayarlardan sinfini dəyişə bilərsən.",

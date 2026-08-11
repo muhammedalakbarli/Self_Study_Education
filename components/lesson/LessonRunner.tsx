@@ -7,11 +7,12 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import { X, Heart } from "lucide-react";
 import type { Lesson, Task } from "@/lib/types";
 import ResultSheet from "@/components/lesson/ResultSheet";
 import { gradeTask, type UserAnswer } from "@/lib/grading";
 import { completeLesson, loadProgress } from "@/lib/progress";
+import { loadHearts, loseHeart, MAX_HEARTS } from "@/lib/hearts";
 import { addWrong as addMistake, markCorrect as removeMistake } from "@/lib/srs";
 import { bumpQuest, bumpQuests } from "@/lib/quests";
 import { addWeeklyXp } from "@/lib/leaderboard";
@@ -63,10 +64,17 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
   const [wrongIds, setWrongIds] = useState<string[]>([]);
   const [retryQueue, setRetryQueue] = useState<Task[]>([]);
   const [retryTotal, setRetryTotal] = useState(0);
+  // Canlar (hearts) — səhv cavab 1 can aparır; 0 olanda mülayim xəbərdarlıq.
+  const [hearts, setHearts] = useState(MAX_HEARTS);
+  const [heartsOut, setHeartsOut] = useState(false);
 
   // Level-up aşkarı üçün dərsə başlamazdan əvvəlki XP.
   useEffect(() => {
     loadProgress(userId).then((p) => setStartXp(p.totalXp)).catch(() => setStartXp(0));
+  }, [userId]);
+  // Cari can sayını yüklə (zaman əsaslı bərpa serverdə tətbiq olunur).
+  useEffect(() => {
+    loadHearts().then(setHearts).catch(() => {});
   }, [userId]);
 
   // Analitika: dərs başlandı (funnel — signup→onboarding→dərs).
@@ -127,6 +135,13 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
       addMistake(task.id);
       // Bölmə sonunda təkrar üçün səhv tapşırığı yadda saxla (təkrarsız).
       setWrongIds((w) => (w.includes(task.id) ? w : [...w, task.id]));
+      // Bir can apar (server bərpanı da idarə edir); 0 olanda mülayim xəbərdarlıq.
+      loseHeart()
+        .then((h) => {
+          setHearts(h);
+          if (h <= 0) setHeartsOut(true);
+        })
+        .catch(() => {});
       playWrong();
       vibrateWrong();
     }
@@ -344,7 +359,56 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
             </motion.span>
           )}
         </AnimatePresence>
+        {/* Canlar */}
+        <span
+          className="flex shrink-0 items-center gap-1 rounded-full bg-red-500/10 px-2.5 py-1 text-sm font-extrabold text-red-500"
+          aria-label={`${hearts} can`}
+        >
+          <Heart size={16} fill="currentColor" strokeWidth={0} />
+          {hearts}
+        </span>
       </div>
+
+      {/* Canlar bitdi — mülayim xəbərdarlıq (bloklamır) */}
+      <AnimatePresence>
+        {heartsOut && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-5"
+          >
+            <motion.div
+              initial={{ scale: 0.85, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              className="w-full max-w-sm rounded-3xl border border-line bg-panel p-6 text-center"
+            >
+              <div className="flex justify-center gap-1 text-red-500">
+                {Array.from({ length: MAX_HEARTS }).map((_, i) => (
+                  <Heart key={i} size={22} className="opacity-30" fill="currentColor" strokeWidth={0} />
+                ))}
+              </div>
+              <h2 className="mt-4 text-xl font-extrabold text-fg">{t("hearts.outTitle")}</h2>
+              <p className="mt-2 text-sm text-muted">{t("hearts.outBody")}</p>
+              <div className="mt-6 flex flex-col gap-2">
+                <Link
+                  href="/praktika"
+                  className="rounded-2xl bg-brand px-5 py-3 font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark"
+                >
+                  {t("hearts.practice")}
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => setHeartsOut(false)}
+                  className="rounded-2xl border-2 border-line px-5 py-3 font-bold text-fg btn-pop btn-pop-ghost hover:border-brand"
+                >
+                  {t("hearts.continue")}
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Sual sahəsi */}
       <div className="mx-auto w-full max-w-xl flex-1 px-4 pt-8 pb-44">

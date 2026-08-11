@@ -10,6 +10,7 @@ import { loadProgress, type ProgressState } from "@/lib/progress";
 import { useContent } from "@/components/ContentProvider";
 import { subjectsForGrade } from "@/lib/grade";
 import { loadDueTaskIds, markCorrect, addWrong } from "@/lib/srs";
+import { refillHearts } from "@/lib/hearts";
 import { isPassageTask } from "@/lib/content";
 import { isDailyDone, markDailyDone } from "@/lib/daily";
 import { useT, hasKey } from "@/lib/i18n";
@@ -89,14 +90,14 @@ export default function PracticePage() {
             }}
             onCorrect={(id) => markCorrect(id)}
             onWrong={(id) => addWrong(id)}
-            onFinish={
-              session.daily
-                ? () => {
-                    markDailyDone();
-                    setDailyDone(true);
-                  }
-                : undefined
-            }
+            onFinish={() => {
+              // Praktika bitəndə canları tam bərpa et (məşq mükafatı).
+              refillHearts().catch(() => {});
+              if (session.daily) {
+                markDailyDone();
+                setDailyDone(true);
+              }
+            }}
           />
         </main>
       </div>
