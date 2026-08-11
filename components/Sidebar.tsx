@@ -15,6 +15,8 @@ import {
   ShieldCheck,
   Dumbbell,
   User,
+  Target,
+  ShoppingBag,
 } from "lucide-react";
 import Logo from "./Logo";
 import {
@@ -23,6 +25,8 @@ import {
   IconLeague,
   IconProfile,
   IconMore,
+  IconQuests,
+  IconShop,
 } from "./NavIcons";
 import { signOut } from "@/lib/auth";
 import { checkIsAdmin } from "@/lib/adminApi";
@@ -59,6 +63,22 @@ const NAV = [
     match: ["/liqa"],
     activeBg: "bg-amber-500/15",
     activeText: "text-amber-600 dark:text-amber-400",
+  },
+  {
+    href: "/gorevler",
+    key: "nav.quests",
+    Icon: IconQuests,
+    match: ["/gorevler"],
+    activeBg: "bg-rose-500/15",
+    activeText: "text-rose-600 dark:text-rose-400",
+  },
+  {
+    href: "/magaza",
+    key: "nav.shop",
+    Icon: IconShop,
+    match: ["/magaza"],
+    activeBg: "bg-teal-500/15",
+    activeText: "text-teal-600 dark:text-teal-400",
   },
   {
     href: "/profil",
@@ -203,6 +223,8 @@ export default function Sidebar() {
               className="fixed inset-x-0 bottom-[68px] z-40 mx-3 rounded-3xl border border-line bg-panel p-2 shadow-2xl lg:hidden"
             >
               <SheetLink href="/praktika" Icon={Dumbbell} label={t("nav.practice")} dot={hasDue} onNavigate={() => setMoreOpen(false)} />
+              <SheetLink href="/gorevler" Icon={Target} label={t("nav.quests")} onNavigate={() => setMoreOpen(false)} />
+              <SheetLink href="/magaza" Icon={ShoppingBag} label={t("nav.shop")} onNavigate={() => setMoreOpen(false)} />
               <SheetLink href="/profil" Icon={User} label={t("nav.profile")} onNavigate={() => setMoreOpen(false)} />
               <SheetLink href="/ayarlar" Icon={Settings} label={t("nav.settings")} onNavigate={() => setMoreOpen(false)} />
               <SheetLink href="/yardim" Icon={HelpCircle} label={t("nav.help")} onNavigate={() => setMoreOpen(false)} />

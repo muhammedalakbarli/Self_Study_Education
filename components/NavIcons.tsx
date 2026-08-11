@@ -106,6 +106,38 @@ export function IconProfile({ size }: IconProps) {
   );
 }
 
+// Görevlər — nişangah (target)
+export function IconQuests({ size }: IconProps) {
+  return (
+    <Tile id="ni-quests" from="#fb7185" to="#e11d48" size={size}>
+      <g fill="none" stroke="#fff" strokeWidth="3.4">
+        <circle cx="24" cy="24" r="9.5" />
+        <circle cx="24" cy="24" r="4.8" />
+      </g>
+      <circle cx="24" cy="24" r="2.1" fill="#fff" />
+    </Tile>
+  );
+}
+
+// Mağaza — alış-veriş çantası
+export function IconShop({ size }: IconProps) {
+  return (
+    <Tile id="ni-shop" from="#22d3ee" to="#0d9488" size={size}>
+      <path
+        d="M18.5 19 v-1.2 a5.5 5.5 0 0 1 11 0 V19"
+        fill="none"
+        stroke="#fff"
+        strokeWidth="3"
+        strokeLinecap="round"
+      />
+      <path
+        d="M15.5 19 h17 l-1.4 13.6 a2.2 2.2 0 0 1-2.2 2 H19.1 a2.2 2.2 0 0 1-2.2-2 z"
+        fill="#fff"
+      />
+    </Tile>
+  );
+}
+
 // Daha çoxu — rəngli xanalar
 export function IconMore({ size }: IconProps) {
   return (
