@@ -3,7 +3,8 @@
 // Mağaza (Shop) — zümrüdləri xərclə: canları doldur, seriya qoruyucu al.
 
 import { useEffect, useState } from "react";
-import { Gem, Heart, Shield } from "lucide-react";
+import Link from "next/link";
+import { Gem, Heart, Shield, Crown, ChevronRight } from "lucide-react";
 import { useAuthUser } from "@/lib/useAuthUser";
 import { loadGems, spendGems, SHOP_PRICES } from "@/lib/gems";
 import { refillHearts, loadHearts, MAX_HEARTS } from "@/lib/hearts";
@@ -91,6 +92,21 @@ export default function ShopPage() {
             {gems}
           </span>
         </div>
+
+        {/* Imparo Plus promo */}
+        <Link
+          href="/plus"
+          className="mt-4 flex items-center gap-3 rounded-2xl border-2 border-amber-400/40 bg-gradient-to-br from-amber-400/15 to-brand/10 p-4 transition hover:border-amber-400/70"
+        >
+          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-400 to-brand text-white shadow-sm">
+            <Crown size={22} />
+          </span>
+          <span className="min-w-0 flex-1">
+            <span className="block font-extrabold text-brand">Imparo Plus</span>
+            <span className="block text-xs text-muted">Limitsiz can, 2× zümrüd, valideyn hesabatı</span>
+          </span>
+          <ChevronRight size={18} className="shrink-0 text-muted" />
+        </Link>
 
         {/* Məhsullar */}
         <div className="mt-5 space-y-3">

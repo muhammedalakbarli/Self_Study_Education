@@ -1,0 +1,121 @@
+"use client";
+
+// Imparo Plus — premium abunə marketinq səhifəsi (Duolingo Super üslubu).
+// Ödəniş inteqrasiyası hələ yoxdur; CTA marağı qeyd edir + "tezliklə".
+
+import { useState } from "react";
+import { Heart, Gem, Sparkles, BarChart3, Rocket, Check } from "lucide-react";
+import { track } from "@/lib/analytics";
+import Mascot from "@/components/Mascot";
+
+const BENEFITS = [
+  { Icon: Heart, title: "Limitsiz can", desc: "Səhv etməkdən qorxma — canlar bitmir." },
+  { Icon: Gem, title: "2× zümrüd", desc: "Hər dərsdə iki qat çox zümrüd qazan." },
+  { Icon: Sparkles, title: "Zefi geyimləri", desc: "Ekskluziv görkəmlər və mağaza endirimləri." },
+  { Icon: BarChart3, title: "Valideyn hesabatı", desc: "Həftəlik irəliləyiş hesabatı valideynə." },
+  { Icon: Rocket, title: "Prioritet məzmun", desc: "Yeni dərslərə və funksiyalara ilk sən çat." },
+];
+
+const PLANS = [
+  { id: "yearly", name: "İllik", price: "39.99 ₼", per: "il", note: "2 ay pulsuz", best: true },
+  { id: "monthly", name: "Aylıq", price: "4.99 ₼", per: "ay", note: "", best: false },
+];
+
+export default function PlusPage() {
+  const [plan, setPlan] = useState("yearly");
+  const [done, setDone] = useState(false);
+
+  function subscribe() {
+    track("plus_interest", { plan });
+    setDone(true);
+  }
+
+  return (
+    <div className="min-h-screen bg-ink">
+      <main className="mx-auto max-w-2xl px-4 py-8">
+        {/* Hero */}
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-amber-400 via-orange-500 to-brand p-8 text-center text-white shadow-lg">
+          <span className="twinkle pointer-events-none absolute left-8 top-8 text-white/60" aria-hidden>
+            <Sparkles size={22} fill="currentColor" strokeWidth={0} />
+          </span>
+          <div className="flex justify-center">
+            <Mascot size={100} mood="love" />
+          </div>
+          <div className="mt-3 inline-block rounded-full bg-white/25 px-4 py-1 text-sm font-extrabold uppercase tracking-wider">
+            Imparo Plus
+          </div>
+          <h1 className="mt-3 text-3xl font-extrabold">Öyrənməni gücləndir</h1>
+          <p className="mx-auto mt-2 max-w-sm text-white/90">
+            Zefi ilə daha sürətli, daha çox mükafatla və reklamsız irəlilə.
+          </p>
+        </div>
+
+        {/* Üstünlüklər */}
+        <div className="mt-6 space-y-3">
+          {BENEFITS.map((b) => (
+            <div key={b.title} className="flex items-center gap-4 rounded-2xl border border-line bg-panel p-4">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-400 to-brand text-white shadow-sm">
+                <b.Icon size={22} />
+              </span>
+              <div className="min-w-0 flex-1">
+                <div className="font-extrabold text-fg">{b.title}</div>
+                <div className="text-sm text-muted">{b.desc}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Planlar */}
+        <div className="mt-6 grid grid-cols-2 gap-3">
+          {PLANS.map((p) => {
+            const on = plan === p.id;
+            return (
+              <button
+                key={p.id}
+                type="button"
+                onClick={() => setPlan(p.id)}
+                className={`relative rounded-2xl border-2 p-4 text-left transition ${
+                  on ? "border-brand bg-brand/5" : "border-line bg-panel hover:border-brand/50"
+                }`}
+              >
+                {p.best && (
+                  <span className="absolute -top-2.5 right-3 rounded-full bg-brand px-2 py-0.5 text-[10px] font-extrabold uppercase text-white">
+                    ən sərfəli
+                  </span>
+                )}
+                <div className="font-extrabold text-fg">{p.name}</div>
+                <div className="mt-1 text-2xl font-black text-brand">{p.price}</div>
+                <div className="text-xs text-muted">/{p.per}</div>
+                {p.note && <div className="mt-1 text-xs font-bold text-emerald-600">{p.note}</div>}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* CTA */}
+        {done ? (
+          <div className="mt-5 flex items-center gap-3 rounded-2xl border-2 border-emerald-500/40 bg-emerald-500/10 p-4">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-emerald-500 text-white">
+              <Check size={22} strokeWidth={3} />
+            </span>
+            <div className="text-sm">
+              <div className="font-extrabold text-fg">Maraq qeyd olundu 🎉</div>
+              <div className="text-muted">Imparo Plus tezliklə əlçatan olacaq — səni xəbərdar edəcəyik.</div>
+            </div>
+          </div>
+        ) : (
+          <button
+            type="button"
+            onClick={subscribe}
+            className="mt-5 w-full rounded-2xl bg-brand py-4 text-lg font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark"
+          >
+            Plus-a başla
+          </button>
+        )}
+        <p className="mt-2 text-center text-xs text-muted">
+          İstənilən vaxt ləğv edə bilərsən. Ödəniş tezliklə əlavə olunacaq.
+        </p>
+      </main>
+    </div>
+  );
+}

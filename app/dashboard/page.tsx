@@ -5,7 +5,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { Flame, Shield, Heart, Gem, Gift, Trophy, ChevronRight, ChevronDown } from "lucide-react";
+import { Flame, Shield, Heart, Gem, Gift, Trophy, ChevronRight, ChevronDown, Crown } from "lucide-react";
 import { useContent } from "@/components/ContentProvider";
 import { loadProgress, loadActiveDays, lessonState, type ProgressState } from "@/lib/progress";
 import { loadHearts, MAX_HEARTS } from "@/lib/hearts";
@@ -182,8 +182,24 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          {/* ── Sağ sütun (YALNIZ desktop) — Liqa + Gündəlik tapşırıqlar ── */}
+          {/* ── Sağ sütun (YALNIZ desktop) — Plus + Liqa + Gündəlik tapşırıqlar ── */}
           <aside className="hidden space-y-4 lg:block lg:sticky lg:top-4">
+            {/* Imparo Plus promo */}
+            <div className="overflow-hidden rounded-2xl border-2 border-amber-400/40 bg-gradient-to-br from-amber-400/15 to-brand/10 p-5">
+              <div className="flex items-center gap-2 text-sm font-extrabold text-brand">
+                <Crown size={18} /> Imparo Plus
+              </div>
+              <p className="mt-1 text-xs text-muted">
+                Limitsiz can, 2× zümrüd, valideyn hesabatı və daha çoxu.
+              </p>
+              <Link
+                href="/plus"
+                className="mt-3 block rounded-xl bg-brand py-2.5 text-center text-sm font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark"
+              >
+                Əldə et
+              </Link>
+            </div>
+
             <Link
               href="/liqa"
               className="flex items-center gap-3 rounded-2xl border border-line bg-panel p-5 transition hover:bg-panel-2"
