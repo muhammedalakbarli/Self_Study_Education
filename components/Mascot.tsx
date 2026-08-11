@@ -1,28 +1,22 @@
 "use client";
 
-// "Zefi" — Imparo-nun tülkü mascotu. Böyük baş, iri qulaqlar (mərcan içli), iri cocoa
-// gözlər (ağ işıq əksi ilə), krem üz/sinə, tüklü quyruq, sarı bel çantası kirişi.
-// İsti palitra: Fox Orange + Cream + Coral + Cocoa.
+// "Zefi" — Imparo-nun tülkü mascotu (3D üslub). Həcmli kölgələmə (radial gradientlər,
+// işıq vurğusu, yumşaq yer kölgəsi), böyük baş, mərcan-içli qulaqlar, iri cocoa gözlər
+// (parıltılı), krem üz/qarın, tüklü quyruq, sarı bel çantası kirişi.
+// Palitra: Fox Orange + Cream + Coral + Cocoa.
 //
-// mood:
-//   happy      — dostyana gülümsəmə (default)
-//   celebrate  — sevincli (level/uğur): qıyılmış gözlər + açıq təbəssüm
-//   sad        — "bir də yoxlayaq" (səhv): narahat qaşlar + yumşaq ağız
-//   thinking   — düşünür (çətin sual): yuxarı baxan gözlər + qalxmış qaş
-//   wave       — salamlayır: pəncə yelləyir
-//   love       — "böyük nailiyyət" 😎: günəş eynəyi + smirk
-//
-// idle: yumşaq üzmə + dövri göz qırpma. speaking=true → audio ilə lipsync.
+// mood: happy · celebrate · sad · thinking · wave · love
+// idle: üzmə + göz qırpma. speaking=true → audio lipsync.
 // prefers-reduced-motion / .no-anim → hərəkət söndürülür.
 
+import { useId } from "react";
 import { useSpeaking } from "@/lib/tts";
 
 export type MascotMood = "happy" | "celebrate" | "sad" | "thinking" | "wave" | "love";
 
-const FOX = "#F47B3A";
-const CREAM = "#FFF4DF";
 const CORAL = "#FF8F70";
 const COCOA = "#3B2723";
+const OUTLINE = "#B84E1F"; // yumşaq tülkü konturu (3D hiss)
 const HONEY = "#FFD166";
 
 export default function Mascot({
@@ -38,6 +32,8 @@ export default function Mascot({
 }) {
   const ttsSpeaking = useSpeaking();
   const isSpeaking = animate && (speaking ?? ttsSpeaking);
+  const uid = useId();
+  const g = (n: string) => `url(#${uid}-${n})`;
 
   const squint = mood === "celebrate";
   const shades = mood === "love";
@@ -57,50 +53,69 @@ export default function Mascot({
         role="img"
         style={{ overflow: "visible" }}
       >
-        {/* Quyruq (arxada, sol) — tüklü, krem uclu */}
+        <defs>
+          <radialGradient id={`${uid}-fox`} cx="38%" cy="28%" r="85%">
+            <stop offset="0" stopColor="#FFC083" />
+            <stop offset="54%" stopColor="#F47B3A" />
+            <stop offset="100%" stopColor="#D85F26" />
+          </radialGradient>
+          <linearGradient id={`${uid}-cream`} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor="#FFFCF4" />
+            <stop offset="1" stopColor="#F8E6C4" />
+          </linearGradient>
+          <radialGradient id={`${uid}-ear`} cx="50%" cy="35%" r="80%">
+            <stop offset="0" stopColor="#FFB59A" />
+            <stop offset="100%" stopColor={CORAL} />
+          </radialGradient>
+        </defs>
+
+        {/* Yer kölgəsi */}
+        <ellipse cx="58" cy="116" rx="33" ry="5" fill={COCOA} opacity="0.13" />
+
+        {/* Quyruq (tüklü, krem uclu) */}
         <path
           d="M36 98 C8 94 2 62 20 46 C28 39 38 44 34 56 C30 70 42 84 48 90 Z"
-          fill={FOX}
-          stroke={COCOA}
-          strokeWidth="3"
+          fill={g("fox")}
+          stroke={OUTLINE}
+          strokeWidth="2.5"
           strokeLinejoin="round"
         />
-        <path d="M20 46 C28 39 38 44 34 56 C32 62 33 68 37 73 C26 71 18 58 20 46 Z" fill={CREAM} />
+        <path d="M20 46 C28 39 38 44 34 56 C32 62 33 68 37 73 C26 71 18 58 20 46 Z" fill={g("cream")} />
 
         {/* Bədən + krem qarın */}
-        <ellipse cx="60" cy="92" rx="27" ry="23" fill={FOX} stroke={COCOA} strokeWidth="3" />
-        <ellipse cx="60" cy="97" rx="16" ry="15" fill={CREAM} />
-        {/* Sarı bel çantası kirişi */}
+        <ellipse cx="60" cy="92" rx="27" ry="23" fill={g("fox")} stroke={OUTLINE} strokeWidth="2.5" />
+        <ellipse cx="60" cy="97" rx="16" ry="15" fill={g("cream")} />
         <path d="M45 82 Q60 90 75 82" stroke={HONEY} strokeWidth="5" fill="none" strokeLinecap="round" />
 
-        {/* Salamlama pəncəsi (yalnız wave) */}
+        {/* Salamlama pəncəsi (wave) */}
         {mood === "wave" && (
           <g
             className={animate ? "ulduz-wave" : ""}
             style={{ transformBox: "fill-box", transformOrigin: "50% 90%" }}
           >
-            <ellipse cx="94" cy="60" rx="8" ry="9" fill={FOX} stroke={COCOA} strokeWidth="3" />
+            <ellipse cx="94" cy="60" rx="8" ry="9" fill={g("fox")} stroke={OUTLINE} strokeWidth="2.5" />
           </g>
         )}
 
         {/* Qulaqlar */}
-        <path d="M33 42 L30 8 L55 27 Z" fill={FOX} stroke={COCOA} strokeWidth="3" strokeLinejoin="round" />
-        <path d="M87 42 L90 8 L65 27 Z" fill={FOX} stroke={COCOA} strokeWidth="3" strokeLinejoin="round" />
-        <path d="M37 35 L35 17 L49 28 Z" fill={CORAL} />
-        <path d="M83 35 L85 17 L71 28 Z" fill={CORAL} />
+        <path d="M33 42 L30 8 L55 27 Z" fill={g("fox")} stroke={OUTLINE} strokeWidth="2.5" strokeLinejoin="round" />
+        <path d="M87 42 L90 8 L65 27 Z" fill={g("fox")} stroke={OUTLINE} strokeWidth="2.5" strokeLinejoin="round" />
+        <path d="M37 35 L35 17 L49 28 Z" fill={g("ear")} />
+        <path d="M83 35 L85 17 L71 28 Z" fill={g("ear")} />
 
-        {/* Baş + krem üz */}
-        <circle cx="60" cy="50" r="33" fill={FOX} stroke={COCOA} strokeWidth="3" />
+        {/* Baş + işıq vurğusu + krem üz */}
+        <circle cx="60" cy="50" r="33" fill={g("fox")} stroke={OUTLINE} strokeWidth="2.5" />
+        <ellipse cx="47" cy="34" rx="14" ry="9" fill="#fff" opacity="0.22" />
         <path
           d="M60 40 C75 40 81 53 78 63 C75 73 68 79 60 79 C52 79 45 73 42 63 C39 53 45 40 60 40 Z"
-          fill={CREAM}
+          fill={g("cream")}
         />
 
         {/* Yanaqlar */}
         {cheeks && (
           <>
-            <ellipse cx="47" cy="55" rx="4" ry="2.6" fill={CORAL} opacity="0.6" />
-            <ellipse cx="73" cy="55" rx="4" ry="2.6" fill={CORAL} opacity="0.6" />
+            <ellipse cx="47" cy="55" rx="4" ry="2.6" fill={CORAL} opacity="0.55" />
+            <ellipse cx="73" cy="55" rx="4" ry="2.6" fill={CORAL} opacity="0.55" />
           </>
         )}
 
@@ -134,13 +149,16 @@ export default function Mascot({
           <g className={blinkClass} style={{ transformBox: "fill-box", transformOrigin: "center" }}>
             <ellipse cx="49" cy="50" rx="6" ry="7.5" fill={COCOA} />
             <ellipse cx="71" cy="50" rx="6" ry="7.5" fill={COCOA} />
-            <circle cx="47" cy={lookUp ? 46 : 47.5} r="2.1" fill="#fff" />
-            <circle cx="69" cy={lookUp ? 46 : 47.5} r="2.1" fill="#fff" />
+            <circle cx="46.6" cy={lookUp ? 46 : 47} r="2.3" fill="#fff" />
+            <circle cx="68.6" cy={lookUp ? 46 : 47} r="2.3" fill="#fff" />
+            <circle cx="51" cy="52.5" r="1" fill="#fff" opacity="0.5" />
+            <circle cx="73" cy="52.5" r="1" fill="#fff" opacity="0.5" />
           </g>
         )}
 
-        {/* Burun */}
+        {/* Burun (parıltılı) */}
         <ellipse cx="60" cy="60" rx="4.6" ry="3.6" fill={COCOA} />
+        <ellipse cx="58.6" cy="58.8" rx="1.3" ry="0.9" fill="#fff" opacity="0.5" />
 
         {/* ── Ağız ── */}
         {isSpeaking ? (
