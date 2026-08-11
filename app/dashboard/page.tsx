@@ -5,7 +5,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { Flame, Shield, Heart, Gem, Gift, Trophy, ChevronRight } from "lucide-react";
+import { Flame, Shield, Heart, Gem, Gift, Trophy, ChevronRight, ChevronDown } from "lucide-react";
 import { useContent } from "@/components/ContentProvider";
 import { loadProgress, loadActiveDays, lessonState, type ProgressState } from "@/lib/progress";
 import { loadHearts, MAX_HEARTS } from "@/lib/hearts";
@@ -29,6 +29,7 @@ import RadialProgress from "@/components/RadialProgress";
 import LearningPath, { type PathNode } from "@/components/LearningPath";
 import { PageSkeleton } from "@/components/Skeleton";
 import Mascot from "@/components/Mascot";
+import type { Subject } from "@/lib/types";
 
 export default function DashboardPage() {
   const { user, ready } = useAuthUser();
@@ -148,25 +149,13 @@ export default function DashboardPage() {
         {/* Mobil: tək sütun · Desktop: mərkəz yol + sağ sütun */}
         <div className="lg:grid lg:grid-cols-[1fr_20rem] lg:items-start lg:gap-6">
           <div className="min-w-0">
-            {/* Fənn tab-ları */}
-            <div className="flex flex-wrap justify-center gap-2 lg:justify-start">
-              {shown.map((s) => {
-                const on = s.slug === activeSlug;
-                return (
-                  <button
-                    key={s.slug}
-                    onClick={() => setActiveSlug(s.slug)}
-                    className={`rounded-2xl px-4 py-2 text-sm font-extrabold uppercase tracking-wide transition ${
-                      on
-                        ? "bg-brand text-white btn-pop"
-                        : "border-2 border-line bg-panel text-muted hover:bg-panel-2"
-                    }`}
-                  >
-                    {t(`subject.${s.slug}`)}
-                  </button>
-                );
-              })}
-            </div>
+            {/* Fənn seçici (Duolingo dil seçici üslubu — aşağı açılan yana-sürüşən bar) */}
+            <SubjectSwitcher
+              subjects={shown}
+              activeSlug={active.slug}
+              onSelect={setActiveSlug}
+              t={t}
+            />
 
             {/* Bölmə başlığı (Duolingo banner üslubu) */}
             <div className="mt-4 flex items-center gap-4 rounded-2xl bg-gradient-to-r from-brand to-brand-dark p-5 text-white shadow-lg">
@@ -271,6 +260,83 @@ export default function DashboardPage() {
           />
         )}
       </main>
+    </div>
+  );
+}
+
+// Fənn seçici — cari fənn göstərilir; üstünə basanda aşağı bar açılır,
+// fənlər yana-sürüşən şəkil(ikon)+ad kartları kimi düzülür (Duolingo dil seçici).
+function SubjectSwitcher({
+  subjects,
+  activeSlug,
+  onSelect,
+  t,
+}: {
+  subjects: Subject[];
+  activeSlug: string;
+  onSelect: (slug: string) => void;
+  t: (k: string) => string;
+}) {
+  const [open, setOpen] = useState(false);
+  const active = subjects.find((s) => s.slug === activeSlug) ?? subjects[0];
+  if (!active) return null;
+
+  return (
+    <div className="relative">
+      {/* Cari fənn — trigger */}
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        className="flex w-full items-center gap-3 rounded-2xl border-2 border-line bg-panel px-4 py-2.5 transition hover:border-brand sm:w-auto"
+      >
+        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand text-lg font-bold text-white">
+          {active.icon}
+        </span>
+        <span className="flex-1 text-left font-extrabold text-fg">{t(`subject.${active.slug}`)}</span>
+        <ChevronDown
+          size={18}
+          className={`text-muted transition-transform ${open ? "rotate-180" : ""}`}
+        />
+      </button>
+
+      {open && (
+        <>
+          {/* kənara toxununca bağla */}
+          <div className="fixed inset-0 z-10" onClick={() => setOpen(false)} aria-hidden />
+          {/* Aşağı açılan bar — yana sürüşən fənlər */}
+          <div className="absolute left-0 right-0 top-full z-20 mt-2 rounded-2xl border border-line bg-panel p-3 shadow-xl sm:right-auto sm:min-w-[320px]">
+            <div className="flex gap-3 overflow-x-auto pb-1">
+              {subjects.map((s) => {
+                const on = s.slug === activeSlug;
+                return (
+                  <button
+                    key={s.slug}
+                    type="button"
+                    onClick={() => {
+                      onSelect(s.slug);
+                      setOpen(false);
+                    }}
+                    className="flex w-20 shrink-0 flex-col items-center gap-1.5"
+                  >
+                    <span
+                      className={`flex h-16 w-16 items-center justify-center rounded-2xl text-2xl font-bold transition ${
+                        on
+                          ? "bg-brand text-white ring-2 ring-brand ring-offset-2 ring-offset-panel"
+                          : "bg-brand/10 text-brand hover:bg-brand/20"
+                      }`}
+                    >
+                      {s.icon}
+                    </span>
+                    <span className={`text-center text-xs leading-tight ${on ? "font-bold text-fg" : "text-muted"}`}>
+                      {t(`subject.${s.slug}`)}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }
