@@ -158,9 +158,14 @@ export default function AboutPage() {
           </span>
           <h2 className="mt-4 text-2xl font-extrabold text-fg">Bizimlə əlaqə</h2>
           <p className="mt-2 text-muted">Sual, əməkdaşlıq və ya təklif üçün yaz:</p>
-          <a href="mailto:salam@imparo.az" className="mt-2 inline-block text-lg font-extrabold text-brand hover:underline">
-            salam@imparo.az
-          </a>
+          <div className="mt-3 flex flex-col items-center gap-1.5">
+            <a href="mailto:m.alakbarli2007@gmail.com" className="text-lg font-extrabold text-brand hover:underline">
+              m.alakbarli2007@gmail.com
+            </a>
+            <a href="mailto:ichbinmahammad@gmail.com" className="text-lg font-extrabold text-brand hover:underline">
+              ichbinmahammad@gmail.com
+            </a>
+          </div>
         </div>
       </section>
 
