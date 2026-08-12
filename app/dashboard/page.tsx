@@ -425,7 +425,7 @@ function StatMini({
 // Dashboard footer — Duolingo üslubu link zolağı (sağ rail sonunda, desktop).
 function DashboardFooter() {
   const links: { label: string; href: string }[] = [
-    { label: "Haqqımızda", href: "/" },
+    { label: "Haqqımızda", href: "/haqqimizda" },
     { label: "Bloq", href: "/blog" },
     { label: "Mağaza", href: "/magaza" },
     { label: "Səmərəlilik", href: "/semerelilik" },
