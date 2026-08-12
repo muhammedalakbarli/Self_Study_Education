@@ -4,7 +4,7 @@
 
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-import { useAuthUser } from "@/lib/useAuthUser";
+import { useOptionalUser } from "@/lib/useOptionalUser";
 import { useT, useLang, type Lang } from "@/lib/i18n";
 import { PageSkeleton } from "@/components/Skeleton";
 
@@ -233,12 +233,12 @@ const FAQ: Record<Lang, Category[]> = {
 };
 
 export default function HelpPage() {
-  const { user, ready } = useAuthUser();
+  const { ready } = useOptionalUser();
   const [open, setOpen] = useState<string | null>("0-0");
   const t = useT();
   const lang = useLang();
 
-  if (!ready || !user) return <PageSkeleton />;
+  if (!ready) return <PageSkeleton />;
 
   const categories = FAQ[lang];
 

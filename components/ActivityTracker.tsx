@@ -4,11 +4,12 @@
 // layout-da mount olunur; anonim ziyarətçilər üçün heç nə göndərmir.
 
 import { useEffect } from "react";
-import { useAuthUser } from "@/lib/useAuthUser";
+import { useOptionalUser } from "@/lib/useOptionalUser";
 import { startActivityTracking } from "@/lib/activity";
 
 export default function ActivityTracker() {
-  const { user } = useAuthUser();
+  // Qlobal mount — çıxış etmiş ziyarətçini login-ə YÖNLƏNDİRMƏMƏLİDİR (useOptionalUser).
+  const { user } = useOptionalUser();
 
   useEffect(() => {
     if (!user) return;

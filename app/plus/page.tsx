@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { Heart, Gem, Sparkles, BarChart3, Rocket, Crown } from "lucide-react";
 import { track } from "@/lib/analytics";
 import { loadPlus } from "@/lib/plus";
-import { useAuthUser } from "@/lib/useAuthUser";
+import { useOptionalUser } from "@/lib/useOptionalUser";
 import Mascot from "@/components/Mascot";
 
 // LemonSqueezy hosted checkout linkləri (.env-də təyin olunur; yoxdursa maraq qeyd edilir).
@@ -30,7 +30,7 @@ const PLANS = [
 ];
 
 export default function PlusPage() {
-  const { user } = useAuthUser();
+  const { user } = useOptionalUser();
   const [plan, setPlan] = useState("yearly");
   const [done, setDone] = useState(false);
   const [active, setActive] = useState(false);

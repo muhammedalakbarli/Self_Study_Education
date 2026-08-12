@@ -186,8 +186,8 @@ function AboutFooter() {
       links: [
         { label: "Imparo", href: "/" },
         { label: "Imparo Plus", href: "/plus" },
-        { label: t("ft.school"), href: "/mekteb" },
-        { label: t("ft.shop"), href: "/magaza" },
+        { label: t("ft.school"), href: "/signup" },
+        { label: t("ft.shop"), href: "/signup" },
       ],
     },
     {
