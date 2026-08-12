@@ -98,9 +98,15 @@ export default function LandingPage() {
         >
           {/* Ulduz */}
           <motion.div variants={fadeUp} className="order-1 flex justify-center lg:order-2">
-            <div className="relative flex aspect-square w-64 items-center justify-center rounded-full bg-gradient-to-br from-brand/20 to-accent/15 sm:w-80">
+            <div className="relative flex items-center justify-center py-4">
+              {/* Dekorativ dairə — ARXA fonda (mütləq), mascotu məhdudlaşdırmır/kəsmir */}
+              <span
+                className="pointer-events-none absolute left-1/2 top-1/2 aspect-square w-60 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-brand/20 to-accent/15 sm:w-72"
+                aria-hidden
+              />
               {/* radial işıq */}
-              <span className="pointer-events-none absolute inset-6 rounded-full bg-brand/10 blur-2xl" aria-hidden />
+              <span className="pointer-events-none absolute left-1/2 top-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand/10 blur-2xl sm:h-48 sm:w-48" aria-hidden />
+              {/* Mascot — normal axında, tam görünür (dairənin üstündə) */}
               <Mascot size={210} mood="wave" />
               {/* orbitləyən qığılcımlar */}
               <span className="twinkle pointer-events-none absolute left-6 top-10 text-amber-300" aria-hidden>
