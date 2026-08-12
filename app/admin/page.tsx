@@ -12,6 +12,7 @@ import { useAuthUser } from "@/lib/useAuthUser";
 import { fetchContentTree } from "@/lib/content/db";
 import {
   checkIsAdmin,
+  adminListTeacherRequests,
   genId,
   upsertSubject,
   deleteSubject,
@@ -44,9 +45,13 @@ export default function AdminPage() {
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
 
+  const [pendingTeachers, setPendingTeachers] = useState(0);
   useEffect(() => {
     if (user) checkIsAdmin().then(setIsAdmin);
   }, [user]);
+  useEffect(() => {
+    if (isAdmin === true) adminListTeacherRequests().then((r) => setPendingTeachers(r.length));
+  }, [isAdmin]);
   useEffect(() => {
     fetchContentTree().then((t) => setTree(t ?? []));
   }, []);
@@ -117,8 +122,13 @@ export default function AdminPage() {
             <Link href="/admin/mekteb" className="text-sm font-semibold text-brand hover:underline">
               Məktəb
             </Link>
-            <Link href="/admin/muellimler" className="text-sm font-semibold text-brand hover:underline">
+            <Link href="/admin/muellimler" className="relative text-sm font-semibold text-brand hover:underline">
               Müəllimlər
+              {pendingTeachers > 0 && (
+                <span className="ml-1 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1.5 text-[11px] font-extrabold text-white">
+                  {pendingTeachers}
+                </span>
+              )}
             </Link>
             <Link href="/admin/elan" className="text-sm font-semibold text-brand hover:underline">
               Elanlar

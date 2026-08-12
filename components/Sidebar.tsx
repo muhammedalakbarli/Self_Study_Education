@@ -31,7 +31,7 @@ import {
   IconShop,
 } from "./NavIcons";
 import { signOut } from "@/lib/auth";
-import { checkIsAdmin } from "@/lib/adminApi";
+import { checkIsAdmin, adminListTeacherRequests } from "@/lib/adminApi";
 import { loadDueTaskIds } from "@/lib/srs";
 import { useT } from "@/lib/i18n";
 
@@ -107,10 +107,16 @@ export default function Sidebar() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [hasDue, setHasDue] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
+  const [adminPending, setAdminPending] = useState(0); // gözləyən müəllim müraciətləri
 
   useEffect(() => {
     checkIsAdmin().then(setIsAdmin);
   }, []);
+  // Admin: gözləyən müəllim müraciətləri sayı (bildiriş badge-i). Səhifə dəyişəndə yenilə.
+  useEffect(() => {
+    if (!isAdmin) return;
+    adminListTeacherRequests().then((r) => setAdminPending(r.length)).catch(() => {});
+  }, [isAdmin, pathname]);
   // Səhifə dəyişəndə mobil "Daha çoxu" vərəqini bağla.
   useEffect(() => {
     setMoreOpen(false);
@@ -180,7 +186,7 @@ export default function Sidebar() {
                       <FlyoutLink href="/ayarlar" Icon={Settings} label={t("nav.settings")} />
                       <FlyoutLink href="/yardim" Icon={HelpCircle} label={t("nav.help")} />
                       {isAdmin && (
-                        <FlyoutLink href="/admin" Icon={ShieldCheck} label="Admin" />
+                        <FlyoutLink href="/admin" Icon={ShieldCheck} label="Admin" badge={adminPending} />
                       )}
                     </div>
                   </div>
@@ -233,7 +239,7 @@ export default function Sidebar() {
               <SheetLink href="/ayarlar" Icon={Settings} label={t("nav.settings")} onNavigate={() => setMoreOpen(false)} />
               <SheetLink href="/yardim" Icon={HelpCircle} label={t("nav.help")} onNavigate={() => setMoreOpen(false)} />
               {isAdmin && (
-                <SheetLink href="/admin" Icon={ShieldCheck} label="Admin" onNavigate={() => setMoreOpen(false)} />
+                <SheetLink href="/admin" Icon={ShieldCheck} label="Admin" badge={adminPending} onNavigate={() => setMoreOpen(false)} />
               )}
               <button
                 type="button"
@@ -303,12 +309,14 @@ function SheetLink({
   Icon,
   label,
   dot,
+  badge,
   onNavigate,
 }: {
   href: string;
   Icon: React.ComponentType<{ size?: number; className?: string }>;
   label: string;
   dot?: boolean;
+  badge?: number;
   onNavigate: () => void;
 }) {
   return (
@@ -324,6 +332,11 @@ function SheetLink({
         )}
       </span>
       <span className="flex-1">{label}</span>
+      {!!badge && badge > 0 && (
+        <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1.5 text-[11px] font-extrabold text-white">
+          {badge}
+        </span>
+      )}
       <ChevronRight size={18} className="text-muted" />
     </Link>
   );
@@ -333,10 +346,12 @@ function FlyoutLink({
   href,
   Icon,
   label,
+  badge,
 }: {
   href: string;
   Icon: React.ComponentType<{ size?: number }>;
   label: string;
+  badge?: number;
 }) {
   return (
     <Link
@@ -344,7 +359,12 @@ function FlyoutLink({
       className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-bold text-muted transition hover:bg-panel-2 hover:text-fg"
     >
       <Icon size={20} />
-      {label}
+      <span className="flex-1">{label}</span>
+      {!!badge && badge > 0 && (
+        <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1.5 text-[11px] font-extrabold text-white">
+          {badge}
+        </span>
+      )}
     </Link>
   );
 }
