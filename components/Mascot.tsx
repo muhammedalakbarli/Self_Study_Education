@@ -13,7 +13,7 @@ const MOOD_TO_EMOTION: Record<MascotMood, ZefiEmotion> = {
   celebrate: "celebrating",
   love: "celebrating",
   sad: "worried",
-  thinking: "learning",
+  thinking: "thinking",
   wave: "welcome",
 };
 

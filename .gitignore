@@ -50,3 +50,6 @@ AGENTS.md
 mobile/node_modules
 mobile/.env
 mobile/.expo
+
+# Maskot mənbə faylları (işlənmiş PNG-lər public/assets-dədir)
+/Maskot/
