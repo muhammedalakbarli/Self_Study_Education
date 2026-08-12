@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import Logo from "@/components/Logo";
 import Mascot from "@/components/Mascot";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 export const metadata: Metadata = {
   title: "Haqqımızda",
@@ -62,12 +63,15 @@ export default function AboutPage() {
             <Logo size={34} />
             <span className="text-lg font-extrabold text-brand">Imparo</span>
           </Link>
-          <Link
-            href="/login"
-            className="rounded-2xl border-2 border-line px-4 py-2 text-sm font-bold text-fg btn-pop btn-pop-ghost hover:border-brand"
-          >
-            Daxil ol
-          </Link>
+          <div className="flex items-center gap-2.5">
+            <LanguageSwitcher />
+            <Link
+              href="/login"
+              className="rounded-2xl border-2 border-line px-4 py-2 text-sm font-bold text-fg btn-pop btn-pop-ghost hover:border-brand"
+            >
+              Daxil ol
+            </Link>
+          </div>
         </div>
       </header>
 
