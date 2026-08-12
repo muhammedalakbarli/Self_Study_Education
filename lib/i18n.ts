@@ -914,6 +914,7 @@ const DICT: Dict = {
   "ft.mission": { az: "Missiya", en: "Mission", ru: "Миссия" },
   "ft.blog": { az: "Bloq", en: "Blog", ru: "Блог" },
   "ft.careers": { az: "Karyera", en: "Careers", ru: "Карьера" },
+  "ft.efficacy": { az: "Səmərəlilik", en: "Efficacy", ru: "Эффективность" },
   "ft.school": { az: "Imparo Məktəb", en: "Imparo for Schools", ru: "Imparo для школ" },
   "ft.shop": { az: "Mağaza", en: "Store", ru: "Магазин" },
   "ft.help": { az: "Yardım mərkəzi", en: "Help center", ru: "Центр помощи" },

@@ -424,15 +424,16 @@ function StatMini({
 
 // Dashboard footer — Duolingo üslubu link zolağı (sağ rail sonunda, desktop).
 function DashboardFooter() {
+  const t = useT();
   const links: { label: string; href: string }[] = [
-    { label: "Haqqımızda", href: "/haqqimizda" },
-    { label: "Bloq", href: "/blog" },
-    { label: "Mağaza", href: "/magaza" },
-    { label: "Səmərəlilik", href: "/semerelilik" },
-    { label: "Karyera", href: "/karyera" },
-    { label: "İnvestorlar", href: "/investorlar" },
-    { label: "Şərtlər", href: "/sertler" },
-    { label: "Məxfilik", href: "/mexfilik" },
+    { label: t("ft.about"), href: "/haqqimizda" },
+    { label: t("ft.blog"), href: "/blog" },
+    { label: t("ft.shop"), href: "/magaza" },
+    { label: t("ft.efficacy"), href: "/semerelilik" },
+    { label: t("ft.careers"), href: "/karyera" },
+    { label: t("ft.investors"), href: "/investorlar" },
+    { label: t("ft.terms"), href: "/sertler" },
+    { label: t("ft.privacy"), href: "/mexfilik" },
   ];
   return (
     <footer className="px-1 pt-2">
@@ -447,7 +448,7 @@ function DashboardFooter() {
           </Link>
         ))}
       </nav>
-      <p className="mt-3 text-[11px] font-semibold text-muted">© {new Date().getFullYear()} Imparo</p>
+      <p className="mt-3 text-[11px] font-semibold text-muted">© {new Date().getFullYear()} Imparo · {t("ft.rights")}</p>
     </footer>
   );
 }

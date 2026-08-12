@@ -254,10 +254,10 @@ export default function LandingPage() {
         </div>
         <p className="mt-2">{t("auth.tagline")}</p>
         <nav className="mt-4 flex flex-wrap justify-center gap-x-5 gap-y-2 text-xs font-bold uppercase tracking-wide">
-          <Link href="/haqqimizda" className="text-muted transition hover:text-brand">Haqqımızda</Link>
+          <Link href="/haqqimizda" className="text-muted transition hover:text-brand">{t("ft.about")}</Link>
           <Link href="/plus" className="text-muted transition hover:text-brand">Imparo Plus</Link>
-          <Link href="/mekteb" className="text-muted transition hover:text-brand">Məktəb</Link>
-          <Link href="/yardim" className="text-muted transition hover:text-brand">Yardım</Link>
+          <Link href="/mekteb" className="text-muted transition hover:text-brand">{t("nav.schools")}</Link>
+          <Link href="/yardim" className="text-muted transition hover:text-brand">{t("ft.help")}</Link>
         </nav>
       </footer>
     </div>
