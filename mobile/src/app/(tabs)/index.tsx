@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { View, Text, ScrollView, Pressable, StyleSheet, ActivityIndicator, RefreshControl } from "react-native";
 import { useRouter, useFocusEffect } from "expo-router";
-import { Flame, Gem, Check, Star, Lock } from "lucide-react-native";
+import { Flame, Gem, Check, Star, Lock, Heart } from "lucide-react-native";
 import { useAuth, userGrade } from "@/lib/auth";
 import { fetchContentTree } from "@/lib/content";
 import { loadProgress, lessonState, type Progress } from "@/lib/progress";
+import { loadHearts, MAX_HEARTS } from "@/lib/hearts";
+import { loadPlus } from "@/lib/plus";
 import type { Subject } from "@/lib/types";
 import { C } from "@/lib/theme";
 
@@ -16,23 +18,30 @@ export default function Learn() {
   const [prog, setProg] = useState<Progress | null>(null);
   const [activeSlug, setActiveSlug] = useState("");
   const [refreshing, setRefreshing] = useState(false);
+  const [hearts, setHearts] = useState(MAX_HEARTS);
+  const [plus, setPlus] = useState(false);
 
   const load = useCallback(async () => {
-    const [tree, p] = await Promise.all([
+    const [tree, p, h, pl] = await Promise.all([
       fetchContentTree(),
       user ? loadProgress(user.id) : Promise.resolve(null),
+      loadHearts(),
+      loadPlus(),
     ]);
     setSubjects(tree);
     setProg(p);
+    setHearts(h);
+    setPlus(pl);
   }, [user]);
 
   useEffect(() => {
     load();
   }, [load]);
-  // Dərsdən qayıdanda irəliləyişi yenilə.
+  // Dərsdən qayıdanda irəliləyişi + can yenilə.
   useFocusEffect(
     useCallback(() => {
       if (user) loadProgress(user.id).then(setProg);
+      loadHearts().then(setHearts).catch(() => {});
     }, [user]),
   );
 
@@ -79,6 +88,7 @@ export default function Learn() {
       <View style={s.statbar}>
         <View style={s.stat}><Flame color={C.brand} size={22} fill={C.brand} /><Text style={s.statN}>{prog.streakDays}</Text></View>
         <View style={s.stat}><Gem color={C.success} size={22} fill={C.success} /><Text style={s.statN}>{prog.gems}</Text></View>
+        <View style={s.stat}><Heart color={C.danger} size={22} fill={C.danger} /><Text style={s.statN}>{plus ? "∞" : hearts}</Text></View>
       </View>
 
       {/* Fənn seçici */}
