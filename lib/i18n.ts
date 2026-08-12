@@ -603,6 +603,7 @@ const DICT: Dict = {
   },
 
   // ── Landing: fənn vitrini ──
+  "home.subjects.grade": { az: "ci sinif", en: "grade", ru: "класс" },
   "home.subjects.title": {
     az: "Üç fənn, bir yolda",
     en: "Three subjects, one path",

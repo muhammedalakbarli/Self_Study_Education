@@ -11,9 +11,6 @@ import Link from "next/link";
 import { motion, type Variants } from "framer-motion";
 import {
   Check,
-  Calculator,
-  BookText,
-  Languages,
   Star,
   Flame,
   Trophy,
@@ -160,28 +157,27 @@ export default function LandingPage() {
           <StatCard value={totalTasks} suffix="+" label={t("home.stat.tasks")} />
         </Reveal>
 
-        {/* ── Fənn vitrini ── */}
+        {/* ── Fənn seçici zolağı (Duolingo dil-seçici üslubu) ── */}
         <Reveal className="py-14 sm:py-20">
           <SectionHead title={t("home.subjects.title")} body={t("home.subjects.body")} />
-          <div className="mt-8 grid gap-4 sm:grid-cols-3">
-            <SubjectCard
-              Icon={Calculator}
-              grad="from-brand to-brand-dark"
-              title={t("home.subjects.math")}
-              desc={t("home.subjects.mathDesc")}
-            />
-            <SubjectCard
-              Icon={BookText}
-              grad="from-brand to-brand-dark"
-              title={t("home.subjects.az")}
-              desc={t("home.subjects.azDesc")}
-            />
-            <SubjectCard
-              Icon={Languages}
-              grad="from-brand to-brand-dark"
-              title={t("home.subjects.en")}
-              desc={t("home.subjects.enDesc")}
-            />
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            {[...subjects]
+              .sort((a, b) => a.grade - b.grade)
+              .map((s) => (
+                <Link
+                  key={s.slug}
+                  href="/signup"
+                  className="group flex items-center gap-3 rounded-2xl border-2 border-line bg-panel px-5 py-3 transition hover:-translate-y-0.5 hover:border-brand hover:bg-panel-2"
+                >
+                  <span className="text-2xl leading-none">{s.icon}</span>
+                  <span className="text-left leading-tight">
+                    <span className="block font-extrabold text-fg group-hover:text-brand">{s.name}</span>
+                    <span className="block text-xs font-bold uppercase tracking-wide text-muted">
+                      {s.grade}-{t("home.subjects.grade")}
+                    </span>
+                  </span>
+                </Link>
+              ))}
           </div>
         </Reveal>
 
@@ -340,35 +336,6 @@ function StatCard({ value, label, suffix = "" }: { value: number; label: string;
   );
 }
 
-function SubjectCard({
-  Icon,
-  grad,
-  title,
-  desc,
-}: {
-  Icon: React.ComponentType<{ size?: number; className?: string }>;
-  grad: string;
-  title: string;
-  desc: string;
-}) {
-  return (
-    <motion.div
-      variants={fadeUp}
-      whileHover={{ y: -6 }}
-      className="flex items-center gap-4 rounded-2xl border border-line bg-panel p-5"
-    >
-      <span
-        className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br ${grad} text-white shadow-md`}
-      >
-        <Icon size={26} />
-      </span>
-      <div>
-        <div className="font-extrabold text-fg">{title}</div>
-        <div className="mt-0.5 text-sm text-muted">{desc}</div>
-      </div>
-    </motion.div>
-  );
-}
 
 function FeatureChip({
   Icon,
