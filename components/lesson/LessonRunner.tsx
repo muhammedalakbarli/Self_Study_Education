@@ -66,6 +66,8 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
   const [wrongIds, setWrongIds] = useState<string[]>([]);
   const [retryQueue, setRetryQueue] = useState<Task[]>([]);
   const [retryTotal, setRetryTotal] = useState(0);
+  // Təkrar bitəndən sonra hara keçək: bonus təklifi, yoxsa dərsi bitir.
+  const [afterRetry, setAfterRetry] = useState<"bonus" | "finish">("finish");
   // Canlar (hearts) — səhv cavab 1 can aparır; 0 olanda mülayim xəbərdarlıq.
   const [hearts, setHearts] = useState(MAX_HEARTS);
   const [heartsOut, setHeartsOut] = useState(false);
@@ -217,7 +219,10 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
       const [head, ...rest] = retryQueue;
       const next = lastCorrect ? rest : [...rest, head];
       if (next.length === 0) {
-        finishLesson(earnedXp);
+        // Bu mərhələnin səhvləri həll olundu → sıfırla, sonra bonus/bitirə keç.
+        setWrongIds([]);
+        if (afterRetry === "bonus") goToBonusPrompt();
+        else finishLesson(earnedXp);
         return;
       }
       setRetryQueue(next);
@@ -228,29 +233,48 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
       setIndex((i) => i + 1);
       return;
     }
-    if (!inBonus && bonusTasks.length > 0) {
-      setPhase("bonusPrompt");
-      setIndex(0);
-    } else {
-      maybeRetryOrFinish();
+
+    // Əsas suallar bitdi: ƏVVƏL səhvlərin təkrarı, SONRA bonus təklifi / bitir.
+    if (!inBonus) {
+      if (wrongIds.length > 0) {
+        startRetry(wrongIds, bonusTasks.length > 0 ? "bonus" : "finish");
+      } else if (bonusTasks.length > 0) {
+        goToBonusPrompt();
+      } else {
+        finishLesson(earnedXp);
+      }
+      return;
     }
+
+    // Bonus suallar bitdi: bonusdakı səhvləri təkrarlat, sonra bitir.
+    if (wrongIds.length > 0) startRetry(wrongIds, "finish");
+    else finishLesson(earnedXp);
   }
 
-  // Bölmə sonu: səhv tapşırıqlar varsa əvvəl onları təkrarlat, sonra bitir.
-  function maybeRetryOrFinish() {
+  // Verilən id-lərdəki səhv tapşırıqları təkrar növbəsinə al; boşdursa hədəfə keç.
+  function startRetry(ids: string[], target: "bonus" | "finish") {
     const all = [...mainTasks, ...bonusTasks];
-    const retry = wrongIds
+    const retry = ids
       .map((id) => all.find((tk) => tk.id === id))
       .filter((tk): tk is Task => !!tk);
-    if (retry.length > 0) {
-      setRetryQueue(retry);
-      setRetryTotal(retry.length);
-      setAnswer(null);
-      setChecked(false);
-      setPhase("retry");
-    } else {
-      finishLesson(earnedXp);
+    if (retry.length === 0) {
+      if (target === "bonus") goToBonusPrompt();
+      else finishLesson(earnedXp);
+      return;
     }
+    setRetryQueue(retry);
+    setRetryTotal(retry.length);
+    setAfterRetry(target);
+    setAnswer(null);
+    setChecked(false);
+    setPhase("retry");
+  }
+
+  function goToBonusPrompt() {
+    setPhase("bonusPrompt");
+    setIndex(0);
+    setAnswer(null);
+    setChecked(false);
   }
 
   function startBonus() {
@@ -282,10 +306,10 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
             {t("run.startBonus")}
           </button>
           <button
-            onClick={maybeRetryOrFinish}
+            onClick={() => finishLesson(earnedXp)}
             className="rounded-2xl border-2 border-line px-5 py-3 font-bold text-fg btn-pop btn-pop-ghost hover:border-brand"
           >
-            {wrongIds.length > 0 ? t("run.continue") : t("run.finish")}
+            {t("run.finish")}
           </button>
         </div>
       </div>
@@ -309,20 +333,23 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
     );
   }
 
-  // Sonda hələ təkrarlanacaq səhv varsa "Bitir" yox, "Davam et" göstər
-  // (əvvəl "Bitir"ə basandan sonra təkrar gəlirdi — indi əvvəl təkrar, sonra bitir).
+  // Son sualda: hələ təkrar/bonus varsa "Davam et", həqiqi son isə "Bitir".
+  // (Səhvlərin təkrarı HƏMİŞƏ bitir/bonusdan əvvəl gəlir.)
   const willRetry = wrongIds.length > 0;
+  const isLast = index + 1 >= total;
 
   // ── Tapşırıq (main və ya bonus) — immersiv tam-ekran ──
   const ctaText = inRetry
     ? t("run.next")
-    : index + 1 < total
+    : !isLast
       ? t("run.next")
       : inBonus
         ? willRetry
           ? t("run.continue")
           : t("run.finish")
-        : t("run.continue");
+        : willRetry || bonusTasks.length > 0
+          ? t("run.continue")
+          : t("run.finish");
 
   return (
     <div className="flex min-h-screen flex-col bg-ink">
