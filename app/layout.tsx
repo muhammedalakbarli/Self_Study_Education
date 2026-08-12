@@ -5,6 +5,7 @@ import AppChrome from "@/components/AppChrome";
 import { ContentProvider } from "@/components/ContentProvider";
 import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
 import AnalyticsProvider from "@/components/AnalyticsProvider";
+import ActivityTracker from "@/components/ActivityTracker";
 
 // Gövdə şrifti — yumşaq, oxunaqlı.
 const nunito = Nunito({
@@ -149,6 +150,7 @@ export default function RootLayout({
           <AppChrome>{children}</AppChrome>
         </ContentProvider>
         <AnalyticsProvider />
+        <ActivityTracker />
         <ServiceWorkerRegister />
       </body>
     </html>

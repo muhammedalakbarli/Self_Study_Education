@@ -22,6 +22,30 @@ function fmtDate(s: string | null): string {
   return new Date(s).toLocaleDateString("az-AZ", { year: "numeric", month: "short", day: "numeric" });
 }
 
+// Tarix + saat:dəqiqə (Bakı vaxtı) — qoşulma və son giriş üçün.
+function fmtDateTime(s: string | null): string {
+  if (!s) return "—";
+  return new Date(s).toLocaleString("az-AZ", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: "Asia/Baku",
+  });
+}
+
+// Aktiv keçirilən vaxt: saniyələr → "2 saat 15 dəq" / "45 dəq" / "30 san".
+function fmtDuration(sec: number | null): string {
+  const s = Number(sec) || 0;
+  if (s <= 0) return "—";
+  const h = Math.floor(s / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  if (h > 0) return m > 0 ? `${h} saat ${m} dəq` : `${h} saat`;
+  if (m > 0) return `${m} dəq`;
+  return `${s} san`;
+}
+
 export default function AdminUsersPage() {
   const router = useRouter();
   const { user, ready } = useAuthUser();
@@ -83,12 +107,14 @@ export default function AdminUsersPage() {
 
         {/* Cədvəl */}
         <div className="mt-4 overflow-x-auto rounded-2xl border border-line bg-panel">
-          <table className="w-full min-w-[720px] text-sm">
+          <table className="w-full min-w-[960px] text-sm">
             <thead>
               <tr className="border-b border-line text-left text-xs uppercase tracking-wide text-muted">
                 <th className="px-4 py-3 font-bold">Email</th>
                 <th className="px-3 py-3 font-bold">Ad</th>
                 <th className="px-3 py-3 font-bold">Qoşuldu</th>
+                <th className="px-3 py-3 font-bold">Son giriş</th>
+                <th className="px-3 py-3 font-bold">Vaxt</th>
                 <th className="px-3 py-3 text-right font-bold">XP</th>
                 <th className="px-3 py-3 text-right font-bold">Streak</th>
                 <th className="px-3 py-3 text-right font-bold">Zümrüd</th>
@@ -102,7 +128,9 @@ export default function AdminUsersPage() {
                 <tr key={r.user_id} className="border-b border-line/60 last:border-b-0">
                   <td className="max-w-[220px] truncate px-4 py-2.5 font-semibold text-fg">{r.email}</td>
                   <td className="px-3 py-2.5 text-muted">{r.name}</td>
-                  <td className="whitespace-nowrap px-3 py-2.5 text-muted">{fmtDate(r.created_at)}</td>
+                  <td className="whitespace-nowrap px-3 py-2.5 text-muted">{fmtDateTime(r.created_at)}</td>
+                  <td className="whitespace-nowrap px-3 py-2.5 text-muted">{fmtDateTime(r.last_sign_in_at)}</td>
+                  <td className="whitespace-nowrap px-3 py-2.5 font-semibold text-fg">{fmtDuration(r.active_seconds)}</td>
                   <td className="px-3 py-2.5 text-right font-bold text-amber-500">{r.total_xp}</td>
                   <td className="px-3 py-2.5 text-right text-orange-500">🔥{r.streak_days}</td>
                   <td className="px-3 py-2.5 text-right text-emerald-600">{r.gems}</td>

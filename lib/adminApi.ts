@@ -186,6 +186,8 @@ export interface AdminUserRow {
   gems: number;
   is_plus: boolean;
   completed: number;
+  last_sign_in_at: string | null;
+  active_seconds: number;
 }
 export interface AdminUserStats {
   total: number;
