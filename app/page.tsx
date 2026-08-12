@@ -100,10 +100,11 @@ export default function LandingPage() {
           {/* Mascot — böyük, mərkəzdə, dekorativ dairə arxada */}
           <motion.div variants={fadeUp} className="relative flex items-center justify-center">
             <span
-              className="pointer-events-none absolute left-1/2 top-1/2 aspect-square w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-brand/20 to-accent/15 sm:w-96"
+              className="pointer-events-none absolute left-1/2 top-1/2 aspect-square w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-brand/25 to-accent/20 sm:w-96"
               aria-hidden
             />
-            <span className="pointer-events-none absolute left-1/2 top-1/2 h-52 w-52 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand/10 blur-2xl sm:h-64 sm:w-64" aria-hidden />
+            {/* Yumşaq işıqlı halo — tünd rejimdə tülkünün tünd konturu qaranlıq fonla qarışmasın */}
+            <span className="pointer-events-none absolute left-1/2 top-1/2 h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/15 blur-3xl sm:h-72 sm:w-72" aria-hidden />
             <Mascot size={260} mood="wave" />
             <span className="twinkle pointer-events-none absolute left-4 top-8 text-amber-300 sm:left-0" aria-hidden>
               <Sparkles size={24} fill="currentColor" strokeWidth={0} />
@@ -190,7 +191,8 @@ export default function LandingPage() {
             </div>
             <div className="flex justify-center">
               <div className="relative">
-                <div className="flex h-64 w-40 items-center justify-center rounded-[2.2rem] border-4 border-fg/80 bg-panel shadow-2xl">
+                {/* Telefon ekranı — həmişə işıqlı (ağ/krem), tünd rejimdə də */}
+                <div className="flex h-64 w-40 items-center justify-center rounded-[2.2rem] border-4 border-fg/80 bg-gradient-to-br from-white to-[#FFF4DF] shadow-2xl">
                   <Mascot size={110} mood="celebrate" />
                 </div>
                 <span className="absolute -right-3 -top-3 rounded-2xl bg-brand px-3 py-1.5 text-sm font-extrabold text-white shadow-lg">
