@@ -62,7 +62,7 @@ export default function LoginPage() {
 
         <div>
           <div className="mb-6 flex justify-center">
-            <ZefiMascot emotion="learning" size={230} />
+            <ZefiMascot emotion="learning" size={300} />
           </div>
           <h2 className="max-w-sm text-4xl font-extrabold leading-tight">
             {t("auth.login.brandHeading")}
