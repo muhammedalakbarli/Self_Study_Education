@@ -20,3 +20,10 @@ export async function loseHeart(): Promise<number> {
     return MAX_HEARTS;
   }
 }
+
+export async function refillHearts(): Promise<number> {
+  try {
+    const { data } = await supabase.rpc("refill_hearts_full");
+    return typeof data === "number" ? data : MAX_HEARTS;
+  } catch { return MAX_HEARTS; }
+}

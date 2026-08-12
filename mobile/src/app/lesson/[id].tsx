@@ -9,6 +9,7 @@ import { completeLesson } from "@/lib/progress";
 import { loadHearts, loseHeart, MAX_HEARTS } from "@/lib/hearts";
 import { addGems, GEMS_PER_LESSON } from "@/lib/gems";
 import { loadPlus } from "@/lib/plus";
+import { addLeaderboardXp } from "@/lib/leaderboard";
 import type { Lesson, Task } from "@/lib/types";
 import { C } from "@/lib/theme";
 import Mascot from "@/components/Mascot";
@@ -87,6 +88,7 @@ export default function LessonScreen() {
     if (user) await completeLesson(user.id, String(id), earned).catch(() => {});
     const g = GEMS_PER_LESSON * (plus ? 2 : 1);
     addGems(g).catch(() => {});
+    addLeaderboardXp(earned).catch(() => {});
     setGemsEarned(g);
     Vibration.vibrate([0, 40, 60, 40]);
     setPhase("done");

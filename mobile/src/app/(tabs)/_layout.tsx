@@ -1,5 +1,5 @@
 import { Tabs } from "expo-router";
-import { House, Trophy, User } from "lucide-react-native";
+import { House, Trophy, ShoppingBag, User } from "lucide-react-native";
 import { C } from "@/lib/theme";
 
 export default function TabsLayout() {
@@ -15,6 +15,7 @@ export default function TabsLayout() {
     >
       <Tabs.Screen name="index" options={{ title: "Öyrən", tabBarIcon: ({ color, size }) => <House color={color} size={size} /> }} />
       <Tabs.Screen name="liqa" options={{ title: "Liqa", tabBarIcon: ({ color, size }) => <Trophy color={color} size={size} /> }} />
+      <Tabs.Screen name="magaza" options={{ title: "Mağaza", tabBarIcon: ({ color, size }) => <ShoppingBag color={color} size={size} /> }} />
       <Tabs.Screen name="profil" options={{ title: "Profil", tabBarIcon: ({ color, size }) => <User color={color} size={size} /> }} />
     </Tabs>
   );

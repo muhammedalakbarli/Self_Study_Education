@@ -10,3 +10,21 @@ export async function addGems(amount: number): Promise<void> {
     /* sükutla keç */
   }
 }
+
+export const SHOP_PRICES = { refillHearts: 50, streakFreeze: 100 };
+
+// Cari balans (xərcləmədən oxu — spend_gems(0)).
+export async function loadGems(): Promise<number> {
+  try {
+    const { data } = await supabase.rpc("spend_gems", { p_amount: 0 });
+    return typeof data === "number" ? data : 0;
+  } catch { return 0; }
+}
+
+// Zümrüd xərclə → qalan balans (kifayət deyilsə mənfi).
+export async function spendGems(amount: number): Promise<number> {
+  try {
+    const { data } = await supabase.rpc("spend_gems", { p_amount: amount });
+    return typeof data === "number" ? data : -1;
+  } catch { return -1; }
+}
