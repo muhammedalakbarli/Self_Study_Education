@@ -188,6 +188,8 @@ export interface AdminUserRow {
   completed: number;
   last_sign_in_at: string | null;
   active_seconds: number;
+  provider: string;
+  email_confirmed: boolean;
 }
 export interface AdminUserStats {
   total: number;
@@ -218,4 +220,136 @@ export async function adminUsers(search = "", limit = 200, offset = 0): Promise<
   } catch {
     return [];
   }
+}
+
+// ── İstifadəçi detalı ──
+export interface AdminUserDetail {
+  user_id: string;
+  email: string;
+  name: string;
+  is_bot: boolean;
+  created_at: string;
+  last_sign_in_at: string | null;
+  email_confirmed: boolean;
+  provider: string;
+  total_xp: number;
+  streak_days: number;
+  gems: number;
+  hearts: number;
+  is_plus: boolean;
+  plus_until: string | null;
+  active_seconds: number;
+  last_active_date: string | null;
+  completed: number;
+  subjects: { subject: string; done: number }[];
+}
+
+export async function adminUserDetail(uid: string): Promise<AdminUserDetail | null> {
+  try {
+    const { data } = await createClient().rpc("admin_user_detail", { p_uid: uid });
+    return (data as AdminUserDetail) ?? null;
+  } catch {
+    return null;
+  }
+}
+
+// ── Admin əməliyyatları ──
+export async function adminSetBot(uid: string, isBot: boolean): Promise<Res> {
+  const { error } = await createClient().rpc("admin_set_bot", { p_uid: uid, p_is_bot: isBot });
+  return { ok: !error, error: error?.message };
+}
+export async function adminGrantPlus(uid: string, months = 12): Promise<Res> {
+  const { error } = await createClient().rpc("admin_grant_plus", { p_uid: uid, p_months: months });
+  return { ok: !error, error: error?.message };
+}
+export async function adminRevokePlus(uid: string): Promise<Res> {
+  const { error } = await createClient().rpc("admin_revoke_plus", { p_uid: uid });
+  return { ok: !error, error: error?.message };
+}
+export async function adminDeleteUser(uid: string): Promise<Res> {
+  const { error } = await createClient().rpc("admin_delete_user", { p_uid: uid });
+  return { ok: !error, error: error?.message };
+}
+
+// ── Böyümə / Retensiya ──
+export interface AdminGrowth {
+  dau: number;
+  wau: number;
+  mau: number;
+  funnel: { signed_up: number; activated: number; retained7: number; plus: number };
+  signups_daily: { d: string; n: number }[];
+  active_daily: { d: string; n: number }[];
+}
+export async function adminGrowth(): Promise<AdminGrowth | null> {
+  try {
+    const { data } = await createClient().rpc("admin_growth");
+    return (data as AdminGrowth) ?? null;
+  } catch {
+    return null;
+  }
+}
+
+// ── Fənn statistikası ──
+export interface AdminSubjectStat {
+  subject: string;
+  completions: number;
+  learners: number;
+}
+export async function adminSubjectStats(): Promise<AdminSubjectStat[]> {
+  try {
+    const { data } = await createClient().rpc("admin_subject_stats");
+    return (data as AdminSubjectStat[]) ?? [];
+  } catch {
+    return [];
+  }
+}
+
+// ── Məktəb (B2B) ──
+export interface AdminSchool {
+  class_id: string;
+  name: string;
+  code: string;
+  subject_slug: string;
+  grade: number;
+  teacher_email: string | null;
+  members: number;
+  assignments: number;
+  created_at: string;
+}
+export async function adminSchools(): Promise<AdminSchool[]> {
+  try {
+    const { data } = await createClient().rpc("admin_schools");
+    return (data as AdminSchool[]) ?? [];
+  } catch {
+    return [];
+  }
+}
+
+// ── Elanlar ──
+export interface Announcement {
+  id: string;
+  title: string;
+  body: string;
+  active: boolean;
+  created_at: string;
+}
+export async function adminListAnnouncements(): Promise<Announcement[]> {
+  try {
+    const { data } = await createClient().rpc("admin_list_announcements");
+    return (data as Announcement[]) ?? [];
+  } catch {
+    return [];
+  }
+}
+export async function adminPostAnnouncement(title: string, body: string): Promise<Res> {
+  const { error } = await createClient().rpc("admin_post_announcement", { p_title: title, p_body: body });
+  return { ok: !error, error: error?.message };
+}
+export async function adminSetAnnouncementActive(id: string, active: boolean): Promise<Res> {
+  const { error } = await createClient().rpc("admin_set_announcement_active", { p_id: id, p_active: active });
+  return { ok: !error, error: error?.message };
+}
+export async function adminDeleteAnnouncement(id: string): Promise<Res> {
+  const { error } = await createClient().rpc("admin_delete_announcement", { p_id: id });
+  return { ok: !error, error: error?.message };
 }

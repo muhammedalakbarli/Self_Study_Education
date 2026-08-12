@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { MotionConfig } from "framer-motion";
 import Sidebar from "./Sidebar";
+import AnnouncementBanner from "./AnnouncementBanner";
 import { loadPrefs, applyPrefs } from "@/lib/prefs";
 
 export default function AppChrome({ children }: { children: React.ReactNode }) {
@@ -38,7 +39,10 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
   ) : (
     <>
       <Sidebar />
-      <div className="pb-20 lg:pb-0 lg:pl-56">{children}</div>
+      <div className="pb-20 lg:pb-0 lg:pl-56">
+        <AnnouncementBanner />
+        {children}
+      </div>
     </>
   );
 

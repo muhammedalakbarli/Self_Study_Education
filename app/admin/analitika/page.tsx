@@ -8,7 +8,10 @@ import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuthUser } from "@/lib/useAuthUser";
-import { checkIsAdmin } from "@/lib/adminApi";
+import {
+  checkIsAdmin, adminGrowth, adminSubjectStats,
+  type AdminGrowth, type AdminSubjectStat,
+} from "@/lib/adminApi";
 import { createClient } from "@/lib/supabase/client";
 import { loadLeaderboard, type LeaderRow } from "@/lib/leaderboard";
 import { useContent } from "@/components/ContentProvider";
@@ -50,6 +53,8 @@ export default function AdminAnalyticsPage() {
   const [leaders, setLeaders] = useState<LeaderRow[] | null>(null);
   const [tiers, setTiers] = useState<number[] | null>(null); // hər sətir bir istifadəçinin tier-i
   const [feedback, setFeedback] = useState<FbRow[] | null>(null);
+  const [growth, setGrowth] = useState<AdminGrowth | null>(null);
+  const [subjectStats, setSubjectStats] = useState<AdminSubjectStat[]>([]);
 
   useEffect(() => {
     if (user) checkIsAdmin().then(setIsAdmin);
@@ -63,6 +68,8 @@ export default function AdminAnalyticsPage() {
     const sb = createClient();
     sb.from("league").select("tier").then(({ data }) => setTiers((data ?? []).map((r) => r.tier as number)));
     sb.from("task_feedback").select("task_id,category,resolved").then(({ data }) => setFeedback((data as FbRow[]) ?? []));
+    adminGrowth().then(setGrowth);
+    adminSubjectStats().then(setSubjectStats);
   }, [isAdmin]);
 
   // ── Məzmun statistikası (DB yox — content tree-dən) ──
@@ -133,6 +140,43 @@ export default function AdminAnalyticsPage() {
           <Stat label="Açıq rəy" value={openFb} />
         </div>
 
+        {/* Böyümə & Retensiya */}
+        {growth && (
+          <Section title="Böyümə & Retensiya">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+              <Stat label="DAU (bu gün aktiv)" value={growth.dau} small />
+              <Stat label="WAU (7 gün)" value={growth.wau} small />
+              <Stat label="MAU (30 gün)" value={growth.mau} small />
+              <Stat label="Plus abunə" value={growth.funnel.plus} small />
+            </div>
+
+            {/* Funnel */}
+            <div className="mt-4">
+              <div className="mb-2 text-xs font-bold uppercase tracking-wide text-muted">Qıf (funnel)</div>
+              <FunnelBar label="Qeydiyyat" value={growth.funnel.signed_up} max={growth.funnel.signed_up} tone="bg-brand" />
+              <FunnelBar label="İlk dərsi etdi" value={growth.funnel.activated} max={growth.funnel.signed_up} tone="bg-emerald-500" />
+              <FunnelBar label="7 gündə qayıtdı" value={growth.funnel.retained7} max={growth.funnel.signed_up} tone="bg-amber-500" />
+              <FunnelBar label="Plus aldı" value={growth.funnel.plus} max={growth.funnel.signed_up} tone="bg-yellow-400" />
+            </div>
+
+            {/* Gündəlik qrafiklər */}
+            <div className="mt-4 grid gap-4 sm:grid-cols-2">
+              <MiniBars title="Qeydiyyat (son 14 gün)" data={growth.signups_daily} tone="fill-brand" />
+              <MiniBars title="Aktiv istifadəçi (son 14 gün)" data={growth.active_daily} tone="fill-emerald-500" />
+            </div>
+          </Section>
+        )}
+
+        {/* Fənn üzrə istifadə (real DB) */}
+        {subjectStats.length > 0 && (
+          <Section title="Fənn üzrə istifadə (tamamlanan dərslər)">
+            <Table
+              head={["Fənn", "Tamamlanan", "Öyrənən"]}
+              rows={subjectStats.map((s) => [s.subject, Number(s.completions), Number(s.learners)])}
+            />
+          </Section>
+        )}
+
         {/* Məzmun */}
         <Section title="Məzmun">
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -196,6 +240,48 @@ function Stat({ label, value, small }: { label: string; value: number; small?: b
         {value.toLocaleString("az-AZ")}
       </div>
       <div className="mt-0.5 text-xs text-muted">{label}</div>
+    </div>
+  );
+}
+
+// Qıf sətri — dəyər + faiz + bar.
+function FunnelBar({ label, value, max, tone }: { label: string; value: number; max: number; tone: string }) {
+  const pct = max > 0 ? Math.round((value / max) * 100) : 0;
+  return (
+    <div className="mb-2">
+      <div className="mb-0.5 flex justify-between text-sm">
+        <span className="font-semibold text-fg">{label}</span>
+        <span className="text-muted">{value} ({pct}%)</span>
+      </div>
+      <div className="h-3 overflow-hidden rounded-full bg-panel-2">
+        <div className={`h-full rounded-full ${tone}`} style={{ width: `${Math.max(pct, 2)}%` }} />
+      </div>
+    </div>
+  );
+}
+
+// Sadə sütun qrafiki (SVG) — gündəlik seriya.
+function MiniBars({ title, data, tone }: { title: string; data: { d: string; n: number }[]; tone: string }) {
+  const max = Math.max(1, ...data.map((x) => x.n));
+  const W = 280, H = 90, bw = data.length ? W / data.length : W;
+  const total = data.reduce((s, x) => s + x.n, 0);
+  return (
+    <div className="rounded-2xl border border-line bg-panel p-3">
+      <div className="mb-1 flex items-baseline justify-between">
+        <span className="text-sm font-bold text-fg">{title}</span>
+        <span className="text-xs text-muted">cəmi {total}</span>
+      </div>
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full" preserveAspectRatio="none">
+        {data.map((x, i) => {
+          const h = (x.n / max) * (H - 12);
+          return (
+            <rect key={i} x={i * bw + 1} y={H - h} width={Math.max(bw - 2, 1)} height={h}
+              className={tone} rx={1.5}>
+              <title>{x.d}: {x.n}</title>
+            </rect>
+          );
+        })}
+      </svg>
     </div>
   );
 }

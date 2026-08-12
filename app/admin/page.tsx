@@ -114,6 +114,12 @@ export default function AdminPage() {
             <Link href="/admin/analitika" className="text-sm font-semibold text-brand hover:underline">
               Analitika
             </Link>
+            <Link href="/admin/mekteb" className="text-sm font-semibold text-brand hover:underline">
+              Məktəb
+            </Link>
+            <Link href="/admin/elan" className="text-sm font-semibold text-brand hover:underline">
+              Elanlar
+            </Link>
             <Link href="/admin/feedback" className="text-sm font-semibold text-brand hover:underline">
               Rəylər
             </Link>
