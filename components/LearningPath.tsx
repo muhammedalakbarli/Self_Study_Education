@@ -9,7 +9,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Star, Check, Lock, Flag, Trophy, Sparkles } from "lucide-react";
-import Mascot from "@/components/Mascot";
+import ZefiMascot, { type ZefiEmotion } from "@/components/ZefiMascot";
 import { useT } from "@/lib/i18n";
 import { playStep } from "@/lib/sound";
 import { vibrateWrong } from "@/lib/haptics";
@@ -211,16 +211,24 @@ function NodeLabel({ node }: { node: PathNode }) {
 }
 
 // Ulduz yolun yanında kiçik platformada (Duolingo owl kimi).
-// Ölçü dərs dairələrinin (82px) çəkisinə uyğun — görkəmli və balanslı.
-const MASCOT_SIZE = 86;
+// Ölçü dərs dairələrindən (82px) bir qədər böyük — görkəmli.
+const MASCOT_SIZE = 104;
 // Mascotun düyün mərkəzindən üfüqi aralığı — qonşu (kilidli) bölmə ilə aydın boşluq.
-const MASCOT_GAP = 130;
+const MASCOT_GAP = 152;
+// Yol boyu növbələşən pozalar (ağlayan/"worried" istisna — həmişə müsbət).
+const PERCH_EMOTIONS: ZefiEmotion[] = [
+  "happy",
+  "welcome",
+  "celebrating",
+  "learning",
+  "thinking",
+];
 
-function MascotPerch() {
+function MascotPerch({ emotion }: { emotion: ZefiEmotion }) {
   return (
     <div className="pointer-events-none relative flex flex-col items-center">
-      <Mascot size={MASCOT_SIZE} />
-      <span className="mt-1 h-3 w-[72px] rounded-[50%] bg-black/25 blur-[3px]" aria-hidden />
+      <ZefiMascot emotion={emotion} size={MASCOT_SIZE} />
+      <span className="mt-1 h-3 w-20 rounded-[50%] bg-black/25 blur-[3px]" aria-hidden />
     </div>
   );
 }
@@ -274,6 +282,8 @@ export default function LearningPath({ nodes }: { nodes: PathNode[] }) {
     // Ulduz-u aralıqlarda, düyünün əks tərəfində platformada göstər.
     const showMascot = i > 0 && i % 5 === 2 && node.state !== "current";
     const mascotSide = off >= 0 ? -1 : 1; // düyün sağdadırsa Ulduz solda
+    // Hər görünüşdə fərqli poza (növbələşir).
+    const mascotEmotion = PERCH_EMOTIONS[Math.floor(i / 5) % PERCH_EMOTIONS.length];
 
     rows.push(
       <motion.div
@@ -295,7 +305,7 @@ export default function LearningPath({ nodes }: { nodes: PathNode[] }) {
               className="absolute top-1/2 z-10 -translate-y-1/2"
               style={{ [mascotSide < 0 ? "right" : "left"]: `${MASCOT_GAP}px` }}
             >
-              <MascotPerch />
+              <MascotPerch emotion={mascotEmotion} />
             </div>
           )}
           <NodeButton node={node} />
