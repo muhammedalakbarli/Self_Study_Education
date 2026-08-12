@@ -19,6 +19,9 @@ import {
   Trophy,
   Award,
   Sparkles,
+  Smartphone,
+  Apple,
+  Play,
 } from "lucide-react";
 import { getCurrentUser } from "@/lib/auth";
 import { useContent } from "@/components/ContentProvider";
@@ -208,6 +211,30 @@ export default function LandingPage() {
           </motion.div>
         </Reveal>
 
+        {/* ── İstənilən yerdə öyrən (app-yükləmə) ── */}
+        <Reveal className="pb-14 sm:pb-20">
+          <div className="grid items-center gap-8 rounded-3xl border border-line bg-gradient-to-br from-brand/10 to-accent/5 p-8 sm:p-12 lg:grid-cols-2">
+            <div className="text-center lg:text-left">
+              <h2 className="text-3xl font-extrabold text-fg sm:text-4xl">{t("home.app.title")}</h2>
+              <p className="mt-3 text-lg text-muted lg:max-w-md">{t("home.app.body")}</p>
+              <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row lg:justify-start">
+                <StoreBadge Icon={Apple} top="Download on the" bottom="App Store" soon={t("home.app.soon")} />
+                <StoreBadge Icon={Play} top="Get it on" bottom="Google Play" soon={t("home.app.soon")} />
+              </div>
+            </div>
+            <div className="flex justify-center">
+              <div className="relative">
+                <div className="flex h-64 w-40 items-center justify-center rounded-[2.2rem] border-4 border-fg/80 bg-panel shadow-2xl">
+                  <Mascot size={110} mood="celebrate" />
+                </div>
+                <span className="absolute -right-3 -top-3 rounded-2xl bg-brand px-3 py-1.5 text-sm font-extrabold text-white shadow-lg">
+                  <Smartphone size={16} className="inline" /> PWA
+                </span>
+              </div>
+            </div>
+          </div>
+        </Reveal>
+
         {/* ── Necə işləyir ── */}
         <Reveal className="pb-14 sm:pb-20">
           <SectionHead title={t("home.how.title")} />
@@ -371,6 +398,32 @@ function FeatureChip({
       </span>
       <span className="text-sm font-bold text-fg">{label}</span>
     </motion.div>
+  );
+}
+
+// App Store / Google Play badge (rəsmi tətbiq hələ yoxdur → "Tezliklə").
+function StoreBadge({
+  Icon,
+  top,
+  bottom,
+  soon,
+}: {
+  Icon: React.ComponentType<{ size?: number; className?: string }>;
+  top: string;
+  bottom: string;
+  soon: string;
+}) {
+  return (
+    <div className="relative flex cursor-default items-center gap-3 rounded-2xl bg-fg px-5 py-2.5 text-ink opacity-90">
+      <Icon size={26} />
+      <span className="text-left leading-tight">
+        <span className="block text-[10px] uppercase tracking-wide opacity-70">{top}</span>
+        <span className="block text-base font-extrabold">{bottom}</span>
+      </span>
+      <span className="absolute -right-2 -top-2 rounded-full bg-brand px-2 py-0.5 text-[9px] font-extrabold uppercase text-white shadow">
+        {soon}
+      </span>
+    </div>
   );
 }
 

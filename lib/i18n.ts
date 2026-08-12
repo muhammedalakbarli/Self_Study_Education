@@ -644,6 +644,13 @@ const DICT: Dict = {
   "home.feat.badge": { az: "Nişan və mükafat", en: "Badges & rewards", ru: "Значки и награды" },
 
   // ── Landing: necə işləyir ──
+  "home.app.title": { az: "İstənilən yerdə öyrən", en: "Learn anytime, anywhere", ru: "Учись где угодно" },
+  "home.app.body": {
+    az: "Imparo brauzerdə işləyir və telefonda tətbiq kimi (PWA) quraşdırıla bilər. Native iOS/Android tətbiqi tezliklə.",
+    en: "Imparo works in the browser and installs as an app on your phone (PWA). Native iOS/Android apps coming soon.",
+    ru: "Imparo работает в браузере и устанавливается как приложение на телефон (PWA). Нативные приложения iOS/Android скоро.",
+  },
+  "home.app.soon": { az: "Tezliklə", en: "Coming soon", ru: "Скоро" },
   "home.how.title": { az: "Necə işləyir?", en: "How it works", ru: "Как это работает" },
   "home.how.s1.t": { az: "Hesab yarat", en: "Create an account", ru: "Создай аккаунт" },
   "home.how.s1.d": {
