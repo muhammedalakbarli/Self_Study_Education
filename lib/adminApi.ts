@@ -353,3 +353,44 @@ export async function adminDeleteAnnouncement(id: string): Promise<Res> {
   const { error } = await createClient().rpc("admin_delete_announcement", { p_id: id });
   return { ok: !error, error: error?.message };
 }
+
+// ── Müəllim təsdiqi (Duolingo for Schools kimi) ──
+export interface AdminTeacherRequest {
+  user_id: string;
+  email: string;
+  name: string;
+  status: string;
+  note: string | null;
+  created_at: string;
+}
+export interface AdminTeacher {
+  user_id: string;
+  email: string;
+  name: string;
+  approved_at: string;
+  classes: number;
+}
+export async function adminListTeacherRequests(): Promise<AdminTeacherRequest[]> {
+  try {
+    const { data } = await createClient().rpc("admin_list_teacher_requests");
+    return (data as AdminTeacherRequest[]) ?? [];
+  } catch { return []; }
+}
+export async function adminListTeachers(): Promise<AdminTeacher[]> {
+  try {
+    const { data } = await createClient().rpc("admin_list_teachers");
+    return (data as AdminTeacher[]) ?? [];
+  } catch { return []; }
+}
+export async function adminApproveTeacher(uid: string): Promise<Res> {
+  const { error } = await createClient().rpc("admin_approve_teacher", { p_uid: uid });
+  return { ok: !error, error: error?.message };
+}
+export async function adminRejectTeacher(uid: string): Promise<Res> {
+  const { error } = await createClient().rpc("admin_reject_teacher", { p_uid: uid });
+  return { ok: !error, error: error?.message };
+}
+export async function adminRevokeTeacher(uid: string): Promise<Res> {
+  const { error } = await createClient().rpc("admin_revoke_teacher", { p_uid: uid });
+  return { ok: !error, error: error?.message };
+}

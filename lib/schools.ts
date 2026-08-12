@@ -49,6 +49,17 @@ async function rpc<T>(fn: string, args?: Record<string, unknown>): Promise<T> {
   return data as T;
 }
 
+// Müəllim qapısı (təsdiq sistemi)
+export type TeacherRequestStatus = "none" | "pending" | "approved" | "rejected";
+export interface TeacherStatus {
+  is_teacher: boolean;
+  request_status: TeacherRequestStatus;
+}
+export const myTeacherStatus = () =>
+  rpc<TeacherStatus>("my_teacher_status").catch(() => ({ is_teacher: false, request_status: "none" as const }));
+export const requestTeacher = (note = "") =>
+  rpc<void>("request_teacher", { p_note: note });
+
 // Müəllim
 export function createClass(name: string, subjectSlug: string, grade: number) {
   return rpc<TeacherClass[]>("create_class", {
