@@ -92,72 +92,64 @@ export default function LandingPage() {
       </header>
 
       <main className="relative z-10 mx-auto max-w-6xl px-5">
-        {/* ── Hero ── */}
+        {/* ── Hero (Duolingo üslubu — böyük mərkəzi) ── */}
         <motion.section
           variants={stagger}
           initial="hidden"
           animate="show"
-          className="grid items-center gap-10 py-12 sm:py-20 lg:grid-cols-2"
+          className="flex flex-col items-center py-14 text-center sm:py-24"
         >
-          {/* Ulduz */}
-          <motion.div variants={fadeUp} className="order-1 flex justify-center lg:order-2">
-            <div className="relative flex items-center justify-center py-4">
-              {/* Dekorativ dairə — ARXA fonda (mütləq), mascotu məhdudlaşdırmır/kəsmir */}
-              <span
-                className="pointer-events-none absolute left-1/2 top-1/2 aspect-square w-60 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-brand/20 to-accent/15 sm:w-72"
-                aria-hidden
-              />
-              {/* radial işıq */}
-              <span className="pointer-events-none absolute left-1/2 top-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand/10 blur-2xl sm:h-48 sm:w-48" aria-hidden />
-              {/* Mascot — normal axında, tam görünür (dairənin üstündə) */}
-              <Mascot size={210} mood="wave" />
-              {/* orbitləyən qığılcımlar */}
-              <span className="twinkle pointer-events-none absolute left-6 top-10 text-amber-300" aria-hidden>
-                <Sparkles size={22} fill="currentColor" strokeWidth={0} />
-              </span>
-              <span
-                className="twinkle pointer-events-none absolute bottom-12 right-8 text-amber-300"
-                style={{ animationDelay: "1s" }}
-                aria-hidden
-              >
-                <Sparkles size={16} fill="currentColor" strokeWidth={0} />
-              </span>
-              <span className="xp-pop absolute left-2 top-6 rounded-2xl bg-accent px-3 py-1.5 text-sm font-extrabold text-white shadow-lg sm:left-0">
-                +10 XP
-              </span>
-              <span className="absolute bottom-8 right-1 rounded-2xl bg-brand px-3 py-1.5 text-sm font-extrabold text-white shadow-lg sm:right-0">
-                {t("home.aferin")}
-              </span>
-            </div>
+          {/* Mascot — böyük, mərkəzdə, dekorativ dairə arxada */}
+          <motion.div variants={fadeUp} className="relative flex items-center justify-center">
+            <span
+              className="pointer-events-none absolute left-1/2 top-1/2 aspect-square w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-brand/20 to-accent/15 sm:w-96"
+              aria-hidden
+            />
+            <span className="pointer-events-none absolute left-1/2 top-1/2 h-52 w-52 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand/10 blur-2xl sm:h-64 sm:w-64" aria-hidden />
+            <Mascot size={260} mood="wave" />
+            <span className="twinkle pointer-events-none absolute left-4 top-8 text-amber-300 sm:left-0" aria-hidden>
+              <Sparkles size={24} fill="currentColor" strokeWidth={0} />
+            </span>
+            <span className="twinkle pointer-events-none absolute bottom-10 right-4 text-amber-300 sm:right-0" style={{ animationDelay: "1s" }} aria-hidden>
+              <Sparkles size={18} fill="currentColor" strokeWidth={0} />
+            </span>
+            <span className="xp-pop absolute left-0 top-10 rounded-2xl bg-accent px-3 py-1.5 text-sm font-extrabold text-white shadow-lg">
+              +10 XP
+            </span>
+            <span className="absolute bottom-12 right-0 rounded-2xl bg-brand px-3 py-1.5 text-sm font-extrabold text-white shadow-lg">
+              {t("home.aferin")}
+            </span>
           </motion.div>
 
-          {/* Mətn + CTA */}
-          <motion.div variants={fadeUp} className="order-2 text-center lg:order-1 lg:text-left">
-            <span className="inline-block rounded-full bg-brand/10 px-4 py-1.5 text-sm font-bold text-brand ring-1 ring-brand/20">
-              {t("home.badge")}
+          {/* Mesaj */}
+          <motion.h1
+            variants={fadeUp}
+            className="mt-10 max-w-3xl text-4xl font-extrabold leading-tight text-fg sm:text-6xl"
+          >
+            {t("home.hero1")}
+            <span className="gradient-pan bg-gradient-to-r from-brand to-accent bg-clip-text text-transparent">
+              {t("home.hero2")}
             </span>
-            <h1 className="mt-5 text-4xl font-extrabold leading-tight text-fg sm:text-5xl lg:text-6xl">
-              {t("home.hero1")}
-              <span className="gradient-pan bg-gradient-to-r from-brand to-accent bg-clip-text text-transparent">
-                {t("home.hero2")}
-              </span>
-              {t("home.hero3")}
-            </h1>
-            <p className="mt-5 text-lg text-muted lg:max-w-md">{t("home.heroBody")}</p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
-              <Link
-                href="/signup"
-                className="rounded-2xl bg-brand px-8 py-4 text-lg font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark"
-              >
-                {t("home.ctaStart")}
-              </Link>
-              <Link
-                href="/login"
-                className="rounded-2xl border-2 border-line bg-panel px-8 py-4 text-lg font-extrabold text-fg btn-pop btn-pop-ghost hover:border-brand"
-              >
-                {t("home.haveAccount")}
-              </Link>
-            </div>
+            {t("home.hero3")}
+          </motion.h1>
+          <motion.p variants={fadeUp} className="mt-5 max-w-xl text-lg text-muted sm:text-xl">
+            {t("home.heroBody")}
+          </motion.p>
+
+          {/* CTA — mərkəzi, geniş (Duolingo kimi) */}
+          <motion.div variants={fadeUp} className="mt-9 flex w-full max-w-sm flex-col gap-3">
+            <Link
+              href="/signup"
+              className="rounded-2xl bg-brand px-8 py-4 text-lg font-extrabold uppercase tracking-wide text-white shadow-lg shadow-brand/25 btn-pop hover:bg-brand-dark"
+            >
+              {t("home.ctaStart")}
+            </Link>
+            <Link
+              href="/login"
+              className="rounded-2xl border-2 border-line bg-panel px-8 py-4 text-lg font-extrabold uppercase tracking-wide text-fg btn-pop btn-pop-ghost hover:border-brand"
+            >
+              {t("home.haveAccount")}
+            </Link>
           </motion.div>
         </motion.section>
 
