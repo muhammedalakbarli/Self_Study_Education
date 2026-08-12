@@ -463,3 +463,12 @@ h1, h2, h3 {
 .no-anim .gradient-pan {
   animation: none !important;
 }
+
+/* Zefi mascotu — tünd rejimdə tülkünün tünd konturu qaranlıq fonla qarışıb "üzü kəsik"
+   görünürdü. İşıqlı rim (drop-shadow) siluetin ətrafına incə krem işıq verir → hər
+   səhifədə/bölmədə tülkü tam seçilir. İşıqlı rejimə təsir yoxdur. */
+html.dark .zefi-mascot-img {
+  filter:
+    drop-shadow(0 0 1px rgba(255, 246, 230, 0.75))
+    drop-shadow(0 0 5px rgba(255, 246, 230, 0.45));
+}

@@ -37,6 +37,7 @@ export default function ZefiMascot({
         alt="Zefi"
         width={size}
         height={size}
+        className="zefi-mascot-img"
         style={{ width: size, height: size, objectFit: "contain" }}
         draggable={false}
       />
