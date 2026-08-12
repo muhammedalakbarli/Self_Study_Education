@@ -21,6 +21,8 @@ end; $$;
 grant execute on function bump_active_seconds(int) to authenticated;
 
 -- ── İstifadəçi cədvəli (botsuz) — qoşulma, SON GİRİŞ və KEÇİRİLƏN VAXT əlavə olundu ──
+-- Qaytarılan sütunlar dəyişdiyi üçün əvvəlcə köhnə funksiyanı sil (CREATE OR REPLACE bunu edə bilmir).
+drop function if exists admin_users(text, int, int);
 create or replace function admin_users(p_search text default '', p_limit int default 100, p_offset int default 0)
 returns table(
   user_id uuid, email text, name text, created_at timestamptz,
