@@ -88,8 +88,8 @@ export default function SignupPage() {
         </Link>
 
         <div>
-          <div className="mb-5">
-            <Mascot size={76} mood="celebrate" />
+          <div className="mb-6 flex justify-center">
+            <Mascot size={230} mood="celebrate" />
           </div>
           <h2 className="max-w-sm text-4xl font-extrabold leading-tight">
             {t("auth.signup.brandHeading")}

@@ -11,7 +11,7 @@ import { signInWithEmail, getCurrentUser } from "@/lib/auth";
 import { useT } from "@/lib/i18n";
 import Logo from "@/components/Logo";
 import GoogleButton from "@/components/GoogleButton";
-import Mascot from "@/components/Mascot";
+import ZefiMascot from "@/components/ZefiMascot";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -61,8 +61,8 @@ export default function LoginPage() {
         </Link>
 
         <div>
-          <div className="mb-5">
-            <Mascot size={76} />
+          <div className="mb-6 flex justify-center">
+            <ZefiMascot emotion="learning" size={230} />
           </div>
           <h2 className="max-w-sm text-4xl font-extrabold leading-tight">
             {t("auth.login.brandHeading")}
