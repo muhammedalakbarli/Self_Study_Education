@@ -275,6 +275,9 @@ export default function DashboardPage() {
                 </div>
               </div>
             )}
+
+            {/* Footer — Duolingo üslubu, günlük görevlərin altında (yalnız desktop) */}
+            <DashboardFooter />
           </aside>
         </div>
 
@@ -416,5 +419,35 @@ function StatMini({
     </button>
   ) : (
     <div className={cls}>{inner}</div>
+  );
+}
+
+// Dashboard footer — Duolingo üslubu link zolağı (sağ rail sonunda, desktop).
+function DashboardFooter() {
+  const links: { label: string; href: string }[] = [
+    { label: "Haqqımızda", href: "/" },
+    { label: "Bloq", href: "/blog" },
+    { label: "Mağaza", href: "/magaza" },
+    { label: "Səmərəlilik", href: "/semerelilik" },
+    { label: "Karyera", href: "/karyera" },
+    { label: "İnvestorlar", href: "/investorlar" },
+    { label: "Şərtlər", href: "/sertler" },
+    { label: "Məxfilik", href: "/mexfilik" },
+  ];
+  return (
+    <footer className="px-1 pt-2">
+      <nav className="flex flex-wrap gap-x-4 gap-y-1.5">
+        {links.map((l) => (
+          <Link
+            key={l.href}
+            href={l.href}
+            className="text-[11px] font-bold uppercase tracking-wide text-muted transition hover:text-fg"
+          >
+            {l.label}
+          </Link>
+        ))}
+      </nav>
+      <p className="mt-3 text-[11px] font-semibold text-muted">© {new Date().getFullYear()} Imparo</p>
+    </footer>
   );
 }
