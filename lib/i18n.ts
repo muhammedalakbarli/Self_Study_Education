@@ -928,6 +928,56 @@ const DICT: Dict = {
   "legal.updated": { az: "Son yenilənmə: 12 avqust 2026", en: "Last updated: August 12, 2026", ru: "Обновлено: 12 августа 2026" },
   "legal.contactLine": { az: "Sualın var? Bizə yaz:", en: "Have a question? Write to us:", ru: "Есть вопрос? Напишите нам:" },
 
+  // ── Info səhifələri (Bloq, Karyera, İnvestorlar, Səmərəlilik) ──
+  "info.home": { az: "Ana səhifə", en: "Home", ru: "Главная" },
+  "info.contactBtn": { az: "Bizə yaz", en: "Write to us", ru: "Написать нам" },
+
+  "blog.title": { az: "Bloq", en: "Blog", ru: "Блог" },
+  "blog.body": {
+    az: "Tezliklə burada təhsil, öyrənmə üsulları və Imparo yenilikləri haqqında məqalələr paylaşacağıq. İzləməkdə qal!",
+    en: "Soon we’ll share articles here about education, learning methods and Imparo updates. Stay tuned!",
+    ru: "Скоро мы будем публиковать здесь статьи об образовании, методах обучения и новостях Imparo. Следите за обновлениями!",
+  },
+
+  "careers.title": { az: "Karyera", en: "Careers", ru: "Карьера" },
+  "careers.body": {
+    az: "Imparo Azərbaycan təhsilini dəyişmək istəyən kiçik, həvəsli komandadır. Hazırda rəsmi açıq vakansiyamız olmasa da, missiyamıza inanırsansa və töhfə vermək istəyirsənsə — bizə yaz. Müəllim, dizayner, developer və məzmun yaradıcılarını həmişə eşitməyə açıqıq.",
+    en: "Imparo is a small, passionate team on a mission to transform education in Azerbaijan. We may not have formal openings right now, but if you believe in our mission and want to contribute — write to us. We’re always open to teachers, designers, developers and content creators.",
+    ru: "Imparo — небольшая увлечённая команда, меняющая образование в Азербайджане. Сейчас у нас нет формальных вакансий, но если вы разделяете нашу миссию и хотите внести вклад — напишите нам. Мы всегда рады учителям, дизайнерам, разработчикам и авторам контента.",
+  },
+
+  "investors.title": { az: "İnvestorlar", en: "Investors", ru: "Инвесторы" },
+  "investors.body": {
+    az: "Imparo Azərbaycan bazarında böyüyən oyunlaşdırılmış təhsil platformasıdır — həm B2C (şagird/valideyn), həm B2B (məktəb/müəllim) istiqamətləri ilə. Əməkdaşlıq, sərmayə və ya strateji tərəfdaşlıq marağınız varsa, bizimlə əlaqə saxlayın.",
+    en: "Imparo is a growing gamified education platform in the Azerbaijani market — with both B2C (students/parents) and B2B (schools/teachers) directions. If you’re interested in collaboration, investment or strategic partnership, get in touch.",
+    ru: "Imparo — растущая геймифицированная образовательная платформа на азербайджанском рынке — с направлениями B2C (ученики/родители) и B2B (школы/учителя). Если вам интересно сотрудничество, инвестиции или стратегическое партнёрство — свяжитесь с нами.",
+  },
+
+  "efficacy.title": { az: "Səmərəlilik", en: "Efficacy", ru: "Эффективность" },
+  "efficacy.intro": {
+    az: "Imparo təsadüfi qurulmayıb — hər elementi öyrənmənin işləməsi üçün düşünülüb. Yanaşmamızın əsasında dayanan üç prinsip:",
+    en: "Imparo isn’t built at random — every element is designed to make learning work. Three principles behind our approach:",
+    ru: "Imparo построен не случайно — каждый элемент создан, чтобы обучение работало. Три принципа нашего подхода:",
+  },
+  "efficacy.p1t": { az: "Aralıqlı təkrar (SRS)", en: "Spaced repetition (SRS)", ru: "Интервальное повторение (SRS)" },
+  "efficacy.p1b": {
+    az: "Səhv etdiyin suallar düzgün cavablanana qədər təkrarlanır və vaxt keçdikcə yenidən qarşına çıxır — beləcə bilik uzunmüddətli yaddaşa köçür.",
+    en: "Questions you get wrong repeat until answered correctly and resurface over time — so knowledge moves into long-term memory.",
+    ru: "Вопросы, в которых вы ошиблись, повторяются до верного ответа и возвращаются со временем — так знания переходят в долговременную память.",
+  },
+  "efficacy.p2t": { az: "Oyunlaşdırma", en: "Gamification", ru: "Геймификация" },
+  "efficacy.p2b": {
+    az: "XP, seriya, liqa və mükafatlar motivasiyanı yüksək saxlayır və gündəlik öyrənmə vərdişi formalaşdırır.",
+    en: "XP, streaks, leagues and rewards keep motivation high and build a daily learning habit.",
+    ru: "XP, серии, лиги и награды поддерживают мотивацию и формируют ежедневную привычку к учёбе.",
+  },
+  "efficacy.p3t": { az: "Kurikuluma uyğunluq", en: "Curriculum alignment", ru: "Соответствие программе" },
+  "efficacy.p3b": {
+    az: "Bütün məzmun Azərbaycan təhsil proqramına (1–8 sinif) uyğundur — məktəbdə öyrənilənlə birbaşa üst-üstə düşür.",
+    en: "All content aligns with the Azerbaijani curriculum (grades 1–8) — directly matching what’s learned at school.",
+    ru: "Весь контент соответствует азербайджанской программе (1–8 классы) — напрямую совпадает с тем, что учат в школе.",
+  },
+
   // ── Şərtlər ──
   "terms.title": { az: "İstifadə şərtləri", en: "Terms of Service", ru: "Условия использования" },
   "terms.s1.t": { az: "1. Şərtlərin qəbulu", en: "1. Acceptance of terms", ru: "1. Принятие условий" },
