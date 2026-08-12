@@ -29,6 +29,7 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
     pathname === "/login" ||
     pathname === "/signup" ||
     pathname === "/onboarding" ||
+    pathname === "/haqqimizda" ||
     pathname.startsWith("/lessons/") ||
     pathname.startsWith("/u/") ||
     pathname.startsWith("/dost/") ||
