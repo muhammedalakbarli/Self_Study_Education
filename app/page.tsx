@@ -27,6 +27,7 @@ import { useCountUp } from "@/lib/useCountUp";
 import Logo from "@/components/Logo";
 import Mascot from "@/components/Mascot";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import SiteFooter from "@/components/SiteFooter";
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 26 },
@@ -157,29 +158,6 @@ export default function LandingPage() {
           <StatCard value={totalTasks} suffix="+" label={t("home.stat.tasks")} />
         </Reveal>
 
-        {/* ── Fənn seçici zolağı (Duolingo dil-seçici üslubu) ── */}
-        <Reveal className="py-14 sm:py-20">
-          <SectionHead title={t("home.subjects.title")} body={t("home.subjects.body")} />
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            {[...subjects]
-              .sort((a, b) => a.grade - b.grade)
-              .map((s) => (
-                <Link
-                  key={s.slug}
-                  href="/signup"
-                  className="group flex items-center gap-3 rounded-2xl border-2 border-line bg-panel px-5 py-3 transition hover:-translate-y-0.5 hover:border-brand hover:bg-panel-2"
-                >
-                  <span className="text-2xl leading-none">{s.icon}</span>
-                  <span className="text-left leading-tight">
-                    <span className="block font-extrabold text-fg group-hover:text-brand">{s.name}</span>
-                    <span className="block text-xs font-bold uppercase tracking-wide text-muted">
-                      {s.grade}-{t("home.subjects.grade")}
-                    </span>
-                  </span>
-                </Link>
-              ))}
-          </div>
-        </Reveal>
 
         {/* ── Niyə Imparo — növbələşən bölmələr ── */}
         <section className="space-y-16 py-6 sm:space-y-24">
@@ -261,20 +239,8 @@ export default function LandingPage() {
         </Reveal>
       </main>
 
-      {/* Alt */}
-      <footer className="relative z-10 mx-auto max-w-6xl px-5 py-8 text-center text-sm text-muted">
-        <div className="flex items-center justify-center gap-2">
-          <Logo size={22} />
-          <span className="font-bold text-fg">Imparo</span>
-        </div>
-        <p className="mt-2">{t("auth.tagline")}</p>
-        <nav className="mt-4 flex flex-wrap justify-center gap-x-5 gap-y-2 text-xs font-bold uppercase tracking-wide">
-          <Link href="/haqqimizda" className="text-muted transition hover:text-brand">{t("ft.about")}</Link>
-          <Link href="/plus" className="text-muted transition hover:text-brand">Imparo Plus</Link>
-          <Link href="/signup" className="text-muted transition hover:text-brand">{t("nav.schools")}</Link>
-          <Link href="/yardim" className="text-muted transition hover:text-brand">{t("ft.help")}</Link>
-        </nav>
-      </footer>
+      {/* Alt — Duolingo üslubu böyük footer */}
+      <SiteFooter />
     </div>
   );
 }
