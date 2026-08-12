@@ -211,11 +211,16 @@ function NodeLabel({ node }: { node: PathNode }) {
 }
 
 // Ulduz yolun yanında kiçik platformada (Duolingo owl kimi).
+// Ölçü dərs dairələrinin (82px) çəkisinə uyğun — görkəmli və balanslı.
+const MASCOT_SIZE = 86;
+// Mascotun düyün mərkəzindən üfüqi aralığı — qonşu (kilidli) bölmə ilə aydın boşluq.
+const MASCOT_GAP = 130;
+
 function MascotPerch() {
   return (
     <div className="pointer-events-none relative flex flex-col items-center">
-      <Mascot size={64} />
-      <span className="mt-1 h-2.5 w-14 rounded-[50%] bg-black/25 blur-[2px]" aria-hidden />
+      <Mascot size={MASCOT_SIZE} />
+      <span className="mt-1 h-3 w-[72px] rounded-[50%] bg-black/25 blur-[3px]" aria-hidden />
     </div>
   );
 }
@@ -288,7 +293,7 @@ export default function LearningPath({ nodes }: { nodes: PathNode[] }) {
           {showMascot && (
             <div
               className="absolute top-1/2 z-10 -translate-y-1/2"
-              style={{ [mascotSide < 0 ? "right" : "left"]: "108px" }}
+              style={{ [mascotSide < 0 ? "right" : "left"]: `${MASCOT_GAP}px` }}
             >
               <MascotPerch />
             </div>
