@@ -2,6 +2,7 @@
 // "@/lib/content" importları bu index-i istifadə edir (əvvəlki content.ts əvəzi).
 
 import type { Subject, Task } from "../types";
+import { balanceSubjects } from "./balance";
 import { math1 } from "./math1";
 import { azerbaijani1 } from "./azerbaijani1";
 import { english1 } from "./english1";
@@ -29,7 +30,9 @@ import { english8 } from "./english8";
 
 // 5-ci sinif fənləri + 6-cı sinif fənləri. App dashboard-da istifadəçinin
 // sinfinə (user_metadata.grade) görə süzür (bax lib/grade.ts).
-export const subjects: Subject[] = [
+// Cavab mövqeyi balanslaşdırılır — düzgün cavab artıq həmişə birinci variant deyil
+// (deterministik, task.id-ə görə sabit). Bax lib/content/balance.ts.
+export const subjects: Subject[] = balanceSubjects([
   math1, azerbaijani1, english1,
   math2, azerbaijani2, english2,
   math3, azerbaijani3, english3,
@@ -38,7 +41,7 @@ export const subjects: Subject[] = [
   math6, azerbaijani6, english6,
   math7, azerbaijani7, english7,
   math8, azerbaijani8, english8,
-];
+]);
 
 export function getSubject(slug: string): Subject | undefined {
   return subjects.find((s) => s.slug === slug);
