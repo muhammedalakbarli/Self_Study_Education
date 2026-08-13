@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 // robots.txt — axtarış motorlarına indeksləşdirmə qaydaları + sitemap ünvanı.
-const SITE_URL = "https://self-study-education.vercel.app";
+const SITE_URL = "https://imparo.pages.dev";
 
 export default function robots(): MetadataRoute.Robots {
   return {

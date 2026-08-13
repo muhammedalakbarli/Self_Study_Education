@@ -11,6 +11,9 @@
   "observability": {
     "enabled": true
   },
+  "triggers": {
+    "crons": ["0 16 * * *"]
+  },
   "env": {
     "production": {
       "routes": [
@@ -24,5 +27,4 @@
   // Qeyd: mühit dəyişənləri (SUPABASE_SERVICE_ROLE_KEY, LEMONSQUEEZY_WEBHOOK_SECRET,
   // CRON_SECRET, VAPID_*, NEXT_PUBLIC_*) Cloudflare dashboard → Workers → Settings →
   // Variables/Secrets bölməsində əlavə olunur (kod-da hardcode YOX).
-  // Cron (axşam xatırlatma) sonra "triggers.crons" + scheduled handler ilə bağlanacaq.
 }
