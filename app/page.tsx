@@ -99,11 +99,12 @@ export default function LandingPage() {
         >
           {/* Mascot — böyük, mərkəzdə, dekorativ dairə arxada */}
           <motion.div variants={fadeUp} className="relative flex items-center justify-center">
-            {/* Yumşaq isti işıq — sərt kənarsız, hər iki rejimdə təmiz (boz ləkə yox) */}
+            {/* Dekorativ dairə — Zefi içində (işıqlı mod dizaynı) */}
             <span
-              className="pointer-events-none absolute left-1/2 top-1/2 h-[20rem] w-[20rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand/15 blur-[70px] sm:h-[24rem] sm:w-[24rem]"
+              className="pointer-events-none absolute left-1/2 top-1/2 aspect-square w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-brand/20 to-accent/15 sm:w-96"
               aria-hidden
             />
+            <span className="pointer-events-none absolute left-1/2 top-1/2 h-52 w-52 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand/10 blur-2xl sm:h-64 sm:w-64" aria-hidden />
             <Mascot size={260} mood="wave" />
             <span className="twinkle pointer-events-none absolute left-4 top-8 text-amber-300 sm:left-0" aria-hidden>
               <Sparkles size={24} fill="currentColor" strokeWidth={0} />
