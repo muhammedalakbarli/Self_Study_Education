@@ -11,13 +11,16 @@ export type ZefiEmotion =
   | "worried"
   | "thinking";
 
+// ?v=3 — keş-bust: təmizlənmiş asetlər üçün brauzer/SW köhnə keşlənmiş (tozlu/kəsik) PNG-ni
+// atıb təzəsini çəksin. Asetlər dəyişəndə bu rəqəmi artır.
+const V = "3";
 const SRC: Record<ZefiEmotion, string> = {
-  welcome: "/assets/images/zefi/zefi_welcome.png",
-  happy: "/assets/images/zefi/zefi_happy.png",
-  learning: "/assets/images/zefi/zefi_learning.png",
-  celebrating: "/assets/images/zefi/zefi_celebrating.png",
-  worried: "/assets/images/zefi/zefi_worried.png",
-  thinking: "/assets/images/zefi/zefi_thinking.png",
+  welcome: `/assets/images/zefi/zefi_welcome.png?v=${V}`,
+  happy: `/assets/images/zefi/zefi_happy.png?v=${V}`,
+  learning: `/assets/images/zefi/zefi_learning.png?v=${V}`,
+  celebrating: `/assets/images/zefi/zefi_celebrating.png?v=${V}`,
+  worried: `/assets/images/zefi/zefi_worried.png?v=${V}`,
+  thinking: `/assets/images/zefi/zefi_thinking.png?v=${V}`,
 };
 
 export default function ZefiMascot({
