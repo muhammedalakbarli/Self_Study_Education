@@ -463,3 +463,16 @@ h1, h2, h3 {
 .no-anim .gradient-pan {
   animation: none !important;
 }
+
+/* Landing (ana səhifə) HƏMİŞƏ işıqlı rejimdə — tünd rejim seçilsə belə bu subtree
+   işıqlı tema dəyişənlərini işlədir (marketing səhifəsi üçün tələb). */
+.force-light {
+  --color-ink: #fff4df;
+  --color-panel: #fffaf0;
+  --color-panel-2: #fdecd0;
+  --color-line: #f0ddbf;
+  --color-muted: #8a7461;
+  --color-fg: #3b2723;
+  --color-brand-soft: #c2571f;
+  color-scheme: light;
+}

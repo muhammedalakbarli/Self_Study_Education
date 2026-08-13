@@ -65,7 +65,7 @@ export default function LandingPage() {
   );
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-ink">
+    <div className="force-light relative min-h-screen overflow-hidden bg-ink">
       <Blobs />
 
       {/* Naviqasiya (sticky, blur) */}
