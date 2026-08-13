@@ -227,8 +227,16 @@ const PERCH_EMOTIONS: ZefiEmotion[] = [
 function MascotPerch({ emotion }: { emotion: ZefiEmotion }) {
   return (
     <div className="pointer-events-none relative flex flex-col items-center">
-      <ZefiMascot emotion={emotion} size={MASCOT_SIZE} />
-      <span className="mt-1 h-3 w-20 rounded-[50%] bg-black/25 blur-[3px]" aria-hidden />
+      {/* Açıq platforma diski — YALNIZ tünd rejim: tülkünün tünd konturu qaranlıq path fonu ilə
+          qarışmasın (işıqlı rejimdə görünmür, glow deyil — dəqiq forma). */}
+      <span
+        className="absolute left-1/2 top-[42%] h-[82%] w-[82%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-transparent dark:bg-[#fdf1dc]"
+        aria-hidden
+      />
+      <span className="relative z-10">
+        <ZefiMascot emotion={emotion} size={MASCOT_SIZE} />
+      </span>
+      <span className="relative z-10 mt-1 h-3 w-20 rounded-[50%] bg-black/25 blur-[3px]" aria-hidden />
     </div>
   );
 }
