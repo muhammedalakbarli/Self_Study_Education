@@ -252,5 +252,107 @@ export const azerbaijani1: Subject = {
         },
       ],
     },
+    // ═══════════════ 7. Qalın və incə saitlər ═══════════════
+    {
+      id: "az1-qalinince",
+      title: "Qalın və incə saitlər",
+      description: "Saitlərin qalın (a, ı, o, u) və incə (e, ə, i, ö, ü) qruplara ayrılması.",
+      lessons: [
+        {
+          id: "az1-qalinince-l1",
+          title: "Qalın və incə saitlər",
+          intro: "Saitlər iki qrupa ayrılır: qalın və incə.",
+          sections: [
+            { heading: "İki qrup", body: "Qalın saitlər: a, ı, o, u. İncə saitlər: e, ə, i, ö, ü. Sait 9-dur: 4 qalın, 5 incə." },
+          ],
+          tasks: [
+            { id: "az1-qalinince-l1-t1", type: "multiple_choice", prompt: "Hansı sırada yalnız QALIN saitlər var?", options: ["e, ə, i", "a, ı, o", "ö, ü, e", "i, ö, ü"], correctIndex: 1, xp: 10 },
+            { id: "az1-qalinince-l1-t2", type: "multiple_choice", prompt: "Hansı sırada yalnız İNCƏ saitlər var?", options: ["a, o, u", "ı, a, o", "e, ə, i", "a, ı, u"], correctIndex: 2, xp: 10 },
+            { id: "az1-qalinince-l1-t3", type: "multiple_choice", prompt: "'a' saiti hansı qrupdandır?", options: ["incə", "qalın", "samit", "heç biri"], correctIndex: 1, xp: 10 },
+            { id: "az1-qalinince-l1-t4", type: "multiple_choice", prompt: "'ə' saiti hansı qrupdandır?", options: ["qalın", "samit", "incə", "heç biri"], correctIndex: 2, xp: 10 },
+            { id: "az1-qalinince-l1-t5", type: "multiple_choice", prompt: "'o' saiti hansı qrupdandır?", options: ["qalın", "incə", "samit", "rəqəm"], correctIndex: 0, xp: 10 },
+            { id: "az1-qalinince-l1-t6", type: "multiple_choice", prompt: "'ü' saiti hansı qrupdandır?", options: ["qalın", "incə", "samit", "heç biri"], correctIndex: 1, xp: 10 },
+            { id: "az1-qalinince-l1-t7", type: "numeric", prompt: "Neçə qalın sait var?", answer: 4, xp: 10 },
+            { id: "az1-qalinince-l1-t8", type: "numeric", prompt: "Neçə incə sait var?", answer: 5, xp: 10 },
+            { id: "az1-qalinince-l1-t9", type: "multiple_choice", prompt: "'alma' sözündəki saitlər (a, a) hansı qrupdandır?", options: ["incə", "qalın", "qarışıq", "samit"], correctIndex: 1, xp: 10 },
+            { id: "az1-qalinince-l1-t10", type: "multiple_choice", prompt: "'çiçək' sözündəki saitlər (i, ə) hansı qrupdandır?", options: ["qalın", "incə", "samit", "rəqəm"], correctIndex: 1, xp: 10 },
+          ],
+          bonusTasks: [
+            { id: "az1-qalinince-l1-b1", type: "multiple_choice", prompt: "'oxu' sözündəki saitlər (o, u) hansı qrupdandır?", options: ["qalın", "incə", "qarışıq", "yoxdur"], correctIndex: 0, xp: 15 },
+            { id: "az1-qalinince-l1-b2", type: "multiple_choice", prompt: "Hansı söz yalnız incə saitlidir?", options: ["ana", "qapı", "sevgi", "araba"], correctIndex: 2, xp: 15 },
+            { id: "az1-qalinince-l1-b3", type: "numeric", prompt: "Cəmi neçə sait var?", answer: 9, xp: 15 },
+            { id: "az1-qalinince-l1-b4", type: "multiple_choice", prompt: "'ı' saiti hansı qrupdandır?", options: ["incə", "samit", "qalın", "heç biri"], correctIndex: 2, xp: 15 },
+          ],
+        },
+      ],
+    },
+    // ═══════════════ 8. Kim? Nə? Nə edir? ═══════════════
+    {
+      id: "az1-kimne",
+      title: "Kim? Nə? Nə edir?",
+      description: "Sözün mənası: canlını (kim?), əşyanı (nə?) və hərəkəti (nə edir?) bildirən sözlər.",
+      lessons: [
+        {
+          id: "az1-kimne-l1",
+          title: "Kim? Nə? Nə edir?",
+          intro: "Sözlər canlını, əşyanı və ya hərəkəti bildirir.",
+          sections: [
+            { heading: "Suallar", body: "İnsan/heyvan → 'kim?' (ana, pişik). Əşya → 'nə?' (kitab, alma). Hərəkət → 'nə edir?' (qaçır, oxuyur)." },
+          ],
+          tasks: [
+            { id: "az1-kimne-l1-t1", type: "multiple_choice", prompt: "'kitab' sözü hansı suala cavab verir?", options: ["kim?", "nə?", "nə edir?", "necə?"], correctIndex: 1, xp: 10 },
+            { id: "az1-kimne-l1-t2", type: "multiple_choice", prompt: "'ana' sözü hansı suala cavab verir?", options: ["kim?", "nə?", "nə edir?", "harada?"], correctIndex: 0, xp: 10 },
+            { id: "az1-kimne-l1-t3", type: "multiple_choice", prompt: "'qaçır' sözü hansı suala cavab verir?", options: ["kim?", "nə?", "nə edir?", "neçə?"], correctIndex: 2, xp: 10 },
+            { id: "az1-kimne-l1-t4", type: "multiple_choice", prompt: "'alma' sözü hansı suala cavab verir?", options: ["nə edir?", "kim?", "nə?", "harada?"], correctIndex: 2, xp: 10 },
+            { id: "az1-kimne-l1-t5", type: "multiple_choice", prompt: "'oxuyur' sözü hansı suala cavab verir?", options: ["nə edir?", "kim?", "nə?", "necə?"], correctIndex: 0, xp: 10 },
+            { id: "az1-kimne-l1-t6", type: "multiple_choice", prompt: "'müəllim' sözü hansı suala cavab verir?", options: ["nə?", "nə edir?", "kim?", "harada?"], correctIndex: 2, xp: 10 },
+            { id: "az1-kimne-l1-t7", type: "multiple_choice", prompt: "'qələm' sözü hansı suala cavab verir?", options: ["kim?", "nə edir?", "necə?", "nə?"], correctIndex: 3, xp: 10 },
+            { id: "az1-kimne-l1-t8", type: "multiple_choice", prompt: "'uçur' sözü hansı suala cavab verir?", options: ["nə edir?", "nə?", "kim?", "harada?"], correctIndex: 0, xp: 10 },
+            { id: "az1-kimne-l1-t9", type: "multiple_choice", prompt: "'pişik' sözü hansı suala cavab verir?", options: ["nə?", "kim?", "nə edir?", "neçə?"], correctIndex: 1, xp: 10 },
+            { id: "az1-kimne-l1-t10", type: "multiple_choice", prompt: "Hansı söz hərəkət bildirir?", options: ["ev", "gülür", "top", "su"], correctIndex: 1, xp: 10 },
+          ],
+          bonusTasks: [
+            { id: "az1-kimne-l1-b1", type: "multiple_choice", prompt: "Hansı söz əşya bildirir?", options: ["yazır", "stol", "gedir", "oynayır"], correctIndex: 1, xp: 15 },
+            { id: "az1-kimne-l1-b2", type: "multiple_choice", prompt: "Hansı söz canlı (kim?) bildirir?", options: ["daş", "quş", "kitab", "qapı"], correctIndex: 1, xp: 15 },
+            { id: "az1-kimne-l1-b3", type: "multiple_choice", prompt: "'Uşaq oynayır.' — 'oynayır' hansı suala cavabdır?", options: ["kim?", "nə?", "nə edir?", "harada?"], correctIndex: 2, xp: 15 },
+            { id: "az1-kimne-l1-b4", type: "multiple_choice", prompt: "Hansı söz hərəkət bildirmir?", options: ["qaçır", "gülür", "masa", "yeyir"], correctIndex: 2, xp: 15 },
+          ],
+        },
+      ],
+    },
+    // ═══════════════ 9. Nəzakət və danışıq ═══════════════
+    {
+      id: "az1-nezaket",
+      title: "Nəzakət və danışıq",
+      description: "Salamlaşma, təşəkkür və nəzakət sözləri — gündəlik danışıq.",
+      lessons: [
+        {
+          id: "az1-nezaket-l1",
+          title: "Nəzakət sözləri",
+          intro: "Nəzakətli olmaq üçün gözəl sözlər deyirik.",
+          sections: [
+            { heading: "Nəzakət sözləri", body: "Salam, sağ ol / təşəkkür edirəm, buyurun, zəhmət olmasa, bağışlayın, xudahafiz. Böyüklərə 'Siz' deyirik." },
+          ],
+          tasks: [
+            { id: "az1-nezaket-l1-t1", type: "multiple_choice", prompt: "Səhər görüşəndə nə deyirik?", options: ["Sabahınız xeyir", "Gecən xeyrə", "Xudahafiz", "Yox"], correctIndex: 0, xp: 10 },
+            { id: "az1-nezaket-l1-t2", type: "multiple_choice", prompt: "Kimsə sənə kömək etdi. Nə deyərsən?", options: ["Get", "Təşəkkür edirəm", "Yox", "Dur"], correctIndex: 1, xp: 10 },
+            { id: "az1-nezaket-l1-t3", type: "multiple_choice", prompt: "Nəsə xahiş edəndə nə deyirik?", options: ["Tez ol", "Ver", "Zəhmət olmasa", "Yox"], correctIndex: 2, xp: 10 },
+            { id: "az1-nezaket-l1-t4", type: "multiple_choice", prompt: "Ayrılanda nə deyirik?", options: ["Salam", "Sabahınız xeyir", "Buyurun", "Sağ ol, xudahafiz"], correctIndex: 3, xp: 10 },
+            { id: "az1-nezaket-l1-t5", type: "multiple_choice", prompt: "Səhvin üçün nə deyirsən?", options: ["Bağışlayın", "Sağ ol", "Salam", "Buyurun"], correctIndex: 0, xp: 10 },
+            { id: "az1-nezaket-l1-t6", type: "multiple_choice", prompt: "Böyüklərə necə müraciət edirik?", options: ["'sən' deyə", "'Siz' deyə", "adı ilə", "qışqıraraq"], correctIndex: 1, xp: 10 },
+            { id: "az1-nezaket-l1-t7", type: "multiple_choice", prompt: "Qonaq gələndə nə deyirik?", options: ["Get", "Xoş gəlmisiniz", "Yox", "Sonra"], correctIndex: 1, xp: 10 },
+            { id: "az1-nezaket-l1-t8", type: "multiple_choice", prompt: "Kimsə 'sağ ol' dedi. Cavabında nə deyərsən?", options: ["Dəyməz / buyurun", "Yox", "Get", "Bilmirəm"], correctIndex: 0, xp: 10 },
+            { id: "az1-nezaket-l1-t9", type: "multiple_choice", prompt: "Yeməkdən əvvəl/sonra nə demək gözəldir?", options: ["Nuş olsun / afiyət olsun", "Get", "Yox", "Sonra"], correctIndex: 0, xp: 10 },
+            { id: "az1-nezaket-l1-t10", type: "multiple_choice", prompt: "Nəzakətli danışıq necə olur?", options: ["qışqıraraq", "təhqir edərək", "sakit və hörmətlə", "gülərək"], correctIndex: 2, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "az1-nezaket-l1-b1", type: "multiple_choice", prompt: "Sinifə girəndə müəllimə nə deyirik?", options: ["Salam / Sabahınız xeyir", "Get", "Yox", "Sonra"], correctIndex: 0, xp: 15 },
+            { id: "az1-nezaket-l1-b2", type: "multiple_choice", prompt: "Kimisə narahat etdin. Nə deyirsən?", options: ["Sağ ol", "Bağışlayın", "Salam", "Buyurun"], correctIndex: 1, xp: 15 },
+            { id: "az1-nezaket-l1-b3", type: "multiple_choice", prompt: "Nəyisə təklif edəndə nə deyirik?", options: ["Buyurun", "Get", "Yox", "Tez ol"], correctIndex: 0, xp: 15 },
+            { id: "az1-nezaket-l1-b4", type: "multiple_choice", prompt: "Nəzakət sözü hansıdır?", options: ["ver", "təşəkkür edirəm", "tez ol", "dur"], correctIndex: 1, xp: 15 },
+          ],
+        },
+      ],
+    },
   ],
 };
