@@ -45,7 +45,9 @@ export default function QuestsPage() {
       <main className="mx-auto max-w-2xl px-4 py-6">
         {/* Başlıq */}
         <div className="flex items-center gap-4 rounded-3xl bg-gradient-to-r from-brand to-brand-dark p-5 text-white shadow-lg">
-          <Mascot size={64} mood={doneCount === list.length ? "celebrate" : "happy"} />
+          <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-white/95 shadow-sm">
+            <Mascot size={56} mood={doneCount === list.length ? "celebrate" : "happy"} />
+          </span>
           <div>
             <h1 className="text-xl font-extrabold">{t("quest.title")}</h1>
             <p className="text-sm text-white/85">

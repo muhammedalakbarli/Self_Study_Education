@@ -5,7 +5,7 @@
 //   - Naviqasiya (səhifə): əvvəlcə şəbəkə, offline olsa keşdən/ana səhifədən.
 //   - Statik fayllar (_next/static, şəkil, şrift): stale-while-revalidate.
 
-const CACHE = "bilik-yolu-v82";
+const CACHE = "bilik-yolu-v83";
 const OFFLINE_URL = "/";
 
 // Şəbəkə çatmayanda göstəriləcək minimal offline HTML.

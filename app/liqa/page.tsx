@@ -52,7 +52,9 @@ export default function LeaguePage() {
       <main className="mx-auto max-w-2xl px-4 py-6">
         {/* Başlıq + pillə */}
         <div className="flex items-center gap-4 rounded-3xl bg-brand p-5 text-white">
-          <Mascot size={60} mood="celebrate" />
+          <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-white/95 shadow-sm">
+            <Mascot size={54} mood="celebrate" />
+          </span>
           <div className="flex-1">
             <div className="text-lg font-extrabold">{t(tierKey(myTier))}</div>
             <div className="text-sm text-white/85">{t("league.compete")}</div>

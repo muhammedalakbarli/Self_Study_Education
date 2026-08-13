@@ -61,7 +61,9 @@ export default function SchoolPage() {
       <main className="mx-auto max-w-2xl px-4 py-8">
         {/* Hero */}
         <div className="flex items-center gap-4 rounded-3xl bg-gradient-to-br from-brand to-brand-dark p-6 text-white shadow-lg">
-          <Mascot size={72} mood="happy" />
+          <span className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-white/95 shadow-sm">
+            <Mascot size={64} mood="happy" />
+          </span>
           <div>
             <div className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-wider text-white/80">
               <School size={14} /> Imparo Məktəb

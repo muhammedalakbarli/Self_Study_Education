@@ -124,7 +124,10 @@ export default function PracticePage() {
 
         {/* Gündəlik challenge */}
         <div className="mt-6 flex items-center gap-4 rounded-3xl bg-brand p-5 text-white">
-          <Mascot size={64} mood={dailyDone ? "celebrate" : "happy"} />
+          {/* Ağ dairə — narıncı Zefi narıncı kartla qarışmasın */}
+          <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-white/95 shadow-sm">
+            <Mascot size={56} mood={dailyDone ? "celebrate" : "happy"} />
+          </span>
           <div className="flex-1">
             <div className="text-lg font-extrabold">{t("practice.daily")}</div>
             <div className="text-sm text-white/85">
