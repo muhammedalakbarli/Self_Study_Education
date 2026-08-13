@@ -1,18 +1,10 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "imparo",
-  "main": ".open-next/worker.js",
+  "pages_build_output_dir": ".open-next/assets",
   "compatibility_date": "2025-06-01",
-  "compatibility_flags": ["nodejs_compat"],
-  "assets": {
-    "directory": ".open-next/assets",
-    "binding": "ASSETS"
-  },
   "observability": {
     "enabled": true
-  },
-  "triggers": {
-    "crons": ["0 16 * * *"]
   },
   "env": {
     "production": {
@@ -24,7 +16,4 @@
       ]
     }
   }
-  // Qeyd: mühit dəyişənləri (SUPABASE_SERVICE_ROLE_KEY, LEMONSQUEEZY_WEBHOOK_SECRET,
-  // CRON_SECRET, VAPID_*, NEXT_PUBLIC_*) Cloudflare dashboard → Workers → Settings →
-  // Variables/Secrets bölməsində əlavə olunur (kod-da hardcode YOX).
 }
