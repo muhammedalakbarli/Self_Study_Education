@@ -53,3 +53,7 @@ mobile/.expo
 
 # Maskot mənbə faylları (işlənmiş PNG-lər public/assets-dədir)
 /Maskot/
+
+# OpenNext (Cloudflare) build çıxışı
+.open-next/
+.wrangler/
