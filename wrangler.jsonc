@@ -10,6 +10,16 @@
   },
   "observability": {
     "enabled": true
+  },
+  "env": {
+    "production": {
+      "routes": [
+        {
+          "pattern": "imparo.pages.dev",
+          "zone_name": "imparo.pages.dev"
+        }
+      ]
+    }
   }
   // Qeyd: mühit dəyişənləri (SUPABASE_SERVICE_ROLE_KEY, LEMONSQUEEZY_WEBHOOK_SECRET,
   // CRON_SECRET, VAPID_*, NEXT_PUBLIC_*) Cloudflare dashboard → Workers → Settings →
