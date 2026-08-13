@@ -25,7 +25,7 @@ export default function AboutContent() {
   ];
 
   return (
-    <main className="min-h-screen bg-ink">
+    <main className="force-light min-h-screen bg-ink">
       {/* Naviqasiya */}
       <header className="sticky top-0 z-30 border-b border-line/60 bg-ink/70 backdrop-blur-md">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-5 py-3.5">
