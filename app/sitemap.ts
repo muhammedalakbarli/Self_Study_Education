@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 // sitemap.xml — açıq (public) səhifələr. Şəxsi/auth arxası səhifələr daxil edilmir.
-const SITE_URL = "https://imparo.pages.dev";
+const SITE_URL = "https://imparo.m-alakbarli2007.workers.dev";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();

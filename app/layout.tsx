@@ -26,7 +26,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const SITE_URL = "https://imparo.pages.dev";
+const SITE_URL = "https://imparo.m-alakbarli2007.workers.dev";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

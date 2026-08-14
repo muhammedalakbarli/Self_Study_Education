@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 // robots.txt — axtarış motorlarına indeksləşdirmə qaydaları + sitemap ünvanı.
-const SITE_URL = "https://imparo.pages.dev";
+const SITE_URL = "https://imparo.m-alakbarli2007.workers.dev";
 
 export default function robots(): MetadataRoute.Robots {
   return {
