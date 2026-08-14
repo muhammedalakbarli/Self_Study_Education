@@ -92,12 +92,21 @@ export const metadata: Metadata = {
     locale: "az_AZ",
     alternateLocale: ["en_US", "ru_RU"],
     type: "website",
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: "Imparo — 1–8-ci siniflər üçün interaktiv öyrənmə",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Imparo — öyrənməyi əyləncəyə çevir",
     description:
       "1–8-ci siniflər üçün interaktiv öyrənmə platforması. Pulsuz və maraqlı.",
+    images: ["/og.png"],
   },
 };
 
