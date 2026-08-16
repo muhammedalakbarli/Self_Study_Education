@@ -52,6 +52,12 @@ export default function AdminUsersPage() {
   const [sortKey, setSortKey] = useState<SortKey>("created_at");
   const [sortDir, setSortDir] = useState<-1 | 1>(-1);
   const [detailId, setDetailId] = useState<string | null>(null);
+  // Filtrlər + toplu seçim
+  const [fGrade, setFGrade] = useState<number | "all">("all");
+  const [fPlus, setFPlus] = useState<"all" | "plus" | "free">("all");
+  const [fActive, setFActive] = useState(false); // yalnız son 7 gün aktiv
+  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [bulkBusy, setBulkBusy] = useState(false);
 
   useEffect(() => { if (user) checkIsAdmin().then(setIsAdmin); }, [user]);
   useEffect(() => { if (isAdmin === false) router.replace("/dashboard"); }, [isAdmin, router]);
@@ -66,12 +72,20 @@ export default function AdminUsersPage() {
     adminUsers("", 1000).then(setRows);
   }
 
+  const sevenDaysAgo = useMemo(() => {
+    const d = new Date(); d.setDate(d.getDate() - 7); return d.toISOString().slice(0, 10);
+  }, []);
+
   const filtered = useMemo(() => {
     if (!rows) return [];
     const s = q.trim().toLowerCase();
-    const out = s
+    let out = s
       ? rows.filter((r) => r.email.toLowerCase().includes(s) || r.name.toLowerCase().includes(s))
       : [...rows];
+    if (fGrade !== "all") out = out.filter((r) => r.grade === fGrade);
+    if (fPlus === "plus") out = out.filter((r) => r.is_plus);
+    else if (fPlus === "free") out = out.filter((r) => !r.is_plus);
+    if (fActive) out = out.filter((r) => r.last_active_date && r.last_active_date >= sevenDaysAgo);
     out.sort((a, b) => {
       const av = a[sortKey] ?? "", bv = b[sortKey] ?? "";
       if (av < bv) return -sortDir;
@@ -87,9 +101,9 @@ export default function AdminUsersPage() {
   }
 
   function exportCsv() {
-    const head = ["Email", "Ad", "Mənbə", "Təsdiq", "Qoşuldu", "Son giriş", "Vaxt(san)", "XP", "Streak", "Zümrüd", "Dərs", "Son aktiv", "Plus"];
+    const head = ["Email", "Ad", "Sinif", "Mənbə", "Təsdiq", "Qoşuldu", "Son giriş", "Vaxt(san)", "XP", "Streak", "Zümrüd", "Dərs", "Son aktiv", "Plus"];
     const lines = filtered.map((r) => [
-      r.email, r.name, r.provider, r.email_confirmed ? "bəli" : "xeyr",
+      r.email, r.name, r.grade ?? "", r.provider, r.email_confirmed ? "bəli" : "xeyr",
       r.created_at, r.last_sign_in_at ?? "", r.active_seconds, r.total_xp, r.streak_days,
       r.gems, r.completed, r.last_active_date ?? "", r.is_plus ? "bəli" : "xeyr",
     ].map((v) => `"${String(v).replace(/"/g, '""')}"`).join(","));
@@ -100,6 +114,32 @@ export default function AdminUsersPage() {
     a.download = `imparo-istifadeciler-${new Date().toISOString().slice(0, 10)}.csv`;
     a.click();
     URL.revokeObjectURL(url);
+  }
+
+  const grades = useMemo(
+    () => [...new Set((rows ?? []).map((r) => r.grade).filter((g): g is number => g != null))].sort((a, b) => a - b),
+    [rows],
+  );
+  function toggleSel(id: string) {
+    setSelected((prev) => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n; });
+  }
+  const allVisibleSelected = filtered.length > 0 && filtered.every((r) => selected.has(r.user_id));
+  function toggleAllVisible() {
+    setSelected((prev) => {
+      const n = new Set(prev);
+      if (allVisibleSelected) filtered.forEach((r) => n.delete(r.user_id));
+      else filtered.forEach((r) => n.add(r.user_id));
+      return n;
+    });
+  }
+  async function bulk(fn: (uid: string) => Promise<{ ok: boolean }>, confirmMsg: string) {
+    const ids = [...selected];
+    if (ids.length === 0 || !confirm(`${confirmMsg} (${ids.length} istifadəçi)`)) return;
+    setBulkBusy(true);
+    for (const id of ids) await fn(id).catch(() => {});
+    setBulkBusy(false);
+    setSelected(new Set());
+    reload();
   }
 
   if (!ready || !user || isAdmin !== true || !rows) return <PageSkeleton />;
@@ -140,12 +180,61 @@ export default function AdminUsersPage() {
           <span className="text-sm text-muted">{filtered.length}</span>
         </div>
 
+        {/* Filtrlər */}
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          <select
+            value={fGrade}
+            onChange={(e) => setFGrade(e.target.value === "all" ? "all" : Number(e.target.value))}
+            className="rounded-xl border-2 border-line bg-panel px-3 py-1.5 text-sm font-semibold text-fg"
+          >
+            <option value="all">Bütün siniflər</option>
+            {grades.map((g) => <option key={g} value={g}>{g}-ci sinif</option>)}
+          </select>
+          <select
+            value={fPlus}
+            onChange={(e) => setFPlus(e.target.value as "all" | "plus" | "free")}
+            className="rounded-xl border-2 border-line bg-panel px-3 py-1.5 text-sm font-semibold text-fg"
+          >
+            <option value="all">Hamısı (Plus/pulsuz)</option>
+            <option value="plus">Yalnız Plus</option>
+            <option value="free">Yalnız pulsuz</option>
+          </select>
+          <label className="flex items-center gap-1.5 rounded-xl border-2 border-line bg-panel px-3 py-1.5 text-sm font-semibold text-fg">
+            <input type="checkbox" checked={fActive} onChange={(e) => setFActive(e.target.checked)} />
+            Son 7 gün aktiv
+          </label>
+        </div>
+
+        {/* Toplu əməliyyat paneli */}
+        {selected.size > 0 && (
+          <div className="mt-3 flex flex-wrap items-center gap-2 rounded-2xl border-2 border-brand/40 bg-brand/5 px-4 py-2.5">
+            <span className="text-sm font-bold text-brand">{selected.size} seçildi</span>
+            <button disabled={bulkBusy}
+              onClick={() => bulk((id) => adminGrantPlus(id, 12), "Seçilənlərə 12 aylıq Plus verilsin?")}
+              className="rounded-lg bg-amber-500 px-3 py-1.5 text-sm font-bold text-white hover:bg-amber-600 disabled:opacity-50">
+              Plus ver
+            </button>
+            <button disabled={bulkBusy}
+              onClick={() => bulk((id) => adminSetBot(id, true), "Seçilənlər bot işarələnsin (gizlədilsin)?")}
+              className="rounded-lg border-2 border-line px-3 py-1.5 text-sm font-bold text-fg hover:border-brand disabled:opacity-50">
+              Bot işarələ
+            </button>
+            <button onClick={() => setSelected(new Set())} className="text-sm font-semibold text-muted hover:text-fg">
+              Seçimi təmizlə
+            </button>
+          </div>
+        )}
+
         <div className="mt-4 overflow-x-auto rounded-2xl border border-line bg-panel">
-          <table className="w-full min-w-[1040px] text-sm">
+          <table className="w-full min-w-[1140px] text-sm">
             <thead>
               <tr className="border-b border-line text-left text-xs uppercase tracking-wide text-muted">
+                <th className="px-3 py-3">
+                  <input type="checkbox" checked={allVisibleSelected} onChange={toggleAllVisible} aria-label="Hamısını seç" />
+                </th>
                 <th className="px-4 py-3 font-bold">Email</th>
                 <th className="px-3 py-3 font-bold">Ad</th>
+                <th className="px-3 py-3 font-bold">Sinif</th>
                 <th className="px-3 py-3 font-bold">Mənbə</th>
                 <SortTh label="Qoşuldu" k="created_at" {...{ sortKey, sortDir, toggleSort }} />
                 <SortTh label="Son giriş" k="last_sign_in_at" {...{ sortKey, sortDir, toggleSort }} />
@@ -161,13 +250,17 @@ export default function AdminUsersPage() {
                 <tr
                   key={r.user_id}
                   onClick={() => setDetailId(r.user_id)}
-                  className="cursor-pointer border-b border-line/60 last:border-b-0 hover:bg-panel-2"
+                  className={`cursor-pointer border-b border-line/60 last:border-b-0 hover:bg-panel-2 ${selected.has(r.user_id) ? "bg-brand/5" : ""}`}
                 >
+                  <td className="px-3 py-2.5" onClick={(e) => e.stopPropagation()}>
+                    <input type="checkbox" checked={selected.has(r.user_id)} onChange={() => toggleSel(r.user_id)} aria-label="Seç" />
+                  </td>
                   <td className="max-w-[220px] truncate px-4 py-2.5 font-semibold text-fg">
                     {r.email}
                     {!r.email_confirmed && <span className="ml-1 text-[10px] text-amber-500">●</span>}
                   </td>
                   <td className="px-3 py-2.5 text-muted">{r.name}</td>
+                  <td className="px-3 py-2.5 text-muted">{r.grade ?? "—"}</td>
                   <td className="px-3 py-2.5 text-muted">{r.provider === "google" ? "Google" : "Email"}</td>
                   <td className="whitespace-nowrap px-3 py-2.5 text-muted">{fmtDateTime(r.created_at)}</td>
                   <td className="whitespace-nowrap px-3 py-2.5 text-muted">{fmtDateTime(r.last_sign_in_at)}</td>
