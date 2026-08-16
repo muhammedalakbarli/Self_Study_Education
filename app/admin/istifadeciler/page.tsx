@@ -18,6 +18,8 @@ import {
   type AdminUserRow, type AdminUserStats, type AdminUserDetail,
 } from "@/lib/adminApi";
 import { PageSkeleton } from "@/components/Skeleton";
+import { toast } from "sonner";
+import { useConfirm } from "@/components/admin/ConfirmDialog";
 
 function fmtDate(s: string | null): string {
   if (!s) return "—";
@@ -58,6 +60,7 @@ export default function AdminUsersPage() {
   const [fActive, setFActive] = useState(false); // yalnız son 7 gün aktiv
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [bulkBusy, setBulkBusy] = useState(false);
+  const confirm = useConfirm();
 
   useEffect(() => { if (user) checkIsAdmin().then(setIsAdmin); }, [user]);
   useEffect(() => { if (isAdmin === false) router.replace("/dashboard"); }, [isAdmin, router]);
@@ -134,11 +137,13 @@ export default function AdminUsersPage() {
   }
   async function bulk(fn: (uid: string) => Promise<{ ok: boolean }>, confirmMsg: string) {
     const ids = [...selected];
-    if (ids.length === 0 || !confirm(`${confirmMsg} (${ids.length} istifadəçi)`)) return;
+    if (ids.length === 0) return;
+    if (!(await confirm({ title: confirmMsg, message: `${ids.length} istifadəçi seçilib.` }))) return;
     setBulkBusy(true);
     for (const id of ids) await fn(id).catch(() => {});
     setBulkBusy(false);
     setSelected(new Set());
+    toast.success(`${ids.length} istifadəçi üçün tamamlandı`);
     reload();
   }
 
@@ -309,17 +314,19 @@ function SortTh({
 function UserDetailModal({ uid, onClose, onChanged }: { uid: string; onClose: () => void; onChanged: () => void }) {
   const [d, setD] = useState<AdminUserDetail | null>(null);
   const [busy, setBusy] = useState(false);
+  const confirm = useConfirm();
 
   useEffect(() => { adminUserDetail(uid).then(setD); }, [uid]);
 
   async function act(fn: () => Promise<{ ok: boolean; error?: string }>, confirmMsg?: string) {
-    if (confirmMsg && !confirm(confirmMsg)) return;
+    if (confirmMsg && !(await confirm({ title: "Əminsən?", message: confirmMsg, danger: true, confirmText: "Sil" }))) return;
     setBusy(true);
     const r = await fn();
     setBusy(false);
-    if (!r.ok) { alert("Xəta: " + (r.error ?? "")); return; }
+    if (!r.ok) { toast.error(r.error || "Xəta baş verdi"); return; }
+    toast.success("Tamamlandı");
     onChanged();
-    if (confirmMsg?.includes("Sil")) { onClose(); return; }
+    if (confirmMsg) { onClose(); return; }
     setD(await adminUserDetail(uid));
   }
 

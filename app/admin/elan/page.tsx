@@ -13,6 +13,8 @@ import {
   adminSetAnnouncementActive, adminDeleteAnnouncement, type Announcement,
 } from "@/lib/adminApi";
 import { PageSkeleton } from "@/components/Skeleton";
+import { toast } from "sonner";
+import { useConfirm } from "@/components/admin/ConfirmDialog";
 
 export default function AdminAnnouncementsPage() {
   const router = useRouter();
@@ -22,6 +24,7 @@ export default function AdminAnnouncementsPage() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [busy, setBusy] = useState(false);
+  const confirm = useConfirm();
 
   useEffect(() => { if (user) checkIsAdmin().then(setIsAdmin); }, [user]);
   useEffect(() => { if (isAdmin === false) router.replace("/dashboard"); }, [isAdmin, router]);
@@ -34,7 +37,8 @@ export default function AdminAnnouncementsPage() {
     setBusy(true);
     const r = await adminPostAnnouncement(title.trim(), body.trim());
     setBusy(false);
-    if (!r.ok) { alert("Xəta: " + (r.error ?? "")); return; }
+    if (!r.ok) { toast.error(r.error || "Xəta baş verdi"); return; }
+    toast.success("Elan yerləşdirildi");
     setTitle(""); setBody("");
     reload();
   }
@@ -102,7 +106,7 @@ export default function AdminAnnouncementsPage() {
                   </button>
                   <button
                     title="Sil"
-                    onClick={async () => { if (confirm("Elan silinsin?")) { await adminDeleteAnnouncement(a.id); reload(); } }}
+                    onClick={async () => { if (await confirm({ title: "Elan silinsin?", danger: true, confirmText: "Sil" })) { await adminDeleteAnnouncement(a.id); toast.success("Elan silindi"); reload(); } }}
                     className="rounded-lg p-2 text-red-500 hover:bg-red-500/10"
                   >
                     <Trash2 size={16} />
