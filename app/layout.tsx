@@ -94,7 +94,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/og.png",
+        url: "/og.png?v=2",
         width: 1200,
         height: 630,
         alt: "Imparo — 1–8-ci siniflər üçün interaktiv öyrənmə",
@@ -106,7 +106,7 @@ export const metadata: Metadata = {
     title: "Imparo — öyrənməyi əyləncəyə çevir",
     description:
       "1–8-ci siniflər üçün interaktiv öyrənmə platforması. Pulsuz və maraqlı.",
-    images: ["/og.png"],
+    images: ["/og.png?v=2"],
   },
 };
 
