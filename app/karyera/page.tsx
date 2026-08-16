@@ -7,7 +7,7 @@ import { useT } from "@/lib/i18n";
 export default function CareersPage() {
   const t = useT();
   return (
-    <InfoShell title={t("careers.title")}>
+    <InfoShell title={t("careers.title")} light>
       <p className="text-lg leading-relaxed text-muted">{t("careers.body")}</p>
       <a
         href="mailto:m.alakbarli2007@gmail.com"

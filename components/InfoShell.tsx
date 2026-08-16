@@ -10,13 +10,15 @@ import { useT } from "@/lib/i18n";
 export default function InfoShell({
   title,
   children,
+  light = false,
 }: {
   title: string;
   children: React.ReactNode;
+  light?: boolean; // qlobal tünd rejimdən asılı olmayaraq işıqlı göstər
 }) {
   const t = useT();
   return (
-    <main className="min-h-screen bg-ink">
+    <main className={`min-h-screen bg-ink${light ? " force-light" : ""}`}>
       <header className="sticky top-0 z-30 border-b border-line/60 bg-ink/70 backdrop-blur-md">
         <div className="mx-auto flex max-w-3xl items-center justify-between px-5 py-3.5">
           <Link href="/" className="flex items-center gap-2.5">
