@@ -32,7 +32,6 @@ import {
 } from "./NavIcons";
 import { signOut } from "@/lib/auth";
 import { checkIsAdmin, adminListTeacherRequests } from "@/lib/adminApi";
-import { loadDueTaskIds } from "@/lib/srs";
 import { useT } from "@/lib/i18n";
 
 // Hər bölmənin öz rəngi — uşaqlar üçün rəngarəng, cəlbedici naviqasiya.
@@ -105,7 +104,6 @@ export default function Sidebar() {
   const router = useRouter();
   const t = useT();
   const [isAdmin, setIsAdmin] = useState(false);
-  const [hasDue, setHasDue] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
   const [adminPending, setAdminPending] = useState(0); // gözləyən müəllim müraciətləri
 
@@ -125,19 +123,8 @@ export default function Sidebar() {
     if (!isAdmin) return;
     adminListTeacherRequests().then((r) => setAdminPending(r.length)).catch(() => {});
   }, [isAdmin, pathname]);
-  // Təkrar vaxtı çatan tapşırıq varsa Praktika üzərində qırmızı nöqtə göstər.
-  useEffect(() => {
-    loadDueTaskIds()
-      .then((ids) => setHasDue(ids.length > 0))
-      .catch(() => {});
-  }, [pathname]);
-
   const isActive = (match: string[]) =>
     match.some((m) => pathname === m || pathname.startsWith(m + "/"));
-
-  // Praktika ikonunun küncündə "diqqət" nöqtəsi (təkrar var və o səhifədə deyil).
-  const showDot = (href: string, on: boolean) =>
-    href === "/praktika" && hasDue && !on;
 
   async function logout() {
     await signOut();
@@ -165,9 +152,6 @@ export default function Sidebar() {
             const iconEl = (
               <span className="relative">
                 <Icon size={28} />
-                {showDot(href, on) && (
-                  <span className="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-panel" />
-                )}
               </span>
             );
 
@@ -236,7 +220,7 @@ export default function Sidebar() {
               transition={{ type: "spring", stiffness: 340, damping: 34 }}
               className="fixed inset-x-0 bottom-[68px] z-40 mx-3 rounded-3xl border border-line bg-panel p-2 shadow-2xl lg:hidden"
             >
-              <SheetLink href="/praktika" Icon={Dumbbell} label={t("nav.practice")} dot={hasDue} onNavigate={() => setMoreOpen(false)} />
+              <SheetLink href="/praktika" Icon={Dumbbell} label={t("nav.practice")} onNavigate={() => setMoreOpen(false)} />
               <SheetLink href="/gorevler" Icon={Target} label={t("nav.quests")} onNavigate={() => setMoreOpen(false)} />
               <SheetLink href="/magaza" Icon={ShoppingBag} label={t("nav.shop")} onNavigate={() => setMoreOpen(false)} />
               <SheetLink href="/profil" Icon={User} label={t("nav.profile")} onNavigate={() => setMoreOpen(false)} />
@@ -270,13 +254,6 @@ export default function Sidebar() {
                 }`}
               >
                 <Icon size={34} />
-                {!isMore && showDot(href, on) && (
-                  <span className="absolute right-1 top-1 h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-panel" />
-                )}
-                {/* Daha çoxu içindəki Praktika üçün diqqət nöqtəsi */}
-                {isMore && hasDue && !moreOpen && (
-                  <span className="absolute right-1 top-1 h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-panel" />
-                )}
               </span>
             );
             const aria = t(NAV.find((n) => n.href === href)!.key);
@@ -312,14 +289,12 @@ function SheetLink({
   href,
   Icon,
   label,
-  dot,
   badge,
   onNavigate,
 }: {
   href: string;
   Icon: React.ComponentType<{ size?: number; className?: string }>;
   label: string;
-  dot?: boolean;
   badge?: number;
   onNavigate: () => void;
 }) {
@@ -331,9 +306,6 @@ function SheetLink({
     >
       <span className="relative">
         <Icon size={22} className="text-muted" />
-        {dot && (
-          <span className="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-panel" />
-        )}
       </span>
       <span className="flex-1">{label}</span>
       {!!badge && badge > 0 && (
