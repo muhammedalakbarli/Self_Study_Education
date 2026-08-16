@@ -35,6 +35,8 @@ export default function Learn() {
   }, [user]);
 
   useEffect(() => {
+    // async data-loader: setState await-dən sonra baş verir, sinxron cascade yoxdur.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     load();
   }, [load]);
   // Dərsdən qayıdanda irəliləyişi + can yenilə.
