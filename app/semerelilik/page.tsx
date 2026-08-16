@@ -12,7 +12,7 @@ export default function EfficacyPage() {
     { Icon: Target, title: t("efficacy.p3t"), body: t("efficacy.p3b") },
   ];
   return (
-    <InfoShell title={t("efficacy.title")}>
+    <InfoShell title={t("efficacy.title")} light>
       <p className="text-lg leading-relaxed text-muted">{t("efficacy.intro")}</p>
       <div className="mt-6 space-y-4">
         {points.map((p) => (

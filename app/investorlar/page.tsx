@@ -7,7 +7,7 @@ import { useT } from "@/lib/i18n";
 export default function InvestorsPage() {
   const t = useT();
   return (
-    <InfoShell title={t("investors.title")}>
+    <InfoShell title={t("investors.title")} light>
       <p className="text-lg leading-relaxed text-muted">{t("investors.body")}</p>
       <a
         href="mailto:ichbinmahammad@gmail.com"
