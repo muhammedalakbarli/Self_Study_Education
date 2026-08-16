@@ -11,7 +11,9 @@ import {
   GraduationCap, Megaphone, MessageSquare, ExternalLink,
   TrendingUp, Gauge, ShieldAlert, ShieldCheck,
 } from "lucide-react";
+import { Toaster } from "sonner";
 import Logo from "@/components/Logo";
+import { ConfirmProvider } from "@/components/admin/ConfirmDialog";
 import { checkIsAdmin, adminListTeacherRequests } from "@/lib/adminApi";
 
 const NAV = [
@@ -46,7 +48,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     item.exact ? pathname === item.href : pathname === item.href || pathname.startsWith(item.href + "/");
 
   return (
+    <ConfirmProvider>
     <div className="min-h-screen bg-ink">
+      <Toaster richColors position="top-center" toastOptions={{ style: { fontWeight: 600 } }} />
       {/* Yan panel — desktop */}
       <aside className="fixed inset-y-0 left-0 z-30 hidden w-56 flex-col border-r border-line bg-panel px-3 py-4 lg:flex">
         <Link href="/admin/panel" className="mb-4 flex items-center gap-2 px-2">
@@ -106,5 +110,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Məzmun sahəsi */}
       <div className="lg:pl-56">{children}</div>
     </div>
+    </ConfirmProvider>
   );
 }
