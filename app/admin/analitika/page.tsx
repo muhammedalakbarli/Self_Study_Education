@@ -150,6 +150,14 @@ export default function AdminAnalyticsPage() {
               <Stat label="Plus abunə" value={growth.funnel.plus} small />
             </div>
 
+            {/* Nisbətlər — faktiki rəqəmlərlə */}
+            <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
+              <Ratio label="Aktivləşmə" num={growth.funnel.activated} den={growth.funnel.signed_up} hint="ilk dərsi edən / qeydiyyat" />
+              <Ratio label="7-gün qayıdış" num={growth.funnel.retained7} den={growth.funnel.signed_up} hint="son 7 gün aktiv / qeydiyyat" />
+              <Ratio label="Plus konversiya" num={growth.funnel.plus} den={growth.funnel.signed_up} hint="Plus / qeydiyyat" />
+              <Ratio label="Stickiness (DAU/MAU)" num={growth.dau} den={growth.mau} hint="gündəlik/aylıq aktiv" />
+            </div>
+
             {/* Funnel */}
             <div className="mt-4">
               <div className="mb-2 text-xs font-bold uppercase tracking-wide text-muted">Qıf (funnel)</div>
@@ -161,8 +169,8 @@ export default function AdminAnalyticsPage() {
 
             {/* Gündəlik qrafiklər */}
             <div className="mt-4 grid gap-4 sm:grid-cols-2">
-              <MiniBars title="Qeydiyyat (son 14 gün)" data={growth.signups_daily} tone="fill-brand" />
-              <MiniBars title="Aktiv istifadəçi (son 14 gün)" data={growth.active_daily} tone="fill-emerald-500" />
+              <MiniBars title="Qeydiyyat (son 14 gün)" data={growth.signups_daily} tone="bg-brand" />
+              <MiniBars title="Aktiv istifadəçi (son 14 gün)" data={growth.active_daily} tone="bg-emerald-500" />
             </div>
           </Section>
         )}
@@ -244,6 +252,23 @@ function Stat({ label, value, small }: { label: string; value: number; small?: b
   );
 }
 
+// Nisbət kartı — faiz + xam rəqəmlər (məs. "45% · 12/27"), incə bar ilə.
+function Ratio({ label, num, den, hint }: { label: string; num: number; den: number; hint?: string }) {
+  const pct = den > 0 ? Math.round((num / den) * 1000) / 10 : 0;
+  return (
+    <div className="rounded-2xl border border-line bg-panel p-4" title={hint}>
+      <div className="flex items-baseline gap-1.5">
+        <span className="text-xl font-extrabold text-brand">{pct}%</span>
+        <span className="text-xs font-semibold text-muted">{num}/{den}</span>
+      </div>
+      <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-panel-2">
+        <div className="h-full rounded-full bg-brand" style={{ width: `${Math.min(pct, 100)}%` }} />
+      </div>
+      <div className="mt-1 text-xs text-muted">{label}</div>
+    </div>
+  );
+}
+
 // Qıf sətri — dəyər + faiz + bar.
 function FunnelBar({ label, value, max, tone }: { label: string; value: number; max: number; tone: string }) {
   const pct = max > 0 ? Math.round((value / max) * 100) : 0;
@@ -260,28 +285,30 @@ function FunnelBar({ label, value, max, tone }: { label: string; value: number; 
   );
 }
 
-// Sadə sütun qrafiki (SVG) — gündəlik seriya.
+// Rəqəmli sütun qrafiki (HTML) — hər sütunun üstündə dəyər, altında gün; başlıqda cəmi/orta/ən çox.
 function MiniBars({ title, data, tone }: { title: string; data: { d: string; n: number }[]; tone: string }) {
   const max = Math.max(1, ...data.map((x) => x.n));
-  const W = 280, H = 90, bw = data.length ? W / data.length : W;
   const total = data.reduce((s, x) => s + x.n, 0);
+  const avg = data.length ? Math.round((total / data.length) * 10) / 10 : 0;
+  const peak = data.reduce((p, x) => (x.n > p.n ? x : p), data[0] ?? { d: "", n: 0 });
   return (
     <div className="rounded-2xl border border-line bg-panel p-3">
-      <div className="mb-1 flex items-baseline justify-between">
+      <div className="mb-3 flex flex-wrap items-baseline justify-between gap-x-3">
         <span className="text-sm font-bold text-fg">{title}</span>
-        <span className="text-xs text-muted">cəmi {total}</span>
+        <span className="text-xs text-muted">
+          cəmi <b className="text-fg">{total}</b> · orta/gün <b className="text-fg">{avg}</b> · ən çox <b className="text-fg">{peak.n}</b>
+        </span>
       </div>
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full" preserveAspectRatio="none">
-        {data.map((x, i) => {
-          const h = (x.n / max) * (H - 12);
-          return (
-            <rect key={i} x={i * bw + 1} y={H - h} width={Math.max(bw - 2, 1)} height={h}
-              className={tone} rx={1.5}>
-              <title>{x.d}: {x.n}</title>
-            </rect>
-          );
-        })}
-      </svg>
+      <div className="flex h-28 items-end gap-[3px]">
+        {data.map((x, i) => (
+          <div key={i} className="flex flex-1 flex-col items-center justify-end" title={`${x.d}: ${x.n}`}>
+            <span className={`text-[9px] font-bold leading-none ${x.n > 0 ? "text-fg" : "text-transparent"}`}>{x.n}</span>
+            <div className={`mt-0.5 w-full rounded-sm ${tone} ${x.n === 0 ? "opacity-30" : ""}`}
+              style={{ height: `${Math.max((x.n / max) * 100, x.n > 0 ? 6 : 3)}%` }} />
+            <span className="mt-1 text-[9px] leading-none text-muted">{x.d.slice(8)}</span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

@@ -161,18 +161,21 @@ function Funnel({ label, v, max, tone }: { label: string; v: number; max: number
 
 function Bars({ data }: { data: { d: string; n: number }[] }) {
   const max = Math.max(1, ...data.map((x) => x.n));
-  const W = 280, H = 90, bw = data.length ? W / data.length : W;
+  const total = data.reduce((s, x) => s + x.n, 0);
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} className="w-full" preserveAspectRatio="none">
-      {data.map((x, i) => {
-        const h = (x.n / max) * (H - 10);
-        return (
-          <rect key={i} x={i * bw + 1} y={H - h} width={Math.max(bw - 2, 1)} height={h} className="fill-brand" rx={1.5}>
-            <title>{x.d}: {x.n}</title>
-          </rect>
-        );
-      })}
-    </svg>
+    <div>
+      <div className="mb-2 text-xs text-muted">cəmi <b className="text-fg">{total}</b> · ən çox <b className="text-fg">{max}</b></div>
+      <div className="flex h-24 items-end gap-[3px]">
+        {data.map((x, i) => (
+          <div key={i} className="flex flex-1 flex-col items-center justify-end" title={`${x.d}: ${x.n}`}>
+            <span className={`text-[9px] font-bold leading-none ${x.n > 0 ? "text-fg" : "text-transparent"}`}>{x.n}</span>
+            <div className={`mt-0.5 w-full rounded-sm bg-brand ${x.n === 0 ? "opacity-30" : ""}`}
+              style={{ height: `${Math.max((x.n / max) * 100, x.n > 0 ? 6 : 3)}%` }} />
+            <span className="mt-1 text-[9px] leading-none text-muted">{x.d.slice(8)}</span>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 
