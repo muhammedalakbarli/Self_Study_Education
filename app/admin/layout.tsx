@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import {
   LayoutDashboard, BookOpen, Users, BarChart3, School,
   GraduationCap, Megaphone, MessageSquare, ExternalLink,
+  TrendingUp, Gauge, ShieldAlert, ShieldCheck,
 } from "lucide-react";
 import Logo from "@/components/Logo";
 import { checkIsAdmin, adminListTeacherRequests } from "@/lib/adminApi";
@@ -18,10 +19,14 @@ const NAV = [
   { href: "/admin", label: "Məzmun", Icon: BookOpen, exact: true },
   { href: "/admin/istifadeciler", label: "İstifadəçilər", Icon: Users },
   { href: "/admin/analitika", label: "Analitika", Icon: BarChart3 },
+  { href: "/admin/gelir", label: "Gəlir", Icon: TrendingUp },
+  { href: "/admin/mezmun-performans", label: "Performans", Icon: Gauge },
   { href: "/admin/mekteb", label: "Məktəb", Icon: School },
   { href: "/admin/muellimler", label: "Müəllimlər", Icon: GraduationCap, badge: "teachers" as const },
   { href: "/admin/elan", label: "Elanlar", Icon: Megaphone },
   { href: "/admin/feedback", label: "Rəylər", Icon: MessageSquare },
+  { href: "/admin/audit", label: "Audit log", Icon: ShieldAlert },
+  { href: "/admin/adminler", label: "Adminlər", Icon: ShieldCheck },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {

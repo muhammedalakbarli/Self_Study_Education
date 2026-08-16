@@ -190,6 +190,7 @@ export interface AdminUserRow {
   active_seconds: number;
   provider: string;
   email_confirmed: boolean;
+  grade: number | null;
 }
 export interface AdminUserStats {
   total: number;
@@ -393,4 +394,43 @@ export async function adminRejectTeacher(uid: string): Promise<Res> {
 export async function adminRevokeTeacher(uid: string): Promise<Res> {
   const { error } = await createClient().rpc("admin_revoke_teacher", { p_uid: uid });
   return { ok: !error, error: error?.message };
+}
+
+// ── Admin Pro (audit, gəlir, məzmun performansı, rollar) ──
+export async function checkIsSuperAdmin(): Promise<boolean> {
+  try { const { data } = await createClient().rpc("is_super_admin"); return !!data; } catch { return false; }
+}
+
+export interface AdminAuditRow {
+  id: number; admin_email: string | null; action: string;
+  target_type: string | null; target_id: string | null; detail: string | null; created_at: string;
+}
+export async function adminAuditList(limit = 100): Promise<AdminAuditRow[]> {
+  try { const { data } = await createClient().rpc("admin_audit_list", { p_limit: limit }); return (data as AdminAuditRow[]) ?? []; }
+  catch { return []; }
+}
+
+export interface AdminRevenue { active_plus: number; expiring_30: number; expired: number; }
+export async function adminRevenue(): Promise<AdminRevenue | null> {
+  try { const { data } = await createClient().rpc("admin_revenue"); return (data as AdminRevenue) ?? null; }
+  catch { return null; }
+}
+export interface AdminPlusRow { user_id: string; email: string; name: string; plus_until: string | null; }
+export async function adminPlusList(limit = 200): Promise<AdminPlusRow[]> {
+  try { const { data } = await createClient().rpc("admin_plus_list", { p_limit: limit }); return (data as AdminPlusRow[]) ?? []; }
+  catch { return []; }
+}
+
+export interface AdminLessonStat {
+  lesson_id: string; title: string; subject: string; grade: number; completions: number; learners: number;
+}
+export async function adminLessonStats(limit = 200): Promise<AdminLessonStat[]> {
+  try { const { data } = await createClient().rpc("admin_lesson_stats", { p_limit: limit }); return (data as AdminLessonStat[]) ?? []; }
+  catch { return []; }
+}
+
+export interface AdminRow { user_id: string; email: string; name: string; role: string; }
+export async function adminListAdmins(): Promise<AdminRow[]> {
+  try { const { data } = await createClient().rpc("admin_list_admins"); return (data as AdminRow[]) ?? []; }
+  catch { return []; }
 }
