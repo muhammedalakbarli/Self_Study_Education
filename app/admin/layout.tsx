@@ -9,11 +9,12 @@ import { useEffect, useState } from "react";
 import {
   LayoutDashboard, BookOpen, Users, BarChart3, School,
   GraduationCap, Megaphone, MessageSquare, ExternalLink,
-  TrendingUp, Gauge, ShieldAlert, ShieldCheck,
+  TrendingUp, Gauge, ShieldAlert, ShieldCheck, Search,
 } from "lucide-react";
 import { Toaster } from "sonner";
 import Logo from "@/components/Logo";
 import { ConfirmProvider } from "@/components/admin/ConfirmDialog";
+import CommandPalette from "@/components/admin/CommandPalette";
 import { checkIsAdmin, adminListTeacherRequests } from "@/lib/adminApi";
 
 const NAV = [
@@ -51,12 +52,20 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     <ConfirmProvider>
     <div className="min-h-screen bg-ink">
       <Toaster richColors position="top-center" toastOptions={{ style: { fontWeight: 600 } }} />
+      <CommandPalette />
       {/* Yan panel — desktop */}
       <aside className="fixed inset-y-0 left-0 z-30 hidden w-56 flex-col border-r border-line bg-panel px-3 py-4 lg:flex">
-        <Link href="/admin/panel" className="mb-4 flex items-center gap-2 px-2">
+        <Link href="/admin/panel" className="mb-3 flex items-center gap-2 px-2">
           <Logo size={26} />
           <span className="text-base font-extrabold text-fg">Admin</span>
         </Link>
+        <button
+          onClick={() => window.dispatchEvent(new Event("admin-cmdk"))}
+          className="mb-3 flex items-center gap-2 rounded-xl border border-line bg-panel-2 px-3 py-2 text-sm font-semibold text-muted hover:text-fg"
+        >
+          <Search size={15} /> <span className="flex-1 text-left">Axtar…</span>
+          <kbd className="rounded border border-line px-1.5 text-[10px] font-bold">⌘K</kbd>
+        </button>
         <nav className="flex flex-1 flex-col gap-1">
           {NAV.map((item) => {
             const on = isActive(item);

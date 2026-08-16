@@ -14,6 +14,8 @@ import {
   type AdminTeacherRequest, type AdminTeacher,
 } from "@/lib/adminApi";
 import { PageSkeleton } from "@/components/Skeleton";
+import { toast } from "sonner";
+import { useConfirm } from "@/components/admin/ConfirmDialog";
 
 function fmtDate(s: string): string {
   return new Date(s).toLocaleString("az-AZ", { dateStyle: "medium", timeStyle: "short" });
@@ -26,6 +28,7 @@ export default function AdminTeachersPage() {
   const [reqs, setReqs] = useState<AdminTeacherRequest[] | null>(null);
   const [teachers, setTeachers] = useState<AdminTeacher[]>([]);
   const [busy, setBusy] = useState(false);
+  const confirm = useConfirm();
 
   const reload = useCallback(() => {
     adminListTeacherRequests().then(setReqs);
@@ -36,11 +39,12 @@ export default function AdminTeachersPage() {
   useEffect(() => { if (isAdmin === false) router.replace("/dashboard"); }, [isAdmin, router]);
   useEffect(() => { if (isAdmin === true) reload(); }, [isAdmin, reload]);
 
-  async function act(fn: () => Promise<{ ok: boolean; error?: string }>) {
+  async function act(fn: () => Promise<{ ok: boolean; error?: string }>, successMsg: string) {
     setBusy(true);
     const r = await fn();
     setBusy(false);
-    if (!r.ok) { alert("Xəta: " + (r.error ?? "")); return; }
+    if (!r.ok) { toast.error(r.error || "Xəta baş verdi"); return; }
+    toast.success(successMsg);
     reload();
   }
 
@@ -76,14 +80,14 @@ export default function AdminTeachersPage() {
                   <div className="flex shrink-0 gap-2">
                     <button
                       disabled={busy}
-                      onClick={() => act(() => adminApproveTeacher(r.user_id))}
+                      onClick={() => act(() => adminApproveTeacher(r.user_id), `${r.name} müəllim təsdiqləndi`)}
                       className="flex items-center gap-1 rounded-xl bg-emerald-500 px-3 py-2 text-sm font-bold text-white hover:bg-emerald-600 disabled:opacity-50"
                     >
                       <Check size={15} /> Təsdiq
                     </button>
                     <button
                       disabled={busy}
-                      onClick={() => act(() => adminRejectTeacher(r.user_id))}
+                      onClick={() => act(() => adminRejectTeacher(r.user_id), "Müraciət rədd edildi")}
                       className="flex items-center gap-1 rounded-xl border-2 border-red-500/40 px-3 py-2 text-sm font-bold text-red-500 hover:bg-red-500/10 disabled:opacity-50"
                     >
                       <X size={15} /> Rədd
@@ -124,7 +128,10 @@ export default function AdminTeachersPage() {
                       <button
                         disabled={busy}
                         title="Müəllimliyi geri al"
-                        onClick={() => { if (confirm(`${t.name} — müəllimliyi geri alınsın?`)) act(() => adminRevokeTeacher(t.user_id)); }}
+                        onClick={async () => {
+                          if (await confirm({ title: "Müəllimliyi geri al?", message: `${t.name} artıq sinif aça bilməyəcək.`, danger: true, confirmText: "Geri al" }))
+                            act(() => adminRevokeTeacher(t.user_id), "Müəllimlik geri alındı");
+                        }}
                         className="rounded-lg p-2 text-red-500 hover:bg-red-500/10 disabled:opacity-50"
                       >
                         <Trash2 size={15} />
