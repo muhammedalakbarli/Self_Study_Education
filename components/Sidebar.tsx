@@ -109,6 +109,14 @@ export default function Sidebar() {
   const [moreOpen, setMoreOpen] = useState(false);
   const [adminPending, setAdminPending] = useState(0); // gözləyən müəllim müraciətləri
 
+  // Səhifə dəyişəndə mobil "Daha çoxu" vərəqini bağla — render fazasında,
+  // əvvəlki path ilə müqayisə (effektsiz, əlavə render yaratmır).
+  const [prevPath, setPrevPath] = useState(pathname);
+  if (pathname !== prevPath) {
+    setPrevPath(pathname);
+    setMoreOpen(false);
+  }
+
   useEffect(() => {
     checkIsAdmin().then(setIsAdmin);
   }, []);
@@ -117,10 +125,6 @@ export default function Sidebar() {
     if (!isAdmin) return;
     adminListTeacherRequests().then((r) => setAdminPending(r.length)).catch(() => {});
   }, [isAdmin, pathname]);
-  // Səhifə dəyişəndə mobil "Daha çoxu" vərəqini bağla.
-  useEffect(() => {
-    setMoreOpen(false);
-  }, [pathname]);
   // Təkrar vaxtı çatan tapşırıq varsa Praktika üzərində qırmızı nöqtə göstər.
   useEffect(() => {
     loadDueTaskIds()

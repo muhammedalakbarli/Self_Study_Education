@@ -3,7 +3,7 @@
 // Ehtiyat yol: brauzerin Web Speech API-si (əgər audio çalınmasa).
 // Bütün çağırışlar istifadəçi klikindən gəlir, ona görə autoplay siyasəti bloklamır.
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 
 let current: HTMLAudioElement | null = null;
 
@@ -20,15 +20,16 @@ function setSpeaking(v: boolean): void {
 
 // React hook — komponent TTS "danışır" vəziyyətini izləsin (Mascot avto-lipsync).
 export function useSpeaking(): boolean {
-  const [v, setV] = useState(false);
-  useEffect(() => {
-    setV(speaking);
-    speakingListeners.add(setV);
-    return () => {
-      speakingListeners.delete(setV);
-    };
-  }, []);
-  return v;
+  return useSyncExternalStore(
+    (onChange) => {
+      speakingListeners.add(onChange);
+      return () => {
+        speakingListeners.delete(onChange);
+      };
+    },
+    () => speaking, // brauzer snapshot-u
+    () => false, // server snapshot-u (SSR)
+  );
 }
 
 // Eyni-mənşəli TTS proxy (bax app/api/tts/route.ts). Server Google-dan audionu

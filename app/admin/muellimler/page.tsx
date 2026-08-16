@@ -3,7 +3,7 @@
 // Admin · Müəllimlər — müəllimlik müraciətlərini təsdiq/rədd et, təsdiqlənmiş müəllimləri idarə et.
 // Yalnız təsdiqlənmiş müəllim sinif aça bilir (Duolingo for Schools məntiqi).
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, GraduationCap, Check, X, Trash2 } from "lucide-react";
@@ -27,14 +27,15 @@ export default function AdminTeachersPage() {
   const [teachers, setTeachers] = useState<AdminTeacher[]>([]);
   const [busy, setBusy] = useState(false);
 
-  useEffect(() => { if (user) checkIsAdmin().then(setIsAdmin); }, [user]);
-  useEffect(() => { if (isAdmin === false) router.replace("/dashboard"); }, [isAdmin, router]);
-  useEffect(() => { if (isAdmin === true) reload(); }, [isAdmin]);
-
-  function reload() {
+  const reload = useCallback(() => {
     adminListTeacherRequests().then(setReqs);
     adminListTeachers().then(setTeachers);
-  }
+  }, []);
+
+  useEffect(() => { if (user) checkIsAdmin().then(setIsAdmin); }, [user]);
+  useEffect(() => { if (isAdmin === false) router.replace("/dashboard"); }, [isAdmin, router]);
+  useEffect(() => { if (isAdmin === true) reload(); }, [isAdmin, reload]);
+
   async function act(fn: () => Promise<{ ok: boolean; error?: string }>) {
     setBusy(true);
     const r = await fn();

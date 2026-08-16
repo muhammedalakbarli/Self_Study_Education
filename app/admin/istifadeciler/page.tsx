@@ -69,7 +69,7 @@ export default function AdminUsersPage() {
   const filtered = useMemo(() => {
     if (!rows) return [];
     const s = q.trim().toLowerCase();
-    let out = s
+    const out = s
       ? rows.filter((r) => r.email.toLowerCase().includes(s) || r.name.toLowerCase().includes(s))
       : [...rows];
     out.sort((a, b) => {

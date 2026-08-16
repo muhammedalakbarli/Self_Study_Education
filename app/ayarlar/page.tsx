@@ -80,6 +80,8 @@ export default function SettingsPage() {
   async function setGrade(value: number) {
     const supabase = createClient();
     await supabase.auth.updateUser({ data: { grade: value } });
+    // Sinif dəyişəndə bütün proqram/məzmun yenidən yüklənməlidir — tam keçid qəsdəndir.
+    // eslint-disable-next-line @next/next/no-location-assign-relative-destination
     window.location.href = "/dashboard";
   }
 

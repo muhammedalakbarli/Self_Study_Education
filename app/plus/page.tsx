@@ -53,6 +53,8 @@ export default function PlusPage() {
         `checkout[custom][user_id]=${encodeURIComponent(user.id)}` +
         `&checkout[custom][plan]=${plan}` +
         (user.email ? `&checkout[email]=${encodeURIComponent(user.email)}` : "");
+      // Xarici LemonSqueezy checkout URL-i — router yox, tam keçid lazımdır.
+      // eslint-disable-next-line @next/next/no-location-assign-relative-destination
       window.location.href = `${url}${sep}${params}`;
       return;
     }
