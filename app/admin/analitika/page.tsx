@@ -10,7 +10,9 @@ import Link from "next/link";
 import { useAuthUser } from "@/lib/useAuthUser";
 import {
   checkIsAdmin, adminGrowth, adminSubjectStats,
+  adminDailySeries, adminRetention, adminHourlyActivity,
   type AdminGrowth, type AdminSubjectStat,
+  type DailyPoint, type AdminRetention, type HourlyPoint,
 } from "@/lib/adminApi";
 import { createClient } from "@/lib/supabase/client";
 import { loadLeaderboard, type LeaderRow } from "@/lib/leaderboard";
@@ -55,6 +57,10 @@ export default function AdminAnalyticsPage() {
   const [feedback, setFeedback] = useState<FbRow[] | null>(null);
   const [growth, setGrowth] = useState<AdminGrowth | null>(null);
   const [subjectStats, setSubjectStats] = useState<AdminSubjectStat[]>([]);
+  const [range, setRange] = useState(14);
+  const [daily, setDaily] = useState<DailyPoint[]>([]);
+  const [retention, setRetention] = useState<AdminRetention | null>(null);
+  const [hourly, setHourly] = useState<HourlyPoint[]>([]);
 
   useEffect(() => {
     if (user) checkIsAdmin().then(setIsAdmin);
@@ -70,7 +76,12 @@ export default function AdminAnalyticsPage() {
     sb.from("task_feedback").select("task_id,category,resolved").then(({ data }) => setFeedback((data as FbRow[]) ?? []));
     adminGrowth().then(setGrowth);
     adminSubjectStats().then(setSubjectStats);
+    adminRetention().then(setRetention);
+    adminHourlyActivity().then(setHourly);
   }, [isAdmin]);
+  useEffect(() => {
+    if (isAdmin === true) adminDailySeries(range).then(setDaily);
+  }, [isAdmin, range]);
 
   // ── Məzmun statistikası (DB yox — content tree-dən) ──
   const content = useMemo(() => {
@@ -175,6 +186,62 @@ export default function AdminAnalyticsPage() {
           </Section>
         )}
 
+        {/* Zaman aralığı — müqayisə + gün-gün + retensiya + saatlıq */}
+        <Section title="Zaman aralığı analizi">
+          <div className="mb-3 flex items-center gap-2">
+            <span className="text-xs font-bold uppercase tracking-wide text-muted">Aralıq:</span>
+            {[7, 14, 30, 90].map((r) => (
+              <button key={r} onClick={() => setRange(r)}
+                className={`rounded-lg px-3 py-1.5 text-sm font-bold ${range === r ? "bg-brand text-white" : "border-2 border-line bg-panel text-fg hover:border-brand"}`}>
+                {r} gün
+              </button>
+            ))}
+          </div>
+
+          {/* Cari dövr vs əvvəlki dövr */}
+          {daily.length >= 2 * range && (() => {
+            const cur = daily.slice(-range), prev = daily.slice(0, range);
+            const sum = (arr: DailyPoint[], k: keyof DailyPoint) => arr.reduce((s, x) => s + Number(x[k]), 0);
+            return (
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                <Compare label={`Qeydiyyat (${range}g)`} cur={sum(cur, "signups")} prev={sum(prev, "signups")} />
+                <Compare label={`Aktiv gün-cəmi (${range}g)`} cur={sum(cur, "active")} prev={sum(prev, "active")} />
+                <Compare label={`Tamamlanan dərs (${range}g)`} cur={sum(cur, "completions")} prev={sum(prev, "completions")} />
+              </div>
+            );
+          })()}
+
+          {/* Gün-gün cədvəl */}
+          <div className="mt-3">
+            <Table
+              title={`Gün-gün (son ${range} gün)`}
+              head={["Tarix", "Qeydiyyat", "Aktiv", "Tamamlanan"]}
+              rows={[...daily.slice(-range)].reverse().map((x) => [x.d, Number(x.signups), Number(x.active), Number(x.completions)])}
+            />
+          </div>
+
+          {/* Retensiya proksisi */}
+          {retention && (
+            <div className="mt-4">
+              <div className="mb-2 text-xs font-bold uppercase tracking-wide text-muted">
+                Retensiya (proksi — qeydiyyatdan N gün sonra ən azı 1 dəfə qayıdan)
+              </div>
+              <div className="grid grid-cols-3 gap-3">
+                <Ratio label="D1 (1 gün sonra)" num={retention.d1_num} den={retention.d1_den} />
+                <Ratio label="D7 (7 gün sonra)" num={retention.d7_num} den={retention.d7_den} />
+                <Ratio label="D30 (30 gün sonra)" num={retention.d30_num} den={retention.d30_den} />
+              </div>
+            </div>
+          )}
+
+          {/* Saatlıq aktivlik */}
+          {hourly.length > 0 && (
+            <div className="mt-4">
+              <HourBars data={hourly} />
+            </div>
+          )}
+        </Section>
+
         {/* Fənn üzrə istifadə (real DB) */}
         {subjectStats.length > 0 && (
           <Section title="Fənn üzrə istifadə (tamamlanan dərslər)">
@@ -265,6 +332,50 @@ function Ratio({ label, num, den, hint }: { label: string; num: number; den: num
         <div className="h-full rounded-full bg-brand" style={{ width: `${Math.min(pct, 100)}%` }} />
       </div>
       <div className="mt-1 text-xs text-muted">{label}</div>
+    </div>
+  );
+}
+
+// Cari vs əvvəlki dövr müqayisəsi.
+function Compare({ label, cur, prev }: { label: string; cur: number; prev: number }) {
+  const delta = prev > 0 ? Math.round(((cur - prev) / prev) * 1000) / 10 : cur > 0 ? 100 : 0;
+  const up = cur >= prev;
+  return (
+    <div className="rounded-2xl border border-line bg-panel p-4">
+      <div className="flex items-baseline gap-2">
+        <span className="text-2xl font-extrabold text-fg">{cur.toLocaleString("az-AZ")}</span>
+        <span className={`text-xs font-bold ${up ? "text-emerald-600" : "text-red-500"}`}>
+          {up ? "↑" : "↓"} {Math.abs(delta)}%
+        </span>
+      </div>
+      <div className="mt-0.5 text-xs text-muted">{label}</div>
+      <div className="text-[11px] text-muted">əvvəlki dövr: {prev.toLocaleString("az-AZ")}</div>
+    </div>
+  );
+}
+
+// Saatlıq aktivlik — 24 saat, rəqəmli.
+function HourBars({ data }: { data: { hour: number; cnt: number }[] }) {
+  const map = new Map(data.map((h) => [h.hour, Number(h.cnt)]));
+  const hours = Array.from({ length: 24 }, (_, h) => ({ h, n: map.get(h) ?? 0 }));
+  const max = Math.max(1, ...hours.map((x) => x.n));
+  const peak = hours.reduce((p, x) => (x.n > p.n ? x : p), hours[0]);
+  return (
+    <div className="rounded-2xl border border-line bg-panel p-3">
+      <div className="mb-3 flex flex-wrap items-baseline justify-between gap-x-3">
+        <span className="text-sm font-bold text-fg">Saatlıq aktivlik (son giriş üzrə, Bakı vaxtı)</span>
+        <span className="text-xs text-muted">ən aktiv saat <b className="text-fg">{String(peak.h).padStart(2, "0")}:00</b> ({peak.n})</span>
+      </div>
+      <div className="flex h-24 items-end gap-[2px]">
+        {hours.map((x) => (
+          <div key={x.h} className="flex flex-1 flex-col items-center justify-end" title={`${x.h}:00 — ${x.n}`}>
+            <span className={`text-[8px] font-bold leading-none ${x.n > 0 ? "text-fg" : "text-transparent"}`}>{x.n}</span>
+            <div className={`mt-0.5 w-full rounded-sm bg-sky-500 ${x.n === 0 ? "opacity-30" : ""}`}
+              style={{ height: `${Math.max((x.n / max) * 100, x.n > 0 ? 6 : 3)}%` }} />
+            <span className="mt-1 text-[8px] leading-none text-muted">{x.h % 3 === 0 ? x.h : ""}</span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

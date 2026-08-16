@@ -434,3 +434,22 @@ export async function adminListAdmins(): Promise<AdminRow[]> {
   try { const { data } = await createClient().rpc("admin_list_admins"); return (data as AdminRow[]) ?? []; }
   catch { return []; }
 }
+
+// ── Analitika (aralıq/retensiya/saatlıq) — migration 0032 ──
+export interface DailyPoint { d: string; signups: number; active: number; completions: number; }
+export async function adminDailySeries(days = 14): Promise<DailyPoint[]> {
+  try { const { data } = await createClient().rpc("admin_daily_series", { p_days: days }); return (data as DailyPoint[]) ?? []; }
+  catch { return []; }
+}
+export interface AdminRetention {
+  d1_num: number; d1_den: number; d7_num: number; d7_den: number; d30_num: number; d30_den: number;
+}
+export async function adminRetention(): Promise<AdminRetention | null> {
+  try { const { data } = await createClient().rpc("admin_retention"); return (data as AdminRetention) ?? null; }
+  catch { return null; }
+}
+export interface HourlyPoint { hour: number; cnt: number; }
+export async function adminHourlyActivity(): Promise<HourlyPoint[]> {
+  try { const { data } = await createClient().rpc("admin_hourly_activity"); return (data as HourlyPoint[]) ?? []; }
+  catch { return []; }
+}
