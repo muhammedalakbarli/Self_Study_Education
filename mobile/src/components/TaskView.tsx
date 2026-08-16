@@ -65,7 +65,7 @@ export default function TaskView({
                 // Dinləmə variantları İngilis sözdür — seçiləndə səslənir.
                 if (isListening) speakEnglish(opt);
               }}
-              style={[t.opt, tone]}
+              style={({ pressed }) => [t.opt, tone, pressed && { transform: [{ scale: 0.98 }] }]}
             >
               <Text style={t.optText}>{opt}</Text>
             </Pressable>
@@ -143,7 +143,7 @@ function WordOrder({
       {/* Söz banki */}
       <View style={t.woBank}>
         {available.map((b) => (
-          <Pressable key={b.key} disabled={disabled} onPress={() => setPicked((p) => [...p, b.key])} style={t.woBankChip}>
+          <Pressable key={b.key} disabled={disabled} onPress={() => setPicked((p) => [...p, b.key])} style={({ pressed }) => [t.woBankChip, pressed && { transform: [{ scale: 0.94 }] }]}>
             <Text style={t.woBankChipText}>{b.w}</Text>
           </Pressable>
         ))}

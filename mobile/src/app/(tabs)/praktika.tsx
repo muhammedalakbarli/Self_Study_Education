@@ -1,7 +1,8 @@
-import { useCallback, useState } from "react";
-import { View, Text, Pressable, StyleSheet, ScrollView, ActivityIndicator } from "react-native";
+import { useCallback, useEffect, useState } from "react";
+import { View, Text, Pressable, StyleSheet, ScrollView, ActivityIndicator, Animated } from "react-native";
 import { useFocusEffect } from "expo-router";
 import { Dumbbell } from "lucide-react-native";
+import AnimatedBar from "@/components/AnimatedBar";
 import { fetchContentTree } from "@/lib/content";
 import { gradeTask, type UserAnswer } from "@/lib/grading";
 import { loadDueTaskIds, markCorrect, addWrong } from "@/lib/srs";
@@ -22,6 +23,28 @@ export default function PraktikaScreen() {
   const [checked, setChecked] = useState(false);
   const [correct, setCorrect] = useState(false);
   const [correctCount, setCorrectCount] = useState(0);
+
+  // Animasiyalar
+  const [shakeX] = useState(() => new Animated.Value(0));
+  const [mascotScale] = useState(() => new Animated.Value(0));
+
+  function runShake() {
+    shakeX.setValue(0);
+    Animated.sequence([
+      Animated.timing(shakeX, { toValue: 10, duration: 50, useNativeDriver: true }),
+      Animated.timing(shakeX, { toValue: -10, duration: 50, useNativeDriver: true }),
+      Animated.timing(shakeX, { toValue: 6, duration: 50, useNativeDriver: true }),
+      Animated.timing(shakeX, { toValue: -6, duration: 50, useNativeDriver: true }),
+      Animated.timing(shakeX, { toValue: 0, duration: 50, useNativeDriver: true }),
+    ]).start();
+  }
+
+  useEffect(() => {
+    if (phase === "done") {
+      mascotScale.setValue(0);
+      Animated.spring(mascotScale, { toValue: 1, friction: 5, tension: 90, useNativeDriver: true }).start();
+    }
+  }, [phase, mascotScale]);
 
   // Vaxtı çatan təkrarları yüklə (bütün məzmun ağacından task-ları tap).
   const reload = useCallback(async () => {
@@ -66,6 +89,7 @@ export default function PraktikaScreen() {
       setCorrectCount((c) => c + 1);
     } else {
       addWrong(task.id); // yenidən sıfırla, gələcəkdə təkrar
+      runShake();
     }
   }
 
@@ -87,7 +111,9 @@ export default function PraktikaScreen() {
     const acc = total ? Math.round((correctCount / total) * 100) : 0;
     return (
       <View style={s.center}>
-        <Mascot size={120} mood="celebrate" />
+        <Animated.View style={{ transform: [{ scale: mascotScale }] }}>
+          <Mascot size={120} mood="celebrate" />
+        </Animated.View>
         <Text style={s.doneTitle}>Praktika bitdi! 🎉</Text>
         <Text style={s.doneSub}>{correctCount} / {total} düz · {acc}% dəqiqlik</Text>
         <Pressable style={s.cta} onPress={() => setPhase("intro")}>
@@ -104,14 +130,14 @@ export default function PraktikaScreen() {
     return (
       <View style={{ flex: 1, backgroundColor: C.ink }}>
         <View style={s.top}>
-          <View style={s.progress}>
-            <View style={[s.progressFill, { width: `${Math.max(pct, 3)}%` }]} />
-          </View>
+          <AnimatedBar pct={pct} />
           <Text style={s.counter}>{index + 1} / {due.length}</Text>
         </View>
         <ScrollView contentContainerStyle={{ padding: 20, paddingBottom: 150 }}>
           <Text style={s.badge}>🔁 Təkrar</Text>
-          <TaskView task={task} answer={answer} checked={checked} onAnswer={setAnswer} />
+          <Animated.View style={{ transform: [{ translateX: shakeX }] }}>
+            <TaskView task={task} answer={answer} checked={checked} onAnswer={setAnswer} />
+          </Animated.View>
         </ScrollView>
         <View style={[s.bottom, checked && { backgroundColor: correct ? "#2FB17018" : "#FF6B5E18" }]}>
           {checked && (
@@ -162,8 +188,6 @@ const s = StyleSheet.create({
   bigNum: { fontSize: 64, fontWeight: "900", color: C.brand },
   introText: { fontSize: 16, color: C.muted, textAlign: "center", lineHeight: 24 },
   top: { flexDirection: "row", alignItems: "center", gap: 12, paddingHorizontal: 16, paddingTop: 16 },
-  progress: { flex: 1, height: 14, backgroundColor: C.panel2, borderRadius: 8, overflow: "hidden" },
-  progressFill: { height: "100%", backgroundColor: C.brand, borderRadius: 8 },
   counter: { color: C.muted, fontWeight: "800", fontSize: 14 },
   badge: { color: "#E9A23B", fontWeight: "800", fontSize: 12, textTransform: "uppercase", marginBottom: 4 },
   bottom: { position: "absolute", left: 0, right: 0, bottom: 0, padding: 16, paddingBottom: 28, backgroundColor: C.ink, borderTopWidth: 1, borderTopColor: C.line, gap: 8 },

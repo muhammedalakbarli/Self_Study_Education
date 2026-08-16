@@ -1,7 +1,8 @@
-import { useCallback, useState } from "react";
-import { View, Text, Pressable, StyleSheet, ScrollView, ActivityIndicator } from "react-native";
+import { useCallback, useEffect, useState } from "react";
+import { View, Text, Pressable, StyleSheet, ScrollView, ActivityIndicator, Animated } from "react-native";
 import { useRouter, useFocusEffect } from "expo-router";
 import { ArrowLeft, Check, Gift } from "lucide-react-native";
+import AnimatedBar from "@/components/AnimatedBar";
 import { useAuth } from "@/lib/auth";
 import {
   todaysQuests,
@@ -29,6 +30,14 @@ export default function GorevlerScreen() {
   const [quests, setQuests] = useState<QuestState | null>(null);
   const [opening, setOpening] = useState(false);
   const [reward, setReward] = useState<ChestReward | null>(null);
+  const [rewardScale] = useState(() => new Animated.Value(0));
+
+  useEffect(() => {
+    if (reward) {
+      rewardScale.setValue(0);
+      Animated.spring(rewardScale, { toValue: 1, friction: 5, tension: 90, useNativeDriver: true }).start();
+    }
+  }, [reward, rewardScale]);
 
   useFocusEffect(
     useCallback(() => {
@@ -64,7 +73,9 @@ export default function GorevlerScreen() {
   if (reward) {
     return (
       <View style={s.center}>
-        <Mascot size={130} mood="celebrate" />
+        <Animated.View style={{ transform: [{ scale: rewardScale }] }}>
+          <Mascot size={130} mood="celebrate" />
+        </Animated.View>
         <Text style={s.rewardTitle}>Sandıq açıldı! 🎁</Text>
         <Text style={s.rewardText}>{rewardText(reward)}</Text>
         <Pressable style={s.cta} onPress={() => setReward(null)}>
@@ -101,9 +112,7 @@ export default function GorevlerScreen() {
                   <Text style={s.reward}>+{q.rewardXp} XP</Text>
                 )}
               </View>
-              <View style={s.bar}>
-                <View style={[s.barFill, { width: `${Math.max(pct, 3)}%`, backgroundColor: done ? C.success : C.brand }]} />
-              </View>
+              <AnimatedBar pct={pct} color={done ? C.success : C.brand} height={12} />
               <Text style={s.count}>{Math.min(val, q.goal)} / {q.goal}</Text>
             </View>
           );
@@ -141,8 +150,6 @@ const s = StyleSheet.create({
   questLabel: { color: C.fg, fontWeight: "800", fontSize: 16, flex: 1 },
   reward: { color: C.gold, fontWeight: "800", fontSize: 13 },
   doneBadge: { width: 24, height: 24, borderRadius: 12, backgroundColor: C.success, alignItems: "center", justifyContent: "center" },
-  bar: { height: 12, backgroundColor: C.panel2, borderRadius: 8, overflow: "hidden" },
-  barFill: { height: "100%", borderRadius: 8 },
   count: { color: C.muted, fontWeight: "700", fontSize: 12, textAlign: "right" },
   chest: { alignItems: "center", gap: 8, borderRadius: 16, borderWidth: 2, padding: 20, marginTop: 6 },
   chestReady: { borderColor: C.brand, backgroundColor: "#F47B3A14" },

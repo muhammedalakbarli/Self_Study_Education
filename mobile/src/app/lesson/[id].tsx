@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { View, Text, Pressable, StyleSheet, ScrollView, ActivityIndicator, Vibration } from "react-native";
+import { View, Text, Pressable, StyleSheet, ScrollView, ActivityIndicator, Vibration, Animated } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { X, Heart } from "lucide-react-native";
 import TaskView from "@/components/TaskView";
+import AnimatedBar from "@/components/AnimatedBar";
+import CountUp from "@/components/CountUp";
 import { addWrong, markCorrect } from "@/lib/srs";
 import { bumpQuest, bumpQuests } from "@/lib/quests";
 import { useAuth } from "@/lib/auth";
@@ -62,6 +64,35 @@ export default function LessonScreen() {
   const doneCount = inRetry ? retryTotal - retryQueue.length : index;
   const pct = total ? Math.round((doneCount / total) * 100) : 0;
 
+  // ── Animasiyalar (RN Animated) ──
+  const [shakeX] = useState(() => new Animated.Value(0)); // səhv cavabda titrəmə
+  const [fbAnim] = useState(() => new Animated.Value(0)); // feedback banner slayd/opacity
+  const [mascotScale] = useState(() => new Animated.Value(0)); // done ekranı maskot spring
+
+  function runShake() {
+    shakeX.setValue(0);
+    Animated.sequence([
+      Animated.timing(shakeX, { toValue: 10, duration: 50, useNativeDriver: true }),
+      Animated.timing(shakeX, { toValue: -10, duration: 50, useNativeDriver: true }),
+      Animated.timing(shakeX, { toValue: 6, duration: 50, useNativeDriver: true }),
+      Animated.timing(shakeX, { toValue: -6, duration: 50, useNativeDriver: true }),
+      Animated.timing(shakeX, { toValue: 0, duration: 50, useNativeDriver: true }),
+    ]).start();
+  }
+
+  // Yoxlanandan sonra feedback banner-i yumşaq gətir (yoxlama sıfırlananda gizlət).
+  useEffect(() => {
+    Animated.timing(fbAnim, { toValue: checked ? 1 : 0, duration: 200, useNativeDriver: true }).start();
+  }, [checked, fbAnim]);
+
+  // Done ekranı — maskot "pop" (spring) ilə görünsün.
+  useEffect(() => {
+    if (phase === "done") {
+      mascotScale.setValue(0);
+      Animated.spring(mascotScale, { toValue: 1, friction: 5, tension: 90, useNativeDriver: true }).start();
+    }
+  }, [phase, mascotScale]);
+
   function check() {
     if (task === undefined || answer === null || answer === "") return;
     const r = gradeTask(task, answer);
@@ -70,7 +101,10 @@ export default function LessonScreen() {
 
     // SRS (aralıqlı təkrar) — web ilə eyni: düz→irəli/mənimsə, səhv→təkrara sal.
     if (r.correct) markCorrect(task.id);
-    else addWrong(task.id);
+    else {
+      addWrong(task.id);
+      runShake();
+    }
 
     if (inRetry) {
       Vibration.vibrate(r.correct ? 25 : 70);
@@ -141,12 +175,14 @@ export default function LessonScreen() {
     const accuracy = answered ? Math.round((correctCount / answered) * 100) : 0;
     return (
       <View style={s.center}>
-        <Mascot size={130} mood="celebrate" />
+        <Animated.View style={{ transform: [{ scale: mascotScale }] }}>
+          <Mascot size={130} mood="celebrate" />
+        </Animated.View>
         <Text style={s.doneTitle}>Dərs tamamlandı! 🎉</Text>
         <View style={s.doneStats}>
-          <Stat value={`+${earned}`} label="XP" color={C.accent} />
-          <Stat value={`+${gemsEarned}`} label="Zümrüd" color={C.success} />
-          <Stat value={`${accuracy}%`} label="Dəqiqlik" color={C.brand} />
+          <Stat count={earned} prefix="+" label="XP" color={C.accent} />
+          <Stat count={gemsEarned} prefix="+" label="Zümrüd" color={C.success} />
+          <Stat count={accuracy} suffix="%" label="Dəqiqlik" color={C.brand} />
         </View>
         <Pressable style={s.btn} onPress={() => router.back()}><Text style={s.btnText}>Davam et</Text></Pressable>
       </View>
@@ -160,9 +196,7 @@ export default function LessonScreen() {
       {/* Üst bar: çıxış + progress + canlar */}
       <View style={s.top}>
         <Pressable onPress={() => router.back()} hitSlop={10}><X color={C.muted} size={26} /></Pressable>
-        <View style={s.progress}>
-          <View style={[s.progressFill, { width: `${Math.max(pct, 3)}%`, backgroundColor: inRetry ? "#E9A23B" : C.brand }]} />
-        </View>
+        <AnimatedBar pct={pct} color={inRetry ? "#E9A23B" : C.brand} />
         <View style={s.hearts}>
           <Heart color={C.danger} fill={C.danger} size={18} />
           <Text style={s.heartsText}>{plus ? "∞" : hearts}</Text>
@@ -173,14 +207,21 @@ export default function LessonScreen() {
         <Text style={s.taskNo}>
           {inRetry ? `🔁 Təkrar ${doneCount + 1} / ${total}` : `Tapşırıq ${index + 1} / ${total}`}
         </Text>
-        <TaskView task={task} answer={answer} checked={checked} onAnswer={setAnswer} />
+        <Animated.View style={{ transform: [{ translateX: shakeX }] }}>
+          <TaskView task={task} answer={answer} checked={checked} onAnswer={setAnswer} />
+        </Animated.View>
       </ScrollView>
 
       <View style={[s.bottom, checked && { backgroundColor: correct ? "#2FB17018" : "#FF6B5E18" }]}>
         {checked && (
-          <Text style={[s.feedback, { color: correct ? C.success : C.danger }]}>
+          <Animated.Text
+            style={[
+              s.feedback,
+              { color: correct ? C.success : C.danger, opacity: fbAnim, transform: [{ translateY: fbAnim.interpolate({ inputRange: [0, 1], outputRange: [10, 0] }) }] },
+            ]}
+          >
             {correct ? "Əla! 🦊" : "Bir də yoxlayaq"}
-          </Text>
+          </Animated.Text>
         )}
         <Pressable
           style={[s.cta, { backgroundColor: checked ? (correct ? C.success : C.danger) : C.brand }, (answer === null || answer === "") && !checked && { opacity: 0.5 }]}
@@ -200,10 +241,10 @@ export default function LessonScreen() {
   );
 }
 
-function Stat({ value, label, color }: { value: string; label: string; color: string }) {
+function Stat({ count, prefix = "", suffix = "", label, color }: { count: number; prefix?: string; suffix?: string; label: string; color: string }) {
   return (
     <View style={s.stat}>
-      <Text style={[s.statValue, { color }]}>{value}</Text>
+      <CountUp to={count} prefix={prefix} suffix={suffix} style={[s.statValue, { color }]} />
       <Text style={s.statLabel}>{label}</Text>
     </View>
   );
@@ -213,8 +254,6 @@ const s = StyleSheet.create({
   center: { flex: 1, backgroundColor: C.ink, alignItems: "center", justifyContent: "center", gap: 12, padding: 24 },
   link: { color: C.brand, fontWeight: "700", marginTop: 12 },
   top: { flexDirection: "row", alignItems: "center", gap: 12, paddingHorizontal: 16, paddingTop: 16 },
-  progress: { flex: 1, height: 14, backgroundColor: C.panel2, borderRadius: 8, overflow: "hidden" },
-  progressFill: { height: "100%", backgroundColor: C.brand, borderRadius: 8 },
   hearts: { flexDirection: "row", alignItems: "center", gap: 4 },
   heartsText: { color: C.danger, fontWeight: "800", fontSize: 15 },
   taskNo: { color: C.muted, fontWeight: "700", fontSize: 12, textTransform: "uppercase" },
