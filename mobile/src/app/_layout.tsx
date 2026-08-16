@@ -27,6 +27,7 @@ function Nav() {
       <Stack.Protected guard={!!session}>
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="lesson/[id]" />
+        <Stack.Screen name="gorevler" />
       </Stack.Protected>
       <Stack.Protected guard={!session}>
         <Stack.Screen name="(auth)" />

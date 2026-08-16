@@ -43,6 +43,12 @@ export async function completeLesson(userId: string, lessonId: string, earnedXp:
   await supabase.rpc("add_user_xp", { p_amount: earnedXp, p_touch_streak: true });
 }
 
+// Dərsdən kənar XP (məs. quest mükafatı) — seriyaya toxunmur (web addXp ilə eyni).
+export async function addXp(_userId: string, amount: number): Promise<void> {
+  if (!amount) return;
+  await supabase.rpc("add_user_xp", { p_amount: amount, p_touch_streak: false });
+}
+
 export type LessonUIState = "done" | "current" | "locked";
 // Ciddi ardıcıl: ilk tamamlanmamış "cari", ondan əvvəlkilər "done", sonrakılar "locked".
 export function lessonState(order: string[], id: string, completed: string[]): LessonUIState {

@@ -4,6 +4,7 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { X, Heart } from "lucide-react-native";
 import TaskView from "@/components/TaskView";
 import { addWrong, markCorrect } from "@/lib/srs";
+import { bumpQuest, bumpQuests } from "@/lib/quests";
 import { useAuth } from "@/lib/auth";
 import { fetchContentTree } from "@/lib/content";
 import { gradeTask, type UserAnswer } from "@/lib/grading";
@@ -80,6 +81,7 @@ export default function LessonScreen() {
     if (r.correct) {
       setEarned((x) => x + 2); // web ilə eyni: hər düz cavab +2 XP
       setCorrectCount((c) => c + 1);
+      bumpQuest("correct", 1); // gündəlik "düzgün cavab" questi
       Vibration.vibrate(25);
     } else {
       setWrongIds((w) => (w.includes(task.id) ? w : [...w, task.id]));
@@ -95,6 +97,7 @@ export default function LessonScreen() {
     const g = GEMS_PER_LESSON * (plus ? 2 : 1);
     addGems(g).catch(() => {});
     addLeaderboardXp(earned).catch(() => {});
+    bumpQuests({ xp: earned, lessons: 1 }).catch(() => {}); // gündəlik XP + dərs questləri
     setGemsEarned(g);
     Vibration.vibrate([0, 40, 60, 40]);
     setPhase("done");

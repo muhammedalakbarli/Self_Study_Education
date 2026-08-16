@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { View, Text, ScrollView, Pressable, StyleSheet, ActivityIndicator, RefreshControl } from "react-native";
 import { useRouter, useFocusEffect } from "expo-router";
-import { Flame, Gem, Check, Star, Lock, Heart } from "lucide-react-native";
+import { Flame, Gem, Check, Star, Lock, Heart, Target } from "lucide-react-native";
 import { useAuth, userGrade } from "@/lib/auth";
 import { fetchContentTree } from "@/lib/content";
 import { loadProgress, lessonState, type Progress } from "@/lib/progress";
 import { loadHearts, MAX_HEARTS } from "@/lib/hearts";
 import { loadPlus } from "@/lib/plus";
+import { syncQuestRewards } from "@/lib/quests";
 import type { Subject } from "@/lib/types";
 import { C } from "@/lib/theme";
 
@@ -39,10 +40,14 @@ export default function Learn() {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     load();
   }, [load]);
-  // Dərsdən qayıdanda irəliləyişi + can yenilə.
+  // Dərsdən qayıdanda: tamamlanmış quest mükafatlarını ver, sonra irəliləyiş + can yenilə.
   useFocusEffect(
     useCallback(() => {
-      if (user) loadProgress(user.id).then(setProg);
+      if (user) {
+        syncQuestRewards(user.id)
+          .catch(() => {})
+          .finally(() => loadProgress(user.id).then(setProg).catch(() => {}));
+      }
       loadHearts().then(setHearts).catch(() => {});
     }, [user]),
   );
@@ -88,9 +93,15 @@ export default function Learn() {
     <View style={{ flex: 1, backgroundColor: C.ink }}>
       {/* Stat zolağı */}
       <View style={s.statbar}>
-        <View style={s.stat}><Flame color={C.brand} size={22} fill={C.brand} /><Text style={s.statN}>{prog.streakDays}</Text></View>
-        <View style={s.stat}><Gem color={C.success} size={22} fill={C.success} /><Text style={s.statN}>{prog.gems}</Text></View>
-        <View style={s.stat}><Heart color={C.danger} size={22} fill={C.danger} /><Text style={s.statN}>{plus ? "∞" : hearts}</Text></View>
+        <Pressable style={s.questBtn} onPress={() => router.push("/gorevler")} hitSlop={8}>
+          <Target color={C.brand} size={22} />
+          <Text style={s.questBtnText}>Görevlər</Text>
+        </Pressable>
+        <View style={s.stats}>
+          <View style={s.stat}><Flame color={C.brand} size={22} fill={C.brand} /><Text style={s.statN}>{prog.streakDays}</Text></View>
+          <View style={s.stat}><Gem color={C.success} size={22} fill={C.success} /><Text style={s.statN}>{prog.gems}</Text></View>
+          <View style={s.stat}><Heart color={C.danger} size={22} fill={C.danger} /><Text style={s.statN}>{plus ? "∞" : hearts}</Text></View>
+        </View>
       </View>
 
       {/* Fənn seçici */}
@@ -141,7 +152,10 @@ export default function Learn() {
 
 const s = StyleSheet.create({
   center: { flex: 1, backgroundColor: C.ink, alignItems: "center", justifyContent: "center" },
-  statbar: { flexDirection: "row", justifyContent: "flex-end", gap: 20, paddingHorizontal: 20, paddingTop: 14, paddingBottom: 6 },
+  statbar: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: 20, paddingTop: 14, paddingBottom: 6 },
+  stats: { flexDirection: "row", gap: 20 },
+  questBtn: { flexDirection: "row", alignItems: "center", gap: 6, backgroundColor: C.panel, borderWidth: 2, borderColor: C.line, borderRadius: 14, paddingHorizontal: 10, paddingVertical: 6 },
+  questBtnText: { color: C.fg, fontWeight: "800", fontSize: 13 },
   stat: { flexDirection: "row", alignItems: "center", gap: 5 },
   statN: { fontSize: 17, fontWeight: "800", color: C.fg },
   subjects: { gap: 8, paddingHorizontal: 16, paddingVertical: 8 },
