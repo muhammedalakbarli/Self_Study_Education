@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { View, Text, TextInput, Pressable, StyleSheet, ScrollView, ActivityIndicator, Vibration } from "react-native";
+import { View, Text, Pressable, StyleSheet, ScrollView, ActivityIndicator, Vibration } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { X, Heart, Volume2 } from "lucide-react-native";
-import { speakEnglish } from "@/lib/tts";
+import { X, Heart } from "lucide-react-native";
+import TaskView from "@/components/TaskView";
+import { addWrong, markCorrect } from "@/lib/srs";
 import { useAuth } from "@/lib/auth";
 import { fetchContentTree } from "@/lib/content";
 import { gradeTask, type UserAnswer } from "@/lib/grading";
@@ -65,6 +66,10 @@ export default function LessonScreen() {
     const r = gradeTask(task, answer);
     setCorrect(r.correct);
     setChecked(true);
+
+    // SRS (aralıqlı təkrar) — web ilə eyni: düz→irəli/mənimsə, səhv→təkrara sal.
+    if (r.correct) markCorrect(task.id);
+    else addWrong(task.id);
 
     if (inRetry) {
       Vibration.vibrate(r.correct ? 25 : 70);
@@ -147,10 +152,6 @@ export default function LessonScreen() {
 
   if (task === undefined) return <View style={s.center}><ActivityIndicator color={C.brand} size="large" /></View>;
 
-  const isListening = task.type === "listening";
-  const isChoice = task.type === "multiple_choice" || isListening;
-  const options = isChoice ? ((task as any).options as string[]) : [];
-
   return (
     <View style={{ flex: 1, backgroundColor: C.ink }}>
       {/* Üst bar: çıxış + progress + canlar */}
@@ -169,60 +170,7 @@ export default function LessonScreen() {
         <Text style={s.taskNo}>
           {inRetry ? `🔁 Təkrar ${doneCount + 1} / ${total}` : `Tapşırıq ${index + 1} / ${total}`}
         </Text>
-        <Text style={s.prompt}>{task.prompt}</Text>
-
-        {/* Dinləmə: İngilis mətnini səsləndir */}
-        {isListening && (
-          <Pressable style={s.listenBtn} onPress={() => speakEnglish((task as any).audioText)}>
-            <Volume2 color={C.white} size={24} />
-            <Text style={s.listenText}>Dinlə</Text>
-          </Pressable>
-        )}
-
-        {task.type === "word_order" ? (
-          <WordOrder
-            key={task.id}
-            words={(task as any).words}
-            translation={(task as any).translation}
-            disabled={checked}
-            onChange={setAnswer}
-          />
-        ) : isChoice ? (
-          options.map((opt, i) => {
-            const sel = answer === i;
-            const reveal = checked;
-            const isCorrectOpt = i === (task as any).correctIndex;
-            const tone = reveal
-              ? isCorrectOpt ? { borderColor: C.success, backgroundColor: "#2FB17022" }
-                : sel ? { borderColor: C.danger, backgroundColor: "#FF6B5E22" } : {}
-              : sel ? { borderColor: C.brand, backgroundColor: "#F47B3A18" } : {};
-            return (
-              <Pressable
-                key={i}
-                disabled={checked}
-                onPress={() => {
-                  setAnswer(i);
-                  // Dinləmə variantları İngilis sözdür — seçiləndə səslənir.
-                  if (isListening) speakEnglish(opt);
-                }}
-                style={[s.opt, tone]}
-              >
-                <Text style={s.optText}>{opt}</Text>
-              </Pressable>
-            );
-          })
-        ) : (
-          <TextInput
-            style={s.input}
-            placeholder="Cavabını yaz…"
-            placeholderTextColor={C.muted}
-            editable={!checked}
-            value={answer !== null ? String(answer) : ""}
-            onChangeText={setAnswer}
-            keyboardType={task.type === "numeric" ? "numeric" : "default"}
-            autoCapitalize="none"
-          />
-        )}
+        <TaskView task={task} answer={answer} checked={checked} onAnswer={setAnswer} />
       </ScrollView>
 
       <View style={[s.bottom, checked && { backgroundColor: correct ? "#2FB17018" : "#FF6B5E18" }]}>
@@ -258,71 +206,6 @@ function Stat({ value, label, color }: { value: string; label: string; color: st
   );
 }
 
-// Cümlə quran (word_order): söz banki qarışıq → sıra ilə seç → cavab sətri.
-function WordOrder({
-  words,
-  translation,
-  disabled,
-  onChange,
-}: {
-  words: string[];
-  translation?: string;
-  disabled: boolean;
-  onChange: (v: UserAnswer) => void;
-}) {
-  // Söz banki: hər sözə sabit açar (təkrar sözlər üçün) + bir dəfə qarışıq sıra.
-  const [bank] = useState(() => {
-    const a = words.map((w, i) => ({ w, key: i }));
-    for (let i = a.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [a[i], a[j]] = [a[j], a[i]];
-    }
-    return a;
-  });
-  const [picked, setPicked] = useState<number[]>([]);
-
-  useEffect(() => {
-    const complete = picked.length === words.length;
-    const sentence = picked.map((k) => bank.find((b) => b.key === k)!.w).join(" ");
-    onChange(complete ? sentence : "");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [picked]);
-
-  const available = bank.filter((b) => !picked.includes(b.key));
-
-  return (
-    <View>
-      {translation ? (
-        <Text style={s.woTranslation}>
-          Tərcümə: <Text style={s.woTranslationStrong}>{translation}</Text>
-        </Text>
-      ) : null}
-
-      {/* Cavab sətri — tıklananda sözü geri qaytarır */}
-      <View style={s.woAnswer}>
-        {picked.length === 0 && <Text style={s.woHint}>Sözləri sıra ilə seç…</Text>}
-        {picked.map((k) => {
-          const word = bank.find((b) => b.key === k)!.w;
-          return (
-            <Pressable key={k} disabled={disabled} onPress={() => setPicked((p) => p.filter((x) => x !== k))} style={s.woChip}>
-              <Text style={s.woChipText}>{word}</Text>
-            </Pressable>
-          );
-        })}
-      </View>
-
-      {/* Söz banki */}
-      <View style={s.woBank}>
-        {available.map((b) => (
-          <Pressable key={b.key} disabled={disabled} onPress={() => setPicked((p) => [...p, b.key])} style={s.woBankChip}>
-            <Text style={s.woBankChipText}>{b.w}</Text>
-          </Pressable>
-        ))}
-      </View>
-    </View>
-  );
-}
-
 const s = StyleSheet.create({
   center: { flex: 1, backgroundColor: C.ink, alignItems: "center", justifyContent: "center", gap: 12, padding: 24 },
   link: { color: C.brand, fontWeight: "700", marginTop: 12 },
@@ -332,21 +215,6 @@ const s = StyleSheet.create({
   hearts: { flexDirection: "row", alignItems: "center", gap: 4 },
   heartsText: { color: C.danger, fontWeight: "800", fontSize: 15 },
   taskNo: { color: C.muted, fontWeight: "700", fontSize: 12, textTransform: "uppercase" },
-  prompt: { color: C.fg, fontSize: 22, fontWeight: "800", marginTop: 8, marginBottom: 20 },
-  opt: { borderWidth: 2, borderColor: C.line, backgroundColor: C.panel, borderRadius: 16, padding: 16, marginBottom: 12 },
-  optText: { fontSize: 17, fontWeight: "600", color: C.fg },
-  listenBtn: { flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 10, backgroundColor: C.brand, borderRadius: 16, paddingVertical: 18, marginBottom: 20 },
-  listenText: { color: C.white, fontSize: 18, fontWeight: "800" },
-  woTranslation: { color: C.muted, fontSize: 14, marginBottom: 12 },
-  woTranslationStrong: { color: C.fg, fontWeight: "700" },
-  woAnswer: { flexDirection: "row", flexWrap: "wrap", alignItems: "center", gap: 8, minHeight: 56, borderWidth: 2, borderStyle: "dashed", borderColor: C.line, borderRadius: 16, padding: 12, marginBottom: 16 },
-  woHint: { color: C.muted, fontSize: 14 },
-  woChip: { backgroundColor: C.brand, borderRadius: 12, paddingHorizontal: 14, paddingVertical: 10 },
-  woChipText: { color: C.white, fontWeight: "700", fontSize: 16 },
-  woBank: { flexDirection: "row", flexWrap: "wrap", gap: 8 },
-  woBankChip: { backgroundColor: C.panel, borderWidth: 2, borderColor: C.line, borderRadius: 12, paddingHorizontal: 14, paddingVertical: 10 },
-  woBankChipText: { color: C.fg, fontWeight: "700", fontSize: 16 },
-  input: { borderWidth: 2, borderColor: C.line, backgroundColor: C.panel, borderRadius: 16, padding: 16, fontSize: 18, color: C.fg },
   bottom: { position: "absolute", left: 0, right: 0, bottom: 0, padding: 16, paddingBottom: 28, backgroundColor: C.ink, borderTopWidth: 1, borderTopColor: C.line, gap: 8 },
   feedback: { fontSize: 17, fontWeight: "800" },
   cta: { borderRadius: 16, paddingVertical: 15, alignItems: "center" },
