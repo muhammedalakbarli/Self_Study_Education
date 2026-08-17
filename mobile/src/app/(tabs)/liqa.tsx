@@ -1,8 +1,8 @@
 import { useCallback, useState } from "react";
-import { View, Text, StyleSheet, FlatList, ActivityIndicator, RefreshControl } from "react-native";
+import { View, Text, StyleSheet, FlatList, ActivityIndicator, RefreshControl, Pressable, Modal } from "react-native";
 import { useFocusEffect } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Trophy } from "lucide-react-native";
+import { Trophy, X, Flame } from "lucide-react-native";
 import { C } from "@/lib/theme";
 import {
   loadCohort, loadMyLeagueTier, maybeLeagueRollover,
@@ -14,6 +14,7 @@ export default function LiqaScreen() {
   const [rows, setRows] = useState<CohortRow[] | null>(null);
   const [tier, setTier] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
+  const [selected, setSelected] = useState<{ row: CohortRow; rank: number } | null>(null);
 
   const load = useCallback(async () => {
     await maybeLeagueRollover();
@@ -52,7 +53,10 @@ export default function LiqaScreen() {
           const rank = index + 1;
           const promo = rank <= 5;
           return (
-            <View style={[s.row, item.isMe && s.rowMe]}>
+            <Pressable
+              style={[s.row, item.isMe && s.rowMe]}
+              onPress={() => setSelected({ row: item, rank })}
+            >
               <Text style={[s.rank, promo && { color: C.success }]}>
                 {rank <= 3 ? ["🥇", "🥈", "🥉"][rank - 1] : rank}
               </Text>
@@ -63,11 +67,38 @@ export default function LiqaScreen() {
                 {item.name}{item.isMe ? " (sən)" : ""}
               </Text>
               <Text style={s.xp}>{item.weeklyXp} XP</Text>
-            </View>
+            </Pressable>
           );
         }}
         ListFooterComponent={<Text style={s.footer}>Həftə sonu sıralamaya görə yüksəlir/düşürsən.</Text>}
       />
+
+      {/* Profil baxışı — sətrə toxunanda */}
+      <Modal visible={!!selected} transparent animationType="fade" onRequestClose={() => setSelected(null)}>
+        <Pressable style={s.modalBg} onPress={() => setSelected(null)}>
+          {selected && (
+            <Pressable style={s.card} onPress={(e) => e.stopPropagation()}>
+              <Pressable style={s.closeBtn} onPress={() => setSelected(null)} hitSlop={10}>
+                <X color={C.muted} size={20} />
+              </Pressable>
+              <View style={[s.avatarBig, { backgroundColor: selected.row.color }]}>
+                <Text style={s.avatarBigText}>{selected.row.initial}</Text>
+              </View>
+              <Text style={s.cardName}>{selected.row.name}{selected.row.isMe ? " (sən)" : ""}</Text>
+              <View style={s.cardBadge}>
+                <Trophy color={TIER_COLORS[selected.row.tier]} size={16} fill={TIER_COLORS[selected.row.tier]} />
+                <Text style={[s.cardBadgeText, { color: TIER_COLORS[selected.row.tier] }]}>
+                  {TIER_NAMES[selected.row.tier]} liqası · #{selected.rank}
+                </Text>
+              </View>
+              <View style={s.cardStat}>
+                <Flame color={C.brand} size={18} fill={C.brand} />
+                <Text style={s.cardStatText}>{selected.row.weeklyXp} XP bu həftə</Text>
+              </View>
+            </Pressable>
+          )}
+        </Pressable>
+      </Modal>
     </View>
   );
 }
@@ -85,4 +116,14 @@ const s = StyleSheet.create({
   name: { flex: 1, fontSize: 16, fontWeight: "700", color: C.fg },
   xp: { fontSize: 15, fontWeight: "800", color: C.accent },
   footer: { textAlign: "center", color: C.muted, fontSize: 12, marginTop: 12 },
+  modalBg: { flex: 1, backgroundColor: "rgba(0,0,0,0.5)", alignItems: "center", justifyContent: "center", padding: 24 },
+  card: { width: "100%", maxWidth: 320, backgroundColor: C.panel, borderRadius: 24, padding: 24, alignItems: "center", gap: 8 },
+  closeBtn: { position: "absolute", top: 14, right: 14, padding: 4 },
+  avatarBig: { width: 72, height: 72, borderRadius: 36, alignItems: "center", justifyContent: "center", marginBottom: 4 },
+  avatarBigText: { color: C.white, fontWeight: "900", fontSize: 28 },
+  cardName: { fontSize: 20, fontWeight: "900", color: C.fg, textAlign: "center" },
+  cardBadge: { flexDirection: "row", alignItems: "center", gap: 6, backgroundColor: C.panel2, borderRadius: 12, paddingHorizontal: 12, paddingVertical: 6, marginTop: 4 },
+  cardBadgeText: { fontWeight: "800", fontSize: 13 },
+  cardStat: { flexDirection: "row", alignItems: "center", gap: 6, marginTop: 8 },
+  cardStatText: { fontWeight: "800", fontSize: 15, color: C.fg },
 });

@@ -11,6 +11,10 @@ import { loadPlus } from "@/lib/plus";
 import { syncQuestRewards } from "@/lib/quests";
 import type { Subject } from "@/lib/types";
 import { C } from "@/lib/theme";
+import ZefiMascot, { type ZefiEmotion } from "@/components/ZefiMascot";
+
+// Yol boyu dövr edən Ulduz pozaları (Duolingo owl kimi, hər 5-ci düyündə).
+const PERCH_EMOTIONS: ZefiEmotion[] = ["happy", "welcome", "celebrating", "learning", "thinking"];
 
 export default function Learn() {
   const router = useRouter();
@@ -83,7 +87,8 @@ export default function Learn() {
   if (shown.length === 0) {
     return (
       <View style={s.center}>
-        <Text style={{ color: C.fg, fontSize: 18, fontWeight: "700" }}>Tezliklə!</Text>
+        <ZefiMascot emotion="happy" size={100} />
+        <Text style={{ color: C.fg, fontSize: 18, fontWeight: "700", marginTop: 10 }}>Tezliklə!</Text>
         <Text style={{ color: C.muted, marginTop: 6, textAlign: "center", paddingHorizontal: 30 }}>
           {grade}-ci sinif üçün məzmun hazırlanır.
         </Text>
@@ -112,7 +117,9 @@ export default function Learn() {
           const on = sub.slug === active?.slug;
           return (
             <Pressable key={sub.slug} onPress={() => setActiveSlug(sub.slug)} style={[s.chip, on && s.chipOn]}>
-              <Text style={{ fontSize: 18 }}>{sub.icon}</Text>
+              <View style={[s.chipIcon, on && s.chipIconOn]}>
+                <Text style={s.chipIconText} allowFontScaling={false}>{sub.icon}</Text>
+              </View>
               <Text style={[s.chipText, on && { color: C.white }]}>{sub.name}</Text>
             </Pressable>
           );
@@ -128,20 +135,31 @@ export default function Learn() {
           const offset = Math.round(Math.sin(i * 0.9) * 70);
           const bg = n.state === "done" ? C.success : n.state === "current" ? C.gold : C.panel2;
           const locked = n.state === "locked";
+          // Yol boyu Ulduz — hər 5-ci düyündə, cari düyün istisna, düyünün əks tərəfində.
+          const showMascot = i > 0 && i % 5 === 2 && n.state !== "current";
+          const mascotSide: "left" | "right" = offset >= 0 ? "left" : "right";
+          const mascotEmotion = PERCH_EMOTIONS[Math.floor(i / 5) % PERCH_EMOTIONS.length];
           return (
             <View key={n.id} style={{ width: "100%" }}>
               {n.unit ? <Text style={s.unit}>{n.unit}</Text> : null}
-              <View style={{ alignItems: "center", transform: [{ translateX: offset }], paddingVertical: 8 }}>
-                <Pressable
-                  disabled={locked}
-                  onPress={() => router.push(`/lesson/${n.id}`)}
-                  style={[s.node, { backgroundColor: bg }, locked && { opacity: 0.55 }]}
-                >
-                  {n.state === "done" ? <Check color={C.white} size={30} strokeWidth={3} />
-                    : n.state === "current" ? <Star color={C.white} size={30} fill={C.white} />
-                    : <Lock color={C.muted} size={26} />}
-                </Pressable>
-                <Text style={s.nodeLabel} numberOfLines={1}>{n.title}</Text>
+              <View style={{ alignItems: "center", paddingVertical: 8 }}>
+                <View style={{ transform: [{ translateX: offset }], alignItems: "center" }}>
+                  {showMascot && (
+                    <View style={[s.perch, mascotSide === "left" ? { right: "100%", marginRight: 4 } : { left: "100%", marginLeft: 4 }]} pointerEvents="none">
+                      <ZefiMascot emotion={mascotEmotion} size={56} />
+                    </View>
+                  )}
+                  <Pressable
+                    disabled={locked}
+                    onPress={() => router.push(`/lesson/${n.id}`)}
+                    style={[s.node, { backgroundColor: bg }, locked && { opacity: 0.55 }]}
+                  >
+                    {n.state === "done" ? <Check color={C.white} size={30} strokeWidth={3} />
+                      : n.state === "current" ? <Star color={C.white} size={30} fill={C.white} />
+                      : <Lock color={C.muted} size={26} />}
+                  </Pressable>
+                  <Text style={s.nodeLabel} numberOfLines={1}>{n.title}</Text>
+                </View>
               </View>
             </View>
           );
@@ -161,7 +179,11 @@ const s = StyleSheet.create({
   stat: { flexDirection: "row", alignItems: "center", gap: 5 },
   statN: { fontSize: 17, fontWeight: "800", color: C.fg },
   subjects: { gap: 8, paddingHorizontal: 16, paddingVertical: 8 },
-  chip: { flexDirection: "row", alignItems: "center", gap: 6, backgroundColor: C.panel, borderWidth: 2, borderColor: C.line, borderRadius: 16, paddingHorizontal: 12, paddingVertical: 8 },
+  chip: { flexDirection: "row", alignItems: "center", gap: 8, backgroundColor: C.panel, borderWidth: 2, borderColor: C.line, borderRadius: 16, paddingHorizontal: 10, paddingVertical: 8 },
+  chipIcon: { width: 26, height: 26, borderRadius: 8, backgroundColor: "#F47B3A18", alignItems: "center", justifyContent: "center" },
+  chipIconOn: { backgroundColor: C.white },
+  chipIconText: { fontSize: 14, fontWeight: "800", color: C.brand, lineHeight: 16, includeFontPadding: false, textAlign: "center" },
+  perch: { position: "absolute", top: -6, width: 56, height: 56, alignItems: "center", justifyContent: "center" },
   chipOn: { backgroundColor: C.brand, borderColor: C.brand },
   chipText: { fontWeight: "800", color: C.muted, fontSize: 13 },
   path: { paddingHorizontal: 16, paddingTop: 8 },

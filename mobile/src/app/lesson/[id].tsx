@@ -19,6 +19,7 @@ import { addLeaderboardXp } from "@/lib/leaderboard";
 import type { Lesson, Task } from "@/lib/types";
 import { C } from "@/lib/theme";
 import Mascot from "@/components/Mascot";
+import ZefiMascot, { type ZefiEmotion } from "@/components/ZefiMascot";
 
 type Phase = "main" | "retry" | "done";
 
@@ -70,6 +71,16 @@ export default function LessonScreen() {
   const [shakeX] = useState(() => new Animated.Value(0)); // səhv cavabda titrəmə
   const [fbAnim] = useState(() => new Animated.Value(0)); // feedback banner slayd/opacity
   const [mascotScale] = useState(() => new Animated.Value(0)); // done ekranı maskot spring
+  const [buddyBounce] = useState(() => new Animated.Value(1)); // yoldaş Ulduz — cavabda bounce
+
+  // Yoldaş Ulduz — sualı gözləyəndə düşünür, düz/səhv cavabda reaksiya verir (Duolingo owl kimi).
+  const buddyEmotion: ZefiEmotion = !checked ? "thinking" : correct ? "celebrating" : "worried";
+  useEffect(() => {
+    if (!checked) return;
+    buddyBounce.setValue(0.7);
+    Animated.spring(buddyBounce, { toValue: 1, friction: 4, tension: 140, useNativeDriver: true }).start();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [checked, correct]);
 
   function runShake() {
     shakeX.setValue(0);
@@ -206,9 +217,14 @@ export default function LessonScreen() {
       </View>
 
       <ScrollView contentContainerStyle={{ padding: 20, paddingBottom: 150 }}>
-        <Text style={s.taskNo}>
-          {inRetry ? `🔁 Təkrar ${doneCount + 1} / ${total}` : `Tapşırıq ${index + 1} / ${total}`}
-        </Text>
+        <View style={s.buddyRow}>
+          <Text style={s.taskNo}>
+            {inRetry ? `🔁 Təkrar ${doneCount + 1} / ${total}` : `Tapşırıq ${index + 1} / ${total}`}
+          </Text>
+          <Animated.View style={{ transform: [{ scale: buddyBounce }] }}>
+            <ZefiMascot emotion={buddyEmotion} size={48} />
+          </Animated.View>
+        </View>
         <Animated.View style={{ transform: [{ translateX: shakeX }] }}>
           <TaskView task={task} answer={answer} checked={checked} onAnswer={setAnswer} />
         </Animated.View>
@@ -259,6 +275,7 @@ const s = StyleSheet.create({
   hearts: { flexDirection: "row", alignItems: "center", gap: 4 },
   heartsText: { color: C.danger, fontWeight: "800", fontSize: 15 },
   taskNo: { color: C.muted, fontWeight: "700", fontSize: 12, textTransform: "uppercase" },
+  buddyRow: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 4 },
   bottom: { position: "absolute", left: 0, right: 0, bottom: 0, padding: 16, paddingBottom: 28, backgroundColor: C.ink, borderTopWidth: 1, borderTopColor: C.line, gap: 8 },
   feedback: { fontSize: 17, fontWeight: "800" },
   cta: { borderRadius: 16, minHeight: 56, paddingVertical: 15, alignItems: "center", justifyContent: "center" },
