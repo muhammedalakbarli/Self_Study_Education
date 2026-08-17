@@ -18,9 +18,11 @@ import {
   HelpCircle,
   ChevronRight,
   School,
+  ShieldCheck,
   type LucideIcon,
 } from "lucide-react";
 import { useAuthUser } from "@/lib/useAuthUser";
+import { checkIsAdmin } from "@/lib/adminApi";
 import { loadProgress, type ProgressState } from "@/lib/progress";
 import { signOut } from "@/lib/auth";
 import { useContent } from "@/components/ContentProvider";
@@ -54,9 +56,11 @@ export default function ProfilePage() {
   const [tier, setTier] = useState(0);
   const [friends, setFriends] = useState<FriendRow[]>([]);
   const [social, setSocial] = useState({ followers: 0, following: 0 });
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     if (!user) return;
+    checkIsAdmin().then(setIsAdmin);
     loadProgress(user.id).then(setState);
     loadProfileRow().then((pr) => {
       setProfile(pr);
@@ -266,6 +270,13 @@ export default function ProfilePage() {
             <span className="flex-1 font-bold text-fg">{t("nav.settings")}</span>
             <ChevronRight size={18} className="text-muted" />
           </Link>
+          {isAdmin && (
+            <Link href="/admin" className="flex items-center gap-3 border-b border-line px-4 py-3.5 transition hover:bg-panel-2">
+              <ShieldCheck size={20} className="text-brand" />
+              <span className="flex-1 font-bold text-fg">Admin paneli</span>
+              <ChevronRight size={18} className="text-muted" />
+            </Link>
+          )}
           <Link href="/yardim" className="flex items-center gap-3 px-4 py-3.5 transition hover:bg-panel-2">
             <HelpCircle size={20} className="text-muted" />
             <span className="flex-1 font-bold text-fg">{t("nav.help")}</span>
