@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { View, Text, TextInput, Pressable, StyleSheet, KeyboardAvoidingView, Platform } from "react-native";
 import { Link } from "expo-router";
-import { signIn } from "@/lib/auth";
+import { signIn, signInWithGoogle } from "@/lib/auth";
 import { C } from "@/lib/theme";
 import Mascot from "@/components/Mascot";
 
@@ -9,6 +9,7 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
+  const [googleBusy, setGoogleBusy] = useState(false);
   const [err, setErr] = useState("");
 
   async function submit() {
@@ -18,6 +19,15 @@ export default function Login() {
     const { error } = await signIn(email, password);
     if (error) setErr("Email və ya parol yanlışdır.");
     setBusy(false);
+  }
+
+  async function submitGoogle() {
+    if (googleBusy) return;
+    setErr("");
+    setGoogleBusy(true);
+    const { error } = await signInWithGoogle();
+    if (error) setErr(error);
+    setGoogleBusy(false);
   }
 
   return (
@@ -50,6 +60,16 @@ export default function Login() {
           <Text style={s.btnText}>{busy ? "Gözlə…" : "Daxil ol"}</Text>
         </Pressable>
 
+        <View style={s.divider}>
+          <View style={s.dividerLine} />
+          <Text style={s.dividerText}>və ya</Text>
+          <View style={s.dividerLine} />
+        </View>
+
+        <Pressable style={[s.googleBtn, googleBusy && { opacity: 0.6 }]} onPress={submitGoogle} disabled={googleBusy}>
+          <Text style={s.googleBtnText}>{googleBusy ? "Gözlə…" : "Google ilə davam et"}</Text>
+        </Pressable>
+
         <Link href="/(auth)/signup" style={s.link}>
           Hesabın yoxdur? Qeydiyyatdan keç
         </Link>
@@ -73,5 +93,13 @@ const s = StyleSheet.create({
     alignItems: "center", marginTop: 4,
   },
   btnText: { color: C.white, fontSize: 17, fontWeight: "800", textTransform: "uppercase" },
+  divider: { flexDirection: "row", alignItems: "center", width: "100%", gap: 10, marginVertical: 2 },
+  dividerLine: { flex: 1, height: 1, backgroundColor: C.line },
+  dividerText: { color: C.muted, fontSize: 12, fontWeight: "700" },
+  googleBtn: {
+    width: "100%", backgroundColor: C.panel, borderWidth: 2, borderColor: C.line,
+    borderRadius: 16, paddingVertical: 15, alignItems: "center",
+  },
+  googleBtnText: { color: C.fg, fontSize: 16, fontWeight: "800" },
   link: { color: C.brand, fontWeight: "700", marginTop: 10 },
 });

@@ -6,6 +6,8 @@ import { C } from "@/lib/theme";
 import Mascot from "@/components/Mascot";
 
 const GRADES = [1, 2, 3, 4, 5, 6, 7, 8];
+// Sadə format yoxlaması — "test@a" kimi real olmayan domenləri tutur (Supabase özü buraxır).
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 export default function Signup() {
   const [name, setName] = useState("");
@@ -18,6 +20,8 @@ export default function Signup() {
   async function submit() {
     if (busy) return;
     if (grade === null) { setMsg("Zəhmət olmasa sinfini seç."); return; }
+    if (!EMAIL_RE.test(email.trim())) { setMsg("Zəhmət olmasa düzgün email daxil et."); return; }
+    if (password.length < 6) { setMsg("Parol ən azı 6 simvol olmalıdır."); return; }
     setMsg("");
     setBusy(true);
     const { error } = await signUp(email, password, name, grade);

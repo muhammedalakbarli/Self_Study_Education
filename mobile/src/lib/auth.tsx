@@ -1,6 +1,8 @@
 // Auth konteksti — Supabase sessiyası (AsyncStorage-də qalır).
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import type { Session, User } from "@supabase/supabase-js";
+import * as WebBrowser from "expo-web-browser";
+import * as Linking from "expo-linking";
 import { supabase } from "./supabase";
 
 interface AuthState {
@@ -52,4 +54,24 @@ export async function updateGrade(grade: number) {
 }
 export async function signOut() {
   return supabase.auth.signOut();
+}
+
+// Google ilə giriş — Supabase-in web-dəki eyni OAuth provayderi, in-app browser +
+// deep-link (imparo://auth/callback) vasitəsilə. Yeni Google Cloud açarı lazım DEYİL.
+export async function signInWithGoogle(): Promise<{ error: string | null }> {
+  const redirectTo = Linking.createURL("auth/callback");
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: { redirectTo, skipBrowserRedirect: true, queryParams: { prompt: "select_account" } },
+  });
+  if (error || !data?.url) return { error: error?.message ?? "OAuth ünvanı alınmadı" };
+
+  const res = await WebBrowser.openAuthSessionAsync(data.url, redirectTo);
+  if (res.type !== "success" || !res.url) return { error: null }; // istifadəçi ləğv etdi — səssiz
+
+  const code = new URL(res.url).searchParams.get("code");
+  if (!code) return { error: "Giriş kodu tapılmadı" };
+
+  const { error: exErr } = await supabase.auth.exchangeCodeForSession(code);
+  return { error: exErr?.message ?? null };
 }

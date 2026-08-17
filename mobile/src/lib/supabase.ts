@@ -12,5 +12,7 @@ export const supabase = createClient(url, anon, {
     autoRefreshToken: true,
     persistSession: true,
     detectSessionInUrl: false,
+    // PKCE — Google girişi (WebBrowser deep-link) code exchange üçün lazımdır.
+    flowType: "pkce",
   },
 });
