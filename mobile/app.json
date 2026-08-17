@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Imparo",
-    "slug": "imparo",
+    "slug": "mahammad",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -39,6 +39,13 @@
     "experiments": {
       "typedRoutes": false,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "de51c8e8-69bf-4c0c-a5b8-6ae2739708ac"
+      }
+    },
+    "owner": "imparo"
   }
 }
