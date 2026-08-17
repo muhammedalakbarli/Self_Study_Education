@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { View, Text, Pressable, StyleSheet, ScrollView, ActivityIndicator, Animated } from "react-native";
 import { useFocusEffect } from "expo-router";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Dumbbell } from "lucide-react-native";
 import AnimatedBar from "@/components/AnimatedBar";
 import { fetchContentTree } from "@/lib/content";
@@ -14,6 +15,7 @@ import Mascot from "@/components/Mascot";
 type Phase = "intro" | "run" | "done";
 
 export default function PraktikaScreen() {
+  const insets = useSafeAreaInsets();
   const [due, setDue] = useState<Task[] | null>(null); // null = yüklənir
   const [phase, setPhase] = useState<Phase>("intro");
 
@@ -129,7 +131,7 @@ export default function PraktikaScreen() {
     const pct = Math.round((index / due.length) * 100);
     return (
       <View style={{ flex: 1, backgroundColor: C.ink }}>
-        <View style={s.top}>
+        <View style={[s.top, { paddingTop: insets.top + 16 }]}>
           <AnimatedBar pct={pct} />
           <Text style={s.counter}>{index + 1} / {due.length}</Text>
         </View>

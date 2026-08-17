@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import { View, Text, StyleSheet, FlatList, ActivityIndicator, RefreshControl } from "react-native";
 import { useFocusEffect } from "expo-router";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Trophy } from "lucide-react-native";
 import { C } from "@/lib/theme";
 import {
@@ -9,6 +10,7 @@ import {
 } from "@/lib/leaderboard";
 
 export default function LiqaScreen() {
+  const insets = useSafeAreaInsets();
   const [rows, setRows] = useState<CohortRow[] | null>(null);
   const [tier, setTier] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
@@ -33,7 +35,7 @@ export default function LiqaScreen() {
   return (
     <View style={{ flex: 1, backgroundColor: C.ink }}>
       {/* Pillə başlığı */}
-      <View style={[s.header, { backgroundColor: TIER_COLORS[tier] + "22" }]}>
+      <View style={[s.header, { backgroundColor: TIER_COLORS[tier] + "22", marginTop: insets.top + 16 }]}>
         <Trophy color={TIER_COLORS[tier]} size={30} fill={TIER_COLORS[tier]} />
         <View>
           <Text style={[s.tierName, { color: TIER_COLORS[tier] }]}>{TIER_NAMES[tier]} liqası</Text>

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { View, Text, ScrollView, Pressable, StyleSheet, ActivityIndicator, RefreshControl } from "react-native";
 import { useRouter, useFocusEffect } from "expo-router";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Flame, Gem, Check, Star, Lock, Heart, Target } from "lucide-react-native";
 import { useAuth, userGrade } from "@/lib/auth";
 import { fetchContentTree } from "@/lib/content";
@@ -13,6 +14,7 @@ import { C } from "@/lib/theme";
 
 export default function Learn() {
   const router = useRouter();
+  const insets = useSafeAreaInsets();
   const { user } = useAuth();
   const grade = userGrade(user);
   const [subjects, setSubjects] = useState<Subject[] | null>(null);
@@ -92,7 +94,7 @@ export default function Learn() {
   return (
     <View style={{ flex: 1, backgroundColor: C.ink }}>
       {/* Stat zolağı */}
-      <View style={s.statbar}>
+      <View style={[s.statbar, { paddingTop: insets.top + 14 }]}>
         <Pressable style={s.questBtn} onPress={() => router.push("/gorevler")} hitSlop={8}>
           <Target color={C.brand} size={22} />
           <Text style={s.questBtnText}>Görevlər</Text>

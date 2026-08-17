@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import { View, Text, Pressable, StyleSheet } from "react-native";
 import { useFocusEffect } from "expo-router";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Star, Flame, Gem, LogOut } from "lucide-react-native";
 import { useAuth, userGrade, signOut, updateGrade } from "@/lib/auth";
 import { loadProgress, type Progress } from "@/lib/progress";
@@ -11,6 +12,7 @@ import Mascot from "@/components/Mascot";
 const GRADES = [1, 2, 3, 4, 5, 6, 7, 8];
 
 export default function Profil() {
+  const insets = useSafeAreaInsets();
   const { user } = useAuth();
   const [prog, setProg] = useState<Progress | null>(null);
   const [editGrade, setEditGrade] = useState(false);
@@ -35,7 +37,7 @@ export default function Profil() {
   }
 
   return (
-    <View style={s.wrap}>
+    <View style={[s.wrap, { paddingTop: insets.top + 40 }]}>
       <Mascot size={100} mood="happy" />
       <Text style={s.name}>{name}</Text>
       <Pressable onPress={() => setEditGrade((v) => !v)}>

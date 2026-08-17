@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import { View, Text, StyleSheet, Pressable, ActivityIndicator, Alert } from "react-native";
 import { useFocusEffect } from "expo-router";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Gem, Heart, Shield } from "lucide-react-native";
 import { C } from "@/lib/theme";
 import { loadGems, spendGems, SHOP_PRICES } from "@/lib/gems";
@@ -10,6 +11,7 @@ import { grantStreakFreeze } from "@/lib/streakFreeze";
 type ItemId = "refillHearts" | "streakFreeze";
 
 export default function MagazaScreen() {
+  const insets = useSafeAreaInsets();
   const [gems, setGems] = useState<number | null>(null);
   const [hearts, setHearts] = useState(MAX_HEARTS);
   const [busy, setBusy] = useState<ItemId | null>(null);
@@ -50,7 +52,7 @@ export default function MagazaScreen() {
 
   return (
     <View style={{ flex: 1, backgroundColor: C.ink }}>
-      <View style={s.header}>
+      <View style={[s.header, { paddingTop: insets.top + 20 }]}>
         <Text style={s.title}>Mağaza</Text>
         <View style={s.balance}>
           <Gem color={C.success} size={20} fill={C.success} />
