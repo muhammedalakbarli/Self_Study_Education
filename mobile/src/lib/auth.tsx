@@ -39,12 +39,16 @@ export function userGrade(user: User | null): number {
 export async function signIn(email: string, password: string) {
   return supabase.auth.signInWithPassword({ email: email.trim(), password });
 }
-export async function signUp(email: string, password: string, name: string) {
+export async function signUp(email: string, password: string, name: string, grade: number) {
   return supabase.auth.signUp({
     email: email.trim(),
     password,
-    options: { data: { name: name.trim() } },
+    options: { data: { name: name.trim(), grade } },
   });
+}
+// Sinfi yenilə (profil-də dəyişmək üçün) — user_metadata.grade.
+export async function updateGrade(grade: number) {
+  return supabase.auth.updateUser({ data: { grade } });
 }
 export async function signOut() {
   return supabase.auth.signOut();

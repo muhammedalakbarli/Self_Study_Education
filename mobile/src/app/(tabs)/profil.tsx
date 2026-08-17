@@ -2,15 +2,19 @@ import { useCallback, useState } from "react";
 import { View, Text, Pressable, StyleSheet } from "react-native";
 import { useFocusEffect } from "expo-router";
 import { Star, Flame, Gem, LogOut } from "lucide-react-native";
-import { useAuth, userGrade, signOut } from "@/lib/auth";
+import { useAuth, userGrade, signOut, updateGrade } from "@/lib/auth";
 import { loadProgress, type Progress } from "@/lib/progress";
 import { levelFromXp } from "@/lib/levels";
 import { C } from "@/lib/theme";
 import Mascot from "@/components/Mascot";
 
+const GRADES = [1, 2, 3, 4, 5, 6, 7, 8];
+
 export default function Profil() {
   const { user } = useAuth();
   const [prog, setProg] = useState<Progress | null>(null);
+  const [editGrade, setEditGrade] = useState(false);
+  const [savingGrade, setSavingGrade] = useState(false);
 
   useFocusEffect(
     useCallback(() => {
@@ -20,12 +24,41 @@ export default function Profil() {
 
   const lv = levelFromXp(prog?.totalXp ?? 0);
   const name = (user?.user_metadata?.name as string) || user?.email?.split("@")[0] || "İstifadəçi";
+  const grade = userGrade(user);
+
+  async function pickGrade(g: number) {
+    if (savingGrade || g === grade) { setEditGrade(false); return; }
+    setSavingGrade(true);
+    await updateGrade(g); // onAuthStateChange (USER_UPDATED) user-i yeniləyir
+    setSavingGrade(false);
+    setEditGrade(false);
+  }
 
   return (
     <View style={s.wrap}>
       <Mascot size={100} mood="happy" />
       <Text style={s.name}>{name}</Text>
-      <Text style={s.meta}>{userGrade(user)}-ci sinif · Səviyyə {lv.level} ({lv.title})</Text>
+      <Pressable onPress={() => setEditGrade((v) => !v)}>
+        <Text style={s.meta}>{grade}-ci sinif · Səviyyə {lv.level} ({lv.title})  ✎</Text>
+      </Pressable>
+
+      {editGrade ? (
+        <View style={s.grades}>
+          {GRADES.map((g) => {
+            const on = g === grade;
+            return (
+              <Pressable
+                key={g}
+                onPress={() => pickGrade(g)}
+                disabled={savingGrade}
+                style={[s.gradeBtn, on && s.gradeOn, savingGrade && { opacity: 0.5 }]}
+              >
+                <Text style={[s.gradeText, on && s.gradeTextOn]}>{g}</Text>
+              </Pressable>
+            );
+          })}
+        </View>
+      ) : null}
 
       <View style={s.row}>
         <Stat Icon={Star} v={prog?.totalXp ?? 0} label="XP" color={C.accent} />
@@ -61,6 +94,11 @@ const s = StyleSheet.create({
   wrap: { flex: 1, backgroundColor: C.ink, alignItems: "center", paddingTop: 60, paddingHorizontal: 24, gap: 8 },
   name: { fontSize: 24, fontWeight: "800", color: C.fg, marginTop: 8 },
   meta: { color: C.muted, marginBottom: 8 },
+  grades: { flexDirection: "row", flexWrap: "wrap", gap: 8, justifyContent: "center", marginBottom: 4 },
+  gradeBtn: { width: 46, height: 46, borderRadius: 12, borderWidth: 2, borderColor: C.line, backgroundColor: C.panel, alignItems: "center", justifyContent: "center" },
+  gradeOn: { borderColor: C.brand, backgroundColor: C.brand },
+  gradeText: { fontSize: 17, fontWeight: "800", color: C.fg },
+  gradeTextOn: { color: C.white },
   row: { flexDirection: "row", gap: 12, marginTop: 8 },
   stat: { backgroundColor: C.panel, borderWidth: 1, borderColor: C.line, borderRadius: 16, padding: 14, alignItems: "center", width: 92 },
   statN: { fontSize: 18, fontWeight: "800", color: C.fg, marginTop: 4 },
