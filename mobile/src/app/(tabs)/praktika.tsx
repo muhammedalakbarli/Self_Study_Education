@@ -192,7 +192,7 @@ const s = StyleSheet.create({
   badge: { color: "#E9A23B", fontWeight: "800", fontSize: 12, textTransform: "uppercase", marginBottom: 4 },
   bottom: { position: "absolute", left: 0, right: 0, bottom: 0, padding: 16, paddingBottom: 28, backgroundColor: C.ink, borderTopWidth: 1, borderTopColor: C.line, gap: 8 },
   feedback: { fontSize: 17, fontWeight: "800" },
-  cta: { borderRadius: 16, paddingVertical: 15, paddingHorizontal: 40, alignItems: "center", backgroundColor: C.brand, marginTop: 8 },
+  cta: { borderRadius: 16, minHeight: 56, paddingVertical: 15, paddingHorizontal: 40, alignItems: "center", justifyContent: "center", backgroundColor: C.brand, marginTop: 8 },
   ctaText: { color: C.white, fontSize: 17, fontWeight: "800", textTransform: "uppercase" },
   doneTitle: { fontSize: 24, fontWeight: "800", color: C.fg, marginTop: 10 },
   doneSub: { fontSize: 16, color: C.muted },

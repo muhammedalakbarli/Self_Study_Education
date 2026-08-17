@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { View, Text, Pressable, StyleSheet, ScrollView, ActivityIndicator, Vibration, Animated } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { X, Heart } from "lucide-react-native";
 import TaskView from "@/components/TaskView";
 import AnimatedBar from "@/components/AnimatedBar";
@@ -25,6 +26,7 @@ export default function LessonScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
   const { user } = useAuth();
+  const insets = useSafeAreaInsets();
   const [lesson, setLesson] = useState<Lesson | null | undefined>(undefined);
   const [phase, setPhase] = useState<Phase>("main");
   const [index, setIndex] = useState(0);
@@ -194,7 +196,7 @@ export default function LessonScreen() {
   return (
     <View style={{ flex: 1, backgroundColor: C.ink }}>
       {/* Üst bar: çıxış + progress + canlar */}
-      <View style={s.top}>
+      <View style={[s.top, { paddingTop: insets.top + 12 }]}>
         <Pressable onPress={() => router.back()} hitSlop={10}><X color={C.muted} size={26} /></Pressable>
         <AnimatedBar pct={pct} color={inRetry ? "#E9A23B" : C.brand} />
         <View style={s.hearts}>
@@ -212,7 +214,7 @@ export default function LessonScreen() {
         </Animated.View>
       </ScrollView>
 
-      <View style={[s.bottom, checked && { backgroundColor: correct ? "#2FB17018" : "#FF6B5E18" }]}>
+      <View style={[s.bottom, { paddingBottom: insets.bottom + 16 }, checked && { backgroundColor: correct ? "#2FB17018" : "#FF6B5E18" }]}>
         {checked && (
           <Animated.Text
             style={[
@@ -259,7 +261,7 @@ const s = StyleSheet.create({
   taskNo: { color: C.muted, fontWeight: "700", fontSize: 12, textTransform: "uppercase" },
   bottom: { position: "absolute", left: 0, right: 0, bottom: 0, padding: 16, paddingBottom: 28, backgroundColor: C.ink, borderTopWidth: 1, borderTopColor: C.line, gap: 8 },
   feedback: { fontSize: 17, fontWeight: "800" },
-  cta: { borderRadius: 16, paddingVertical: 15, alignItems: "center" },
+  cta: { borderRadius: 16, minHeight: 56, paddingVertical: 15, alignItems: "center", justifyContent: "center" },
   ctaText: { color: C.white, fontSize: 17, fontWeight: "800", textTransform: "uppercase" },
   doneTitle: { fontSize: 24, fontWeight: "800", color: C.fg, marginTop: 10 },
   doneStats: { flexDirection: "row", gap: 12, marginTop: 8 },
