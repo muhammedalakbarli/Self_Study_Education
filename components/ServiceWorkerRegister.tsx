@@ -13,6 +13,16 @@ export default function ServiceWorkerRegister() {
 
     let reg: ServiceWorkerRegistration | undefined;
 
+    // Yeni SW nəzarəti ələ alanda səhifəni bir dəfə səssizcə təzələ — bannersiz.
+    // Beləliklə hər deploy-dan sonra açıq səhifə avtomatik ən son koda keçir.
+    let reloading = false;
+    const onControllerChange = () => {
+      if (reloading) return;
+      reloading = true;
+      window.location.reload();
+    };
+    navigator.serviceWorker.addEventListener("controllerchange", onControllerChange);
+
     // Gözləyən (installed) yeni SW-i səssizcə aktivləşdir — bannersiz.
     const activate = (r: ServiceWorkerRegistration) => {
       if (r.waiting) r.waiting.postMessage({ type: "SKIP_WAITING" });
@@ -45,6 +55,7 @@ export default function ServiceWorkerRegister() {
     else window.addEventListener("load", register, { once: true });
 
     return () => {
+      navigator.serviceWorker.removeEventListener("controllerchange", onControllerChange);
       void reg;
     };
   }, []);
