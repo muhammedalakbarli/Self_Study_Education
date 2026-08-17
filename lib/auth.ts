@@ -55,6 +55,24 @@ export async function signInWithGoogle(): Promise<AuthResult> {
   return { ok: true };
 }
 
+// Parol bərpası: email-ə bərpa linki göndər (link /parol-yenile-ə qayıdır).
+export async function sendPasswordReset(email: string): Promise<AuthResult> {
+  const supabase = createClient();
+  const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+    redirectTo: `${window.location.origin}/parol-yenile`,
+  });
+  if (error) return { ok: false, error: error.message };
+  return { ok: true };
+}
+
+// Yeni parol təyin et (bərpa linkindən gələn sessiya ilə).
+export async function updatePassword(password: string): Promise<AuthResult> {
+  const supabase = createClient();
+  const { error } = await supabase.auth.updateUser({ password });
+  if (error) return { ok: false, error: error.message };
+  return { ok: true };
+}
+
 // Çıxış.
 export async function signOut(): Promise<void> {
   const supabase = createClient();

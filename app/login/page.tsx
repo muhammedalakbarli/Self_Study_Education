@@ -124,7 +124,12 @@ export default function LoginPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-bold text-slate-800">{t("auth.password")}</label>
+              <div className="flex items-center justify-between">
+                <label className="block text-sm font-bold text-slate-800">{t("auth.password")}</label>
+                <Link href="/parol-unutdum" className="text-xs font-bold text-brand hover:underline">
+                  {t("auth.forgot.link")}
+                </Link>
+              </div>
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}

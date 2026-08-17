@@ -856,6 +856,45 @@ const DICT: Dict = {
     ru: "Не удалось войти через Google. Попробуйте снова.",
   },
 
+  // ── Parol bərpası ──
+  "auth.forgot.link": { az: "Parolunu unutmusan?", en: "Forgot password?", ru: "Забыли пароль?" },
+  "auth.forgot.title": { az: "Parolu bərpa et", en: "Reset password", ru: "Сброс пароля" },
+  "auth.forgot.subtitle": {
+    az: "Email ünvanını yaz — sənə bərpa linki göndərək.",
+    en: "Enter your email and we'll send you a reset link.",
+    ru: "Введите эл. почту — мы отправим ссылку для сброса.",
+  },
+  "auth.forgot.submit": { az: "Bərpa linki göndər", en: "Send reset link", ru: "Отправить ссылку" },
+  "auth.forgot.sending": { az: "Göndərilir...", en: "Sending...", ru: "Отправка..." },
+  "auth.forgot.sent.title": { az: "Emailini yoxla", en: "Check your email", ru: "Проверьте почту" },
+  "auth.forgot.sent.body": {
+    az: "Əgər bu email ilə hesab varsa, parol bərpası linkini göndərdik. Gələnlər qutusunu (və spam qovluğunu) yoxla.",
+    en: "If an account exists with this email, we've sent a password reset link. Check your inbox (and spam folder).",
+    ru: "Если аккаунт с этой почтой существует, мы отправили ссылку для сброса пароля. Проверьте входящие (и спам).",
+  },
+  "auth.forgot.backToLogin": { az: "← Girişə qayıt", en: "← Back to sign in", ru: "← Назад ко входу" },
+  "auth.reset.title": { az: "Yeni parol təyin et", en: "Set a new password", ru: "Установите новый пароль" },
+  "auth.reset.subtitle": {
+    az: "Hesabın üçün yeni parol seç.",
+    en: "Choose a new password for your account.",
+    ru: "Выберите новый пароль для аккаунта.",
+  },
+  "auth.reset.newPassword": { az: "Yeni parol", en: "New password", ru: "Новый пароль" },
+  "auth.reset.confirm": { az: "Parolu təsdiqlə", en: "Confirm password", ru: "Подтвердите пароль" },
+  "auth.reset.submit": { az: "Parolu yenilə", en: "Update password", ru: "Обновить пароль" },
+  "auth.reset.saving": { az: "Yenilənir...", en: "Updating...", ru: "Обновление..." },
+  "auth.reset.success": {
+    az: "Parol yeniləndi! İndi girişə yönləndirilirsən...",
+    en: "Password updated! Redirecting to sign in...",
+    ru: "Пароль обновлён! Перенаправляем ко входу...",
+  },
+  "auth.reset.invalidLink": {
+    az: "Bərpa linki etibarsız və ya vaxtı keçib. Yenidən cəhd et.",
+    en: "The reset link is invalid or expired. Please try again.",
+    ru: "Ссылка недействительна или истекла. Попробуйте снова.",
+  },
+  "auth.reset.waiting": { az: "Link yoxlanılır...", en: "Verifying link...", ru: "Проверка ссылки..." },
+
   // ── Haqqımızda səhifəsi ──
   "about.login": { az: "Daxil ol", en: "Log in", ru: "Войти" },
   "about.mission.badge": { az: "Missiyamız", en: "Our mission", ru: "Наша миссия" },
