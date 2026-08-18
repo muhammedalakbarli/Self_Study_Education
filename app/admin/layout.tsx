@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import {
   LayoutDashboard, BookOpen, Users, BarChart3, School,
   GraduationCap, Megaphone, MessageSquare, ExternalLink,
-  TrendingUp, Gauge, ShieldAlert, ShieldCheck, Search,
+  TrendingUp, Gauge, ShieldAlert, ShieldCheck, Search, Siren,
 } from "lucide-react";
 import { Toaster } from "sonner";
 import Logo from "@/components/Logo";
@@ -29,6 +29,7 @@ const NAV = [
   { href: "/admin/elan", label: "Elanlar", Icon: Megaphone },
   { href: "/admin/feedback", label: "Rəylər", Icon: MessageSquare },
   { href: "/admin/audit", label: "Audit log", Icon: ShieldAlert },
+  { href: "/admin/tehlukesizlik", label: "Təhlükəsizlik", Icon: Siren },
   { href: "/admin/adminler", label: "Adminlər", Icon: ShieldCheck },
 ];
 

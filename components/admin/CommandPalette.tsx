@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { Command } from "cmdk";
 import {
   LayoutDashboard, BookOpen, Users, BarChart3, School, GraduationCap,
-  Megaphone, MessageSquare, ShieldAlert, ShieldCheck, TrendingUp, Gauge, ExternalLink, Search,
+  Megaphone, MessageSquare, ShieldAlert, ShieldCheck, TrendingUp, Gauge, ExternalLink, Search, Siren,
 } from "lucide-react";
 
 const ITEMS = [
@@ -22,6 +22,7 @@ const ITEMS = [
   { href: "/admin/elan", label: "Elanlar", Icon: Megaphone },
   { href: "/admin/feedback", label: "Rəylər", Icon: MessageSquare },
   { href: "/admin/audit", label: "Audit log", Icon: ShieldAlert },
+  { href: "/admin/tehlukesizlik", label: "Təhlükəsizlik", Icon: Siren },
   { href: "/admin/adminler", label: "Adminlər / rollar", Icon: ShieldCheck },
   { href: "/dashboard", label: "Sayta qayıt", Icon: ExternalLink },
 ];

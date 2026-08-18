@@ -11,13 +11,34 @@ export interface AuthResult {
   needsEmailConfirm?: boolean;
 }
 
-// Qeydiyyat: ad + email + parol.
+// Qeydiyyat: ad + email + parol. IP-ə görə saatlıq tavan (bax migration 0038) — Supabase-in öz
+// email-rate-limit-i üzərinə əlavə qat, skript-lə kütləvi hesab yaratmanı çətinləşdirir.
 export async function signUpWithEmail(
   name: string,
   email: string,
   password: string,
 ): Promise<AuthResult> {
   const supabase = createClient();
+
+  let ip = "";
+  try {
+    const r = await fetch("/api/client-ip");
+    ip = ((await r.json()) as { ip?: string }).ip ?? "";
+  } catch {
+    // IP alına bilmədi — rate-limit yoxlaması sükutla ötür (Supabase-in öz limiti hələ işləyir).
+  }
+  if (ip) {
+    const { data: allowed } = await supabase.rpc("check_signup_rate", { p_ip: ip });
+    if (allowed === false) {
+      return { ok: false, error: "Çox sayda qeydiyyat cəhdi. Bir az sonra yenidən cəhd et." };
+    }
+    try {
+      await supabase.rpc("log_security_event", { p_kind: "signup_attempt", p_ip: ip, p_detail: { email } });
+    } catch {
+      // sükutla ötür
+    }
+  }
+
   const { data, error } = await supabase.auth.signUp({
     email,
     password,

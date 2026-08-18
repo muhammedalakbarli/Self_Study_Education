@@ -401,6 +401,23 @@ export async function checkIsSuperAdmin(): Promise<boolean> {
   try { const { data } = await createClient().rpc("is_super_admin"); return !!data; } catch { return false; }
 }
 
+// ── Təhlükəsizlik monitorinqi (bax migration 0038) ──
+export interface AdminSecurityEvent {
+  id: number; created_at: string; kind: string; user_id: string | null;
+  email: string | null; ip: string | null; detail: Record<string, unknown> | null;
+}
+export async function adminSecurityEvents(limit = 100): Promise<AdminSecurityEvent[]> {
+  try { const { data } = await createClient().rpc("admin_security_events", { p_limit: limit }); return (data as AdminSecurityEvent[]) ?? []; }
+  catch { return []; }
+}
+export interface AdminFlaggedUser {
+  user_id: string; email: string | null; name: string | null; cap_hits: number; last_hit: string;
+}
+export async function adminFlaggedUsers(): Promise<AdminFlaggedUser[]> {
+  try { const { data } = await createClient().rpc("admin_flagged_users"); return (data as AdminFlaggedUser[]) ?? []; }
+  catch { return []; }
+}
+
 export interface AdminAuditRow {
   id: number; admin_email: string | null; action: string;
   target_type: string | null; target_id: string | null; detail: string | null; created_at: string;
