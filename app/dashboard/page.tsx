@@ -34,7 +34,7 @@ import type { Subject } from "@/lib/types";
 
 export default function DashboardPage() {
   const { user, ready } = useAuthUser();
-  const { subjects } = useContent();
+  const { subjects, loading: contentLoading } = useContent();
   // Yalnız istifadəçinin sinfinə (onboarding) uyğun fənlər.
   const grade = userGrade(user);
   const shown = useMemo(() => subjectsForGrade(subjects, user), [subjects, user]);
@@ -102,7 +102,9 @@ export default function DashboardPage() {
     return { nodes, currentLesson, scorePct };
   }, [active, state]);
 
-  if (!ready || !state) return <PageSkeleton />;
+  // Məzmun DB-dən yüklənənə qədər gözlə — əks halda əvvəlcə koddakı (bəlkə köhnə)
+  // struktur göstərilir, sonra DB-dəki ilə əvəzlənir → path "yanıb-sönür".
+  if (!ready || !state || contentLoading) return <PageSkeleton />;
 
   // Bu sinif üçün hələ məzmun yoxdursa (məs. 7–8-ci sinif) — dostcasına mesaj.
   if (shown.length === 0 || !active) {

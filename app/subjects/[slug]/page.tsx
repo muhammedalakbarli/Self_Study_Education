@@ -29,7 +29,9 @@ export default function SubjectPage({
     if (user) loadProgress(user.id).then(setState);
   }, [user]);
 
-  if (!subject && loading) return <PageSkeleton />;
+  // DB yüklənənə qədər gözlə: əks halda koddakı (bəlkə köhnə) struktur göstərilib
+  // sonra DB-dəkinə dəyişir — səhifə "yanıb-sönür".
+  if (loading) return <PageSkeleton />;
   if (!subject) notFound();
   if (!ready || !state) return <PageSkeleton />;
 
