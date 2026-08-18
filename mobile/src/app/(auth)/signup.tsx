@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { View, Text, TextInput, Pressable, StyleSheet, KeyboardAvoidingView, Platform, ScrollView } from "react-native";
 import { Link } from "expo-router";
+import { Check } from "lucide-react-native";
 import { signUp } from "@/lib/auth";
 import { C } from "@/lib/theme";
 import Mascot from "@/components/Mascot";
@@ -14,6 +15,8 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [grade, setGrade] = useState<number | null>(null);
+  const [guardianConsent, setGuardianConsent] = useState(false);
+  const [parentEmail, setParentEmail] = useState("");
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState("");
 
@@ -22,9 +25,10 @@ export default function Signup() {
     if (grade === null) { setMsg("Zəhmət olmasa sinfini seç."); return; }
     if (!EMAIL_RE.test(email.trim())) { setMsg("Zəhmət olmasa düzgün email daxil et."); return; }
     if (password.length < 6) { setMsg("Parol ən azı 6 simvol olmalıdır."); return; }
+    if (!guardianConsent) { setMsg("Zəhmət olmasa valideyn/müəllim nəzarəti bəndini təsdiqlə."); return; }
     setMsg("");
     setBusy(true);
-    const { error } = await signUp(email, password, name, grade);
+    const { error } = await signUp(email, password, name, grade, guardianConsent, parentEmail);
     if (error) setMsg(error.message);
     else setMsg("Hesab yaradıldı! Emailini təsdiqlə və ya daxil ol.");
     setBusy(false);
@@ -52,6 +56,24 @@ export default function Signup() {
           })}
         </View>
 
+        <View style={s.consentBox}>
+          <Pressable style={s.consentRow} onPress={() => setGuardianConsent((v) => !v)}>
+            <View style={[s.checkbox, guardianConsent && s.checkboxOn]}>
+              {guardianConsent && <Check color={C.white} size={14} strokeWidth={3} />}
+            </View>
+            <Text style={s.consentText}>Bu hesabı valideyn/müəllim nəzarəti ilə yaradıram</Text>
+          </Pressable>
+          <TextInput
+            style={s.parentInput}
+            placeholder="Valideyn email-i (könüllü)"
+            placeholderTextColor={C.muted}
+            autoCapitalize="none"
+            keyboardType="email-address"
+            value={parentEmail}
+            onChangeText={setParentEmail}
+          />
+        </View>
+
         {msg ? <Text style={s.msg}>{msg}</Text> : null}
 
         <Pressable style={[s.btn, busy && { opacity: 0.6 }]} onPress={submit} disabled={busy}>
@@ -74,6 +96,12 @@ const s = StyleSheet.create({
   gradeOn: { borderColor: C.brand, backgroundColor: C.brand },
   gradeText: { fontSize: 18, fontWeight: "800", color: C.fg },
   gradeTextOn: { color: C.white },
+  consentBox: { width: "100%", backgroundColor: C.panel, borderWidth: 2, borderColor: C.line, borderRadius: 14, padding: 12, gap: 8 },
+  consentRow: { flexDirection: "row", alignItems: "center", gap: 8 },
+  checkbox: { width: 20, height: 20, borderRadius: 6, borderWidth: 2, borderColor: C.line, alignItems: "center", justifyContent: "center" },
+  checkboxOn: { backgroundColor: C.brand, borderColor: C.brand },
+  consentText: { flex: 1, fontSize: 12, fontWeight: "600", color: C.fg },
+  parentInput: { backgroundColor: C.panel2, borderRadius: 10, paddingHorizontal: 12, paddingVertical: 10, fontSize: 13, color: C.fg },
   msg: { color: C.brand, fontWeight: "700", textAlign: "center" },
   btn: { width: "100%", backgroundColor: C.brand, borderRadius: 16, paddingVertical: 15, alignItems: "center", marginTop: 4 },
   btnText: { color: C.white, fontSize: 17, fontWeight: "800", textTransform: "uppercase" },

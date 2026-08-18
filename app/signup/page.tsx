@@ -25,6 +25,8 @@ export default function SignupPage() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [guardianConsent, setGuardianConsent] = useState(false);
+  const [parentEmail, setParentEmail] = useState("");
 
   // Şifrə gücü yoxlaması
   const getPasswordStrength = (pass: string) => {
@@ -55,12 +57,16 @@ export default function SignupPage() {
       setError(t("auth.err.passShort"));
       return;
     }
+    if (!guardianConsent) {
+      setError(t("auth.err.guardianConsent"));
+      return;
+    }
 
     setLoading(true);
     setError("");
 
-    // Real Supabase qeydiyyatı (ad + email + parol)
-    const res = await signUpWithEmail(fullName.trim(), email.trim(), password);
+    // Real Supabase qeydiyyatı (ad + email + parol + valideyn nəzarəti təsdiqi)
+    const res = await signUpWithEmail(fullName.trim(), email.trim(), password, guardianConsent, parentEmail);
     setLoading(false);
 
     if (!res.ok) {
@@ -258,6 +264,33 @@ export default function SignupPage() {
               )}
             </div>
 
+            {/* Valideyn nəzarəti təsdiqi (platforma uşaqlar üçündür) */}
+            <div className="rounded-xl border border-slate-200 bg-slate-50 p-3.5">
+              <label className="flex items-start gap-2.5 text-sm text-slate-700">
+                <input
+                  type="checkbox"
+                  checked={guardianConsent}
+                  onChange={(e) => setGuardianConsent(e.target.checked)}
+                  disabled={loading}
+                  className="mt-0.5 h-4 w-4 shrink-0 rounded border-slate-300 text-brand focus:ring-brand/30"
+                />
+                <span>{t("auth.signup.guardianConsent")}</span>
+              </label>
+              <div className="mt-2.5">
+                <label className="block text-xs font-bold text-slate-600">
+                  {t("auth.signup.parentEmail")}
+                </label>
+                <input
+                  type="email"
+                  value={parentEmail}
+                  onChange={(e) => setParentEmail(e.target.value)}
+                  disabled={loading}
+                  className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20"
+                  placeholder={t("auth.signup.parentEmailPlaceholder")}
+                />
+              </div>
+            </div>
+
             {/* Xəta mesajı */}
             {error && (
               <div className="rounded-xl bg-red-50 px-3.5 py-2.5 text-sm font-medium text-red-600">
@@ -274,7 +307,8 @@ export default function SignupPage() {
                 !password ||
                 !confirmPassword ||
                 loading ||
-                !doPasswordsMatch
+                !doPasswordsMatch ||
+                !guardianConsent
               }
               className="w-full rounded-2xl bg-brand px-4 py-3 font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-40"
             >
