@@ -104,24 +104,20 @@ export async function loadActiveDays(userId: string): Promise<string[]> {
   return [...days];
 }
 
-// Dərs tamamlananda: user_progress-ə yaz, user_stats-ı yenilə (XP + streak).
+// Dərs tamamlananda: server HƏQİQİ tapşırıq sayından mükafatı özü hesablayır və idempotentdir
+// (eyni dərs ikinci dəfə "bitirilsə" mükafat verilmir) — client heç bir məbləğ göndərmir.
+// Bax migration 0037 (complete_lesson RPC). grantReward=false — yalnız onboarding diaqnostikası
+// üçün (bildiyi dərsi XP-siz "bilinən" kimi işarələmək).
 export async function completeLesson(
-  userId: string,
   lessonId: string,
-  earnedXp: number,
-): Promise<void> {
+  grantReward = true,
+): Promise<{ xp: number; gems: number }> {
   const supabase = createClient();
-
-  await supabase
-    .from("user_progress")
-    .upsert(
-      { user_id: userId, lesson_id: lessonId, score: earnedXp },
-      { onConflict: "user_id,lesson_id" },
-    );
-
-  // XP + streak-i atomik server RPC ilə yenilə (oxu-dəyiş-yaz race yoxdur; streak
-  // günü Asia/Baku vaxtı ilə serverdə hesablanır). Bax 0011 migration.
-  await supabase.rpc("add_user_xp", { p_amount: earnedXp, p_touch_streak: true });
+  const { data } = await supabase
+    .rpc("complete_lesson", { p_lesson_id: lessonId, p_grant_reward: grantReward })
+    .single();
+  const row = data as { xp: number; gems: number } | null;
+  return { xp: row?.xp ?? 0, gems: row?.gems ?? 0 };
 }
 
 // Statistikaya əlavə XP yaz (məs. gündəlik quest mükafatı) — streak-ə toxunmadan.

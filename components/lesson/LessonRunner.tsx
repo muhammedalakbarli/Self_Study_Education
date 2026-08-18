@@ -13,7 +13,6 @@ import ResultSheet from "@/components/lesson/ResultSheet";
 import { gradeTask, type UserAnswer } from "@/lib/grading";
 import { completeLesson, loadProgress } from "@/lib/progress";
 import { loadHearts, loseHeart, MAX_HEARTS } from "@/lib/hearts";
-import { addGems, GEMS_PER_LESSON } from "@/lib/gems";
 import { loadPlus } from "@/lib/plus";
 import { addWrong as addMistake, markCorrect as removeMistake } from "@/lib/srs";
 import { bumpQuest, bumpQuests } from "@/lib/quests";
@@ -185,10 +184,11 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
   }
 
   function finishLesson(finalXp: number) {
-    completeLesson(userId, lesson.id, finalXp)
+    // XP+zümrüd artıq serverdə (complete_lesson RPC) həqiqi tapşırıq sayından hesablanır —
+    // client heç bir məbləğ göndərmir, idempotentdir (bax lib/progress.ts, migration 0037).
+    completeLesson(lesson.id)
       .then(() => touchFriendStreaks())
       .catch(() => {});
-    addGems(GEMS_PER_LESSON * (plus ? 2 : 1)).catch(() => {}); // dərsə görə zümrüd (Plus: 2×)
     bumpQuests({ xp: finalXp, lessons: 1 });
     addWeeklyXp(finalXp);
     addMonthlyXp(finalXp);

@@ -35,12 +35,17 @@ export async function loadProgress(userId: string): Promise<Progress> {
   };
 }
 
-export async function completeLesson(userId: string, lessonId: string, earnedXp: number): Promise<void> {
-  await supabase.from("user_progress").upsert(
-    { user_id: userId, lesson_id: lessonId, score: earnedXp },
-    { onConflict: "user_id,lesson_id" },
-  );
-  await supabase.rpc("add_user_xp", { p_amount: earnedXp, p_touch_streak: true });
+// Server HƏQİQİ tapşırıq sayından mükafatı özü hesablayır və idempotentdir (eyni dərs ikinci
+// dəfə "bitirilsə" mükafat verilmir) — client heç bir məbləğ göndərmir. Bax migration 0037.
+export async function completeLesson(
+  lessonId: string,
+  grantReward = true,
+): Promise<{ xp: number; gems: number }> {
+  const { data } = await supabase
+    .rpc("complete_lesson", { p_lesson_id: lessonId, p_grant_reward: grantReward })
+    .single();
+  const row = data as { xp: number; gems: number } | null;
+  return { xp: row?.xp ?? 0, gems: row?.gems ?? 0 };
 }
 
 // Dərsdən kənar XP (məs. quest mükafatı) — seriyaya toxunmur (web addXp ilə eyni).

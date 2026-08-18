@@ -13,7 +13,6 @@ import { fetchContentTree } from "@/lib/content";
 import { gradeTask, type UserAnswer } from "@/lib/grading";
 import { completeLesson } from "@/lib/progress";
 import { loadHearts, loseHeart, MAX_HEARTS } from "@/lib/hearts";
-import { addGems, GEMS_PER_LESSON } from "@/lib/gems";
 import { loadPlus } from "@/lib/plus";
 import { addLeaderboardXp } from "@/lib/leaderboard";
 import type { Lesson, Task } from "@/lib/types";
@@ -140,12 +139,14 @@ export default function LessonScreen() {
   }
 
   async function finishLesson() {
-    if (user) await completeLesson(user.id, String(id), earned).catch(() => {});
-    const g = GEMS_PER_LESSON * (plus ? 2 : 1);
-    addGems(g).catch(() => {});
-    addLeaderboardXp(earned).catch(() => {});
-    bumpQuests({ xp: earned, lessons: 1 }).catch(() => {}); // gündəlik XP + dərs questləri
-    setGemsEarned(g);
+    // XP+zümrüd artıq serverdə (complete_lesson RPC) həqiqi tapşırıq sayından hesablanır —
+    // client heç bir məbləğ göndərmir, idempotentdir (bax lib/progress.ts, migration 0037).
+    // "Bitdi" ekranı server-in qaytardığı real dəyərləri göstərir.
+    const r = user ? await completeLesson(String(id)).catch(() => ({ xp: 0, gems: 0 })) : { xp: 0, gems: 0 };
+    setEarned(r.xp);
+    setGemsEarned(r.gems);
+    addLeaderboardXp(r.xp).catch(() => {});
+    bumpQuests({ xp: r.xp, lessons: 1 }).catch(() => {}); // gündəlik XP + dərs questləri
     Vibration.vibrate([0, 40, 60, 40]);
     setPhase("done");
   }

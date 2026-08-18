@@ -121,7 +121,6 @@ export default function OnboardingPage() {
   const { subjects } = useContent();
   const [ready, setReady] = useState(false);
   const [name, setName] = useState("");
-  const [userId, setUserId] = useState("");
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string | number>>({});
   const [saving, setSaving] = useState(false);
@@ -141,7 +140,6 @@ export default function OnboardingPage() {
         return;
       }
       setName(displayName(u));
-      setUserId(u.id);
       setReady(true);
     });
   }, [router]);
@@ -163,7 +161,7 @@ export default function OnboardingPage() {
     try {
       // Bildiyi dərsləri tamamlanmış işarələ (XP-siz), səhvləri SRS-ə əlavə et.
       for (const lessonId of r.knownLessonIds) {
-        await completeLesson(userId, lessonId, 0).catch(() => {});
+        await completeLesson(lessonId, false).catch(() => {});
       }
       for (const taskId of r.wrongTaskIds) {
         await addWrong(taskId).catch(() => {});
