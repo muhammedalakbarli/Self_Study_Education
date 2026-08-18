@@ -227,12 +227,8 @@ const PERCH_EMOTIONS: ZefiEmotion[] = [
 function MascotPerch({ emotion }: { emotion: ZefiEmotion }) {
   return (
     <div className="pointer-events-none relative flex flex-col items-center">
-      {/* Açıq platforma diski — YALNIZ tünd rejim: tülkünün tünd konturu qaranlıq path fonu ilə
-          qarışmasın (işıqlı rejimdə görünmür, glow deyil — dəqiq forma). */}
-      <span
-        className="absolute left-1/2 top-[42%] h-[82%] w-[82%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-transparent dark:bg-[#fdf1dc]"
-        aria-hidden
-      />
+      {/* Arxa ağ disk artıq ZefiMascot-un öz içindədir (tünd rejimdə avtomatik) — bax
+          components/ZefiMascot.tsx + globals.css `.zefi-disk`. */}
       <span className="relative z-10">
         <ZefiMascot emotion={emotion} size={MASCOT_SIZE} />
       </span>

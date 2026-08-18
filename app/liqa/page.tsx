@@ -53,7 +53,7 @@ export default function LeaguePage() {
         {/* Başlıq + pillə */}
         <div className="flex items-center gap-4 rounded-3xl bg-brand p-5 text-white">
           <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-white/95 shadow-sm">
-            <Mascot size={54} mood="celebrate" />
+            <Mascot size={54} mood="celebrate" disk={false} />
           </span>
           <div className="flex-1">
             <div className="text-lg font-extrabold">{t(tierKey(myTier))}</div>

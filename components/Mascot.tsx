@@ -21,6 +21,7 @@ export default function Mascot({
   size = 120,
   mood = "happy",
   badge,
+  disk,
 }: {
   size?: number;
   mood?: MascotMood;
@@ -28,6 +29,8 @@ export default function Mascot({
   animate?: boolean;
   speaking?: boolean;
   badge?: string;
+  /** Tünd rejimdə arxa ağ disk (default açıq) — bax ZefiMascot. */
+  disk?: boolean;
 }) {
-  return <ZefiMascot emotion={MOOD_TO_EMOTION[mood]} size={size} badge={badge} />;
+  return <ZefiMascot emotion={MOOD_TO_EMOTION[mood]} size={size} badge={badge} disk={disk} />;
 }

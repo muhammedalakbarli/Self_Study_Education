@@ -62,7 +62,7 @@ export default function SchoolPage() {
         {/* Hero */}
         <div className="flex items-center gap-4 rounded-3xl bg-gradient-to-br from-brand to-brand-dark p-6 text-white shadow-lg">
           <span className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-white/95 shadow-sm">
-            <Mascot size={64} mood="happy" />
+            <Mascot size={64} mood="happy" disk={false} />
           </span>
           <div>
             <div className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-wider text-white/80">

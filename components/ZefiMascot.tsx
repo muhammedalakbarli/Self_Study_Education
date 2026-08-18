@@ -27,13 +27,33 @@ export default function ZefiMascot({
   emotion = "happy",
   size = 120,
   badge,
+  disk = true,
 }: {
   emotion?: ZefiEmotion;
   size?: number;
   badge?: string;
+  /** Arxa ağ disk — TÜND rejimdə görünür (narıncı tülkü tünd fonda əriməsin).
+   *  İşıqlı və `.force-light` səhifələrdə avtomatik gizlidir (bax globals.css `.zefi-disk`).
+   *  Zefi onsuz da ağ dairə içindədirsə (məs. narıncı kartlar) `disk={false}` ver. */
+  disk?: boolean;
 }) {
   return (
     <span style={{ position: "relative", display: "inline-block", lineHeight: 0 }}>
+      {disk ? (
+        <span
+          className="zefi-disk"
+          aria-hidden
+          style={{
+            position: "absolute",
+            left: "50%",
+            top: "42%",
+            width: "82%",
+            height: "82%",
+            transform: "translate(-50%, -50%)",
+            borderRadius: 9999,
+          }}
+        />
+      ) : null}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={SRC[emotion]}
@@ -41,7 +61,7 @@ export default function ZefiMascot({
         width={size}
         height={size}
         className="zefi-mascot-img"
-        style={{ width: size, height: size, objectFit: "contain" }}
+        style={{ width: size, height: size, objectFit: "contain", position: "relative" }}
         draggable={false}
       />
       {badge ? (

@@ -476,3 +476,17 @@ h1, h2, h3 {
   --color-brand-soft: #c2571f;
   color-scheme: light;
 }
+
+/* Zefi arxa diski (bax components/ZefiMascot.tsx) — YALNIZ tünd rejimdə görünür:
+   narıncı tülkü tünd fonda əriməsin, konturu aydın seçilsin. İşıqlı rejimdə və
+   `.force-light` subtree-lərində (landing, haqqımızda) şəffafdır — orada onsuz da
+   isti-işıqlı fon var və disk dizaynı pozardı. */
+.zefi-disk {
+  background: transparent;
+}
+html.dark .zefi-disk {
+  background: rgba(255, 255, 255, 0.95);
+}
+html.dark .force-light .zefi-disk {
+  background: transparent;
+}

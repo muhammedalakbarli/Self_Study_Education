@@ -95,7 +95,7 @@ export default function SignupPage() {
 
         <div>
           <div className="mb-6 flex justify-center">
-            <Mascot size={230} mood="celebrate" />
+            <Mascot size={230} mood="celebrate" disk={false} />
           </div>
           <h2 className="max-w-sm text-4xl font-extrabold leading-tight">
             {t("auth.signup.brandHeading")}
