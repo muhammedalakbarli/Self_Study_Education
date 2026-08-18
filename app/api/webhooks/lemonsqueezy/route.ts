@@ -51,7 +51,9 @@ export async function POST(req: NextRequest) {
       // cancelled: dövr sonuna qədər aktiv qalır; expired: söndür.
       if (event === "subscription_expired") await revokePlusServer(userId);
     }
-  } catch {
+  } catch (err) {
+    // Cloudflare Workers logs/tail-də iz qalsın — pullu abunə əməliyyatı sükutla itməsin.
+    console.error("[lemonsqueezy webhook] processing error", { event, userId, err });
     return new Response("processing error", { status: 500 });
   }
 

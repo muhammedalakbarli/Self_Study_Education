@@ -11,12 +11,14 @@ export interface AuthResult {
   needsEmailConfirm?: boolean;
 }
 
-// Qeydiyyat: ad + email + parol. IP-ə görə saatlıq tavan (bax migration 0038) — Supabase-in öz
-// email-rate-limit-i üzərinə əlavə qat, skript-lə kütləvi hesab yaratmanı çətinləşdirir.
+// Qeydiyyat: ad + email + parol + valideyn nəzarəti təsdiqi (checkbox, platforma uşaqlar üçündür).
+// IP-ə görə saatlıq tavan (bax migration 0038) — Supabase-in öz email-rate-limit-i üzərinə əlavə qat.
 export async function signUpWithEmail(
   name: string,
   email: string,
   password: string,
+  guardianConsent: boolean,
+  parentEmail?: string,
 ): Promise<AuthResult> {
   const supabase = createClient();
 
@@ -42,7 +44,13 @@ export async function signUpWithEmail(
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
-    options: { data: { name } },
+    options: {
+      data: {
+        name,
+        guardianConsent,
+        ...(parentEmail?.trim() ? { parentEmail: parentEmail.trim() } : {}),
+      },
+    },
   });
   if (error) return { ok: false, error: error.message };
   // Email təsdiqi aktivdirsə, session hələ null olur.
@@ -51,11 +59,32 @@ export async function signUpWithEmail(
 }
 
 // Giriş: email + parol.
+// IP-ə görə saatlıq tavan (bax migration 0040) — brute-force giriş cəhdlərinə qarşı əlavə qat.
 export async function signInWithEmail(
   email: string,
   password: string,
 ): Promise<AuthResult> {
   const supabase = createClient();
+
+  let ip = "";
+  try {
+    const r = await fetch("/api/client-ip");
+    ip = ((await r.json()) as { ip?: string }).ip ?? "";
+  } catch {
+    // IP alına bilmədi — rate-limit yoxlaması sükutla ötür.
+  }
+  if (ip) {
+    const { data: allowed } = await supabase.rpc("check_login_rate", { p_ip: ip });
+    if (allowed === false) {
+      return { ok: false, error: "Çox sayda giriş cəhdi. Bir az sonra yenidən cəhd et." };
+    }
+    try {
+      await supabase.rpc("log_security_event", { p_kind: "login_attempt", p_ip: ip, p_detail: { email } });
+    } catch {
+      // sükutla ötür
+    }
+  }
+
   const { error } = await supabase.auth.signInWithPassword({ email, password });
   if (error) return { ok: false, error: error.message };
   return { ok: true };

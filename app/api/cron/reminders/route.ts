@@ -26,9 +26,12 @@ interface Stat {
 }
 
 export async function GET(req: Request) {
+  // Fail-CLOSED: CRON_SECRET mühitdə YOXDURSA da endpoint açıq qalmasın (əvvəlki
+  // `secret && ...` fail-open idi — mühit dəyişəni səhvən silinsə/qurulmasa, qoruma
+  // sükutla keçirdi).
   const secret = process.env.CRON_SECRET;
-  if (secret && req.headers.get("authorization") !== `Bearer ${secret}`) {
-    return new Response("unauthorized", { status: 401 });
+  if (!secret || req.headers.get("authorization") !== `Bearer ${secret}`) {
+    return new Response("unauthorized", { status: secret ? 401 : 500 });
   }
 
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;

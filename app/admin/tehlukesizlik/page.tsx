@@ -19,7 +19,9 @@ import { DataTable, type Column } from "@/components/admin/DataTable";
 
 const KIND_LABEL: Record<string, string> = {
   signup_attempt: "Qeydiyyat cəhdi",
+  login_attempt: "Giriş cəhdi",
   reward_cap_hit: "Mükafat tavanına dəydi",
+  self_delete_account: "Hesabını özü sildi",
 };
 
 export default function AdminSecurityPage() {
