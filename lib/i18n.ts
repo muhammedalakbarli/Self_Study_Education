@@ -472,9 +472,9 @@ const DICT: Dict = {
   },
   "settings.animations": { az: "Animasiyalar", en: "Animations", ru: "Анимации" },
   "settings.animationsHint": {
-    az: "Ulduz və keçid animasiyaları",
-    en: "Ulduz and transition animations",
-    ru: "Анимации Улдуз и переходов",
+    az: "Zefi və keçid animasiyaları",
+    en: "Zefi and transition animations",
+    ru: "Анимации Зефи и переходов",
   },
   "settings.motivational": { az: "Motivasiya mesajları", en: "Motivational messages", ru: "Мотивационные сообщения" },
   "settings.motivationalHint": {
@@ -587,9 +587,9 @@ const DICT: Dict = {
     ru: "Пусть учёба будет в удовольствие",
   },
   "home.r1.body": {
-    az: "Hər düzgün cavabda XP qazan, seriyanı qoru, dərsləri tamamla. Ulduz səni hər addımda ruhlandırır.",
-    en: "Earn XP for every correct answer, keep your streak, complete lessons. Ulduz cheers you on at every step.",
-    ru: "Получай XP за каждый правильный ответ, береги серию, завершай уроки. Улдуз подбадривает тебя на каждом шагу.",
+    az: "Hər düzgün cavabda XP qazan, seriyanı qoru, dərsləri tamamla. Zefi səni hər addımda ruhlandırır.",
+    en: "Earn XP for every correct answer, keep your streak, complete lessons. Zefi cheers you on at every step.",
+    ru: "Получай XP за каждый правильный ответ, береги серию, завершай уроки. Зефи подбадривает тебя на каждом шагу.",
   },
   "home.r2.tag": { az: "Öz sürətinlə", en: "At your own pace", ru: "В своём темпе" },
   "home.r2.title": {
