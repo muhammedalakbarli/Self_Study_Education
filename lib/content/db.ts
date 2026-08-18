@@ -40,6 +40,7 @@ interface LessonRow {
   unit_id: string;
   title: string;
   intro: string | null;
+  kind?: string | null;
   visual: string | null;
   sections: RuleSection[] | null;
   sort_order: number;
@@ -182,6 +183,7 @@ export async function fetchContentTreeWith(
         id: row.id,
         title: row.title,
         intro: row.intro ?? seed?.intro ?? "",
+        kind: (row.kind as Lesson["kind"]) ?? seed?.kind ?? "lesson",
         visual: row.visual ?? seed?.visual,
         sections:
           row.sections && row.sections.length ? row.sections : seed?.sections,

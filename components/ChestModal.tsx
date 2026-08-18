@@ -16,9 +16,17 @@ import type { ChestReward } from "@/lib/quests";
 interface Props {
   onOpen: () => Promise<ChestReward>; // sandığı açır, mükafatı qaytarır
   onClose: () => void;
+  /** Başlıq/izah açarları — gündəlik sandıq (default) və ya bölmə sandığı. */
+  titleKey?: string;
+  subtitleKey?: string;
 }
 
-export default function ChestModal({ onOpen, onClose }: Props) {
+export default function ChestModal({
+  onOpen,
+  onClose,
+  titleKey = "chest.title",
+  subtitleKey = "chest.ready",
+}: Props) {
   const t = useT();
   const [phase, setPhase] = useState<"closed" | "opened">("closed");
   const [reward, setReward] = useState<ChestReward | null>(null);
@@ -48,7 +56,7 @@ export default function ChestModal({ onOpen, onClose }: Props) {
         {phase === "opened" && <Confetti />}
         <motion.div
           role="dialog"
-          aria-label={t("chest.title")}
+          aria-label={t(titleKey)}
           className="relative w-full max-w-sm rounded-3xl border border-line bg-panel p-6 text-center shadow-xl"
           initial={{ scale: 0.9, y: 20, opacity: 0 }}
           animate={{ scale: 1, y: 0, opacity: 1 }}
@@ -67,8 +75,8 @@ export default function ChestModal({ onOpen, onClose }: Props) {
 
           {phase === "closed" ? (
             <>
-              <div className="text-lg font-extrabold text-fg">{t("chest.title")}</div>
-              <div className="mt-1 text-sm text-muted">{t("chest.ready")}</div>
+              <div className="text-lg font-extrabold text-fg">{t(titleKey)}</div>
+              <div className="mt-1 text-sm text-muted">{t(subtitleKey)}</div>
               <motion.div
                 className="mx-auto my-6 flex h-28 w-28 items-center justify-center rounded-3xl bg-gradient-to-br from-amber-300 to-accent text-white shadow-md"
                 animate={{ rotate: [0, -4, 4, -3, 3, 0], scale: [1, 1.04, 1] }}

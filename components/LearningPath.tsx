@@ -8,7 +8,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Star, Check, Lock, Flag, Trophy, Sparkles } from "lucide-react";
+import { Star, Check, Lock, Flag, Trophy, Sparkles, Gift } from "lucide-react";
 import ZefiMascot, { type ZefiEmotion } from "@/components/ZefiMascot";
 import { useT } from "@/lib/i18n";
 import { playStep } from "@/lib/sound";
@@ -16,8 +16,11 @@ import { vibrateWrong } from "@/lib/haptics";
 
 export type NodeState = "done" | "current" | "locked";
 
+export type NodeKind = "lesson" | "chest" | "test";
+
 export interface PathNode {
   id: string;
+  kind?: NodeKind; // "chest" = bölmə sandığı, "test" = bölmə sonu testi
   title: string;
   state: NodeState;
   href?: string;
@@ -38,6 +41,12 @@ const NODE_STYLE: Record<NodeState, { bg: string; depth: string; text: string }>
   done: { bg: "#22c55e", depth: "#15803d", text: "#fff" },
   current: { bg: "#f5b60a", depth: "#c98703", text: "#fff" },
   locked: { bg: "var(--color-panel-2)", depth: "var(--color-line)", text: "var(--color-muted)" },
+};
+
+// Sandıq və bölmə-sonu-test düyünləri adi dərsdən vizual olaraq fərqlənir.
+const SPECIAL_STYLE: Record<"chest" | "test", { bg: string; depth: string }> = {
+  chest: { bg: "#a855f7", depth: "#7e22ce" }, // bənövşəyi — mükafat
+  test: { bg: "#0ea5e9", depth: "#0369a1" }, // mavi — yoxlama
 };
 
 // Bölmə banneri — rəngli gradient, ikon + başlıq; keçilmişsə kubok. Görünəndə səs.
@@ -85,8 +94,23 @@ function NodeButton({ node }: { node: PathNode }) {
   const isDone = node.state === "done";
   const isCurrent = node.state === "current";
   const isLocked = node.state === "locked";
-  const Icon = isDone ? Check : isCurrent ? Star : Lock;
-  const s = NODE_STYLE[node.state];
+  const kind = node.kind ?? "lesson";
+  // Sandıq/test öz ikonunu saxlayır (kilidli olanda kilid göstərilir ki, əlçatmazlıq aydın olsun).
+  const Icon = isLocked
+    ? Lock
+    : kind === "chest"
+      ? Gift
+      : kind === "test"
+        ? Trophy
+        : isDone
+          ? Check
+          : Star;
+  const base = NODE_STYLE[node.state];
+  // Xüsusi düyünlər açıq olanda öz rəngindədir; kilidli/bitmiş halda ümumi sxem qalır.
+  const s =
+    kind !== "lesson" && isCurrent
+      ? { ...SPECIAL_STYLE[kind], text: "#fff" }
+      : base;
 
   const inner = (
     <motion.div

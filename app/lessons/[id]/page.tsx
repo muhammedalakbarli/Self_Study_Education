@@ -7,6 +7,10 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { X } from "lucide-react";
 import { useContent } from "@/components/ContentProvider";
+import ChestModal from "@/components/ChestModal";
+import { completeLesson } from "@/lib/progress";
+import { useRouter } from "next/navigation";
+import type { ChestReward } from "@/lib/quests";
 import { useAuthUser } from "@/lib/useAuthUser";
 import { useT } from "@/lib/i18n";
 import LessonRunner from "@/components/lesson/LessonRunner";
@@ -21,6 +25,7 @@ export default function LessonPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = use(params);
+  const router = useRouter();
   const { user, ready } = useAuthUser();
   const { getLesson, orderedLessonIds, loading } = useContent();
   const [started, setStarted] = useState(false);
@@ -36,6 +41,23 @@ export default function LessonPage({
   const { subject, lesson } = found;
   const index = orderedLessonIds(subject.slug).indexOf(lesson.id);
   const bonusCount = lesson.bonusTasks?.length ?? 0;
+
+  // Bölmə sandığı — tapşırıq yoxdur: açılanda zümrüd verilir (server hesablayır, bax 0041).
+  if (lesson.kind === "chest") {
+    return (
+      <div className="min-h-screen bg-ink">
+        <ChestModal
+          onOpen={async (): Promise<ChestReward> => {
+            const r = await completeLesson(lesson.id).catch(() => ({ xp: 0, gems: 0 }));
+            return { kind: "gems", amount: r.gems };
+          }}
+          onClose={() => router.push(`/subjects/${subject.slug}`)}
+          titleKey="chest.unitTitle"
+          subtitleKey="chest.unitReady"
+        />
+      </div>
+    );
+  }
 
   if (started) {
     return <LessonRunner slug={subject.slug} lesson={lesson} userId={user.id} />;

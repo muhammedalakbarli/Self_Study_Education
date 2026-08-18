@@ -263,6 +263,12 @@ const DICT: Dict = {
     ru: "Ты выполнил все дневные цели! Открой сундук.",
   },
   "chest.readyShort": { az: "Sandıq hazır!", en: "Chest ready!", ru: "Сундук готов!" },
+  "chest.unitTitle": { az: "Bölmə sandığı", en: "Unit chest", ru: "Сундук раздела" },
+  "chest.unitReady": {
+    az: "Bu bölmənin yarısını bitirdin — mükafatını al!",
+    en: "You finished half of this unit — claim your reward!",
+    ru: "Вы прошли половину раздела — заберите награду!",
+  },
   "chest.open": { az: "Aç", en: "Open", ru: "Открыть" },
   "chest.reward": { az: "Təbriklər! Mükafatın:", en: "Congrats! Your reward:", ru: "Поздравляем! Твоя награда:" },
   "common.ok": { az: "Al", en: "Claim", ru: "Забрать" },

@@ -88,6 +88,7 @@ export default function DashboardPage() {
       u.lessons.map((l, li) => ({
         id: l.id,
         title: l.title,
+        kind: l.kind ?? "lesson",
         state: lessonState(order, l.id, completed),
         href: `/lessons/${l.id}`,
         unitTitle: li === 0 ? u.title : undefined,

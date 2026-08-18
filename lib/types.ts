@@ -81,14 +81,21 @@ export interface RuleSection {
   body: string; // izah mətni (uşaq dilində)
 }
 
+// Yolda (path) düyünün növü:
+//  • "lesson" — adi dərs (default)
+//  • "chest"  — bölmə sandığı: tapşırıq yoxdur, açılanda zümrüd verir
+//  • "test"   — bölmə sonu testi: tapşırıqları həmin bölmənin dərslərindən qarışıq yığılır
+export type LessonKind = "lesson" | "chest" | "test";
+
 // Lesson = "project": bir mövzu, öz qaydaları, tapşırıqları və son tarixi ilə.
 export interface Lesson {
   id: string;
   title: string;
   intro: string; // qısa giriş cümləsi (uşaq dilində, sadə)
+  kind?: LessonKind; // yoxdursa "lesson"
   visual?: string; // hero illüstrasiyanın açarı (bax LessonVisual)
   sections?: RuleSection[]; // ətraflı qaydalar (şəkil altında)
-  tasks: Task[]; // 15 əsas tapşırıq
+  tasks: Task[]; // 15 əsas tapşırıq (chest üçün boş, test üçün avtomatik doldurulur)
   bonusTasks?: Task[]; // 5 bonus tapşırıq
 }
 
