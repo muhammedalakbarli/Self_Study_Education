@@ -93,6 +93,13 @@ export const azerbaijani: Subject = {
           ],
         },
         {
+          id: "az-grammar-chest",
+          title: "Sandıq",
+          kind: "chest",
+          intro: "Buraya çatdın! Sandığı aç və mükafatını al.",
+          tasks: [],
+        },
+        {
           id: "az-soz-yaradiciligi",
           title: "Söz yaradıcılığı",
           intro: "Sözün kökü, şəkilçilər və sözün tərkibi.",
@@ -160,6 +167,13 @@ export const azerbaijani: Subject = {
             { id: "az-sintaksis-b5", type: "multiple_choice", prompt: "Cümlə adətən nə ilə bitir?", options: ["durğu işarəsi", "həmişə vergül", "heca", "kök"], correctIndex: 0, xp: 15 },
           ],
         },
+        {
+          id: "az-grammar-test",
+          title: "Bölmə sonu test",
+          kind: "test",
+          intro: "Bu bölmədə öyrəndiklərini yoxla — suallar bütün dərslərdən qarışıq gəlir.",
+          tasks: [],
+        }
       ],
     },
 
@@ -274,6 +288,13 @@ export const azerbaijani: Subject = {
           ],
         },
         {
+          id: "az-parts-of-speech-chest",
+          title: "Sandıq",
+          kind: "chest",
+          intro: "Buraya çatdın! Sandığı aç və mükafatını al.",
+          tasks: [],
+        },
+        {
           id: "az-evezlik",
           title: "Əvəzlik",
           intro: "Əvəzlik ismin, sifətin yerində işlənir.",
@@ -375,6 +396,13 @@ export const azerbaijani: Subject = {
             { id: "az-zerf-b5", type: "fill_blank", prompt: "'harada?' sualına cavab verən zərf ___ zərfidir.", accepted: ["yer"], xp: 15 },
           ],
         },
+        {
+          id: "az-parts-of-speech-test",
+          title: "Bölmə sonu test",
+          kind: "test",
+          intro: "Bu bölmədə öyrəndiklərini yoxla — suallar bütün dərslərdən qarışıq gəlir.",
+          tasks: [],
+        }
       ],
     },
 
@@ -452,6 +480,13 @@ export const azerbaijani: Subject = {
           ],
         },
         {
+          id: "az-writing-chest",
+          title: "Sandıq",
+          kind: "chest",
+          intro: "Buraya çatdın! Sandığı aç və mükafatını al.",
+          tasks: [],
+        },
+        {
           id: "az-metn",
           title: "Mətnlə iş",
           intro: "Mətnin hissələri, planı və başlığı.",
@@ -516,6 +551,13 @@ export const azerbaijani: Subject = {
             { id: "az-uslub-b5", type: "fill_blank", prompt: "Təmsilin sonunda oxucuya ___ (nəticə) verilir.", accepted: ["ibrət", "ibret", "nəticə"], xp: 15 },
           ],
         },
+        {
+          id: "az-writing-test",
+          title: "Bölmə sonu test",
+          kind: "test",
+          intro: "Bu bölmədə öyrəndiklərini yoxla — suallar bütün dərslərdən qarışıq gəlir.",
+          tasks: [],
+        }
       ],
     },
 

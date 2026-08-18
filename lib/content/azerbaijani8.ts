@@ -86,6 +86,13 @@ export const azerbaijani8: Subject = {
           ],
         },
         {
+          id: "az8-birlesme-chest",
+          title: "Sandıq",
+          kind: "chest",
+          intro: "Buraya çatdın! Sandığı aç və mükafatını al.",
+          tasks: [],
+        },
+        {
           id: "az8-birlesme-l3",
           title: "Təyini söz birləşmələri",
           intro: "İsmi birləşmələrin üç növü: I, II, III növ təyini söz birləşmələri.",
@@ -119,6 +126,13 @@ export const azerbaijani8: Subject = {
             { id: "az8-birlesme-l3-b5", type: "multiple_choice", prompt: "'ipək parça' hansı növdür?", options: ["I növ", "II növ", "III növ", "heç biri"], correctIndex: 0, xp: 15 },
           ],
         },
+        {
+          id: "az8-birlesme-test",
+          title: "Bölmə sonu test",
+          kind: "test",
+          intro: "Bu bölmədə öyrəndiklərini yoxla — suallar bütün dərslərdən qarışıq gəlir.",
+          tasks: [],
+        }
       ],
     },
     // ═══════════════ 2. Cümlənin baş üzvləri ═══════════════
@@ -195,6 +209,13 @@ export const azerbaijani8: Subject = {
           ],
         },
         {
+          id: "az8-bas-chest",
+          title: "Sandıq",
+          kind: "chest",
+          intro: "Buraya çatdın! Sandığı aç və mükafatını al.",
+          tasks: [],
+        },
+        {
           id: "az8-bas-l3",
           title: "Mübtəda və xəbərin uzlaşması",
           intro: "Xəbər mübtəda ilə şəxsə və kəmiyyətə görə uzlaşır.",
@@ -227,6 +248,13 @@ export const azerbaijani8: Subject = {
             { id: "az8-bas-l3-b5", type: "multiple_choice", prompt: "Cümlədə mübtəda buraxılıb yalnız xəbər varsa (Gəldim.), cümlə düzgündürmü?", options: ["bəli (təktərkibli ola bilər)", "xeyr, həmişə səhvdir", "yalnız sualda", "yalnız cəmdə"], correctIndex: 0, xp: 15 },
           ],
         },
+        {
+          id: "az8-bas-test",
+          title: "Bölmə sonu test",
+          kind: "test",
+          intro: "Bu bölmədə öyrəndiklərini yoxla — suallar bütün dərslərdən qarışıq gəlir.",
+          tasks: [],
+        }
       ],
     },
     // ═══════════════ 3. İkinci dərəcəli üzvlər ═══════════════
@@ -303,6 +331,13 @@ export const azerbaijani8: Subject = {
           ],
         },
         {
+          id: "az8-ikinci-chest",
+          title: "Sandıq",
+          kind: "chest",
+          intro: "Buraya çatdın! Sandığı aç və mükafatını al.",
+          tasks: [],
+        },
+        {
           id: "az8-ikinci-l3",
           title: "Zərflik",
           intro: "İşin tərzini, yerini, zamanını, səbəbini, məqsədini bildirən ikinci dərəcəli üzv.",
@@ -335,6 +370,13 @@ export const azerbaijani8: Subject = {
             { id: "az8-ikinci-l3-b5", type: "multiple_choice", prompt: "'Hər gün məşq edirəm.' cümləsində zərflik hansıdır?", options: ["hər gün", "məşq", "edirəm", "yoxdur"], correctIndex: 0, xp: 15 },
           ],
         },
+        {
+          id: "az8-ikinci-test",
+          title: "Bölmə sonu test",
+          kind: "test",
+          intro: "Bu bölmədə öyrəndiklərini yoxla — suallar bütün dərslərdən qarışıq gəlir.",
+          tasks: [],
+        }
       ],
     },
     // ═══════════════ 4. Cümlənin növləri ═══════════════
@@ -411,6 +453,13 @@ export const azerbaijani8: Subject = {
           ],
         },
         {
+          id: "az8-nov-chest",
+          title: "Sandıq",
+          kind: "chest",
+          intro: "Buraya çatdın! Sandığı aç və mükafatını al.",
+          tasks: [],
+        },
+        {
           id: "az8-nov-l3",
           title: "Cümlə üzvlərinin təkrarı",
           intro: "Baş və ikinci dərəcəli üzvləri cümlədə tanımaq.",
@@ -442,6 +491,13 @@ export const azerbaijani8: Subject = {
             { id: "az8-nov-l3-b5", type: "multiple_choice", prompt: "Cümlədə ən azı hansı üzv mütləq olmalıdır?", options: ["xəbər", "təyin", "tamamlıq", "zərflik"], correctIndex: 0, xp: 15 },
           ],
         },
+        {
+          id: "az8-nov-test",
+          title: "Bölmə sonu test",
+          kind: "test",
+          intro: "Bu bölmədə öyrəndiklərini yoxla — suallar bütün dərslərdən qarışıq gəlir.",
+          tasks: [],
+        }
       ],
     },
     // ═══════════════ 5. Sadə cümlə ═══════════════
@@ -518,6 +574,13 @@ export const azerbaijani8: Subject = {
           ],
         },
         {
+          id: "az8-sade-chest",
+          title: "Sandıq",
+          kind: "chest",
+          intro: "Buraya çatdın! Sandığı aç və mükafatını al.",
+          tasks: [],
+        },
+        {
           id: "az8-sade-l3",
           title: "Cümlədə söz sırası",
           intro: "Azərbaycan dilində adi söz sırası: mübtəda əvvəl, xəbər sonda.",
@@ -550,6 +613,13 @@ export const azerbaijani8: Subject = {
             { id: "az8-sade-l3-b5", type: "multiple_choice", prompt: "Söz sırasını dəyişəndə cümlənin qrammatikliyi pozulurmu (bədii mətndə)?", options: ["xeyr, üslubi vasitədir", "bəli, həmişə səhvdir", "yalnız sualda", "yalnız nəqlidə"], correctIndex: 0, xp: 15 },
           ],
         },
+        {
+          id: "az8-sade-test",
+          title: "Bölmə sonu test",
+          kind: "test",
+          intro: "Bu bölmədə öyrəndiklərini yoxla — suallar bütün dərslərdən qarışıq gəlir.",
+          tasks: [],
+        }
       ],
     },
     // ═══════════════ 6. Həmcins üzvlər və durğu işarələri ═══════════════
@@ -626,6 +696,13 @@ export const azerbaijani8: Subject = {
           ],
         },
         {
+          id: "az8-hemcins-chest",
+          title: "Sandıq",
+          kind: "chest",
+          intro: "Buraya çatdın! Sandığı aç və mükafatını al.",
+          tasks: [],
+        },
+        {
           id: "az8-hemcins-l3",
           title: "Durğu işarələri",
           intro: "Nöqtə, vergül, sual, nida, iki nöqtə, tire işarələrinin işlədilməsi.",
@@ -658,6 +735,13 @@ export const azerbaijani8: Subject = {
             { id: "az8-hemcins-l3-b5", type: "multiple_choice", prompt: "Durğu işarələri nəyə xidmət edir?", options: ["mətnin düzgün oxunması və anlaşılmasına", "yalnız bəzəyə", "səhv üçün", "heç nəyə"], correctIndex: 0, xp: 15 },
           ],
         },
+        {
+          id: "az8-hemcins-test",
+          title: "Bölmə sonu test",
+          kind: "test",
+          intro: "Bu bölmədə öyrəndiklərini yoxla — suallar bütün dərslərdən qarışıq gəlir.",
+          tasks: [],
+        }
       ],
     },
   ],

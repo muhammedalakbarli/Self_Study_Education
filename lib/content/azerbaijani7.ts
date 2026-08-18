@@ -88,6 +88,13 @@ export const azerbaijani7: Subject = {
           ],
         },
         {
+          id: "az7-feil-chest",
+          title: "Sandıq",
+          kind: "chest",
+          intro: "Buraya çatdın! Sandığı aç və mükafatını al.",
+          tasks: [],
+        },
+        {
           id: "az7-feil-l3",
           title: "Feilin zamanları",
           intro: "Feil üç zamanda olur: keçmiş, indiki və gələcək zaman.",
@@ -121,6 +128,13 @@ export const azerbaijani7: Subject = {
             { id: "az7-feil-l3-b5", type: "fill_blank", prompt: "'gəl' feilini qəti gələcək zamana çevir (3-cü şəxs tək).", accepted: ["gələcək"], xp: 15 },
           ],
         },
+        {
+          id: "az7-feil-test",
+          title: "Bölmə sonu test",
+          kind: "test",
+          intro: "Bu bölmədə öyrəndiklərini yoxla — suallar bütün dərslərdən qarışıq gəlir.",
+          tasks: [],
+        }
       ],
     },
     // ═══════════════ 2. Feilin qrammatik məna növləri ═══════════════
@@ -197,6 +211,13 @@ export const azerbaijani7: Subject = {
           ],
         },
         {
+          id: "az7-nov-chest",
+          title: "Sandıq",
+          kind: "chest",
+          intro: "Buraya çatdın! Sandığı aç və mükafatını al.",
+          tasks: [],
+        },
+        {
           id: "az7-nov-l3",
           title: "İcbar növ və növlərin təkrarı",
           intro: "İş başqasına gördürülürsə icbar növ. Beş növün ümumi təkrarı.",
@@ -229,6 +250,13 @@ export const azerbaijani7: Subject = {
             { id: "az7-nov-l3-b5", type: "fill_blank", prompt: "'tik' feilini icbar növə çevir (keçmiş, 3-cü şəxs).", accepted: ["tikdirdi"], xp: 15 },
           ],
         },
+        {
+          id: "az7-nov-test",
+          title: "Bölmə sonu test",
+          kind: "test",
+          intro: "Bu bölmədə öyrəndiklərini yoxla — suallar bütün dərslərdən qarışıq gəlir.",
+          tasks: [],
+        }
       ],
     },
     // ═══════════════ 3. Təsriflənməyən feillər ═══════════════
@@ -305,6 +333,13 @@ export const azerbaijani7: Subject = {
           ],
         },
         {
+          id: "az7-tesrif-chest",
+          title: "Sandıq",
+          kind: "chest",
+          intro: "Buraya çatdın! Sandığı aç və mükafatını al.",
+          tasks: [],
+        },
+        {
           id: "az7-tesrif-l3",
           title: "Feili bağlama",
           intro: "Həm feilə, həm zərfə aid xüsusiyyət daşıyan, işin tərzini/zamanını bildirən forma.",
@@ -337,6 +372,13 @@ export const azerbaijani7: Subject = {
             { id: "az7-tesrif-l3-b5", type: "fill_blank", prompt: "'de' feilindən -yərək/-yib formasına: 'salam ___ girdi' (deyib).", accepted: ["deyib"], xp: 15 },
           ],
         },
+        {
+          id: "az7-tesrif-test",
+          title: "Bölmə sonu test",
+          kind: "test",
+          intro: "Bu bölmədə öyrəndiklərini yoxla — suallar bütün dərslərdən qarışıq gəlir.",
+          tasks: [],
+        }
       ],
     },
     // ═══════════════ 4. Zərf ═══════════════
@@ -413,6 +455,13 @@ export const azerbaijani7: Subject = {
           ],
         },
         {
+          id: "az7-zerf-chest",
+          title: "Sandıq",
+          kind: "chest",
+          intro: "Buraya çatdın! Sandığı aç və mükafatını al.",
+          tasks: [],
+        },
+        {
           id: "az7-zerf-l3",
           title: "Zərfin quruluşca növləri",
           intro: "Zərflər quruluşca sadə, düzəltmə və mürəkkəb olur.",
@@ -444,6 +493,13 @@ export const azerbaijani7: Subject = {
             { id: "az7-zerf-l3-b5", type: "multiple_choice", prompt: "'gizlicə' zərfi quruluşca necədir?", options: ["düzəltmə", "sadə", "mürəkkəb", "alınma"], correctIndex: 0, xp: 15 },
           ],
         },
+        {
+          id: "az7-zerf-test",
+          title: "Bölmə sonu test",
+          kind: "test",
+          intro: "Bu bölmədə öyrəndiklərini yoxla — suallar bütün dərslərdən qarışıq gəlir.",
+          tasks: [],
+        }
       ],
     },
     // ═══════════════ 5. Köməkçi nitq hissələri ═══════════════
@@ -520,6 +576,13 @@ export const azerbaijani7: Subject = {
           ],
         },
         {
+          id: "az7-komekci-chest",
+          title: "Sandıq",
+          kind: "chest",
+          intro: "Buraya çatdın! Sandığı aç və mükafatını al.",
+          tasks: [],
+        },
+        {
           id: "az7-komekci-l3",
           title: "Ədat",
           intro: "Sözün və ya cümlənin mənasını qüvvətləndirən, məhdudlaşdıran köməkçi nitq hissəsi.",
@@ -552,6 +615,13 @@ export const azerbaijani7: Subject = {
             { id: "az7-komekci-l3-b5", type: "multiple_choice", prompt: "Qoşma, bağlayıcı, ədat — bunların ortaq cəhəti nədir?", options: ["hamısı köməkçi nitq hissəsidir", "hamısı əşya bildirir", "hamısı hallanır", "hamısı feildir"], correctIndex: 0, xp: 15 },
           ],
         },
+        {
+          id: "az7-komekci-test",
+          title: "Bölmə sonu test",
+          kind: "test",
+          intro: "Bu bölmədə öyrəndiklərini yoxla — suallar bütün dərslərdən qarışıq gəlir.",
+          tasks: [],
+        }
       ],
     },
     // ═══════════════ 6. Modal sözlər, nida və söz birləşmələri ═══════════════
@@ -628,6 +698,13 @@ export const azerbaijani7: Subject = {
           ],
         },
         {
+          id: "az7-modal-chest",
+          title: "Sandıq",
+          kind: "chest",
+          intro: "Buraya çatdın! Sandığı aç və mükafatını al.",
+          tasks: [],
+        },
+        {
           id: "az7-modal-l3",
           title: "Söz birləşmələri",
           intro: "İki və daha çox müstəqil sözün məna və qrammatik cəhətdən birləşməsi.",
@@ -660,6 +737,13 @@ export const azerbaijani7: Subject = {
             { id: "az7-modal-l3-b5", type: "multiple_choice", prompt: "'sürətlə qaçmaq' birləşməsində əsas söz hansıdır?", options: ["qaçmaq", "sürətlə", "hər ikisi", "heç biri"], correctIndex: 0, xp: 15 },
           ],
         },
+        {
+          id: "az7-modal-test",
+          title: "Bölmə sonu test",
+          kind: "test",
+          intro: "Bu bölmədə öyrəndiklərini yoxla — suallar bütün dərslərdən qarışıq gəlir.",
+          tasks: [],
+        }
       ],
     },
   ],

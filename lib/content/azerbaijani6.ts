@@ -89,6 +89,13 @@ export const azerbaijani6: Subject = {
           ],
         },
         {
+          id: "az6-fonetika-chest",
+          title: "Sandıq",
+          kind: "chest",
+          intro: "Buraya çatdın! Sandığı aç və mükafatını al.",
+          tasks: [],
+        },
+        {
           id: "az6-fon-l3",
           title: "Heca, vurğu və böyük hərf",
           intro: "Sözü hecalara bölmək, vurğunu təyin etmək və böyük hərf qaydaları.",
@@ -122,6 +129,13 @@ export const azerbaijani6: Subject = {
             { id: "az6-fon-l3-b5", type: "numeric", prompt: "'yaz-mı-şam' — 'yazmışam' sözündə neçə heca var?", answer: 3, xp: 15 },
           ],
         },
+        {
+          id: "az6-fonetika-test",
+          title: "Bölmə sonu test",
+          kind: "test",
+          intro: "Bu bölmədə öyrəndiklərini yoxla — suallar bütün dərslərdən qarışıq gəlir.",
+          tasks: [],
+        }
       ],
     },
 
@@ -201,6 +215,13 @@ export const azerbaijani6: Subject = {
           ],
         },
         {
+          id: "az6-leksika-chest",
+          title: "Sandıq",
+          kind: "chest",
+          intro: "Buraya çatdın! Sandığı aç və mükafatını al.",
+          tasks: [],
+        },
+        {
           id: "az6-lek-l3",
           title: "Omonim və çoxmənalı sözlər",
           intro: "Eyni yazılıb müxtəlif məna verən (omonim) və bir neçə mənalı sözlər.",
@@ -234,6 +255,13 @@ export const azerbaijani6: Subject = {
             { id: "az6-lek-l3-b5", type: "multiple_choice", prompt: "'yol' (cığır, həyat yolu) — necədir?", options: ["çoxmənalı", "omonim", "sinonim", "antonim"], correctIndex: 0, xp: 15 },
           ],
         },
+        {
+          id: "az6-leksika-test",
+          title: "Bölmə sonu test",
+          kind: "test",
+          intro: "Bu bölmədə öyrəndiklərini yoxla — suallar bütün dərslərdən qarışıq gəlir.",
+          tasks: [],
+        }
       ],
     },
 
@@ -313,6 +341,13 @@ export const azerbaijani6: Subject = {
           ],
         },
         {
+          id: "az6-terkib-chest",
+          title: "Sandıq",
+          kind: "chest",
+          intro: "Buraya çatdın! Sandığı aç və mükafatını al.",
+          tasks: [],
+        },
+        {
           id: "az6-ter-l3",
           title: "Mürəkkəb sözlər",
           intro: "İki kökdən yaranan sözlər və onların yazılışı.",
@@ -346,6 +381,13 @@ export const azerbaijani6: Subject = {
             { id: "az6-ter-l3-b5", type: "multiple_choice", prompt: "'Bakı' sözü necədir?", options: ["sadə", "mürəkkəb", "düzəltmə", "şəkilçi"], correctIndex: 0, xp: 15 },
           ],
         },
+        {
+          id: "az6-terkib-test",
+          title: "Bölmə sonu test",
+          kind: "test",
+          intro: "Bu bölmədə öyrəndiklərini yoxla — suallar bütün dərslərdən qarışıq gəlir.",
+          tasks: [],
+        }
       ],
     },
 
@@ -425,6 +467,13 @@ export const azerbaijani6: Subject = {
           ],
         },
         {
+          id: "az6-nitq1-chest",
+          title: "Sandıq",
+          kind: "chest",
+          intro: "Buraya çatdın! Sandığı aç və mükafatını al.",
+          tasks: [],
+        },
+        {
           id: "az6-nit1-l3",
           title: "Say",
           intro: "Say, onun sualları və növləri (miqdar və sıra).",
@@ -492,6 +541,13 @@ export const azerbaijani6: Subject = {
             { id: "az6-nit1-l4-b5", type: "multiple_choice", prompt: "'bu kitab'-da əvəzlik hansıdır?", options: ["bu", "kitab", "hər ikisi", "heç biri"], correctIndex: 0, xp: 15 },
           ],
         },
+        {
+          id: "az6-nitq1-test",
+          title: "Bölmə sonu test",
+          kind: "test",
+          intro: "Bu bölmədə öyrəndiklərini yoxla — suallar bütün dərslərdən qarışıq gəlir.",
+          tasks: [],
+        }
       ],
     },
 
@@ -649,6 +705,13 @@ export const azerbaijani6: Subject = {
           ],
         },
         {
+          id: "az6-orfoqrafiya-chest",
+          title: "Sandıq",
+          kind: "chest",
+          intro: "Buraya çatdın! Sandığı aç və mükafatını al.",
+          tasks: [],
+        },
+        {
           id: "az6-orf-l3",
           title: "Mətn",
           intro: "Mətnin qurulması, mövzusu, əsas fikri və hissələri.",
@@ -682,6 +745,13 @@ export const azerbaijani6: Subject = {
             { id: "az6-orf-l3-b5", type: "multiple_choice", prompt: "Mətnin başlığı nəyə uyğun olmalıdır?", options: ["mövzuya", "uzunluğuna", "abzas sayına", "durğu işarəsinə"], correctIndex: 0, xp: 15 },
           ],
         },
+        {
+          id: "az6-orfoqrafiya-test",
+          title: "Bölmə sonu test",
+          kind: "test",
+          intro: "Bu bölmədə öyrəndiklərini yoxla — suallar bütün dərslərdən qarışıq gəlir.",
+          tasks: [],
+        }
       ],
     },
   ],
