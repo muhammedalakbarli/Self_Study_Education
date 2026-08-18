@@ -73,6 +73,7 @@ const DICT: Dict = {
   "subject.riyaziyyat-8": { az: "Riyaziyyat", en: "Mathematics", ru: "Математика" },
   "subject.azerbaycan-dili-8": { az: "Azərbaycan dili", en: "Azerbaijani", ru: "Азербайджанский" },
   "subject.ingilis-dili-8": { az: "İngilis dili", en: "English", ru: "Английский" },
+  "subject.reqemsal-tehlukesizlik-5": { az: "Rəqəmsal Təhlükəsizlik", en: "Digital Safety", ru: "Цифровая безопасность" },
 
   // Bölmə (unit) adları — Praktika "Bölmə üzrə" siyahısı
   "unit.ry-natural": {
@@ -149,6 +150,21 @@ const DICT: Dict = {
     az: "Bacarıqlar (Skills)",
     en: "Skills",
     ru: "Навыки (Skills)",
+  },
+  "unit.ds5-sexsi-melumat": {
+    az: "Şəxsi məlumatını qoru",
+    en: "Protect your personal information",
+    ru: "Защити свои личные данные",
+  },
+  "unit.ds5-parollar": {
+    az: "Güclü parollar və hesab təhlükəsizliyi",
+    en: "Strong passwords and account safety",
+    ru: "Надёжные пароли и безопасность аккаунта",
+  },
+  "unit.ds5-kiberbulli": {
+    az: "Kiberbulli və fişinqi tanı",
+    en: "Recognize cyberbullying and phishing",
+    ru: "Распознавай кибербуллинг и фишинг",
   },
 
   // Yardım mərkəzi (səhifə çərçivəsi; suallar səhifədə dilə görə saxlanılır)

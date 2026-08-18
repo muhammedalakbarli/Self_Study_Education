@@ -27,6 +27,7 @@ import { english7 } from "./english7";
 import { math8 } from "./math8";
 import { azerbaijani8 } from "./azerbaijani8";
 import { english8 } from "./english8";
+import { tehlukesizlik5 } from "./tehlukesizlik5";
 
 // 5-ci sinif fənləri + 6-cı sinif fənləri. App dashboard-da istifadəçinin
 // sinfinə (user_metadata.grade) görə süzür (bax lib/grade.ts).
@@ -37,7 +38,7 @@ export const subjects: Subject[] = balanceSubjects([
   math2, azerbaijani2, english2,
   math3, azerbaijani3, english3,
   math4, azerbaijani4, english4,
-  math, azerbaijani, english,
+  math, azerbaijani, english, tehlukesizlik5,
   math6, azerbaijani6, english6,
   math7, azerbaijani7, english7,
   math8, azerbaijani8, english8,
