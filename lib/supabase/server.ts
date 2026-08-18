@@ -12,6 +12,10 @@ export async function createClient() {
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
+      // httpOnly QƏSDƏN yoxdur — middleware-siz arxitekturada brauzer client-i sessiyanı
+      // özü yeniləmək üçün JS-dən oxuya/yaza bilməlidir. secure isə həmişə tətbiq olunur
+      // (sayt yalnız HTTPS-də işləyir).
+      cookieOptions: { secure: true, sameSite: "lax" },
       cookies: {
         getAll() {
           return cookieStore.getAll();

@@ -25,7 +25,8 @@ export async function readJson<T = Record<string, unknown>>(
 }
 
 // Cari autentifikasiya olunmuş istifadəçini qaytar (yoxdursa null).
-// Session httpOnly cookie-dən oxunur (Supabase SSR).
+// Sessiya cookie-dən oxunur (Supabase SSR). QEYD: cookie httpOnly DEYİL — brauzer client-i
+// (middleware-siz arxitektura) sessiyanı özü yeniləmək üçün ona JS-dən yaza bilməlidir.
 export async function currentUser(): Promise<User | null> {
   const supabase = await createClient();
   const { data } = await supabase.auth.getUser();
