@@ -17,13 +17,45 @@ export const english: Subject = {
     // Hər bölmə bir bacarıqdır; hamısı eyni "gündəlik fellər" lüğəti ilə bağlıdır.
     // ═══════════════════════════════════════════════════════════════
     {
-      id: "en-c1-grammar",
-      title: "Qayda: Present Simple",
-      description: "İndiki sadə zaman — hər gün təkrarlanan işlər. Qaydanı oxu, sonra məşq et.",
+      id: "en-u1",
+      title: "Gündəlik həyat",
+      description: "Present Simple — hər gün təkrarlanan işlər.",
       lessons: [
         {
+          id: "ps-vocab",
+          title: "Yeni sözlər",
+          intro: "Bu gün 8 yeni fel öyrənəcəyik və onları cümlələrdə işlədəcəyik.",
+          sections: [
+            { heading: "Yeni sözlər (8 fel)", body: "get up — durmaq/qalxmaq · go — getmək · eat — yemək · drink — içmək · read — oxumaq · play — oynamaq · watch — baxmaq · like — sevmək" },
+            { heading: "Məsləhət", body: "Hər sözü bir cümlədə xatırla: I eat breakfast. She reads a book. Sözü cümlə ilə öyrənmək daha asandır." },
+          ],
+          tasks: [
+            { id: "ps-vocab-t1", type: "multiple_choice", prompt: "'eat' sözünün mənası nədir?", options: ["içmək", "yemək", "oxumaq", "getmək"], correctIndex: 1, xp: 10 },
+            { id: "ps-vocab-t2", type: "multiple_choice", prompt: "'read' sözünün mənası?", options: ["oynamaq", "oxumaq", "baxmaq", "durmaq"], correctIndex: 1, xp: 10 },
+            { id: "ps-vocab-t3", type: "multiple_choice", prompt: "'play' sözünün mənası?", options: ["oynamaq", "yemək", "içmək", "sevmək"], correctIndex: 0, xp: 10 },
+            { id: "ps-vocab-t4", type: "multiple_choice", prompt: "'drink' sözünün mənası?", options: ["baxmaq", "içmək", "getmək", "oxumaq"], correctIndex: 1, xp: 10 },
+            { id: "ps-vocab-t5", type: "multiple_choice", prompt: "'watch' sözünün mənası?", options: ["baxmaq", "durmaq", "yemək", "oynamaq"], correctIndex: 0, xp: 10 },
+            { id: "ps-vocab-t6", type: "multiple_choice", prompt: "'go' sözünün mənası?", options: ["getmək", "gəlmək", "durmaq", "içmək"], correctIndex: 0, xp: 10 },
+            { id: "ps-vocab-t7", type: "fill_blank", prompt: "'getmək' ingiliscə necə yazılır?", accepted: ["go"], xp: 10 },
+            { id: "ps-vocab-t8", type: "fill_blank", prompt: "'oxumaq' ingiliscə necə yazılır?", accepted: ["read"], xp: 10 },
+            { id: "ps-vocab-t9", type: "multiple_choice", speakOptions: true, prompt: "'I ___ water.' (içmək)", options: ["drink", "eat", "read", "play"], correctIndex: 0, xp: 10 },
+            { id: "ps-vocab-t10", type: "multiple_choice", speakOptions: true, prompt: "'She ___ a book.' (oxumaq)", options: ["reads", "eats", "plays", "drinks"], correctIndex: 0, xp: 10 },
+            { id: "ps-vocab-t11", type: "multiple_choice", speakOptions: true, prompt: "'They ___ football.' (oynamaq)", options: ["play", "watch", "drink", "go"], correctIndex: 0, xp: 10 },
+            { id: "ps-vocab-t12", type: "fill_blank", prompt: "'I ___ TV in the evening.' (baxmaq — düzgün feli yaz)", accepted: ["watch"], xp: 10 },
+            { id: "ps-vocab-t13", type: "fill_blank", prompt: "'içmək' ingiliscə necə yazılır?", accepted: ["drink"], xp: 10 },
+            { id: "ps-vocab-t14", type: "fill_blank", prompt: "'baxmaq' ingiliscə necə yazılır?", accepted: ["watch"], xp: 10 },
+            { id: "ps-vocab-t15", type: "multiple_choice", speakOptions: true, prompt: "'He ___ up at seven.' (durmaq)", options: ["gets", "eats", "goes", "reads"], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "ps-vocab-b1", type: "multiple_choice", prompt: "'get up' nə deməkdir?", options: ["yatmaq", "durmaq / qalxmaq", "oturmaq", "qaçmaq"], correctIndex: 1, xp: 15 },
+            { id: "ps-vocab-b2", type: "multiple_choice", prompt: "'like' nə deməkdir?", options: ["sevmək", "sevməmək", "bilmək", "istəmək"], correctIndex: 0, xp: 15 },
+            { id: "ps-vocab-b3", type: "multiple_choice", speakOptions: true, prompt: "'We ___ breakfast.' (yemək)", options: ["eat", "drink", "read", "watch"], correctIndex: 0, xp: 15 },
+            { id: "ps-vocab-b4", type: "fill_blank", prompt: "'oynamaq' ingiliscə necə yazılır?", accepted: ["play"], xp: 15 },
+          ],
+        },
+        {
           id: "ps-rule",
-          title: "Present Simple qaydası",
+          title: "Qaydalar",
           intro: "Present Simple hər gün təkrarlanan işləri bildirir. Gəl qaydanı öyrənək!",
           sections: [
             { heading: "Present Simple nədir?", body: "Hər gün, həmişə və ya adətən təkrarlanan işləri bildirir: I go to school every day. (Mən hər gün məktəbə gedirəm.)" },
@@ -54,92 +86,9 @@ export const english: Subject = {
             { id: "ps-rule-b4", type: "multiple_choice", speakOptions: true, prompt: "'Cats ___ milk.' (drink)", options: ["drink", "drinks", "drinking", "drank"], correctIndex: 0, xp: 15 },
           ],
         },
-      ],
-    },
-    {
-      id: "en-c1-vocab",
-      title: "Lüğət: Gündəlik fellər",
-      description: "8 yeni fel — eyni sözləri müxtəlif cümlələrdə təkrar-təkrar işlət.",
-      lessons: [
-        {
-          id: "ps-vocab",
-          title: "Gündəlik fellər (8 söz)",
-          intro: "Bu gün 8 yeni fel öyrənəcəyik və onları cümlələrdə işlədəcəyik.",
-          sections: [
-            { heading: "Yeni sözlər (8 fel)", body: "get up — durmaq/qalxmaq · go — getmək · eat — yemək · drink — içmək · read — oxumaq · play — oynamaq · watch — baxmaq · like — sevmək" },
-            { heading: "Məsləhət", body: "Hər sözü bir cümlədə xatırla: I eat breakfast. She reads a book. Sözü cümlə ilə öyrənmək daha asandır." },
-          ],
-          tasks: [
-            { id: "ps-vocab-t1", type: "multiple_choice", prompt: "'eat' sözünün mənası nədir?", options: ["içmək", "yemək", "oxumaq", "getmək"], correctIndex: 1, xp: 10 },
-            { id: "ps-vocab-t2", type: "multiple_choice", prompt: "'read' sözünün mənası?", options: ["oynamaq", "oxumaq", "baxmaq", "durmaq"], correctIndex: 1, xp: 10 },
-            { id: "ps-vocab-t3", type: "multiple_choice", prompt: "'play' sözünün mənası?", options: ["oynamaq", "yemək", "içmək", "sevmək"], correctIndex: 0, xp: 10 },
-            { id: "ps-vocab-t4", type: "multiple_choice", prompt: "'drink' sözünün mənası?", options: ["baxmaq", "içmək", "getmək", "oxumaq"], correctIndex: 1, xp: 10 },
-            { id: "ps-vocab-t5", type: "multiple_choice", prompt: "'watch' sözünün mənası?", options: ["baxmaq", "durmaq", "yemək", "oynamaq"], correctIndex: 0, xp: 10 },
-            { id: "ps-vocab-t6", type: "multiple_choice", prompt: "'go' sözünün mənası?", options: ["getmək", "gəlmək", "durmaq", "içmək"], correctIndex: 0, xp: 10 },
-            { id: "ps-vocab-t7", type: "fill_blank", prompt: "'getmək' ingiliscə necə yazılır?", accepted: ["go"], xp: 10 },
-            { id: "ps-vocab-t8", type: "fill_blank", prompt: "'oxumaq' ingiliscə necə yazılır?", accepted: ["read"], xp: 10 },
-            { id: "ps-vocab-t9", type: "multiple_choice", speakOptions: true, prompt: "'I ___ water.' (içmək)", options: ["drink", "eat", "read", "play"], correctIndex: 0, xp: 10 },
-            { id: "ps-vocab-t10", type: "multiple_choice", speakOptions: true, prompt: "'She ___ a book.' (oxumaq)", options: ["reads", "eats", "plays", "drinks"], correctIndex: 0, xp: 10 },
-            { id: "ps-vocab-t11", type: "multiple_choice", speakOptions: true, prompt: "'They ___ football.' (oynamaq)", options: ["play", "watch", "drink", "go"], correctIndex: 0, xp: 10 },
-            { id: "ps-vocab-t12", type: "fill_blank", prompt: "'I ___ TV in the evening.' (baxmaq — düzgün feli yaz)", accepted: ["watch"], xp: 10 },
-            { id: "ps-vocab-t13", type: "fill_blank", prompt: "'içmək' ingiliscə necə yazılır?", accepted: ["drink"], xp: 10 },
-            { id: "ps-vocab-t14", type: "fill_blank", prompt: "'baxmaq' ingiliscə necə yazılır?", accepted: ["watch"], xp: 10 },
-            { id: "ps-vocab-t15", type: "multiple_choice", speakOptions: true, prompt: "'He ___ up at seven.' (durmaq)", options: ["gets", "eats", "goes", "reads"], correctIndex: 0, xp: 15 },
-          ],
-          bonusTasks: [
-            { id: "ps-vocab-b1", type: "multiple_choice", prompt: "'get up' nə deməkdir?", options: ["yatmaq", "durmaq / qalxmaq", "oturmaq", "qaçmaq"], correctIndex: 1, xp: 15 },
-            { id: "ps-vocab-b2", type: "multiple_choice", prompt: "'like' nə deməkdir?", options: ["sevmək", "sevməmək", "bilmək", "istəmək"], correctIndex: 0, xp: 15 },
-            { id: "ps-vocab-b3", type: "multiple_choice", speakOptions: true, prompt: "'We ___ breakfast.' (yemək)", options: ["eat", "drink", "read", "watch"], correctIndex: 0, xp: 15 },
-            { id: "ps-vocab-b4", type: "fill_blank", prompt: "'oynamaq' ingiliscə necə yazılır?", accepted: ["play"], xp: 15 },
-          ],
-        },
-      ],
-    },
-    {
-      id: "en-c1-listening",
-      title: "Dinləmə: Present Simple",
-      description: "Present Simple cümlələrini qulaqla tanı — dinlə və düzgün mənanı seç.",
-      lessons: [
-        {
-          id: "ps-listen",
-          title: "Dinlə və seç: cümlələr",
-          intro: "Cümləni dinlə və düzgün cavabı seç.",
-          sections: [
-            { heading: "Necə işləyir?", body: "«Dinlə» düyməsinə bas, cümləni eşit və düzgün variantı seç. İstədiyin qədər təkrar dinlə." },
-          ],
-          tasks: [
-            { id: "ps-listen-t1", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I eat breakfast.", options: ["Mən səhər yeməyi yeyirəm.", "Mən su içirəm.", "Mən kitab oxuyuram.", "Mən televizora baxıram."], correctIndex: 0, xp: 10 },
-            { id: "ps-listen-t2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She reads a book.", options: ["O futbol oynayır.", "O kitab oxuyur.", "O su içir.", "O məktəbə gedir."], correctIndex: 1, xp: 10 },
-            { id: "ps-listen-t3", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "He plays football.", options: ["O televizora baxır.", "O yemək yeyir.", "O futbol oynayır.", "O durur."], correctIndex: 2, xp: 10 },
-            { id: "ps-listen-t4", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "We drink water.", options: ["Biz su içirik.", "Biz yemək yeyirik.", "Biz oynayırıq.", "Biz oxuyuruq."], correctIndex: 0, xp: 10 },
-            { id: "ps-listen-t5", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "They go to school.", options: ["Onlar evə gedir.", "Onlar məktəbə gedir.", "Onlar oynayır.", "Onlar yatır."], correctIndex: 1, xp: 10 },
-            { id: "ps-listen-t6", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I watch TV.", options: ["Mən televizora baxıram.", "Mən kitab oxuyuram.", "Mən su içirəm.", "Mən qaçıram."], correctIndex: 0, xp: 10 },
-            { id: "ps-listen-t7", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She likes apples.", options: ["O almanı sevmir.", "O alma yeyir.", "O almanı sevir.", "O alma alır."], correctIndex: 2, xp: 10 },
-            { id: "ps-listen-t8", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "He gets up at seven.", options: ["O saat yeddidə durur.", "O saat yeddidə yatır.", "O saat səkkizdə durur.", "O saat altıda gəlir."], correctIndex: 0, xp: 10 },
-            { id: "ps-listen-t9", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "We eat lunch at school.", options: ["Biz evdə nahar edirik.", "Biz məktəbdə nahar edirik.", "Biz məktəbdə oynayırıq.", "Biz nahar etmirik."], correctIndex: 1, xp: 10 },
-            { id: "ps-listen-t10", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "You read every day.", options: ["Sən hər gün oxuyursan.", "Sən heç oxumursan.", "Sən hər gün oynayırsan.", "Sən bəzən oxuyursan."], correctIndex: 0, xp: 10 },
-            { id: "ps-listen-t11", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "He drinks milk.", options: ["O süd içir.", "O su içir.", "O çay içir.", "O süd sevir."], correctIndex: 0, xp: 10 },
-            { id: "ps-listen-t12", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "We play in the park.", options: ["Biz parkda oynayırıq.", "Biz evdə oynayırıq.", "Biz parkda gəzirik.", "Biz parkda qaçırıq."], correctIndex: 0, xp: 10 },
-            { id: "ps-listen-t13", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She goes to school by bus.", options: ["O məktəbə avtobusla gedir.", "O məktəbə piyada gedir.", "O işə avtobusla gedir.", "O evə avtobusla gedir."], correctIndex: 0, xp: 10 },
-            { id: "ps-listen-t14", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I read a book every night.", options: ["Mən hər gecə kitab oxuyuram.", "Mən hər səhər kitab oxuyuram.", "Mən heç kitab oxumuram.", "Mən hər gecə televizora baxıram."], correctIndex: 0, xp: 10 },
-            { id: "ps-listen-t15", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Does he like tea?", options: ["O çayı sevir?", "O çay içir?", "O çay alır?", "O çay bilir?"], correctIndex: 0, xp: 15 },
-          ],
-          bonusTasks: [
-            { id: "ps-listen-b1", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "The cat drinks milk.", options: ["Pişik su içir.", "Pişik süd içir.", "Pişik yemək yeyir.", "İt süd içir."], correctIndex: 1, xp: 15 },
-            { id: "ps-listen-b2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "My mother watches TV in the evening.", options: ["Anam səhər televizora baxır.", "Anam axşam televizora baxır.", "Anam axşam kitab oxuyur.", "Atam axşam televizora baxır."], correctIndex: 1, xp: 15 },
-            { id: "ps-listen-b3", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Do you like football?", options: ["Sən futbol oynayırsan?", "Sən futbolu sevirsən?", "Sən futbola baxırsan?", "Sən futbol bilirsən?"], correctIndex: 1, xp: 15 },
-          ],
-        },
-      ],
-    },
-    {
-      id: "en-c1-reading",
-      title: "Oxu: Mənim günüm",
-      description: "Qısa mətni oxu və suallara cavab ver (Present Simple).",
-      lessons: [
         {
           id: "ps-read",
-          title: "Reading: My day",
+          title: "Oxu",
           intro: "Qısa mətni oxu və suallara cavab ver.",
           sections: [
             { heading: "Read the text (Mətni oxu)", body: "This is Leyla. She is eleven years old. Every day she gets up at seven o'clock. She eats breakfast and drinks milk. Then she goes to school. At school she reads books and plays with her friends. In the evening she watches TV. She likes her day." },
@@ -168,16 +117,39 @@ export const english: Subject = {
             { id: "ps-read-b3", type: "multiple_choice", speakOptions: true, prompt: "'She plays with her ___.'", options: ["books", "friends", "cat", "food"], correctIndex: 1, xp: 15 },
           ],
         },
-      ],
-    },
-    {
-      id: "en-c1-writing",
-      title: "Yazı: Present Simple",
-      description: "Sözlərdən düzgün Present Simple cümləsi qur.",
-      lessons: [
+        {
+          id: "ps-listen",
+          title: "Dinləmə",
+          intro: "Cümləni dinlə və düzgün cavabı seç.",
+          sections: [
+            { heading: "Necə işləyir?", body: "«Dinlə» düyməsinə bas, cümləni eşit və düzgün variantı seç. İstədiyin qədər təkrar dinlə." },
+          ],
+          tasks: [
+            { id: "ps-listen-t1", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I eat breakfast.", options: ["Mən səhər yeməyi yeyirəm.", "Mən su içirəm.", "Mən kitab oxuyuram.", "Mən televizora baxıram."], correctIndex: 0, xp: 10 },
+            { id: "ps-listen-t2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She reads a book.", options: ["O futbol oynayır.", "O kitab oxuyur.", "O su içir.", "O məktəbə gedir."], correctIndex: 1, xp: 10 },
+            { id: "ps-listen-t3", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "He plays football.", options: ["O televizora baxır.", "O yemək yeyir.", "O futbol oynayır.", "O durur."], correctIndex: 2, xp: 10 },
+            { id: "ps-listen-t4", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "We drink water.", options: ["Biz su içirik.", "Biz yemək yeyirik.", "Biz oynayırıq.", "Biz oxuyuruq."], correctIndex: 0, xp: 10 },
+            { id: "ps-listen-t5", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "They go to school.", options: ["Onlar evə gedir.", "Onlar məktəbə gedir.", "Onlar oynayır.", "Onlar yatır."], correctIndex: 1, xp: 10 },
+            { id: "ps-listen-t6", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I watch TV.", options: ["Mən televizora baxıram.", "Mən kitab oxuyuram.", "Mən su içirəm.", "Mən qaçıram."], correctIndex: 0, xp: 10 },
+            { id: "ps-listen-t7", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She likes apples.", options: ["O almanı sevmir.", "O alma yeyir.", "O almanı sevir.", "O alma alır."], correctIndex: 2, xp: 10 },
+            { id: "ps-listen-t8", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "He gets up at seven.", options: ["O saat yeddidə durur.", "O saat yeddidə yatır.", "O saat səkkizdə durur.", "O saat altıda gəlir."], correctIndex: 0, xp: 10 },
+            { id: "ps-listen-t9", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "We eat lunch at school.", options: ["Biz evdə nahar edirik.", "Biz məktəbdə nahar edirik.", "Biz məktəbdə oynayırıq.", "Biz nahar etmirik."], correctIndex: 1, xp: 10 },
+            { id: "ps-listen-t10", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "You read every day.", options: ["Sən hər gün oxuyursan.", "Sən heç oxumursan.", "Sən hər gün oynayırsan.", "Sən bəzən oxuyursan."], correctIndex: 0, xp: 10 },
+            { id: "ps-listen-t11", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "He drinks milk.", options: ["O süd içir.", "O su içir.", "O çay içir.", "O süd sevir."], correctIndex: 0, xp: 10 },
+            { id: "ps-listen-t12", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "We play in the park.", options: ["Biz parkda oynayırıq.", "Biz evdə oynayırıq.", "Biz parkda gəzirik.", "Biz parkda qaçırıq."], correctIndex: 0, xp: 10 },
+            { id: "ps-listen-t13", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She goes to school by bus.", options: ["O məktəbə avtobusla gedir.", "O məktəbə piyada gedir.", "O işə avtobusla gedir.", "O evə avtobusla gedir."], correctIndex: 0, xp: 10 },
+            { id: "ps-listen-t14", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I read a book every night.", options: ["Mən hər gecə kitab oxuyuram.", "Mən hər səhər kitab oxuyuram.", "Mən heç kitab oxumuram.", "Mən hər gecə televizora baxıram."], correctIndex: 0, xp: 10 },
+            { id: "ps-listen-t15", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Does he like tea?", options: ["O çayı sevir?", "O çay içir?", "O çay alır?", "O çay bilir?"], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "ps-listen-b1", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "The cat drinks milk.", options: ["Pişik su içir.", "Pişik süd içir.", "Pişik yemək yeyir.", "İt süd içir."], correctIndex: 1, xp: 15 },
+            { id: "ps-listen-b2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "My mother watches TV in the evening.", options: ["Anam səhər televizora baxır.", "Anam axşam televizora baxır.", "Anam axşam kitab oxuyur.", "Atam axşam televizora baxır."], correctIndex: 1, xp: 15 },
+            { id: "ps-listen-b3", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Do you like football?", options: ["Sən futbol oynayırsan?", "Sən futbolu sevirsən?", "Sən futbola baxırsan?", "Sən futbol bilirsən?"], correctIndex: 1, xp: 15 },
+          ],
+        },
         {
           id: "ps-write",
-          title: "Cümlə qur: Present Simple",
+          title: "Cümlə qurma",
           intro: "Sözləri düzgün sıraya düz və Present Simple cümləsi qur.",
           sections: [
             { heading: "Necə işləyir?", body: "Sözlərə sıra ilə bas — cümlə yuxarıda düzələcək. İngilis cümləsi: kim → nə edir → nəyi. he/she ilə felə -s yadında olsun!" },
@@ -207,19 +179,46 @@ export const english: Subject = {
         },
       ],
     },
-
-    // ═══════════════════════════════════════════════════════════════
-    // 2-Cİ DÖVR — PRESENT CONTINUOUS (Qayda → Lüğət → Dinləmə → Oxu → Yazı)
-    // İndi baş verən işlər; yeni fellər: run, write, sleep, cook, sing, dance, swim, sit.
-    // ═══════════════════════════════════════════════════════════════
     {
-      id: "en-c2-grammar",
-      title: "Qayda: Present Continuous",
-      description: "İndi, danışıq anında baş verən işlər. Qaydanı oxu, sonra məşq et.",
+      id: "en-u2",
+      title: "İndi baş verənlər",
+      description: "Present Continuous — məhz indi görülən işlər.",
       lessons: [
         {
+          id: "pc-vocab",
+          title: "Yeni sözlər",
+          intro: "İndi görülən işləri bildirən 8 yeni fel öyrənək.",
+          sections: [
+            { heading: "Yeni sözlər (8 fel)", body: "run — qaçmaq · write — yazmaq · sleep — yatmaq · cook — bişirmək · sing — mahnı oxumaq · dance — rəqs etmək · swim — üzmək · sit — oturmaq" },
+            { heading: "Məsləhət", body: "Bu felləri -ing forması ilə xatırla: running, writing, sleeping... çünki indi baş verən işi bildirirlər." },
+          ],
+          tasks: [
+            { id: "pc-vocab-t1", type: "multiple_choice", prompt: "'run' sözünün mənası?", options: ["qaçmaq", "yatmaq", "üzmək", "oxumaq"], correctIndex: 0, xp: 10 },
+            { id: "pc-vocab-t2", type: "multiple_choice", prompt: "'sleep' sözünün mənası?", options: ["oturmaq", "yatmaq", "qaçmaq", "bişirmək"], correctIndex: 1, xp: 10 },
+            { id: "pc-vocab-t3", type: "multiple_choice", prompt: "'cook' sözünün mənası?", options: ["bişirmək", "üzmək", "yazmaq", "rəqs etmək"], correctIndex: 0, xp: 10 },
+            { id: "pc-vocab-t4", type: "multiple_choice", prompt: "'swim' sözünün mənası?", options: ["oxumaq", "üzmək", "qaçmaq", "oturmaq"], correctIndex: 1, xp: 10 },
+            { id: "pc-vocab-t5", type: "multiple_choice", prompt: "'write' sözünün mənası?", options: ["yazmaq", "oxumaq", "oturmaq", "qaçmaq"], correctIndex: 0, xp: 10 },
+            { id: "pc-vocab-t6", type: "multiple_choice", prompt: "'dance' sözünün mənası?", options: ["rəqs etmək", "oxumaq", "üzmək", "yatmaq"], correctIndex: 0, xp: 10 },
+            { id: "pc-vocab-t7", type: "fill_blank", prompt: "'yatmaq' ingiliscə necə yazılır?", accepted: ["sleep"], xp: 10 },
+            { id: "pc-vocab-t8", type: "fill_blank", prompt: "'oturmaq' ingiliscə necə yazılır?", accepted: ["sit"], xp: 10 },
+            { id: "pc-vocab-t9", type: "multiple_choice", speakOptions: true, prompt: "'She is ___ in the pool.' (üzmək)", options: ["swimming", "running", "cooking", "singing"], correctIndex: 0, xp: 10 },
+            { id: "pc-vocab-t10", type: "multiple_choice", speakOptions: true, prompt: "'He is ___ a letter.' (yazmaq)", options: ["writing", "reading", "cooking", "dancing"], correctIndex: 0, xp: 10 },
+            { id: "pc-vocab-t11", type: "multiple_choice", speakOptions: true, prompt: "'They are ___ a song.' (oxumaq)", options: ["singing", "sleeping", "sitting", "running"], correctIndex: 0, xp: 10 },
+            { id: "pc-vocab-t12", type: "fill_blank", prompt: "'The boys are ___ in the yard.' (qaçmaq — -ing forması)", accepted: ["running"], xp: 10 },
+            { id: "pc-vocab-t13", type: "fill_blank", prompt: "'qaçmaq' ingiliscə necə yazılır?", accepted: ["run"], xp: 10 },
+            { id: "pc-vocab-t14", type: "fill_blank", prompt: "'bişirmək' ingiliscə necə yazılır?", accepted: ["cook"], xp: 10 },
+            { id: "pc-vocab-t15", type: "multiple_choice", speakOptions: true, prompt: "'The baby is ___.' (yatmaq)", options: ["sleeping", "running", "cooking", "dancing"], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "pc-vocab-b1", type: "multiple_choice", prompt: "'sing' sözünün mənası?", options: ["mahnı oxumaq", "yatmaq", "oturmaq", "üzmək"], correctIndex: 0, xp: 15 },
+            { id: "pc-vocab-b2", type: "multiple_choice", prompt: "'sit' sözünün mənası?", options: ["oturmaq", "qaçmaq", "bişirmək", "yazmaq"], correctIndex: 0, xp: 15 },
+            { id: "pc-vocab-b3", type: "multiple_choice", speakOptions: true, prompt: "'Mum is ___ dinner.' (bişirmək)", options: ["cooking", "swimming", "writing", "dancing"], correctIndex: 0, xp: 15 },
+            { id: "pc-vocab-b4", type: "fill_blank", prompt: "'rəqs etmək' ingiliscə necə yazılır?", accepted: ["dance"], xp: 15 },
+          ],
+        },
+        {
           id: "pc-rule",
-          title: "Present Continuous qaydası",
+          title: "Qaydalar",
           intro: "Present Continuous indi, bu anda baş verən işi bildirir. Gəl qaydanı öyrənək!",
           sections: [
             { heading: "Present Continuous nədir?", body: "İndi, danışıq anında baş verən işi bildirir: I am reading now. (Mən indi oxuyuram.) Çox vaxt 'now', 'at the moment' sözləri ilə işlənir." },
@@ -250,92 +249,9 @@ export const english: Subject = {
             { id: "pc-rule-b4", type: "multiple_choice", speakOptions: true, prompt: "'What ___ you doing?'", options: ["am", "is", "are", "be"], correctIndex: 2, xp: 15 },
           ],
         },
-      ],
-    },
-    {
-      id: "en-c2-vocab",
-      title: "Lüğət: İndi görülən işlər",
-      description: "8 yeni fel — run, write, sleep, cook, sing, dance, swim, sit.",
-      lessons: [
-        {
-          id: "pc-vocab",
-          title: "İş felləri (8 söz)",
-          intro: "İndi görülən işləri bildirən 8 yeni fel öyrənək.",
-          sections: [
-            { heading: "Yeni sözlər (8 fel)", body: "run — qaçmaq · write — yazmaq · sleep — yatmaq · cook — bişirmək · sing — mahnı oxumaq · dance — rəqs etmək · swim — üzmək · sit — oturmaq" },
-            { heading: "Məsləhət", body: "Bu felləri -ing forması ilə xatırla: running, writing, sleeping... çünki indi baş verən işi bildirirlər." },
-          ],
-          tasks: [
-            { id: "pc-vocab-t1", type: "multiple_choice", prompt: "'run' sözünün mənası?", options: ["qaçmaq", "yatmaq", "üzmək", "oxumaq"], correctIndex: 0, xp: 10 },
-            { id: "pc-vocab-t2", type: "multiple_choice", prompt: "'sleep' sözünün mənası?", options: ["oturmaq", "yatmaq", "qaçmaq", "bişirmək"], correctIndex: 1, xp: 10 },
-            { id: "pc-vocab-t3", type: "multiple_choice", prompt: "'cook' sözünün mənası?", options: ["bişirmək", "üzmək", "yazmaq", "rəqs etmək"], correctIndex: 0, xp: 10 },
-            { id: "pc-vocab-t4", type: "multiple_choice", prompt: "'swim' sözünün mənası?", options: ["oxumaq", "üzmək", "qaçmaq", "oturmaq"], correctIndex: 1, xp: 10 },
-            { id: "pc-vocab-t5", type: "multiple_choice", prompt: "'write' sözünün mənası?", options: ["yazmaq", "oxumaq", "oturmaq", "qaçmaq"], correctIndex: 0, xp: 10 },
-            { id: "pc-vocab-t6", type: "multiple_choice", prompt: "'dance' sözünün mənası?", options: ["rəqs etmək", "oxumaq", "üzmək", "yatmaq"], correctIndex: 0, xp: 10 },
-            { id: "pc-vocab-t7", type: "fill_blank", prompt: "'yatmaq' ingiliscə necə yazılır?", accepted: ["sleep"], xp: 10 },
-            { id: "pc-vocab-t8", type: "fill_blank", prompt: "'oturmaq' ingiliscə necə yazılır?", accepted: ["sit"], xp: 10 },
-            { id: "pc-vocab-t9", type: "multiple_choice", speakOptions: true, prompt: "'She is ___ in the pool.' (üzmək)", options: ["swimming", "running", "cooking", "singing"], correctIndex: 0, xp: 10 },
-            { id: "pc-vocab-t10", type: "multiple_choice", speakOptions: true, prompt: "'He is ___ a letter.' (yazmaq)", options: ["writing", "reading", "cooking", "dancing"], correctIndex: 0, xp: 10 },
-            { id: "pc-vocab-t11", type: "multiple_choice", speakOptions: true, prompt: "'They are ___ a song.' (oxumaq)", options: ["singing", "sleeping", "sitting", "running"], correctIndex: 0, xp: 10 },
-            { id: "pc-vocab-t12", type: "fill_blank", prompt: "'The boys are ___ in the yard.' (qaçmaq — -ing forması)", accepted: ["running"], xp: 10 },
-            { id: "pc-vocab-t13", type: "fill_blank", prompt: "'qaçmaq' ingiliscə necə yazılır?", accepted: ["run"], xp: 10 },
-            { id: "pc-vocab-t14", type: "fill_blank", prompt: "'bişirmək' ingiliscə necə yazılır?", accepted: ["cook"], xp: 10 },
-            { id: "pc-vocab-t15", type: "multiple_choice", speakOptions: true, prompt: "'The baby is ___.' (yatmaq)", options: ["sleeping", "running", "cooking", "dancing"], correctIndex: 0, xp: 15 },
-          ],
-          bonusTasks: [
-            { id: "pc-vocab-b1", type: "multiple_choice", prompt: "'sing' sözünün mənası?", options: ["mahnı oxumaq", "yatmaq", "oturmaq", "üzmək"], correctIndex: 0, xp: 15 },
-            { id: "pc-vocab-b2", type: "multiple_choice", prompt: "'sit' sözünün mənası?", options: ["oturmaq", "qaçmaq", "bişirmək", "yazmaq"], correctIndex: 0, xp: 15 },
-            { id: "pc-vocab-b3", type: "multiple_choice", speakOptions: true, prompt: "'Mum is ___ dinner.' (bişirmək)", options: ["cooking", "swimming", "writing", "dancing"], correctIndex: 0, xp: 15 },
-            { id: "pc-vocab-b4", type: "fill_blank", prompt: "'rəqs etmək' ingiliscə necə yazılır?", accepted: ["dance"], xp: 15 },
-          ],
-        },
-      ],
-    },
-    {
-      id: "en-c2-listening",
-      title: "Dinləmə: Present Continuous",
-      description: "İndi baş verən işlərin cümlələrini dinlə və düzgün mənanı seç.",
-      lessons: [
-        {
-          id: "pc-listen",
-          title: "Dinlə və seç: indi baş verən iş",
-          intro: "Cümləni dinlə və düzgün cavabı seç.",
-          sections: [
-            { heading: "Necə işləyir?", body: "«Dinlə» düyməsinə bas, cümləni eşit və düzgün variantı seç. İstədiyin qədər təkrar dinlə." },
-          ],
-          tasks: [
-            { id: "pc-listen-t1", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I am reading a book.", options: ["Mən kitab oxuyuram.", "Mən yazıram.", "Mən yatıram.", "Mən qaçıram."], correctIndex: 0, xp: 10 },
-            { id: "pc-listen-t2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She is running.", options: ["O yazır.", "O qaçır.", "O yatır.", "O üzür."], correctIndex: 1, xp: 10 },
-            { id: "pc-listen-t3", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "They are singing.", options: ["Onlar rəqs edir.", "Onlar mahnı oxuyur.", "Onlar yatır.", "Onlar qaçır."], correctIndex: 1, xp: 10 },
-            { id: "pc-listen-t4", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "He is cooking dinner.", options: ["O şam yeməyi bişirir.", "O yemək yeyir.", "O yazır.", "O yatır."], correctIndex: 0, xp: 10 },
-            { id: "pc-listen-t5", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "We are swimming.", options: ["Biz üzürük.", "Biz qaçırıq.", "Biz oxuyuruq.", "Biz yatırıq."], correctIndex: 0, xp: 10 },
-            { id: "pc-listen-t6", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "The baby is sleeping.", options: ["Körpə yatır.", "Körpə ağlayır.", "Körpə oynayır.", "Körpə yeyir."], correctIndex: 0, xp: 10 },
-            { id: "pc-listen-t7", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "You are writing a letter.", options: ["Sən məktub yazırsan.", "Sən oxuyursan.", "Sən qaçırsan.", "Sən yatırsan."], correctIndex: 0, xp: 10 },
-            { id: "pc-listen-t8", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She is dancing now.", options: ["O indi rəqs edir.", "O indi oxuyur.", "O indi yatır.", "O indi qaçır."], correctIndex: 0, xp: 10 },
-            { id: "pc-listen-t9", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "The children are playing.", options: ["Uşaqlar oynayır.", "Uşaqlar yatır.", "Uşaqlar yeyir.", "Uşaqlar oxuyur."], correctIndex: 0, xp: 10 },
-            { id: "pc-listen-t10", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I am sitting on the chair.", options: ["Mən stulda oturmuşam.", "Mən qaçıram.", "Mən üzürəm.", "Mən yazıram."], correctIndex: 0, xp: 10 },
-            { id: "pc-listen-t11", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "He is writing now.", options: ["O indi yazır.", "O indi oxuyur.", "O indi qaçır.", "O indi yeyir."], correctIndex: 0, xp: 10 },
-            { id: "pc-listen-t12", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "We are cooking together.", options: ["Biz birlikdə bişiririk.", "Biz birlikdə oxuyuruq.", "Biz birlikdə yeyirik.", "Biz birlikdə üzürük."], correctIndex: 0, xp: 10 },
-            { id: "pc-listen-t13", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "The girl is dancing.", options: ["Qız rəqs edir.", "Qız qaçır.", "Qız oxuyur.", "Qız yatır."], correctIndex: 0, xp: 10 },
-            { id: "pc-listen-t14", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "My brother is sleeping.", options: ["Qardaşım yatır.", "Qardaşım qaçır.", "Qardaşım oxuyur.", "Bacım yatır."], correctIndex: 0, xp: 10 },
-            { id: "pc-listen-t15", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Are they swimming?", options: ["Onlar üzür?", "Onlar qaçır?", "Onlar oxuyur?", "Onlar rəqs edir?"], correctIndex: 0, xp: 15 },
-          ],
-          bonusTasks: [
-            { id: "pc-listen-b1", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "What are you doing?", options: ["Sən nə edirsən?", "Sən hara gedirsən?", "Sən kimsən?", "Sən neçə yaşındasan?"], correctIndex: 0, xp: 15 },
-            { id: "pc-listen-b2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "Look! It is raining.", options: ["Bax! Yağış yağır.", "Bax! Gün çıxıb.", "Bax! Qar yağır.", "Bax! Külək əsir."], correctIndex: 0, xp: 15 },
-            { id: "pc-listen-b3", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "My father is reading a newspaper.", options: ["Atam qəzet oxuyur.", "Anam qəzet oxuyur.", "Atam kitab oxuyur.", "Atam yazır."], correctIndex: 0, xp: 15 },
-          ],
-        },
-      ],
-    },
-    {
-      id: "en-c2-reading",
-      title: "Oxu: In the park",
-      description: "Qısa mətni oxu və suallara cavab ver (Present Continuous).",
-      lessons: [
         {
           id: "pc-read",
-          title: "Reading: In the park",
+          title: "Oxu",
           intro: "Qısa mətni oxu və suallara cavab ver.",
           sections: [
             { heading: "Read the text (Mətni oxu)", body: "Look at the park. It is a sunny day. Many people are in the park. Two boys are playing football. A girl is running with her dog. An old man is sitting on a bench and reading a newspaper. Some children are singing and dancing. Everyone is having a good time." },
@@ -364,16 +280,39 @@ export const english: Subject = {
             { id: "pc-read-b3", type: "multiple_choice", prompt: "'Everyone is having a good time.' nə deməkdir?", options: ["hamı yaxşı vaxt keçirir", "hamı yorğundur", "hamı acdır", "hamı yatır"], correctIndex: 0, xp: 15 },
           ],
         },
-      ],
-    },
-    {
-      id: "en-c2-writing",
-      title: "Yazı: Present Continuous",
-      description: "Sözlərdən düzgün Present Continuous cümləsi qur.",
-      lessons: [
+        {
+          id: "pc-listen",
+          title: "Dinləmə",
+          intro: "Cümləni dinlə və düzgün cavabı seç.",
+          sections: [
+            { heading: "Necə işləyir?", body: "«Dinlə» düyməsinə bas, cümləni eşit və düzgün variantı seç. İstədiyin qədər təkrar dinlə." },
+          ],
+          tasks: [
+            { id: "pc-listen-t1", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I am reading a book.", options: ["Mən kitab oxuyuram.", "Mən yazıram.", "Mən yatıram.", "Mən qaçıram."], correctIndex: 0, xp: 10 },
+            { id: "pc-listen-t2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She is running.", options: ["O yazır.", "O qaçır.", "O yatır.", "O üzür."], correctIndex: 1, xp: 10 },
+            { id: "pc-listen-t3", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "They are singing.", options: ["Onlar rəqs edir.", "Onlar mahnı oxuyur.", "Onlar yatır.", "Onlar qaçır."], correctIndex: 1, xp: 10 },
+            { id: "pc-listen-t4", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "He is cooking dinner.", options: ["O şam yeməyi bişirir.", "O yemək yeyir.", "O yazır.", "O yatır."], correctIndex: 0, xp: 10 },
+            { id: "pc-listen-t5", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "We are swimming.", options: ["Biz üzürük.", "Biz qaçırıq.", "Biz oxuyuruq.", "Biz yatırıq."], correctIndex: 0, xp: 10 },
+            { id: "pc-listen-t6", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "The baby is sleeping.", options: ["Körpə yatır.", "Körpə ağlayır.", "Körpə oynayır.", "Körpə yeyir."], correctIndex: 0, xp: 10 },
+            { id: "pc-listen-t7", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "You are writing a letter.", options: ["Sən məktub yazırsan.", "Sən oxuyursan.", "Sən qaçırsan.", "Sən yatırsan."], correctIndex: 0, xp: 10 },
+            { id: "pc-listen-t8", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She is dancing now.", options: ["O indi rəqs edir.", "O indi oxuyur.", "O indi yatır.", "O indi qaçır."], correctIndex: 0, xp: 10 },
+            { id: "pc-listen-t9", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "The children are playing.", options: ["Uşaqlar oynayır.", "Uşaqlar yatır.", "Uşaqlar yeyir.", "Uşaqlar oxuyur."], correctIndex: 0, xp: 10 },
+            { id: "pc-listen-t10", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I am sitting on the chair.", options: ["Mən stulda oturmuşam.", "Mən qaçıram.", "Mən üzürəm.", "Mən yazıram."], correctIndex: 0, xp: 10 },
+            { id: "pc-listen-t11", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "He is writing now.", options: ["O indi yazır.", "O indi oxuyur.", "O indi qaçır.", "O indi yeyir."], correctIndex: 0, xp: 10 },
+            { id: "pc-listen-t12", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "We are cooking together.", options: ["Biz birlikdə bişiririk.", "Biz birlikdə oxuyuruq.", "Biz birlikdə yeyirik.", "Biz birlikdə üzürük."], correctIndex: 0, xp: 10 },
+            { id: "pc-listen-t13", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "The girl is dancing.", options: ["Qız rəqs edir.", "Qız qaçır.", "Qız oxuyur.", "Qız yatır."], correctIndex: 0, xp: 10 },
+            { id: "pc-listen-t14", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "My brother is sleeping.", options: ["Qardaşım yatır.", "Qardaşım qaçır.", "Qardaşım oxuyur.", "Bacım yatır."], correctIndex: 0, xp: 10 },
+            { id: "pc-listen-t15", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Are they swimming?", options: ["Onlar üzür?", "Onlar qaçır?", "Onlar oxuyur?", "Onlar rəqs edir?"], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "pc-listen-b1", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "What are you doing?", options: ["Sən nə edirsən?", "Sən hara gedirsən?", "Sən kimsən?", "Sən neçə yaşındasan?"], correctIndex: 0, xp: 15 },
+            { id: "pc-listen-b2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "Look! It is raining.", options: ["Bax! Yağış yağır.", "Bax! Gün çıxıb.", "Bax! Qar yağır.", "Bax! Külək əsir."], correctIndex: 0, xp: 15 },
+            { id: "pc-listen-b3", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "My father is reading a newspaper.", options: ["Atam qəzet oxuyur.", "Anam qəzet oxuyur.", "Atam kitab oxuyur.", "Atam yazır."], correctIndex: 0, xp: 15 },
+          ],
+        },
         {
           id: "pc-write",
-          title: "Cümlə qur: Present Continuous",
+          title: "Cümlə qurma",
           intro: "Sözləri düzgün sıraya düz və Present Continuous cümləsi qur.",
           sections: [
             { heading: "Necə işləyir?", body: "Sözlərə sıra ilə bas — cümlə yuxarıda düzələcək. Quruluş: kim → am/is/are → fel+ing." },
@@ -403,19 +342,45 @@ export const english: Subject = {
         },
       ],
     },
-
-    // ═══════════════════════════════════════════════════════════════
-    // 3-CÜ DÖVR — PAST SIMPLE (Qayda → Lüğət → Dinləmə → Oxu → Yazı)
-    // Keçmiş işlər; yeni fellər: visit, help, clean, wash, walk, talk, want, call.
-    // ═══════════════════════════════════════════════════════════════
     {
-      id: "en-c3-grammar",
-      title: "Qayda: Past Simple",
-      description: "Keçmişdə bitmiş işlər. Qaydalı (-ed) və qaydasız fellər.",
+      id: "en-u3",
+      title: "Keçmiş hadisələr",
+      description: "Past Simple — keçmişdə baş verənlər.",
       lessons: [
         {
+          id: "past-vocab",
+          title: "Yeni sözlər",
+          intro: "Keçmişdə görülən işləri bildirən 8 yeni fel öyrənək.",
+          sections: [
+            { heading: "Yeni sözlər (8 fel)", body: "visit — ziyarət etmək · help — kömək etmək · clean — təmizləmək · wash — yumaq · walk — gəzmək · talk — danışmaq · want — istəmək · call — zəng etmək" },
+            { heading: "Məsləhət", body: "Bu fellər qaydalıdır — keçmişdə -ed alır: visited, helped, cleaned... Bir cümlədə xatırla: I helped my mother." },
+          ],
+          tasks: [
+            { id: "past-vocab-t1", type: "multiple_choice", prompt: "'visit' sözünün mənası?", options: ["ziyarət etmək", "təmizləmək", "yumaq", "gəzmək"], correctIndex: 0, xp: 10 },
+            { id: "past-vocab-t2", type: "multiple_choice", prompt: "'help' sözünün mənası?", options: ["kömək etmək", "danışmaq", "istəmək", "zəng etmək"], correctIndex: 0, xp: 10 },
+            { id: "past-vocab-t3", type: "multiple_choice", prompt: "'clean' sözünün mənası?", options: ["təmizləmək", "yumaq", "gəzmək", "ziyarət etmək"], correctIndex: 0, xp: 10 },
+            { id: "past-vocab-t4", type: "multiple_choice", prompt: "'wash' sözünün mənası?", options: ["yumaq", "təmizləmək", "danışmaq", "istəmək"], correctIndex: 0, xp: 10 },
+            { id: "past-vocab-t5", type: "multiple_choice", prompt: "'walk' sözünün mənası?", options: ["gəzmək / yerimək", "qaçmaq", "üzmək", "oturmaq"], correctIndex: 0, xp: 10 },
+            { id: "past-vocab-t6", type: "multiple_choice", prompt: "'talk' sözünün mənası?", options: ["danışmaq", "dinləmək", "oxumaq", "yazmaq"], correctIndex: 0, xp: 10 },
+            { id: "past-vocab-t7", type: "fill_blank", prompt: "'istəmək' ingiliscə necə yazılır?", accepted: ["want"], xp: 10 },
+            { id: "past-vocab-t8", type: "fill_blank", prompt: "'zəng etmək' ingiliscə necə yazılır?", accepted: ["call"], xp: 10 },
+            { id: "past-vocab-t9", type: "multiple_choice", speakOptions: true, prompt: "'Yesterday I ___ my grandma.' (ziyarət etdim)", options: ["visited", "cleaned", "walked", "wanted"], correctIndex: 0, xp: 10 },
+            { id: "past-vocab-t10", type: "multiple_choice", speakOptions: true, prompt: "'She ___ the dishes.' (yudu)", options: ["washed", "helped", "talked", "called"], correctIndex: 0, xp: 10 },
+            { id: "past-vocab-t11", type: "fill_blank", prompt: "'kömək etmək' ingiliscə necə yazılır?", accepted: ["help"], xp: 10 },
+            { id: "past-vocab-t12", type: "fill_blank", prompt: "'təmizləmək' ingiliscə necə yazılır?", accepted: ["clean"], xp: 10 },
+            { id: "past-vocab-t13", type: "multiple_choice", speakOptions: true, prompt: "'They ___ on the phone.' (danışdı)", options: ["talked", "walked", "washed", "wanted"], correctIndex: 0, xp: 10 },
+            { id: "past-vocab-t14", type: "multiple_choice", prompt: "'wash' sözünün mənası?", options: ["yumaq", "gəzmək", "istəmək", "zəng etmək"], correctIndex: 0, xp: 10 },
+            { id: "past-vocab-t15", type: "multiple_choice", speakOptions: true, prompt: "'I ___ to buy a book.' (istədim)", options: ["wanted", "called", "helped", "cleaned"], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "past-vocab-b1", type: "multiple_choice", prompt: "'want' sözünün mənası?", options: ["istəmək", "sevmək", "bilmək", "görmək"], correctIndex: 0, xp: 15 },
+            { id: "past-vocab-b2", type: "multiple_choice", prompt: "'call' sözünün mənası?", options: ["zəng etmək", "gəzmək", "yumaq", "oxumaq"], correctIndex: 0, xp: 15 },
+            { id: "past-vocab-b3", type: "multiple_choice", speakOptions: true, prompt: "'We ___ in the park.' (gəzdik)", options: ["walked", "washed", "wanted", "called"], correctIndex: 0, xp: 15 },
+          ],
+        },
+        {
           id: "past-rule",
-          title: "Past Simple qaydası",
+          title: "Qaydalar",
           intro: "Past Simple keçmişdə bitmiş işi bildirir. Gəl qaydanı öyrənək!",
           sections: [
             { heading: "Past Simple nədir?", body: "Keçmişdə bitmiş işi bildirir: I played yesterday. Çox vaxt 'yesterday', 'last week', 'ago' sözləri ilə işlənir." },
@@ -445,90 +410,9 @@ export const english: Subject = {
             { id: "past-rule-b3", type: "multiple_choice", speakOptions: true, prompt: "'I ___ happy yesterday.' (be)", options: ["am", "was", "were", "is"], correctIndex: 1, xp: 15 },
           ],
         },
-      ],
-    },
-    {
-      id: "en-c3-vocab",
-      title: "Lüğət: Keçmiş işlər",
-      description: "8 yeni fel — visit, help, clean, wash, walk, talk, want, call.",
-      lessons: [
-        {
-          id: "past-vocab",
-          title: "Gündəlik fellər II (8 söz)",
-          intro: "Keçmişdə görülən işləri bildirən 8 yeni fel öyrənək.",
-          sections: [
-            { heading: "Yeni sözlər (8 fel)", body: "visit — ziyarət etmək · help — kömək etmək · clean — təmizləmək · wash — yumaq · walk — gəzmək · talk — danışmaq · want — istəmək · call — zəng etmək" },
-            { heading: "Məsləhət", body: "Bu fellər qaydalıdır — keçmişdə -ed alır: visited, helped, cleaned... Bir cümlədə xatırla: I helped my mother." },
-          ],
-          tasks: [
-            { id: "past-vocab-t1", type: "multiple_choice", prompt: "'visit' sözünün mənası?", options: ["ziyarət etmək", "təmizləmək", "yumaq", "gəzmək"], correctIndex: 0, xp: 10 },
-            { id: "past-vocab-t2", type: "multiple_choice", prompt: "'help' sözünün mənası?", options: ["kömək etmək", "danışmaq", "istəmək", "zəng etmək"], correctIndex: 0, xp: 10 },
-            { id: "past-vocab-t3", type: "multiple_choice", prompt: "'clean' sözünün mənası?", options: ["təmizləmək", "yumaq", "gəzmək", "ziyarət etmək"], correctIndex: 0, xp: 10 },
-            { id: "past-vocab-t4", type: "multiple_choice", prompt: "'wash' sözünün mənası?", options: ["yumaq", "təmizləmək", "danışmaq", "istəmək"], correctIndex: 0, xp: 10 },
-            { id: "past-vocab-t5", type: "multiple_choice", prompt: "'walk' sözünün mənası?", options: ["gəzmək / yerimək", "qaçmaq", "üzmək", "oturmaq"], correctIndex: 0, xp: 10 },
-            { id: "past-vocab-t6", type: "multiple_choice", prompt: "'talk' sözünün mənası?", options: ["danışmaq", "dinləmək", "oxumaq", "yazmaq"], correctIndex: 0, xp: 10 },
-            { id: "past-vocab-t7", type: "fill_blank", prompt: "'istəmək' ingiliscə necə yazılır?", accepted: ["want"], xp: 10 },
-            { id: "past-vocab-t8", type: "fill_blank", prompt: "'zəng etmək' ingiliscə necə yazılır?", accepted: ["call"], xp: 10 },
-            { id: "past-vocab-t9", type: "multiple_choice", speakOptions: true, prompt: "'Yesterday I ___ my grandma.' (ziyarət etdim)", options: ["visited", "cleaned", "walked", "wanted"], correctIndex: 0, xp: 10 },
-            { id: "past-vocab-t10", type: "multiple_choice", speakOptions: true, prompt: "'She ___ the dishes.' (yudu)", options: ["washed", "helped", "talked", "called"], correctIndex: 0, xp: 10 },
-            { id: "past-vocab-t11", type: "fill_blank", prompt: "'kömək etmək' ingiliscə necə yazılır?", accepted: ["help"], xp: 10 },
-            { id: "past-vocab-t12", type: "fill_blank", prompt: "'təmizləmək' ingiliscə necə yazılır?", accepted: ["clean"], xp: 10 },
-            { id: "past-vocab-t13", type: "multiple_choice", speakOptions: true, prompt: "'They ___ on the phone.' (danışdı)", options: ["talked", "walked", "washed", "wanted"], correctIndex: 0, xp: 10 },
-            { id: "past-vocab-t14", type: "multiple_choice", prompt: "'wash' sözünün mənası?", options: ["yumaq", "gəzmək", "istəmək", "zəng etmək"], correctIndex: 0, xp: 10 },
-            { id: "past-vocab-t15", type: "multiple_choice", speakOptions: true, prompt: "'I ___ to buy a book.' (istədim)", options: ["wanted", "called", "helped", "cleaned"], correctIndex: 0, xp: 15 },
-          ],
-          bonusTasks: [
-            { id: "past-vocab-b1", type: "multiple_choice", prompt: "'want' sözünün mənası?", options: ["istəmək", "sevmək", "bilmək", "görmək"], correctIndex: 0, xp: 15 },
-            { id: "past-vocab-b2", type: "multiple_choice", prompt: "'call' sözünün mənası?", options: ["zəng etmək", "gəzmək", "yumaq", "oxumaq"], correctIndex: 0, xp: 15 },
-            { id: "past-vocab-b3", type: "multiple_choice", speakOptions: true, prompt: "'We ___ in the park.' (gəzdik)", options: ["walked", "washed", "wanted", "called"], correctIndex: 0, xp: 15 },
-          ],
-        },
-      ],
-    },
-    {
-      id: "en-c3-listening",
-      title: "Dinləmə: Past Simple",
-      description: "Keçmiş işlərin cümlələrini dinlə və düzgün mənanı seç.",
-      lessons: [
-        {
-          id: "past-listen",
-          title: "Dinlə və seç: keçmiş iş",
-          intro: "Cümləni dinlə və düzgün cavabı seç.",
-          sections: [
-            { heading: "Necə işləyir?", body: "«Dinlə» düyməsinə bas, cümləni eşit və düzgün variantı seç. İstədiyin qədər təkrar dinlə." },
-          ],
-          tasks: [
-            { id: "past-listen-t1", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I played football yesterday.", options: ["Mən dünən futbol oynadım.", "Mən indi futbol oynayıram.", "Mən sabah oynayacağam.", "Mən futbola baxdım."], correctIndex: 0, xp: 10 },
-            { id: "past-listen-t2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She visited her grandmother.", options: ["O nənəsini ziyarət etdi.", "O nənəsinə zəng etdi.", "O anasını ziyarət etdi.", "O nənəsinə kömək etdi."], correctIndex: 0, xp: 10 },
-            { id: "past-listen-t3", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "We went to school.", options: ["Biz məktəbə getdik.", "Biz evə getdik.", "Biz məktəbdəyik.", "Biz məktəbə gedirik."], correctIndex: 0, xp: 10 },
-            { id: "past-listen-t4", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "He watched a film.", options: ["O film izlədi.", "O kitab oxudu.", "O film çəkdi.", "O televizora baxır."], correctIndex: 0, xp: 10 },
-            { id: "past-listen-t5", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "They ate pizza.", options: ["Onlar pizza yedi.", "Onlar pizza bişirdi.", "Onlar pizza istədi.", "Onlar yemək yeyir."], correctIndex: 0, xp: 10 },
-            { id: "past-listen-t6", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I cleaned my room.", options: ["Mən otağımı təmizlədim.", "Mən otağıma getdim.", "Mən otağımı yudum.", "Mən otağı gördüm."], correctIndex: 0, xp: 10 },
-            { id: "past-listen-t7", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She washed the dishes.", options: ["O qabları yudu.", "O qabları yığdı.", "O əllərini yudu.", "O paltar yudu."], correctIndex: 0, xp: 10 },
-            { id: "past-listen-t8", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "We walked in the park.", options: ["Biz parkda gəzdik.", "Biz parkda qaçdıq.", "Biz parka getdik.", "Biz bağda gəzdik."], correctIndex: 0, xp: 10 },
-            { id: "past-listen-t9", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "They talked on the phone.", options: ["Onlar telefonda danışdı.", "Onlar zəng etdi.", "Onlar danışmadı.", "Onlar televizora baxdı."], correctIndex: 0, xp: 10 },
-            { id: "past-listen-t10", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I called my friend.", options: ["Mən dostuma zəng etdim.", "Mən dostumu çağırdım.", "Mən dostumla danışdım.", "Mən dostumu gördüm."], correctIndex: 0, xp: 10 },
-            { id: "past-listen-t11", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She wanted a new bag.", options: ["O yeni çanta istədi.", "O yeni çanta aldı.", "O çantanı sevdi.", "O çantanı gördü."], correctIndex: 0, xp: 10 },
-            { id: "past-listen-t12", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "We visited the museum.", options: ["Biz muzeyi ziyarət etdik.", "Biz muzeyə getmədik.", "Biz parkı ziyarət etdik.", "Biz muzeydəyik."], correctIndex: 0, xp: 10 },
-            { id: "past-listen-t13", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "He cleaned the car.", options: ["O maşını təmizlədi.", "O maşını yudu.", "O maşını sürdü.", "O maşını gördü."], correctIndex: 0, xp: 10 },
-            { id: "past-listen-t14", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "My mother cooked dinner.", options: ["Anam şam yeməyi bişirdi.", "Atam şam yeməyi bişirdi.", "Anam nahar bişirdi.", "Anam yemək yedi."], correctIndex: 0, xp: 10 },
-            { id: "past-listen-t15", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Did she help you?", options: ["O sənə kömək etdi?", "O səni gördü?", "O sənə zəng etdi?", "O səninlə danışdı?"], correctIndex: 0, xp: 15 },
-          ],
-          bonusTasks: [
-            { id: "past-listen-b1", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Did you see the film?", options: ["Sən filmi gördün?", "Sən film çəkdin?", "Sən film izləyirsən?", "Sən filmi bəyəndin?"], correctIndex: 0, xp: 15 },
-            { id: "past-listen-b2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "He helped his mother.", options: ["O anasına kömək etdi.", "O anasına zəng etdi.", "O atasına kömək etdi.", "O anası ilə danışdı."], correctIndex: 0, xp: 15 },
-          ],
-        },
-      ],
-    },
-    {
-      id: "en-c3-reading",
-      title: "Oxu: My weekend",
-      description: "Keçmiş haqqında qısa mətni oxu və suallara cavab ver (Past Simple).",
-      lessons: [
         {
           id: "past-read",
-          title: "Reading: My weekend",
+          title: "Oxu",
           intro: "Qısa mətni oxu və suallara cavab ver.",
           sections: [
             { heading: "Read the text (Mətni oxu)", body: "Last Saturday was a great day. In the morning I cleaned my room and helped my mother. Then we visited my grandmother. She cooked a nice dinner. In the afternoon I played football with my friends. In the evening I watched a film and went to bed early. It was a happy day." },
@@ -556,16 +440,38 @@ export const english: Subject = {
             { id: "past-read-b2", type: "fill_blank", prompt: "'We ___ my grandmother.' (ziyarət etdik — mətndən)", accepted: ["visited"], xp: 15 },
           ],
         },
-      ],
-    },
-    {
-      id: "en-c3-writing",
-      title: "Yazı: Past Simple",
-      description: "Sözlərdən düzgün Past Simple cümləsi qur.",
-      lessons: [
+        {
+          id: "past-listen",
+          title: "Dinləmə",
+          intro: "Cümləni dinlə və düzgün cavabı seç.",
+          sections: [
+            { heading: "Necə işləyir?", body: "«Dinlə» düyməsinə bas, cümləni eşit və düzgün variantı seç. İstədiyin qədər təkrar dinlə." },
+          ],
+          tasks: [
+            { id: "past-listen-t1", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I played football yesterday.", options: ["Mən dünən futbol oynadım.", "Mən indi futbol oynayıram.", "Mən sabah oynayacağam.", "Mən futbola baxdım."], correctIndex: 0, xp: 10 },
+            { id: "past-listen-t2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She visited her grandmother.", options: ["O nənəsini ziyarət etdi.", "O nənəsinə zəng etdi.", "O anasını ziyarət etdi.", "O nənəsinə kömək etdi."], correctIndex: 0, xp: 10 },
+            { id: "past-listen-t3", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "We went to school.", options: ["Biz məktəbə getdik.", "Biz evə getdik.", "Biz məktəbdəyik.", "Biz məktəbə gedirik."], correctIndex: 0, xp: 10 },
+            { id: "past-listen-t4", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "He watched a film.", options: ["O film izlədi.", "O kitab oxudu.", "O film çəkdi.", "O televizora baxır."], correctIndex: 0, xp: 10 },
+            { id: "past-listen-t5", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "They ate pizza.", options: ["Onlar pizza yedi.", "Onlar pizza bişirdi.", "Onlar pizza istədi.", "Onlar yemək yeyir."], correctIndex: 0, xp: 10 },
+            { id: "past-listen-t6", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I cleaned my room.", options: ["Mən otağımı təmizlədim.", "Mən otağıma getdim.", "Mən otağımı yudum.", "Mən otağı gördüm."], correctIndex: 0, xp: 10 },
+            { id: "past-listen-t7", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She washed the dishes.", options: ["O qabları yudu.", "O qabları yığdı.", "O əllərini yudu.", "O paltar yudu."], correctIndex: 0, xp: 10 },
+            { id: "past-listen-t8", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "We walked in the park.", options: ["Biz parkda gəzdik.", "Biz parkda qaçdıq.", "Biz parka getdik.", "Biz bağda gəzdik."], correctIndex: 0, xp: 10 },
+            { id: "past-listen-t9", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "They talked on the phone.", options: ["Onlar telefonda danışdı.", "Onlar zəng etdi.", "Onlar danışmadı.", "Onlar televizora baxdı."], correctIndex: 0, xp: 10 },
+            { id: "past-listen-t10", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I called my friend.", options: ["Mən dostuma zəng etdim.", "Mən dostumu çağırdım.", "Mən dostumla danışdım.", "Mən dostumu gördüm."], correctIndex: 0, xp: 10 },
+            { id: "past-listen-t11", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She wanted a new bag.", options: ["O yeni çanta istədi.", "O yeni çanta aldı.", "O çantanı sevdi.", "O çantanı gördü."], correctIndex: 0, xp: 10 },
+            { id: "past-listen-t12", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "We visited the museum.", options: ["Biz muzeyi ziyarət etdik.", "Biz muzeyə getmədik.", "Biz parkı ziyarət etdik.", "Biz muzeydəyik."], correctIndex: 0, xp: 10 },
+            { id: "past-listen-t13", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "He cleaned the car.", options: ["O maşını təmizlədi.", "O maşını yudu.", "O maşını sürdü.", "O maşını gördü."], correctIndex: 0, xp: 10 },
+            { id: "past-listen-t14", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "My mother cooked dinner.", options: ["Anam şam yeməyi bişirdi.", "Atam şam yeməyi bişirdi.", "Anam nahar bişirdi.", "Anam yemək yedi."], correctIndex: 0, xp: 10 },
+            { id: "past-listen-t15", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Did she help you?", options: ["O sənə kömək etdi?", "O səni gördü?", "O sənə zəng etdi?", "O səninlə danışdı?"], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "past-listen-b1", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Did you see the film?", options: ["Sən filmi gördün?", "Sən film çəkdin?", "Sən film izləyirsən?", "Sən filmi bəyəndin?"], correctIndex: 0, xp: 15 },
+            { id: "past-listen-b2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "He helped his mother.", options: ["O anasına kömək etdi.", "O anasına zəng etdi.", "O atasına kömək etdi.", "O anası ilə danışdı."], correctIndex: 0, xp: 15 },
+          ],
+        },
         {
           id: "past-write",
-          title: "Cümlə qur: Past Simple",
+          title: "Cümlə qurma",
           intro: "Sözləri düzgün sıraya düz və Past Simple cümləsi qur.",
           sections: [
             { heading: "Necə işləyir?", body: "Sözlərə sıra ilə bas — cümlə yuxarıda düzələcək. Keçmişdə fel -ed alır və ya qaydasız dəyişir (played, went, ate)." },
@@ -595,18 +501,45 @@ export const english: Subject = {
         },
       ],
     },
-    // ═══════════════════════════════════════════════════════════════
-    // 4-CÜ DÖVR — QUESTIONS & NEGATIVES (Sual və inkar)
-    // Sual sözləri: what, where, when, who, why, how.
-    // ═══════════════════════════════════════════════════════════════
     {
-      id: "en-c4-grammar",
-      title: "Qayda: Sual və inkar",
-      description: "Sual (do/does/did) və inkar (don't/doesn't/didn't) cümlələri.",
+      id: "en-u4",
+      title: "Sual və cavab",
+      description: "Sual və inkar cümlələri qurmaq.",
       lessons: [
         {
+          id: "q-vocab",
+          title: "Yeni sözlər",
+          intro: "İngiliscə sual verməyə kömək edən 6 sözü öyrənək.",
+          sections: [
+            { heading: "Yeni sözlər (sual sözləri)", body: "what — nə · where — harada · when — nə vaxt · who — kim · why — niyə · how — necə" },
+            { heading: "Məsləhət", body: "Bu sözlər cümlənin əvvəlində gəlir: What is your name? Where do you live?" },
+          ],
+          tasks: [
+            { id: "q-vocab-t1", type: "multiple_choice", prompt: "'what' sözünün mənası?", options: ["nə", "harada", "nə vaxt", "kim"], correctIndex: 0, xp: 10 },
+            { id: "q-vocab-t2", type: "multiple_choice", prompt: "'where' sözünün mənası?", options: ["kim", "harada", "niyə", "necə"], correctIndex: 1, xp: 10 },
+            { id: "q-vocab-t3", type: "multiple_choice", prompt: "'when' sözünün mənası?", options: ["nə vaxt", "harada", "nə", "kim"], correctIndex: 0, xp: 10 },
+            { id: "q-vocab-t4", type: "multiple_choice", prompt: "'who' sözünün mənası?", options: ["kim", "nə", "harada", "niyə"], correctIndex: 0, xp: 10 },
+            { id: "q-vocab-t5", type: "multiple_choice", prompt: "'why' sözünün mənası?", options: ["niyə", "necə", "nə vaxt", "kim"], correctIndex: 0, xp: 10 },
+            { id: "q-vocab-t6", type: "multiple_choice", prompt: "'how' sözünün mənası?", options: ["necə", "niyə", "harada", "nə"], correctIndex: 0, xp: 10 },
+            { id: "q-vocab-t7", type: "fill_blank", prompt: "'harada' ingiliscə necə yazılır?", accepted: ["where"], xp: 10 },
+            { id: "q-vocab-t8", type: "fill_blank", prompt: "'niyə' ingiliscə necə yazılır?", accepted: ["why"], xp: 10 },
+            { id: "q-vocab-t9", type: "multiple_choice", speakOptions: true, prompt: "'___ is your teacher?' (kim)", options: ["Who", "What", "Where", "When"], correctIndex: 0, xp: 10 },
+            { id: "q-vocab-t10", type: "multiple_choice", speakOptions: true, prompt: "'___ do you go to school?' (nə vaxt)", options: ["When", "Who", "What", "Why"], correctIndex: 0, xp: 10 },
+            { id: "q-vocab-t11", type: "fill_blank", prompt: "'kim' ingiliscə necə yazılır?", accepted: ["who"], xp: 10 },
+            { id: "q-vocab-t12", type: "fill_blank", prompt: "'nə vaxt' ingiliscə necə yazılır?", accepted: ["when"], xp: 10 },
+            { id: "q-vocab-t13", type: "multiple_choice", speakOptions: true, prompt: "'___ is my bag?' (harada)", options: ["Where", "Who", "What", "Why"], correctIndex: 0, xp: 10 },
+            { id: "q-vocab-t14", type: "multiple_choice", speakOptions: true, prompt: "'___ do you like English?' (niyə)", options: ["Why", "How", "When", "Who"], correctIndex: 0, xp: 10 },
+            { id: "q-vocab-t15", type: "multiple_choice", prompt: "'how' sözünün mənası?", options: ["necə", "nə", "kim", "harada"], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "q-vocab-b1", type: "multiple_choice", prompt: "'how' sözünün mənası?", options: ["necə", "nə", "kim", "harada"], correctIndex: 0, xp: 15 },
+            { id: "q-vocab-b2", type: "fill_blank", prompt: "'nə' ingiliscə necə yazılır?", accepted: ["what"], xp: 15 },
+            { id: "q-vocab-b3", type: "multiple_choice", speakOptions: true, prompt: "'___ are you? — I am fine.' (necə)", options: ["How", "What", "Who", "Why"], correctIndex: 0, xp: 15 },
+          ],
+        },
+        {
           id: "q-rule",
-          title: "Sual və inkar qaydası",
+          title: "Qaydalar",
           intro: "İngiliscə sual və inkar necə qurulur? Gəl öyrənək!",
           sections: [
             { heading: "Sual necə qurulur?", body: "do/does/did + kim + fel: Do you like tea? Does she play? Did they go? Sual sözü əvvələ gəlir: What do you want?" },
@@ -636,90 +569,9 @@ export const english: Subject = {
             { id: "q-rule-b3", type: "fill_blank", prompt: "'nə vaxt' sual sözü ingiliscə necə yazılır?", accepted: ["when"], xp: 15 },
           ],
         },
-      ],
-    },
-    {
-      id: "en-c4-vocab",
-      title: "Lüğət: Sual sözləri",
-      description: "6 sual sözü: what, where, when, who, why, how.",
-      lessons: [
-        {
-          id: "q-vocab",
-          title: "Sual sözləri (wh- sözlər)",
-          intro: "İngiliscə sual verməyə kömək edən 6 sözü öyrənək.",
-          sections: [
-            { heading: "Yeni sözlər (sual sözləri)", body: "what — nə · where — harada · when — nə vaxt · who — kim · why — niyə · how — necə" },
-            { heading: "Məsləhət", body: "Bu sözlər cümlənin əvvəlində gəlir: What is your name? Where do you live?" },
-          ],
-          tasks: [
-            { id: "q-vocab-t1", type: "multiple_choice", prompt: "'what' sözünün mənası?", options: ["nə", "harada", "nə vaxt", "kim"], correctIndex: 0, xp: 10 },
-            { id: "q-vocab-t2", type: "multiple_choice", prompt: "'where' sözünün mənası?", options: ["kim", "harada", "niyə", "necə"], correctIndex: 1, xp: 10 },
-            { id: "q-vocab-t3", type: "multiple_choice", prompt: "'when' sözünün mənası?", options: ["nə vaxt", "harada", "nə", "kim"], correctIndex: 0, xp: 10 },
-            { id: "q-vocab-t4", type: "multiple_choice", prompt: "'who' sözünün mənası?", options: ["kim", "nə", "harada", "niyə"], correctIndex: 0, xp: 10 },
-            { id: "q-vocab-t5", type: "multiple_choice", prompt: "'why' sözünün mənası?", options: ["niyə", "necə", "nə vaxt", "kim"], correctIndex: 0, xp: 10 },
-            { id: "q-vocab-t6", type: "multiple_choice", prompt: "'how' sözünün mənası?", options: ["necə", "niyə", "harada", "nə"], correctIndex: 0, xp: 10 },
-            { id: "q-vocab-t7", type: "fill_blank", prompt: "'harada' ingiliscə necə yazılır?", accepted: ["where"], xp: 10 },
-            { id: "q-vocab-t8", type: "fill_blank", prompt: "'niyə' ingiliscə necə yazılır?", accepted: ["why"], xp: 10 },
-            { id: "q-vocab-t9", type: "multiple_choice", speakOptions: true, prompt: "'___ is your teacher?' (kim)", options: ["Who", "What", "Where", "When"], correctIndex: 0, xp: 10 },
-            { id: "q-vocab-t10", type: "multiple_choice", speakOptions: true, prompt: "'___ do you go to school?' (nə vaxt)", options: ["When", "Who", "What", "Why"], correctIndex: 0, xp: 10 },
-            { id: "q-vocab-t11", type: "fill_blank", prompt: "'kim' ingiliscə necə yazılır?", accepted: ["who"], xp: 10 },
-            { id: "q-vocab-t12", type: "fill_blank", prompt: "'nə vaxt' ingiliscə necə yazılır?", accepted: ["when"], xp: 10 },
-            { id: "q-vocab-t13", type: "multiple_choice", speakOptions: true, prompt: "'___ is my bag?' (harada)", options: ["Where", "Who", "What", "Why"], correctIndex: 0, xp: 10 },
-            { id: "q-vocab-t14", type: "multiple_choice", speakOptions: true, prompt: "'___ do you like English?' (niyə)", options: ["Why", "How", "When", "Who"], correctIndex: 0, xp: 10 },
-            { id: "q-vocab-t15", type: "multiple_choice", prompt: "'how' sözünün mənası?", options: ["necə", "nə", "kim", "harada"], correctIndex: 0, xp: 15 },
-          ],
-          bonusTasks: [
-            { id: "q-vocab-b1", type: "multiple_choice", prompt: "'how' sözünün mənası?", options: ["necə", "nə", "kim", "harada"], correctIndex: 0, xp: 15 },
-            { id: "q-vocab-b2", type: "fill_blank", prompt: "'nə' ingiliscə necə yazılır?", accepted: ["what"], xp: 15 },
-            { id: "q-vocab-b3", type: "multiple_choice", speakOptions: true, prompt: "'___ are you? — I am fine.' (necə)", options: ["How", "What", "Who", "Why"], correctIndex: 0, xp: 15 },
-          ],
-        },
-      ],
-    },
-    {
-      id: "en-c4-listening",
-      title: "Dinləmə: Sual və inkar",
-      description: "Sual və inkar cümlələrini dinlə və düzgün mənanı seç.",
-      lessons: [
-        {
-          id: "q-listen",
-          title: "Dinlə və seç: sual-cavab",
-          intro: "Cümləni dinlə və düzgün cavabı seç.",
-          sections: [
-            { heading: "Necə işləyir?", body: "«Dinlə» düyməsinə bas, cümləni eşit və düzgün variantı seç. İstədiyin qədər təkrar dinlə." },
-          ],
-          tasks: [
-            { id: "q-listen-t1", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "What is your name?", options: ["Adın nədir?", "Neçə yaşın var?", "Haralısan?", "Necəsən?"], correctIndex: 0, xp: 10 },
-            { id: "q-listen-t2", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Where do you live?", options: ["Harada yaşayırsan?", "Nə vaxt gəlirsən?", "Kimsən?", "Niyə gəldin?"], correctIndex: 0, xp: 10 },
-            { id: "q-listen-t3", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "How old are you?", options: ["Neçə yaşın var?", "Adın nədir?", "Necəsən?", "Haradasan?"], correctIndex: 0, xp: 10 },
-            { id: "q-listen-t4", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Do you like football?", options: ["Futbolu sevirsən?", "Futbol oynayırsan?", "Futbola baxırsan?", "Futbol bilirsən?"], correctIndex: 0, xp: 10 },
-            { id: "q-listen-t5", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Why are you late?", options: ["Niyə gecikirsən?", "Harada idin?", "Kiminlə gəldin?", "Nə vaxt gəldin?"], correctIndex: 0, xp: 10 },
-            { id: "q-listen-t6", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I don't like coffee.", options: ["Mən qəhvə sevmirəm.", "Mən qəhvə sevirəm.", "Mən çay sevmirəm.", "Mən qəhvə içirəm."], correctIndex: 0, xp: 10 },
-            { id: "q-listen-t7", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She doesn't play tennis.", options: ["O tennis oynamır.", "O tennis oynayır.", "O futbol oynamır.", "O tennisə baxmır."], correctIndex: 0, xp: 10 },
-            { id: "q-listen-t8", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "When do you get up?", options: ["Nə vaxt durursan?", "Harada durursan?", "Niyə durursan?", "Necə durursan?"], correctIndex: 0, xp: 10 },
-            { id: "q-listen-t9", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Who is that boy?", options: ["O oğlan kimdir?", "O oğlan haradadır?", "O oğlan neçə yaşındadır?", "O oğlan nə edir?"], correctIndex: 0, xp: 10 },
-            { id: "q-listen-t10", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "How are you?", options: ["Necəsən?", "Neçə yaşın var?", "Haralısan?", "Adın nədir?"], correctIndex: 0, xp: 10 },
-            { id: "q-listen-t11", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "What do you want?", options: ["Nə istəyirsən?", "Harada istəyirsən?", "Nə vaxt istəyirsən?", "Kim istəyir?"], correctIndex: 0, xp: 10 },
-            { id: "q-listen-t12", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I don't have a pen.", options: ["Mənim qələmim yoxdur.", "Mənim qələmim var.", "Mən qələm istəmirəm.", "Mən qələm görmürəm."], correctIndex: 0, xp: 10 },
-            { id: "q-listen-t13", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "He doesn't like milk.", options: ["O süd sevmir.", "O süd sevir.", "O su sevmir.", "O süd içmir."], correctIndex: 0, xp: 10 },
-            { id: "q-listen-t14", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Where is the school?", options: ["Məktəb haradadır?", "Məktəb nədir?", "Məktəb nə vaxt açılır?", "Məktəbdə kim var?"], correctIndex: 0, xp: 10 },
-            { id: "q-listen-t15", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Did they win the game?", options: ["Onlar oyunu uddu?", "Onlar oyunu oynadı?", "Onlar oyunu itirdi?", "Onlar oyuna baxdı?"], correctIndex: 0, xp: 15 },
-          ],
-          bonusTasks: [
-            { id: "q-listen-b1", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Who is your best friend?", options: ["Ən yaxşı dostun kimdir?", "Dostun haradadır?", "Dostun neçə yaşındadır?", "Dostun necədir?"], correctIndex: 0, xp: 15 },
-            { id: "q-listen-b2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "We didn't watch the film.", options: ["Biz filmi izləmədik.", "Biz filmi izlədik.", "Biz filmə baxırıq.", "Biz filmi bəyənmədik."], correctIndex: 0, xp: 15 },
-          ],
-        },
-      ],
-    },
-    {
-      id: "en-c4-reading",
-      title: "Oxu: An interview",
-      description: "Qısa müsahibəni oxu və suallara cavab ver (sual-cavab).",
-      lessons: [
         {
           id: "q-read",
-          title: "Reading: An interview",
+          title: "Oxu",
           intro: "Qısa müsahibəni oxu və suallara cavab ver.",
           sections: [
             { heading: "Read the text (Mətni oxu)", body: "This is an interview with Nigar. — What is your name? — My name is Nigar. — Where are you from? — I am from Ganja. — How old are you? — I am eleven. — Do you like school? — Yes, I do. I like English very much. — What is your favourite sport? — I like basketball. — Do you play every day? — No, I don't. I play on Sundays." },
@@ -747,16 +599,38 @@ export const english: Subject = {
             { id: "q-read-b2", type: "fill_blank", prompt: "'Where are you ___? — I am from Ganja.'", accepted: ["from"], xp: 15 },
           ],
         },
-      ],
-    },
-    {
-      id: "en-c4-writing",
-      title: "Yazı: Sual və inkar",
-      description: "Sözlərdən düzgün sual və inkar cümləsi qur.",
-      lessons: [
+        {
+          id: "q-listen",
+          title: "Dinləmə",
+          intro: "Cümləni dinlə və düzgün cavabı seç.",
+          sections: [
+            { heading: "Necə işləyir?", body: "«Dinlə» düyməsinə bas, cümləni eşit və düzgün variantı seç. İstədiyin qədər təkrar dinlə." },
+          ],
+          tasks: [
+            { id: "q-listen-t1", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "What is your name?", options: ["Adın nədir?", "Neçə yaşın var?", "Haralısan?", "Necəsən?"], correctIndex: 0, xp: 10 },
+            { id: "q-listen-t2", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Where do you live?", options: ["Harada yaşayırsan?", "Nə vaxt gəlirsən?", "Kimsən?", "Niyə gəldin?"], correctIndex: 0, xp: 10 },
+            { id: "q-listen-t3", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "How old are you?", options: ["Neçə yaşın var?", "Adın nədir?", "Necəsən?", "Haradasan?"], correctIndex: 0, xp: 10 },
+            { id: "q-listen-t4", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Do you like football?", options: ["Futbolu sevirsən?", "Futbol oynayırsan?", "Futbola baxırsan?", "Futbol bilirsən?"], correctIndex: 0, xp: 10 },
+            { id: "q-listen-t5", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Why are you late?", options: ["Niyə gecikirsən?", "Harada idin?", "Kiminlə gəldin?", "Nə vaxt gəldin?"], correctIndex: 0, xp: 10 },
+            { id: "q-listen-t6", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I don't like coffee.", options: ["Mən qəhvə sevmirəm.", "Mən qəhvə sevirəm.", "Mən çay sevmirəm.", "Mən qəhvə içirəm."], correctIndex: 0, xp: 10 },
+            { id: "q-listen-t7", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She doesn't play tennis.", options: ["O tennis oynamır.", "O tennis oynayır.", "O futbol oynamır.", "O tennisə baxmır."], correctIndex: 0, xp: 10 },
+            { id: "q-listen-t8", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "When do you get up?", options: ["Nə vaxt durursan?", "Harada durursan?", "Niyə durursan?", "Necə durursan?"], correctIndex: 0, xp: 10 },
+            { id: "q-listen-t9", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Who is that boy?", options: ["O oğlan kimdir?", "O oğlan haradadır?", "O oğlan neçə yaşındadır?", "O oğlan nə edir?"], correctIndex: 0, xp: 10 },
+            { id: "q-listen-t10", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "How are you?", options: ["Necəsən?", "Neçə yaşın var?", "Haralısan?", "Adın nədir?"], correctIndex: 0, xp: 10 },
+            { id: "q-listen-t11", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "What do you want?", options: ["Nə istəyirsən?", "Harada istəyirsən?", "Nə vaxt istəyirsən?", "Kim istəyir?"], correctIndex: 0, xp: 10 },
+            { id: "q-listen-t12", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I don't have a pen.", options: ["Mənim qələmim yoxdur.", "Mənim qələmim var.", "Mən qələm istəmirəm.", "Mən qələm görmürəm."], correctIndex: 0, xp: 10 },
+            { id: "q-listen-t13", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "He doesn't like milk.", options: ["O süd sevmir.", "O süd sevir.", "O su sevmir.", "O süd içmir."], correctIndex: 0, xp: 10 },
+            { id: "q-listen-t14", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Where is the school?", options: ["Məktəb haradadır?", "Məktəb nədir?", "Məktəb nə vaxt açılır?", "Məktəbdə kim var?"], correctIndex: 0, xp: 10 },
+            { id: "q-listen-t15", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Did they win the game?", options: ["Onlar oyunu uddu?", "Onlar oyunu oynadı?", "Onlar oyunu itirdi?", "Onlar oyuna baxdı?"], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "q-listen-b1", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Who is your best friend?", options: ["Ən yaxşı dostun kimdir?", "Dostun haradadır?", "Dostun neçə yaşındadır?", "Dostun necədir?"], correctIndex: 0, xp: 15 },
+            { id: "q-listen-b2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "We didn't watch the film.", options: ["Biz filmi izləmədik.", "Biz filmi izlədik.", "Biz filmə baxırıq.", "Biz filmi bəyənmədik."], correctIndex: 0, xp: 15 },
+          ],
+        },
         {
           id: "q-write",
-          title: "Cümlə qur: sual və inkar",
+          title: "Cümlə qurma",
           intro: "Sözləri düzgün sıraya düz və sual/inkar cümləsi qur.",
           sections: [
             { heading: "Necə işləyir?", body: "Sözlərə sıra ilə bas. Sual: (sual sözü) + do/does/did + kim + fel. İnkar: kim + do/does not + fel." },
@@ -786,18 +660,45 @@ export const english: Subject = {
         },
       ],
     },
-
-    // ═══════════════════════════════════════════════════════════════
-    // 5-Cİ DÖVR — PRONOUNS (Əvəzliklər)
-    // ═══════════════════════════════════════════════════════════════
     {
-      id: "en-c5-grammar",
-      title: "Qayda: Əvəzliklər",
-      description: "Şəxs (I, you, he...) və yiyəlik (my, your, his...) əvəzlikləri.",
+      id: "en-u5",
+      title: "Ailə və şəxslər",
+      description: "Şəxs əvəzlikləri və ailə mövzusu.",
       lessons: [
         {
+          id: "pron-vocab",
+          title: "Yeni sözlər",
+          intro: "Əvəzliklərin mənasını öyrənək.",
+          sections: [
+            { heading: "Şəxs əvəzlikləri", body: "I — mən · you — sən/siz · he — o (kişi) · she — o (qadın) · it — o (əşya) · we — biz · they — onlar" },
+            { heading: "Yiyəlik əvəzlikləri", body: "my — mənim · your — sənin · his — onun (kişi) · her — onun (qadın) · our — bizim · their — onların" },
+          ],
+          tasks: [
+            { id: "pron-vocab-t1", type: "multiple_choice", prompt: "'he' nə deməkdir?", options: ["o (kişi)", "o (qadın)", "mən", "biz"], correctIndex: 0, xp: 10 },
+            { id: "pron-vocab-t2", type: "multiple_choice", prompt: "'she' nə deməkdir?", options: ["o (kişi)", "o (qadın)", "sən", "onlar"], correctIndex: 1, xp: 10 },
+            { id: "pron-vocab-t3", type: "multiple_choice", prompt: "'we' nə deməkdir?", options: ["biz", "siz", "onlar", "mən"], correctIndex: 0, xp: 10 },
+            { id: "pron-vocab-t4", type: "multiple_choice", prompt: "'they' nə deməkdir?", options: ["onlar", "biz", "sən", "o"], correctIndex: 0, xp: 10 },
+            { id: "pron-vocab-t5", type: "multiple_choice", prompt: "'my' nə deməkdir?", options: ["mənim", "sənin", "onun", "bizim"], correctIndex: 0, xp: 10 },
+            { id: "pron-vocab-t6", type: "multiple_choice", prompt: "'your' nə deməkdir?", options: ["sənin", "mənim", "onun", "onların"], correctIndex: 0, xp: 10 },
+            { id: "pron-vocab-t7", type: "fill_blank", prompt: "'mən' ingiliscə əvəzlik necə yazılır?", accepted: ["i"], xp: 10 },
+            { id: "pron-vocab-t8", type: "fill_blank", prompt: "'o' (əşya/heyvan) ingiliscə əvəzlik?", accepted: ["it"], xp: 10 },
+            { id: "pron-vocab-t9", type: "multiple_choice", speakOptions: true, prompt: "'This is ___ dog.' (onun — kişi)", options: ["his", "her", "its", "my"], correctIndex: 0, xp: 10 },
+            { id: "pron-vocab-t10", type: "multiple_choice", speakOptions: true, prompt: "'___ are teachers.' (onlar)", options: ["They", "We", "You", "He"], correctIndex: 0, xp: 10 },
+            { id: "pron-vocab-t11", type: "fill_blank", prompt: "'onlar' ingiliscə necə yazılır?", accepted: ["they"], xp: 10 },
+            { id: "pron-vocab-t12", type: "fill_blank", prompt: "'sənin' ingiliscə necə yazılır?", accepted: ["your"], xp: 10 },
+            { id: "pron-vocab-t13", type: "multiple_choice", prompt: "'our' nə deməkdir?", options: ["bizim", "onların", "sənin", "mənim"], correctIndex: 0, xp: 10 },
+            { id: "pron-vocab-t14", type: "multiple_choice", prompt: "'their' nə deməkdir?", options: ["onların", "bizim", "onun", "sənin"], correctIndex: 0, xp: 10 },
+            { id: "pron-vocab-t15", type: "multiple_choice", speakOptions: true, prompt: "'___ is a boy.' (o — kişi)", options: ["He", "She", "It", "They"], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "pron-vocab-b1", type: "multiple_choice", prompt: "'her' (yiyəlik) nə deməkdir?", options: ["onun (qadın)", "onun (kişi)", "mənim", "sənin"], correctIndex: 0, xp: 15 },
+            { id: "pron-vocab-b2", type: "multiple_choice", prompt: "'it' nə deməkdir?", options: ["o (əşya)", "o (kişi)", "o (qadın)", "onlar"], correctIndex: 0, xp: 15 },
+            { id: "pron-vocab-b3", type: "fill_blank", prompt: "'biz' ingiliscə necə yazılır?", accepted: ["we"], xp: 15 },
+          ],
+        },
+        {
           id: "pron-rule",
-          title: "Əvəzliklər qaydası",
+          title: "Qaydalar",
           intro: "İsim əvəzinə işlənən sözlər — əvəzliklər. Gəl öyrənək!",
           sections: [
             { heading: "Şəxs əvəzlikləri", body: "I (mən), you (sən/siz), he (o — kişi), she (o — qadın), it (o — əşya/heyvan), we (biz), they (onlar). Cümlədə isim əvəzinə işlənir." },
@@ -827,90 +728,9 @@ export const english: Subject = {
             { id: "pron-rule-b3", type: "fill_blank", prompt: "'mənim' (yiyəlik) ingiliscə necə yazılır?", accepted: ["my"], xp: 15 },
           ],
         },
-      ],
-    },
-    {
-      id: "en-c5-vocab",
-      title: "Lüğət: Əvəzliklər",
-      description: "Şəxs və yiyəlik əvəzlikləri: I/he/she/we/they, my/your/her...",
-      lessons: [
-        {
-          id: "pron-vocab",
-          title: "Əvəzliklər (sözlər)",
-          intro: "Əvəzliklərin mənasını öyrənək.",
-          sections: [
-            { heading: "Şəxs əvəzlikləri", body: "I — mən · you — sən/siz · he — o (kişi) · she — o (qadın) · it — o (əşya) · we — biz · they — onlar" },
-            { heading: "Yiyəlik əvəzlikləri", body: "my — mənim · your — sənin · his — onun (kişi) · her — onun (qadın) · our — bizim · their — onların" },
-          ],
-          tasks: [
-            { id: "pron-vocab-t1", type: "multiple_choice", prompt: "'he' nə deməkdir?", options: ["o (kişi)", "o (qadın)", "mən", "biz"], correctIndex: 0, xp: 10 },
-            { id: "pron-vocab-t2", type: "multiple_choice", prompt: "'she' nə deməkdir?", options: ["o (kişi)", "o (qadın)", "sən", "onlar"], correctIndex: 1, xp: 10 },
-            { id: "pron-vocab-t3", type: "multiple_choice", prompt: "'we' nə deməkdir?", options: ["biz", "siz", "onlar", "mən"], correctIndex: 0, xp: 10 },
-            { id: "pron-vocab-t4", type: "multiple_choice", prompt: "'they' nə deməkdir?", options: ["onlar", "biz", "sən", "o"], correctIndex: 0, xp: 10 },
-            { id: "pron-vocab-t5", type: "multiple_choice", prompt: "'my' nə deməkdir?", options: ["mənim", "sənin", "onun", "bizim"], correctIndex: 0, xp: 10 },
-            { id: "pron-vocab-t6", type: "multiple_choice", prompt: "'your' nə deməkdir?", options: ["sənin", "mənim", "onun", "onların"], correctIndex: 0, xp: 10 },
-            { id: "pron-vocab-t7", type: "fill_blank", prompt: "'mən' ingiliscə əvəzlik necə yazılır?", accepted: ["i"], xp: 10 },
-            { id: "pron-vocab-t8", type: "fill_blank", prompt: "'o' (əşya/heyvan) ingiliscə əvəzlik?", accepted: ["it"], xp: 10 },
-            { id: "pron-vocab-t9", type: "multiple_choice", speakOptions: true, prompt: "'This is ___ dog.' (onun — kişi)", options: ["his", "her", "its", "my"], correctIndex: 0, xp: 10 },
-            { id: "pron-vocab-t10", type: "multiple_choice", speakOptions: true, prompt: "'___ are teachers.' (onlar)", options: ["They", "We", "You", "He"], correctIndex: 0, xp: 10 },
-            { id: "pron-vocab-t11", type: "fill_blank", prompt: "'onlar' ingiliscə necə yazılır?", accepted: ["they"], xp: 10 },
-            { id: "pron-vocab-t12", type: "fill_blank", prompt: "'sənin' ingiliscə necə yazılır?", accepted: ["your"], xp: 10 },
-            { id: "pron-vocab-t13", type: "multiple_choice", prompt: "'our' nə deməkdir?", options: ["bizim", "onların", "sənin", "mənim"], correctIndex: 0, xp: 10 },
-            { id: "pron-vocab-t14", type: "multiple_choice", prompt: "'their' nə deməkdir?", options: ["onların", "bizim", "onun", "sənin"], correctIndex: 0, xp: 10 },
-            { id: "pron-vocab-t15", type: "multiple_choice", speakOptions: true, prompt: "'___ is a boy.' (o — kişi)", options: ["He", "She", "It", "They"], correctIndex: 0, xp: 15 },
-          ],
-          bonusTasks: [
-            { id: "pron-vocab-b1", type: "multiple_choice", prompt: "'her' (yiyəlik) nə deməkdir?", options: ["onun (qadın)", "onun (kişi)", "mənim", "sənin"], correctIndex: 0, xp: 15 },
-            { id: "pron-vocab-b2", type: "multiple_choice", prompt: "'it' nə deməkdir?", options: ["o (əşya)", "o (kişi)", "o (qadın)", "onlar"], correctIndex: 0, xp: 15 },
-            { id: "pron-vocab-b3", type: "fill_blank", prompt: "'biz' ingiliscə necə yazılır?", accepted: ["we"], xp: 15 },
-          ],
-        },
-      ],
-    },
-    {
-      id: "en-c5-listening",
-      title: "Dinləmə: Əvəzliklər",
-      description: "Əvəzlikli cümlələri dinlə və düzgün mənanı seç.",
-      lessons: [
-        {
-          id: "pron-listen",
-          title: "Dinlə və seç: əvəzliklər",
-          intro: "Cümləni dinlə və düzgün cavabı seç.",
-          sections: [
-            { heading: "Necə işləyir?", body: "«Dinlə» düyməsinə bas, cümləni eşit və düzgün variantı seç. İstədiyin qədər təkrar dinlə." },
-          ],
-          tasks: [
-            { id: "pron-listen-t1", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "He is my brother.", options: ["O mənim qardaşımdır.", "O mənim bacımdır.", "Onlar mənim qardaşımdır.", "Bu mənim qardaşımdır."], correctIndex: 0, xp: 10 },
-            { id: "pron-listen-t2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She is a teacher.", options: ["O müəllimdir (qadın).", "O müəllimdir (kişi).", "O şagirddir.", "Onlar müəllimdir."], correctIndex: 0, xp: 10 },
-            { id: "pron-listen-t3", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "They are my friends.", options: ["Onlar mənim dostlarımdır.", "Biz dostuq.", "O mənim dostumdur.", "Sən mənim dostumsan."], correctIndex: 0, xp: 10 },
-            { id: "pron-listen-t4", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "This is my book.", options: ["Bu mənim kitabımdır.", "Bu sənin kitabındır.", "Bu onun kitabıdır.", "Bunlar mənim kitabımdır."], correctIndex: 0, xp: 10 },
-            { id: "pron-listen-t5", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "We are happy.", options: ["Biz xoşbəxtik.", "Onlar xoşbəxtdir.", "Mən xoşbəxtəm.", "Sən xoşbəxtsən."], correctIndex: 0, xp: 10 },
-            { id: "pron-listen-t6", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "It is a cat.", options: ["Bu pişikdir.", "Bu itdir.", "O uşaqdır.", "Onlar pişikdir."], correctIndex: 0, xp: 10 },
-            { id: "pron-listen-t7", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "Her name is Leyla.", options: ["Onun adı Leyladır (qadın).", "Onun adı Leyladır (kişi).", "Mənim adım Leyladır.", "Sənin adın Leyladır."], correctIndex: 0, xp: 10 },
-            { id: "pron-listen-t8", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I am a student.", options: ["Mən şagirdəm.", "Sən şagirdsən.", "O şagirddir.", "Biz şagirdik."], correctIndex: 0, xp: 10 },
-            { id: "pron-listen-t9", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "Our house is big.", options: ["Bizim evimiz böyükdür.", "Onların evi böyükdür.", "Mənim evim böyükdür.", "Sənin evin böyükdür."], correctIndex: 0, xp: 10 },
-            { id: "pron-listen-t10", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "Their car is new.", options: ["Onların maşını təzədir.", "Bizim maşınımız təzədir.", "Onun maşını təzədir.", "Sənin maşının təzədir."], correctIndex: 0, xp: 10 },
-            { id: "pron-listen-t11", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "He is a doctor.", options: ["O həkimdir.", "O müəllimdir.", "Onlar həkimdir.", "O şagirddir."], correctIndex: 0, xp: 10 },
-            { id: "pron-listen-t12", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "It is my pen.", options: ["Bu mənim qələmimdir.", "Bu sənin qələmindir.", "Bu onun qələmidir.", "Bunlar mənim qələmimdir."], correctIndex: 0, xp: 10 },
-            { id: "pron-listen-t13", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "We are students.", options: ["Biz şagirdik.", "Onlar şagirddir.", "Mən şagirdəm.", "Sən şagirdsən."], correctIndex: 0, xp: 10 },
-            { id: "pron-listen-t14", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She has a red bag.", options: ["Onun qırmızı çantası var.", "Onun mavi çantası var.", "Mənim qırmızı çantam var.", "Onların qırmızı çantası var."], correctIndex: 0, xp: 10 },
-            { id: "pron-listen-t15", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Is he your friend?", options: ["O sənin dostundur?", "O mənim dostumdur?", "Onlar sənin dostundur?", "Bu sənin dostundur?"], correctIndex: 0, xp: 15 },
-          ],
-          bonusTasks: [
-            { id: "pron-listen-b1", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "His car is fast.", options: ["Onun maşını sürətlidir.", "Onun maşını yavaşdır.", "Mənim maşınım sürətlidir.", "Sənin maşının sürətlidir."], correctIndex: 0, xp: 15 },
-            { id: "pron-listen-b2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "You are my friend.", options: ["Sən mənim dostumsan.", "O mənim dostumdur.", "Biz dostuq.", "Onlar mənim dostumdur."], correctIndex: 0, xp: 15 },
-          ],
-        },
-      ],
-    },
-    {
-      id: "en-c5-reading",
-      title: "Oxu: My family",
-      description: "Ailə haqqında mətni oxu və suallara cavab ver (əvəzliklər).",
-      lessons: [
         {
           id: "pron-read",
-          title: "Reading: My family",
+          title: "Oxu",
           intro: "Qısa mətni oxu və suallara cavab ver.",
           sections: [
             { heading: "Read the text (Mətni oxu)", body: "This is my family. My father is a doctor. He works at a hospital. My mother is a teacher. She works at a school. I have a sister. Her name is Aysel. She is nine. We have a cat. It is black and white. Its name is Pamuk. We love our cat." },
@@ -938,16 +758,38 @@ export const english: Subject = {
             { id: "pron-read-b2", type: "fill_blank", prompt: "'Her name is ___.' (mətndən)", accepted: ["aysel"], xp: 15 },
           ],
         },
-      ],
-    },
-    {
-      id: "en-c5-writing",
-      title: "Yazı: Əvəzliklər",
-      description: "Sözlərdən əvəzlikli cümlə qur.",
-      lessons: [
+        {
+          id: "pron-listen",
+          title: "Dinləmə",
+          intro: "Cümləni dinlə və düzgün cavabı seç.",
+          sections: [
+            { heading: "Necə işləyir?", body: "«Dinlə» düyməsinə bas, cümləni eşit və düzgün variantı seç. İstədiyin qədər təkrar dinlə." },
+          ],
+          tasks: [
+            { id: "pron-listen-t1", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "He is my brother.", options: ["O mənim qardaşımdır.", "O mənim bacımdır.", "Onlar mənim qardaşımdır.", "Bu mənim qardaşımdır."], correctIndex: 0, xp: 10 },
+            { id: "pron-listen-t2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She is a teacher.", options: ["O müəllimdir (qadın).", "O müəllimdir (kişi).", "O şagirddir.", "Onlar müəllimdir."], correctIndex: 0, xp: 10 },
+            { id: "pron-listen-t3", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "They are my friends.", options: ["Onlar mənim dostlarımdır.", "Biz dostuq.", "O mənim dostumdur.", "Sən mənim dostumsan."], correctIndex: 0, xp: 10 },
+            { id: "pron-listen-t4", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "This is my book.", options: ["Bu mənim kitabımdır.", "Bu sənin kitabındır.", "Bu onun kitabıdır.", "Bunlar mənim kitabımdır."], correctIndex: 0, xp: 10 },
+            { id: "pron-listen-t5", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "We are happy.", options: ["Biz xoşbəxtik.", "Onlar xoşbəxtdir.", "Mən xoşbəxtəm.", "Sən xoşbəxtsən."], correctIndex: 0, xp: 10 },
+            { id: "pron-listen-t6", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "It is a cat.", options: ["Bu pişikdir.", "Bu itdir.", "O uşaqdır.", "Onlar pişikdir."], correctIndex: 0, xp: 10 },
+            { id: "pron-listen-t7", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "Her name is Leyla.", options: ["Onun adı Leyladır (qadın).", "Onun adı Leyladır (kişi).", "Mənim adım Leyladır.", "Sənin adın Leyladır."], correctIndex: 0, xp: 10 },
+            { id: "pron-listen-t8", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I am a student.", options: ["Mən şagirdəm.", "Sən şagirdsən.", "O şagirddir.", "Biz şagirdik."], correctIndex: 0, xp: 10 },
+            { id: "pron-listen-t9", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "Our house is big.", options: ["Bizim evimiz böyükdür.", "Onların evi böyükdür.", "Mənim evim böyükdür.", "Sənin evin böyükdür."], correctIndex: 0, xp: 10 },
+            { id: "pron-listen-t10", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "Their car is new.", options: ["Onların maşını təzədir.", "Bizim maşınımız təzədir.", "Onun maşını təzədir.", "Sənin maşının təzədir."], correctIndex: 0, xp: 10 },
+            { id: "pron-listen-t11", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "He is a doctor.", options: ["O həkimdir.", "O müəllimdir.", "Onlar həkimdir.", "O şagirddir."], correctIndex: 0, xp: 10 },
+            { id: "pron-listen-t12", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "It is my pen.", options: ["Bu mənim qələmimdir.", "Bu sənin qələmindir.", "Bu onun qələmidir.", "Bunlar mənim qələmimdir."], correctIndex: 0, xp: 10 },
+            { id: "pron-listen-t13", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "We are students.", options: ["Biz şagirdik.", "Onlar şagirddir.", "Mən şagirdəm.", "Sən şagirdsən."], correctIndex: 0, xp: 10 },
+            { id: "pron-listen-t14", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She has a red bag.", options: ["Onun qırmızı çantası var.", "Onun mavi çantası var.", "Mənim qırmızı çantam var.", "Onların qırmızı çantası var."], correctIndex: 0, xp: 10 },
+            { id: "pron-listen-t15", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Is he your friend?", options: ["O sənin dostundur?", "O mənim dostumdur?", "Onlar sənin dostundur?", "Bu sənin dostundur?"], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "pron-listen-b1", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "His car is fast.", options: ["Onun maşını sürətlidir.", "Onun maşını yavaşdır.", "Mənim maşınım sürətlidir.", "Sənin maşının sürətlidir."], correctIndex: 0, xp: 15 },
+            { id: "pron-listen-b2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "You are my friend.", options: ["Sən mənim dostumsan.", "O mənim dostumdur.", "Biz dostuq.", "Onlar mənim dostumdur."], correctIndex: 0, xp: 15 },
+          ],
+        },
         {
           id: "pron-write",
-          title: "Cümlə qur: əvəzliklər",
+          title: "Cümlə qurma",
           intro: "Sözləri düzgün sıraya düz və cümlə qur.",
           sections: [
             { heading: "Necə işləyir?", body: "Sözlərə sıra ilə bas. Cümlə əvəzliklə başlaya bilər: He is..., They are..., This is my..." },
@@ -977,18 +819,45 @@ export const english: Subject = {
         },
       ],
     },
-    // ═══════════════════════════════════════════════════════════════
-    // 6-CI DÖVR — ARTICLES (a / an / the)
-    // Yeni isimlər: orange, egg, umbrella, elephant, banana, pen, car, box.
-    // ═══════════════════════════════════════════════════════════════
     {
-      id: "en-c6-grammar",
-      title: "Qayda: Artikllar (a / an / the)",
-      description: "Qeyri-müəyyən (a/an) və müəyyən (the) artikllar.",
+      id: "en-u6",
+      title: "Əşyalar və yerlər",
+      description: "Artikllar (a / an / the) və gündəlik əşyalar.",
       lessons: [
         {
+          id: "art-vocab",
+          title: "Yeni sözlər",
+          intro: "8 yeni isim öyrənək və a/an ilə işlədək.",
+          sections: [
+            { heading: "Yeni sözlər (8 isim)", body: "orange — portağal · egg — yumurta · umbrella — çətir · elephant — fil · banana — banan · pen — qələm · car — maşın · box — qutu" },
+            { heading: "Məsləhət", body: "Saitlə başlayanlar 'an' alır: an orange, an egg, an umbrella, an elephant. Samitlə başlayanlar 'a': a banana, a pen, a car, a box." },
+          ],
+          tasks: [
+            { id: "art-vocab-t1", type: "multiple_choice", prompt: "'orange' sözünün mənası?", options: ["portağal", "alma", "banan", "yumurta"], correctIndex: 0, xp: 10 },
+            { id: "art-vocab-t2", type: "multiple_choice", prompt: "'egg' sözünün mənası?", options: ["yumurta", "portağal", "çətir", "qutu"], correctIndex: 0, xp: 10 },
+            { id: "art-vocab-t3", type: "multiple_choice", prompt: "'umbrella' sözünün mənası?", options: ["çətir", "qələm", "qutu", "maşın"], correctIndex: 0, xp: 10 },
+            { id: "art-vocab-t4", type: "multiple_choice", prompt: "'elephant' sözünün mənası?", options: ["fil", "pişik", "it", "quş"], correctIndex: 0, xp: 10 },
+            { id: "art-vocab-t5", type: "multiple_choice", prompt: "'banana' sözünün mənası?", options: ["banan", "portağal", "alma", "yumurta"], correctIndex: 0, xp: 10 },
+            { id: "art-vocab-t6", type: "multiple_choice", prompt: "'pen' sözünün mənası?", options: ["qələm", "kitab", "qutu", "çətir"], correctIndex: 0, xp: 10 },
+            { id: "art-vocab-t7", type: "fill_blank", prompt: "'maşın' ingiliscə necə yazılır?", accepted: ["car"], xp: 10 },
+            { id: "art-vocab-t8", type: "fill_blank", prompt: "'qutu' ingiliscə necə yazılır?", accepted: ["box"], xp: 10 },
+            { id: "art-vocab-t9", type: "multiple_choice", speakOptions: true, prompt: "Hansı söz 'an' ilə işlənir?", options: ["apple", "dog", "book", "car"], correctIndex: 0, xp: 10 },
+            { id: "art-vocab-t10", type: "multiple_choice", speakOptions: true, prompt: "Hansı söz 'a' ilə işlənir?", options: ["egg", "orange", "banana", "umbrella"], correctIndex: 2, xp: 10 },
+            { id: "art-vocab-t11", type: "fill_blank", prompt: "'portağal' ingiliscə necə yazılır?", accepted: ["orange"], xp: 10 },
+            { id: "art-vocab-t12", type: "fill_blank", prompt: "'fil' ingiliscə necə yazılır?", accepted: ["elephant"], xp: 10 },
+            { id: "art-vocab-t13", type: "multiple_choice", prompt: "'box' sözünün mənası?", options: ["qutu", "çətir", "fil", "banan"], correctIndex: 0, xp: 10 },
+            { id: "art-vocab-t14", type: "fill_blank", prompt: "'qələm' ingiliscə necə yazılır?", accepted: ["pen"], xp: 10 },
+            { id: "art-vocab-t15", type: "multiple_choice", speakOptions: true, prompt: "Hansı sözdən əvvəl 'an' gəlir?", options: ["orange", "banana", "pen", "box"], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "art-vocab-b1", type: "multiple_choice", prompt: "'box' sözünün mənası?", options: ["qutu", "çətir", "qələm", "fil"], correctIndex: 0, xp: 15 },
+            { id: "art-vocab-b2", type: "multiple_choice", prompt: "'car' sözünün mənası?", options: ["maşın", "qutu", "banan", "qələm"], correctIndex: 0, xp: 15 },
+            { id: "art-vocab-b3", type: "multiple_choice", speakOptions: true, prompt: "Hansı sözdən əvvəl 'an' gəlir?", options: ["banana", "elephant", "pen", "car"], correctIndex: 1, xp: 15 },
+          ],
+        },
+        {
           id: "art-rule",
-          title: "Artikllar qaydası",
+          title: "Qaydalar",
           intro: "a, an, the — İngiliscə artikllar. Nə vaxt hansını işlətməli?",
           sections: [
             { heading: "a / an nə üçündür?", body: "Tək, sayıla bilən isimdən əvvəl: a book, a dog. Samitlə başlayan sözdən əvvəl 'a', saitlə (a,e,i,o,u) başlayan sözdən əvvəl 'an': an apple, an egg, an umbrella." },
@@ -1018,90 +887,9 @@ export const english: Subject = {
             { id: "art-rule-b3", type: "fill_blank", prompt: "Samitlə başlayan 'car' üçün hansı artikl? (a / an)", accepted: ["a"], xp: 15 },
           ],
         },
-      ],
-    },
-    {
-      id: "en-c6-vocab",
-      title: "Lüğət: Əşyalar",
-      description: "8 yeni isim: orange, egg, umbrella, elephant, banana, pen, car, box.",
-      lessons: [
-        {
-          id: "art-vocab",
-          title: "Əşyalar (8 söz)",
-          intro: "8 yeni isim öyrənək və a/an ilə işlədək.",
-          sections: [
-            { heading: "Yeni sözlər (8 isim)", body: "orange — portağal · egg — yumurta · umbrella — çətir · elephant — fil · banana — banan · pen — qələm · car — maşın · box — qutu" },
-            { heading: "Məsləhət", body: "Saitlə başlayanlar 'an' alır: an orange, an egg, an umbrella, an elephant. Samitlə başlayanlar 'a': a banana, a pen, a car, a box." },
-          ],
-          tasks: [
-            { id: "art-vocab-t1", type: "multiple_choice", prompt: "'orange' sözünün mənası?", options: ["portağal", "alma", "banan", "yumurta"], correctIndex: 0, xp: 10 },
-            { id: "art-vocab-t2", type: "multiple_choice", prompt: "'egg' sözünün mənası?", options: ["yumurta", "portağal", "çətir", "qutu"], correctIndex: 0, xp: 10 },
-            { id: "art-vocab-t3", type: "multiple_choice", prompt: "'umbrella' sözünün mənası?", options: ["çətir", "qələm", "qutu", "maşın"], correctIndex: 0, xp: 10 },
-            { id: "art-vocab-t4", type: "multiple_choice", prompt: "'elephant' sözünün mənası?", options: ["fil", "pişik", "it", "quş"], correctIndex: 0, xp: 10 },
-            { id: "art-vocab-t5", type: "multiple_choice", prompt: "'banana' sözünün mənası?", options: ["banan", "portağal", "alma", "yumurta"], correctIndex: 0, xp: 10 },
-            { id: "art-vocab-t6", type: "multiple_choice", prompt: "'pen' sözünün mənası?", options: ["qələm", "kitab", "qutu", "çətir"], correctIndex: 0, xp: 10 },
-            { id: "art-vocab-t7", type: "fill_blank", prompt: "'maşın' ingiliscə necə yazılır?", accepted: ["car"], xp: 10 },
-            { id: "art-vocab-t8", type: "fill_blank", prompt: "'qutu' ingiliscə necə yazılır?", accepted: ["box"], xp: 10 },
-            { id: "art-vocab-t9", type: "multiple_choice", speakOptions: true, prompt: "Hansı söz 'an' ilə işlənir?", options: ["apple", "dog", "book", "car"], correctIndex: 0, xp: 10 },
-            { id: "art-vocab-t10", type: "multiple_choice", speakOptions: true, prompt: "Hansı söz 'a' ilə işlənir?", options: ["egg", "orange", "banana", "umbrella"], correctIndex: 2, xp: 10 },
-            { id: "art-vocab-t11", type: "fill_blank", prompt: "'portağal' ingiliscə necə yazılır?", accepted: ["orange"], xp: 10 },
-            { id: "art-vocab-t12", type: "fill_blank", prompt: "'fil' ingiliscə necə yazılır?", accepted: ["elephant"], xp: 10 },
-            { id: "art-vocab-t13", type: "multiple_choice", prompt: "'box' sözünün mənası?", options: ["qutu", "çətir", "fil", "banan"], correctIndex: 0, xp: 10 },
-            { id: "art-vocab-t14", type: "fill_blank", prompt: "'qələm' ingiliscə necə yazılır?", accepted: ["pen"], xp: 10 },
-            { id: "art-vocab-t15", type: "multiple_choice", speakOptions: true, prompt: "Hansı sözdən əvvəl 'an' gəlir?", options: ["orange", "banana", "pen", "box"], correctIndex: 0, xp: 15 },
-          ],
-          bonusTasks: [
-            { id: "art-vocab-b1", type: "multiple_choice", prompt: "'box' sözünün mənası?", options: ["qutu", "çətir", "qələm", "fil"], correctIndex: 0, xp: 15 },
-            { id: "art-vocab-b2", type: "multiple_choice", prompt: "'car' sözünün mənası?", options: ["maşın", "qutu", "banan", "qələm"], correctIndex: 0, xp: 15 },
-            { id: "art-vocab-b3", type: "multiple_choice", speakOptions: true, prompt: "Hansı sözdən əvvəl 'an' gəlir?", options: ["banana", "elephant", "pen", "car"], correctIndex: 1, xp: 15 },
-          ],
-        },
-      ],
-    },
-    {
-      id: "en-c6-listening",
-      title: "Dinləmə: Artikllar",
-      description: "Artikllı cümlələri dinlə və düzgün mənanı seç.",
-      lessons: [
-        {
-          id: "art-listen",
-          title: "Dinlə və seç: əşyalar",
-          intro: "Cümləni dinlə və düzgün cavabı seç.",
-          sections: [
-            { heading: "Necə işləyir?", body: "«Dinlə» düyməsinə bas, cümləni eşit və düzgün variantı seç. İstədiyin qədər təkrar dinlə." },
-          ],
-          tasks: [
-            { id: "art-listen-t1", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I have an apple.", options: ["Mənim almam var.", "Mənim iki almam var.", "Mən alma istəyirəm.", "Mənim portağalım var."], correctIndex: 0, xp: 10 },
-            { id: "art-listen-t2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She has a dog.", options: ["Onun iti var.", "Onun pişiyi var.", "Mənim itim var.", "Onun iki iti var."], correctIndex: 0, xp: 10 },
-            { id: "art-listen-t3", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "Look at the sun.", options: ["Günəşə bax.", "Aya bax.", "Ulduza bax.", "Buluda bax."], correctIndex: 0, xp: 10 },
-            { id: "art-listen-t4", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "It is an egg.", options: ["Bu yumurtadır.", "Bu almadır.", "Bu qutudur.", "Bu portağaldır."], correctIndex: 0, xp: 10 },
-            { id: "art-listen-t5", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "This is a book.", options: ["Bu kitabdır.", "Bu qələmdir.", "Bunlar kitabdır.", "Bu qutudur."], correctIndex: 0, xp: 10 },
-            { id: "art-listen-t6", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I see an elephant.", options: ["Mən fil görürəm.", "Mən pişik görürəm.", "Mən it görürəm.", "Mən quş görürəm."], correctIndex: 0, xp: 10 },
-            { id: "art-listen-t7", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "The car is red.", options: ["Maşın qırmızıdır.", "Maşın mavidir.", "Qutu qırmızıdır.", "Maşın yaşıldır."], correctIndex: 0, xp: 10 },
-            { id: "art-listen-t8", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I want an orange.", options: ["Mən portağal istəyirəm.", "Mən alma istəyirəm.", "Mən banan istəyirəm.", "Mən yumurta istəyirəm."], correctIndex: 0, xp: 10 },
-            { id: "art-listen-t9", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I have a pen.", options: ["Mənim qələmim var.", "Mənim kitabım var.", "Mənim iki qələmim var.", "Onun qələmi var."], correctIndex: 0, xp: 10 },
-            { id: "art-listen-t10", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "There is a banana.", options: ["Bir banan var.", "Bir portağal var.", "İki banan var.", "Bir alma var."], correctIndex: 0, xp: 10 },
-            { id: "art-listen-t11", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "The box is big.", options: ["Qutu böyükdür.", "Qutu kiçikdir.", "Maşın böyükdür.", "Qutu qırmızıdır."], correctIndex: 0, xp: 10 },
-            { id: "art-listen-t12", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I want an egg.", options: ["Mən yumurta istəyirəm.", "Mən alma istəyirəm.", "Mən portağal istəyirəm.", "Mən banan istəyirəm."], correctIndex: 0, xp: 10 },
-            { id: "art-listen-t13", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She has an orange.", options: ["Onun portağalı var.", "Onun alması var.", "Mənim portağalım var.", "Onun iki portağalı var."], correctIndex: 0, xp: 10 },
-            { id: "art-listen-t14", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "The dog is under the table.", options: ["İt masanın altındadır.", "İt masanın üstündədir.", "Pişik masanın altındadır.", "İt stulun altındadır."], correctIndex: 0, xp: 10 },
-            { id: "art-listen-t15", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Is it an elephant?", options: ["Bu fildir?", "Bu pişikdir?", "Bu itdir?", "Bunlar fildir?"], correctIndex: 0, xp: 15 },
-          ],
-          bonusTasks: [
-            { id: "art-listen-b1", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She has an umbrella.", options: ["Onun çətiri var.", "Onun qələmi var.", "Mənim çətirim var.", "Onun iki çətiri var."], correctIndex: 0, xp: 15 },
-            { id: "art-listen-b2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "The book is on the table.", options: ["Kitab masanın üstündədir.", "Kitab masanın altındadır.", "Qutu masanın üstündədir.", "Kitab stulun üstündədir."], correctIndex: 0, xp: 15 },
-          ],
-        },
-      ],
-    },
-    {
-      id: "en-c6-reading",
-      title: "Oxu: A day at the zoo",
-      description: "Heyvanxana haqqında mətni oxu və suallara cavab ver (artikllar).",
-      lessons: [
         {
           id: "art-read",
-          title: "Reading: A day at the zoo",
+          title: "Oxu",
           intro: "Qısa mətni oxu və suallara cavab ver.",
           sections: [
             { heading: "Read the text (Mətni oxu)", body: "Today we are at the zoo. Look! There is an elephant. It is very big. There is a lion too. The lion is sleeping. I can see a monkey. The monkey is eating a banana. Near the water there is a bird. It is an eagle. I like the zoo very much." },
@@ -1129,16 +917,38 @@ export const english: Subject = {
             { id: "art-read-b2", type: "multiple_choice", speakOptions: true, prompt: "'The lion is sleeping.' — Is the lion awake?", options: ["No, it is sleeping.", "Yes, it is.", "It is eating.", "It is running."], correctIndex: 0, xp: 15 },
           ],
         },
-      ],
-    },
-    {
-      id: "en-c6-writing",
-      title: "Yazı: Artikllar",
-      description: "Sözlərdən artikllı cümlə qur.",
-      lessons: [
+        {
+          id: "art-listen",
+          title: "Dinləmə",
+          intro: "Cümləni dinlə və düzgün cavabı seç.",
+          sections: [
+            { heading: "Necə işləyir?", body: "«Dinlə» düyməsinə bas, cümləni eşit və düzgün variantı seç. İstədiyin qədər təkrar dinlə." },
+          ],
+          tasks: [
+            { id: "art-listen-t1", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I have an apple.", options: ["Mənim almam var.", "Mənim iki almam var.", "Mən alma istəyirəm.", "Mənim portağalım var."], correctIndex: 0, xp: 10 },
+            { id: "art-listen-t2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She has a dog.", options: ["Onun iti var.", "Onun pişiyi var.", "Mənim itim var.", "Onun iki iti var."], correctIndex: 0, xp: 10 },
+            { id: "art-listen-t3", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "Look at the sun.", options: ["Günəşə bax.", "Aya bax.", "Ulduza bax.", "Buluda bax."], correctIndex: 0, xp: 10 },
+            { id: "art-listen-t4", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "It is an egg.", options: ["Bu yumurtadır.", "Bu almadır.", "Bu qutudur.", "Bu portağaldır."], correctIndex: 0, xp: 10 },
+            { id: "art-listen-t5", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "This is a book.", options: ["Bu kitabdır.", "Bu qələmdir.", "Bunlar kitabdır.", "Bu qutudur."], correctIndex: 0, xp: 10 },
+            { id: "art-listen-t6", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I see an elephant.", options: ["Mən fil görürəm.", "Mən pişik görürəm.", "Mən it görürəm.", "Mən quş görürəm."], correctIndex: 0, xp: 10 },
+            { id: "art-listen-t7", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "The car is red.", options: ["Maşın qırmızıdır.", "Maşın mavidir.", "Qutu qırmızıdır.", "Maşın yaşıldır."], correctIndex: 0, xp: 10 },
+            { id: "art-listen-t8", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I want an orange.", options: ["Mən portağal istəyirəm.", "Mən alma istəyirəm.", "Mən banan istəyirəm.", "Mən yumurta istəyirəm."], correctIndex: 0, xp: 10 },
+            { id: "art-listen-t9", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I have a pen.", options: ["Mənim qələmim var.", "Mənim kitabım var.", "Mənim iki qələmim var.", "Onun qələmi var."], correctIndex: 0, xp: 10 },
+            { id: "art-listen-t10", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "There is a banana.", options: ["Bir banan var.", "Bir portağal var.", "İki banan var.", "Bir alma var."], correctIndex: 0, xp: 10 },
+            { id: "art-listen-t11", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "The box is big.", options: ["Qutu böyükdür.", "Qutu kiçikdir.", "Maşın böyükdür.", "Qutu qırmızıdır."], correctIndex: 0, xp: 10 },
+            { id: "art-listen-t12", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I want an egg.", options: ["Mən yumurta istəyirəm.", "Mən alma istəyirəm.", "Mən portağal istəyirəm.", "Mən banan istəyirəm."], correctIndex: 0, xp: 10 },
+            { id: "art-listen-t13", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She has an orange.", options: ["Onun portağalı var.", "Onun alması var.", "Mənim portağalım var.", "Onun iki portağalı var."], correctIndex: 0, xp: 10 },
+            { id: "art-listen-t14", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "The dog is under the table.", options: ["İt masanın altındadır.", "İt masanın üstündədir.", "Pişik masanın altındadır.", "İt stulun altındadır."], correctIndex: 0, xp: 10 },
+            { id: "art-listen-t15", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Is it an elephant?", options: ["Bu fildir?", "Bu pişikdir?", "Bu itdir?", "Bunlar fildir?"], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "art-listen-b1", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She has an umbrella.", options: ["Onun çətiri var.", "Onun qələmi var.", "Mənim çətirim var.", "Onun iki çətiri var."], correctIndex: 0, xp: 15 },
+            { id: "art-listen-b2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "The book is on the table.", options: ["Kitab masanın üstündədir.", "Kitab masanın altındadır.", "Qutu masanın üstündədir.", "Kitab stulun üstündədir."], correctIndex: 0, xp: 15 },
+          ],
+        },
         {
           id: "art-write",
-          title: "Cümlə qur: artikllar",
+          title: "Cümlə qurma",
           intro: "Sözləri düzgün sıraya düz və cümlə qur.",
           sections: [
             { heading: "Necə işləyir?", body: "Sözlərə sıra ilə bas. Saitlə başlayan isimdən əvvəl 'an', samitlə başlayandan əvvəl 'a'." },
@@ -1168,19 +978,45 @@ export const english: Subject = {
         },
       ],
     },
-
-    // ═══════════════════════════════════════════════════════════════
-    // 7-Cİ DÖVR — COMPARATIVES (Sifət dərəcələri)
-    // Yeni sifətlər: tall, short, fast, slow, strong, young, clever, heavy.
-    // ═══════════════════════════════════════════════════════════════
     {
-      id: "en-c7-grammar",
-      title: "Qayda: Sifət dərəcələri",
-      description: "Müqayisə (-er / more) və üstünlük (-est / most) dərəcələri.",
+      id: "en-u7",
+      title: "Müqayisə",
+      description: "Sifət dərəcələri — böyük, daha böyük, ən böyük.",
       lessons: [
         {
+          id: "comp-vocab",
+          title: "Yeni sözlər",
+          intro: "Müqayisə üçün 8 yeni sifət öyrənək.",
+          sections: [
+            { heading: "Yeni sözlər (8 sifət)", body: "tall — hündür · short — qısa/alçaq · fast — sürətli · slow — yavaş · strong — güclü · young — gənc/cavan · clever — ağıllı · heavy — ağır" },
+            { heading: "Məsləhət", body: "Bu sifətlərin müqayisə formasını da yadda saxla: taller, faster, stronger, heavier..." },
+          ],
+          tasks: [
+            { id: "comp-vocab-t1", type: "multiple_choice", prompt: "'tall' sözünün mənası?", options: ["hündür", "alçaq", "sürətli", "yavaş"], correctIndex: 0, xp: 10 },
+            { id: "comp-vocab-t2", type: "multiple_choice", prompt: "'fast' sözünün mənası?", options: ["sürətli", "yavaş", "güclü", "ağır"], correctIndex: 0, xp: 10 },
+            { id: "comp-vocab-t3", type: "multiple_choice", prompt: "'slow' sözünün mənası?", options: ["yavaş", "sürətli", "hündür", "gənc"], correctIndex: 0, xp: 10 },
+            { id: "comp-vocab-t4", type: "multiple_choice", prompt: "'strong' sözünün mənası?", options: ["güclü", "zəif", "ağıllı", "gənc"], correctIndex: 0, xp: 10 },
+            { id: "comp-vocab-t5", type: "multiple_choice", prompt: "'young' sözünün mənası?", options: ["gənc / cavan", "qoca", "hündür", "ağır"], correctIndex: 0, xp: 10 },
+            { id: "comp-vocab-t6", type: "multiple_choice", prompt: "'clever' sözünün mənası?", options: ["ağıllı", "güclü", "sürətli", "hündür"], correctIndex: 0, xp: 10 },
+            { id: "comp-vocab-t7", type: "fill_blank", prompt: "'ağır' ingiliscə necə yazılır?", accepted: ["heavy"], xp: 10 },
+            { id: "comp-vocab-t8", type: "fill_blank", prompt: "'qısa / alçaq' ingiliscə necə yazılır?", accepted: ["short"], xp: 10 },
+            { id: "comp-vocab-t9", type: "multiple_choice", speakOptions: true, prompt: "'A giraffe is very ___.' (hündür)", options: ["tall", "short", "slow", "heavy"], correctIndex: 0, xp: 10 },
+            { id: "comp-vocab-t10", type: "multiple_choice", speakOptions: true, prompt: "'A turtle is ___.' (yavaş)", options: ["slow", "fast", "tall", "strong"], correctIndex: 0, xp: 10 },
+            { id: "comp-vocab-t11", type: "fill_blank", prompt: "'hündür' ingiliscə necə yazılır?", accepted: ["tall"], xp: 10 },
+            { id: "comp-vocab-t12", type: "fill_blank", prompt: "'güclü' ingiliscə necə yazılır?", accepted: ["strong"], xp: 10 },
+            { id: "comp-vocab-t13", type: "multiple_choice", prompt: "'slow' sözünün əksi hansıdır?", options: ["fast", "tall", "heavy", "young"], correctIndex: 0, xp: 10 },
+            { id: "comp-vocab-t14", type: "multiple_choice", speakOptions: true, prompt: "'An old man is not ___.' (gənc)", options: ["young", "tall", "fast", "heavy"], correctIndex: 0, xp: 10 },
+            { id: "comp-vocab-t15", type: "multiple_choice", prompt: "'clever' sözünün mənası?", options: ["ağıllı", "güclü", "ağır", "yavaş"], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "comp-vocab-b1", type: "multiple_choice", prompt: "'heavy' sözünün mənası?", options: ["ağır", "yüngül", "sürətli", "ağıllı"], correctIndex: 0, xp: 15 },
+            { id: "comp-vocab-b2", type: "multiple_choice", prompt: "'short' sözünün mənası?", options: ["qısa / alçaq", "hündür", "güclü", "gənc"], correctIndex: 0, xp: 15 },
+            { id: "comp-vocab-b3", type: "multiple_choice", speakOptions: true, prompt: "'A lion is ___.' (güclü)", options: ["strong", "weak", "slow", "short"], correctIndex: 0, xp: 15 },
+          ],
+        },
+        {
           id: "comp-rule",
-          title: "Sifət dərəcələri qaydası",
+          title: "Qaydalar",
           intro: "İki və ya daha çox şeyi müqayisə edək. Gəl öyrənək!",
           sections: [
             { heading: "Müqayisə dərəcəsi (-er / more)", body: "İki şeyi müqayisə edərkən: tall → taller, big → bigger. Uzun sözlərdə 'more': beautiful → more beautiful. 'than' ilə: Tom is taller than Sam." },
@@ -1210,90 +1046,9 @@ export const english: Subject = {
             { id: "comp-rule-b3", type: "fill_blank", prompt: "'fast' sözünün üstünlük forması (the ___)?", accepted: ["fastest"], xp: 15 },
           ],
         },
-      ],
-    },
-    {
-      id: "en-c7-vocab",
-      title: "Lüğət: Sifətlər",
-      description: "8 yeni sifət: tall, short, fast, slow, strong, young, clever, heavy.",
-      lessons: [
-        {
-          id: "comp-vocab",
-          title: "Sifətlər (8 söz)",
-          intro: "Müqayisə üçün 8 yeni sifət öyrənək.",
-          sections: [
-            { heading: "Yeni sözlər (8 sifət)", body: "tall — hündür · short — qısa/alçaq · fast — sürətli · slow — yavaş · strong — güclü · young — gənc/cavan · clever — ağıllı · heavy — ağır" },
-            { heading: "Məsləhət", body: "Bu sifətlərin müqayisə formasını da yadda saxla: taller, faster, stronger, heavier..." },
-          ],
-          tasks: [
-            { id: "comp-vocab-t1", type: "multiple_choice", prompt: "'tall' sözünün mənası?", options: ["hündür", "alçaq", "sürətli", "yavaş"], correctIndex: 0, xp: 10 },
-            { id: "comp-vocab-t2", type: "multiple_choice", prompt: "'fast' sözünün mənası?", options: ["sürətli", "yavaş", "güclü", "ağır"], correctIndex: 0, xp: 10 },
-            { id: "comp-vocab-t3", type: "multiple_choice", prompt: "'slow' sözünün mənası?", options: ["yavaş", "sürətli", "hündür", "gənc"], correctIndex: 0, xp: 10 },
-            { id: "comp-vocab-t4", type: "multiple_choice", prompt: "'strong' sözünün mənası?", options: ["güclü", "zəif", "ağıllı", "gənc"], correctIndex: 0, xp: 10 },
-            { id: "comp-vocab-t5", type: "multiple_choice", prompt: "'young' sözünün mənası?", options: ["gənc / cavan", "qoca", "hündür", "ağır"], correctIndex: 0, xp: 10 },
-            { id: "comp-vocab-t6", type: "multiple_choice", prompt: "'clever' sözünün mənası?", options: ["ağıllı", "güclü", "sürətli", "hündür"], correctIndex: 0, xp: 10 },
-            { id: "comp-vocab-t7", type: "fill_blank", prompt: "'ağır' ingiliscə necə yazılır?", accepted: ["heavy"], xp: 10 },
-            { id: "comp-vocab-t8", type: "fill_blank", prompt: "'qısa / alçaq' ingiliscə necə yazılır?", accepted: ["short"], xp: 10 },
-            { id: "comp-vocab-t9", type: "multiple_choice", speakOptions: true, prompt: "'A giraffe is very ___.' (hündür)", options: ["tall", "short", "slow", "heavy"], correctIndex: 0, xp: 10 },
-            { id: "comp-vocab-t10", type: "multiple_choice", speakOptions: true, prompt: "'A turtle is ___.' (yavaş)", options: ["slow", "fast", "tall", "strong"], correctIndex: 0, xp: 10 },
-            { id: "comp-vocab-t11", type: "fill_blank", prompt: "'hündür' ingiliscə necə yazılır?", accepted: ["tall"], xp: 10 },
-            { id: "comp-vocab-t12", type: "fill_blank", prompt: "'güclü' ingiliscə necə yazılır?", accepted: ["strong"], xp: 10 },
-            { id: "comp-vocab-t13", type: "multiple_choice", prompt: "'slow' sözünün əksi hansıdır?", options: ["fast", "tall", "heavy", "young"], correctIndex: 0, xp: 10 },
-            { id: "comp-vocab-t14", type: "multiple_choice", speakOptions: true, prompt: "'An old man is not ___.' (gənc)", options: ["young", "tall", "fast", "heavy"], correctIndex: 0, xp: 10 },
-            { id: "comp-vocab-t15", type: "multiple_choice", prompt: "'clever' sözünün mənası?", options: ["ağıllı", "güclü", "ağır", "yavaş"], correctIndex: 0, xp: 15 },
-          ],
-          bonusTasks: [
-            { id: "comp-vocab-b1", type: "multiple_choice", prompt: "'heavy' sözünün mənası?", options: ["ağır", "yüngül", "sürətli", "ağıllı"], correctIndex: 0, xp: 15 },
-            { id: "comp-vocab-b2", type: "multiple_choice", prompt: "'short' sözünün mənası?", options: ["qısa / alçaq", "hündür", "güclü", "gənc"], correctIndex: 0, xp: 15 },
-            { id: "comp-vocab-b3", type: "multiple_choice", speakOptions: true, prompt: "'A lion is ___.' (güclü)", options: ["strong", "weak", "slow", "short"], correctIndex: 0, xp: 15 },
-          ],
-        },
-      ],
-    },
-    {
-      id: "en-c7-listening",
-      title: "Dinləmə: Sifət dərəcələri",
-      description: "Müqayisə cümlələrini dinlə və düzgün mənanı seç.",
-      lessons: [
-        {
-          id: "comp-listen",
-          title: "Dinlə və seç: müqayisə",
-          intro: "Cümləni dinlə və düzgün cavabı seç.",
-          sections: [
-            { heading: "Necə işləyir?", body: "«Dinlə» düyməsinə bas, cümləni eşit və düzgün variantı seç. İstədiyin qədər təkrar dinlə." },
-          ],
-          tasks: [
-            { id: "comp-listen-t1", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "Tom is taller than Sam.", options: ["Tom Samdan hündürdür.", "Tom Samdan alçaqdır.", "Sam Tomdan hündürdür.", "Tom və Sam eyni boydadır."], correctIndex: 0, xp: 10 },
-            { id: "comp-listen-t2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "A car is faster than a bike.", options: ["Maşın velosipeddən sürətlidir.", "Velosiped maşından sürətlidir.", "Maşın velosipeddən yavaşdır.", "Maşın və velosiped eynidir."], correctIndex: 0, xp: 10 },
-            { id: "comp-listen-t3", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "This box is bigger.", options: ["Bu qutu daha böyükdür.", "Bu qutu daha kiçikdir.", "Bu qutu ağırdır.", "Bu qutu yüngüldür."], correctIndex: 0, xp: 10 },
-            { id: "comp-listen-t4", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She is the best student.", options: ["O ən yaxşı şagirddir.", "O ən pis şagirddir.", "O yaxşı şagirddir.", "O yeni şagirddir."], correctIndex: 0, xp: 10 },
-            { id: "comp-listen-t5", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "An elephant is heavy.", options: ["Fil ağırdır.", "Fil yüngüldür.", "Pişik ağırdır.", "Fil sürətlidir."], correctIndex: 0, xp: 10 },
-            { id: "comp-listen-t6", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "A turtle is slow.", options: ["Tısbağa yavaşdır.", "Tısbağa sürətlidir.", "Dovşan yavaşdır.", "Tısbağa güclüdür."], correctIndex: 0, xp: 10 },
-            { id: "comp-listen-t7", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "He is stronger than me.", options: ["O məndən güclüdür.", "O məndən zəifdir.", "Mən ondan güclüyəm.", "Biz eyni güclüyük."], correctIndex: 0, xp: 10 },
-            { id: "comp-listen-t8", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "This is the tallest tree.", options: ["Bu ən hündür ağacdır.", "Bu ən alçaq ağacdır.", "Bu hündür ağacdır.", "Bu qısa ağacdır."], correctIndex: 0, xp: 10 },
-            { id: "comp-listen-t9", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "A giraffe is taller than a horse.", options: ["Zürafə atdan hündürdür.", "At zürafədən hündürdür.", "Zürafə atdan alçaqdır.", "Onlar eyni boydadır."], correctIndex: 0, xp: 10 },
-            { id: "comp-listen-t10", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "This bag is heavier.", options: ["Bu çanta daha ağırdır.", "Bu çanta daha yüngüldür.", "Bu çanta böyükdür.", "Bu çanta kiçikdir."], correctIndex: 0, xp: 10 },
-            { id: "comp-listen-t11", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "He is the strongest boy.", options: ["O ən güclü oğlandır.", "O ən zəif oğlandır.", "O güclü oğlandır.", "O gənc oğlandır."], correctIndex: 0, xp: 10 },
-            { id: "comp-listen-t12", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "A snail is very slow.", options: ["İlbiz çox yavaşdır.", "İlbiz çox sürətlidir.", "Tısbağa çox yavaşdır.", "İlbiz güclüdür."], correctIndex: 0, xp: 10 },
-            { id: "comp-listen-t13", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She is younger than me.", options: ["O məndən cavandır.", "O məndən böyükdür.", "Biz eyni yaşdayıq.", "Mən ondan cavanam."], correctIndex: 0, xp: 10 },
-            { id: "comp-listen-t14", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "This is the best film.", options: ["Bu ən yaxşı filmdir.", "Bu ən pis filmdir.", "Bu yaxşı filmdir.", "Bu yeni filmdir."], correctIndex: 0, xp: 10 },
-            { id: "comp-listen-t15", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "A dog is bigger than a cat.", options: ["İt pişikdən böyükdür.", "Pişik itdən böyükdür.", "İt pişikdən kiçikdir.", "Onlar eynidir."], correctIndex: 0, xp: 15 },
-          ],
-          bonusTasks: [
-            { id: "comp-listen-b1", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "A plane is faster than a car.", options: ["Təyyarə maşından sürətlidir.", "Maşın təyyarədən sürətlidir.", "Təyyarə maşından yavaşdır.", "Təyyarə və maşın eynidir."], correctIndex: 0, xp: 15 },
-            { id: "comp-listen-b2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She is younger than her brother.", options: ["O qardaşından cavandır.", "O qardaşından böyükdür.", "O qardaşı ilə eyni yaşdadır.", "Qardaşı ondan cavandır."], correctIndex: 0, xp: 15 },
-          ],
-        },
-      ],
-    },
-    {
-      id: "en-c7-reading",
-      title: "Oxu: Animals",
-      description: "Heyvanlar haqqında mətni oxu və suallara cavab ver (müqayisə).",
-      lessons: [
         {
           id: "comp-read",
-          title: "Reading: Animals",
+          title: "Oxu",
           intro: "Qısa mətni oxu və suallara cavab ver.",
           sections: [
             { heading: "Read the text (Mətni oxu)", body: "Animals are different. The cheetah is the fastest animal. It can run very fast. The elephant is the biggest animal on land. It is very heavy. The giraffe is the tallest animal. Its neck is very long. A mouse is smaller than a cat, but a cat is smaller than a dog. The blue whale is the biggest animal in the world." },
@@ -1321,16 +1076,38 @@ export const english: Subject = {
             { id: "comp-read-b2", type: "fill_blank", prompt: "'The cheetah is the ___ animal.' (ən sürətli — mətndən)", accepted: ["fastest"], xp: 15 },
           ],
         },
-      ],
-    },
-    {
-      id: "en-c7-writing",
-      title: "Yazı: Sifət dərəcələri",
-      description: "Sözlərdən müqayisə cümləsi qur.",
-      lessons: [
+        {
+          id: "comp-listen",
+          title: "Dinləmə",
+          intro: "Cümləni dinlə və düzgün cavabı seç.",
+          sections: [
+            { heading: "Necə işləyir?", body: "«Dinlə» düyməsinə bas, cümləni eşit və düzgün variantı seç. İstədiyin qədər təkrar dinlə." },
+          ],
+          tasks: [
+            { id: "comp-listen-t1", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "Tom is taller than Sam.", options: ["Tom Samdan hündürdür.", "Tom Samdan alçaqdır.", "Sam Tomdan hündürdür.", "Tom və Sam eyni boydadır."], correctIndex: 0, xp: 10 },
+            { id: "comp-listen-t2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "A car is faster than a bike.", options: ["Maşın velosipeddən sürətlidir.", "Velosiped maşından sürətlidir.", "Maşın velosipeddən yavaşdır.", "Maşın və velosiped eynidir."], correctIndex: 0, xp: 10 },
+            { id: "comp-listen-t3", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "This box is bigger.", options: ["Bu qutu daha böyükdür.", "Bu qutu daha kiçikdir.", "Bu qutu ağırdır.", "Bu qutu yüngüldür."], correctIndex: 0, xp: 10 },
+            { id: "comp-listen-t4", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She is the best student.", options: ["O ən yaxşı şagirddir.", "O ən pis şagirddir.", "O yaxşı şagirddir.", "O yeni şagirddir."], correctIndex: 0, xp: 10 },
+            { id: "comp-listen-t5", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "An elephant is heavy.", options: ["Fil ağırdır.", "Fil yüngüldür.", "Pişik ağırdır.", "Fil sürətlidir."], correctIndex: 0, xp: 10 },
+            { id: "comp-listen-t6", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "A turtle is slow.", options: ["Tısbağa yavaşdır.", "Tısbağa sürətlidir.", "Dovşan yavaşdır.", "Tısbağa güclüdür."], correctIndex: 0, xp: 10 },
+            { id: "comp-listen-t7", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "He is stronger than me.", options: ["O məndən güclüdür.", "O məndən zəifdir.", "Mən ondan güclüyəm.", "Biz eyni güclüyük."], correctIndex: 0, xp: 10 },
+            { id: "comp-listen-t8", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "This is the tallest tree.", options: ["Bu ən hündür ağacdır.", "Bu ən alçaq ağacdır.", "Bu hündür ağacdır.", "Bu qısa ağacdır."], correctIndex: 0, xp: 10 },
+            { id: "comp-listen-t9", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "A giraffe is taller than a horse.", options: ["Zürafə atdan hündürdür.", "At zürafədən hündürdür.", "Zürafə atdan alçaqdır.", "Onlar eyni boydadır."], correctIndex: 0, xp: 10 },
+            { id: "comp-listen-t10", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "This bag is heavier.", options: ["Bu çanta daha ağırdır.", "Bu çanta daha yüngüldür.", "Bu çanta böyükdür.", "Bu çanta kiçikdir."], correctIndex: 0, xp: 10 },
+            { id: "comp-listen-t11", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "He is the strongest boy.", options: ["O ən güclü oğlandır.", "O ən zəif oğlandır.", "O güclü oğlandır.", "O gənc oğlandır."], correctIndex: 0, xp: 10 },
+            { id: "comp-listen-t12", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "A snail is very slow.", options: ["İlbiz çox yavaşdır.", "İlbiz çox sürətlidir.", "Tısbağa çox yavaşdır.", "İlbiz güclüdür."], correctIndex: 0, xp: 10 },
+            { id: "comp-listen-t13", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She is younger than me.", options: ["O məndən cavandır.", "O məndən böyükdür.", "Biz eyni yaşdayıq.", "Mən ondan cavanam."], correctIndex: 0, xp: 10 },
+            { id: "comp-listen-t14", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "This is the best film.", options: ["Bu ən yaxşı filmdir.", "Bu ən pis filmdir.", "Bu yaxşı filmdir.", "Bu yeni filmdir."], correctIndex: 0, xp: 10 },
+            { id: "comp-listen-t15", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "A dog is bigger than a cat.", options: ["İt pişikdən böyükdür.", "Pişik itdən böyükdür.", "İt pişikdən kiçikdir.", "Onlar eynidir."], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "comp-listen-b1", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "A plane is faster than a car.", options: ["Təyyarə maşından sürətlidir.", "Maşın təyyarədən sürətlidir.", "Təyyarə maşından yavaşdır.", "Təyyarə və maşın eynidir."], correctIndex: 0, xp: 15 },
+            { id: "comp-listen-b2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She is younger than her brother.", options: ["O qardaşından cavandır.", "O qardaşından böyükdür.", "O qardaşı ilə eyni yaşdadır.", "Qardaşı ondan cavandır."], correctIndex: 0, xp: 15 },
+          ],
+        },
         {
           id: "comp-write",
-          title: "Cümlə qur: müqayisə",
+          title: "Cümlə qurma",
           intro: "Sözləri düzgün sıraya düz və müqayisə cümləsi qur.",
           sections: [
             { heading: "Necə işləyir?", body: "Sözlərə sıra ilə bas. Müqayisə: X is + sifət-er + than + Y. Üstünlük: the + sifət-est." },
@@ -1360,18 +1137,45 @@ export const english: Subject = {
         },
       ],
     },
-    // ═══════════════════════════════════════════════════════════════
-    // 8-Cİ DÖVR — MODAL VERBS (can / must / should)
-    // Yeni fellər: jump, climb, fly, draw, drive, fix, ride, count.
-    // ═══════════════════════════════════════════════════════════════
     {
-      id: "en-c8-grammar",
-      title: "Qayda: Modal fellər",
-      description: "can (bacarıq), must (məcburiyyət), should (məsləhət).",
+      id: "en-u8",
+      title: "Bacarıq və qaydalar",
+      description: "Modal fellər — bacarıq, icazə və qadağa.",
       lessons: [
         {
+          id: "modal-vocab",
+          title: "Yeni sözlər",
+          intro: "'can' ilə işlədəcəyimiz 8 yeni fel öyrənək.",
+          sections: [
+            { heading: "Yeni sözlər (8 fel)", body: "jump — tullanmaq · climb — dırmaşmaq · fly — uçmaq · draw — rəsm çəkmək · drive — sürmək · fix — təmir etmək · ride — minmək · count — saymaq" },
+            { heading: "Məsləhət", body: "Bu felləri 'can' ilə işlət: I can jump. She can draw. A bird can fly." },
+          ],
+          tasks: [
+            { id: "modal-vocab-t1", type: "multiple_choice", prompt: "'jump' sözünün mənası?", options: ["tullanmaq", "dırmaşmaq", "uçmaq", "sürmək"], correctIndex: 0, xp: 10 },
+            { id: "modal-vocab-t2", type: "multiple_choice", prompt: "'climb' sözünün mənası?", options: ["dırmaşmaq", "tullanmaq", "minmək", "saymaq"], correctIndex: 0, xp: 10 },
+            { id: "modal-vocab-t3", type: "multiple_choice", prompt: "'fly' sözünün mənası?", options: ["uçmaq", "üzmək", "qaçmaq", "tullanmaq"], correctIndex: 0, xp: 10 },
+            { id: "modal-vocab-t4", type: "multiple_choice", prompt: "'draw' sözünün mənası?", options: ["rəsm çəkmək", "yazmaq", "oxumaq", "sürmək"], correctIndex: 0, xp: 10 },
+            { id: "modal-vocab-t5", type: "multiple_choice", prompt: "'drive' sözünün mənası?", options: ["sürmək", "minmək", "uçmaq", "təmir etmək"], correctIndex: 0, xp: 10 },
+            { id: "modal-vocab-t6", type: "multiple_choice", prompt: "'fix' sözünün mənası?", options: ["təmir etmək", "sürmək", "saymaq", "dırmaşmaq"], correctIndex: 0, xp: 10 },
+            { id: "modal-vocab-t7", type: "fill_blank", prompt: "'minmək' ingiliscə necə yazılır?", accepted: ["ride"], xp: 10 },
+            { id: "modal-vocab-t8", type: "fill_blank", prompt: "'saymaq' ingiliscə necə yazılır?", accepted: ["count"], xp: 10 },
+            { id: "modal-vocab-t9", type: "multiple_choice", speakOptions: true, prompt: "'A bird can ___.' (uçmaq)", options: ["fly", "swim", "drive", "count"], correctIndex: 0, xp: 10 },
+            { id: "modal-vocab-t10", type: "multiple_choice", speakOptions: true, prompt: "'I can ___ a bike.' (minmək)", options: ["ride", "fly", "draw", "fix"], correctIndex: 0, xp: 10 },
+            { id: "modal-vocab-t11", type: "fill_blank", prompt: "'uçmaq' ingiliscə necə yazılır?", accepted: ["fly"], xp: 10 },
+            { id: "modal-vocab-t12", type: "fill_blank", prompt: "'tullanmaq' ingiliscə necə yazılır?", accepted: ["jump"], xp: 10 },
+            { id: "modal-vocab-t13", type: "multiple_choice", speakOptions: true, prompt: "'A monkey can ___.' (dırmaşmaq)", options: ["climb", "fly", "drive", "count"], correctIndex: 0, xp: 10 },
+            { id: "modal-vocab-t14", type: "multiple_choice", prompt: "'drive' sözünün mənası?", options: ["sürmək", "minmək", "uçmaq", "saymaq"], correctIndex: 0, xp: 10 },
+            { id: "modal-vocab-t15", type: "multiple_choice", speakOptions: true, prompt: "'Dad can ___ the car.' (təmir etmək)", options: ["fix", "fly", "draw", "jump"], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "modal-vocab-b1", type: "multiple_choice", prompt: "'count' sözünün mənası?", options: ["saymaq", "çəkmək", "sürmək", "uçmaq"], correctIndex: 0, xp: 15 },
+            { id: "modal-vocab-b2", type: "multiple_choice", prompt: "'ride' sözünün mənası?", options: ["minmək", "tullanmaq", "uçmaq", "saymaq"], correctIndex: 0, xp: 15 },
+            { id: "modal-vocab-b3", type: "multiple_choice", speakOptions: true, prompt: "'She can ___ a picture.' (rəsm çəkmək)", options: ["draw", "drive", "count", "climb"], correctIndex: 0, xp: 15 },
+          ],
+        },
+        {
           id: "modal-rule",
-          title: "Modal fellər qaydası",
+          title: "Qaydalar",
           intro: "can, must, should — modal fellər. Nə vaxt hansını işlətməli?",
           sections: [
             { heading: "can — bacarıq / icazə", body: "Bir işi bacarmaq və ya icazə: I can swim. Can I go? Modaldan sonra fel əsas formadadır (can swim, NOT can swims)." },
@@ -1401,90 +1205,9 @@ export const english: Subject = {
             { id: "modal-rule-b3", type: "fill_blank", prompt: "'məcburiyyət' bildirən modal fel?", accepted: ["must"], xp: 15 },
           ],
         },
-      ],
-    },
-    {
-      id: "en-c8-vocab",
-      title: "Lüğət: Bacarıq felləri",
-      description: "8 yeni fel: jump, climb, fly, draw, drive, fix, ride, count.",
-      lessons: [
-        {
-          id: "modal-vocab",
-          title: "Bacarıq felləri (8 söz)",
-          intro: "'can' ilə işlədəcəyimiz 8 yeni fel öyrənək.",
-          sections: [
-            { heading: "Yeni sözlər (8 fel)", body: "jump — tullanmaq · climb — dırmaşmaq · fly — uçmaq · draw — rəsm çəkmək · drive — sürmək · fix — təmir etmək · ride — minmək · count — saymaq" },
-            { heading: "Məsləhət", body: "Bu felləri 'can' ilə işlət: I can jump. She can draw. A bird can fly." },
-          ],
-          tasks: [
-            { id: "modal-vocab-t1", type: "multiple_choice", prompt: "'jump' sözünün mənası?", options: ["tullanmaq", "dırmaşmaq", "uçmaq", "sürmək"], correctIndex: 0, xp: 10 },
-            { id: "modal-vocab-t2", type: "multiple_choice", prompt: "'climb' sözünün mənası?", options: ["dırmaşmaq", "tullanmaq", "minmək", "saymaq"], correctIndex: 0, xp: 10 },
-            { id: "modal-vocab-t3", type: "multiple_choice", prompt: "'fly' sözünün mənası?", options: ["uçmaq", "üzmək", "qaçmaq", "tullanmaq"], correctIndex: 0, xp: 10 },
-            { id: "modal-vocab-t4", type: "multiple_choice", prompt: "'draw' sözünün mənası?", options: ["rəsm çəkmək", "yazmaq", "oxumaq", "sürmək"], correctIndex: 0, xp: 10 },
-            { id: "modal-vocab-t5", type: "multiple_choice", prompt: "'drive' sözünün mənası?", options: ["sürmək", "minmək", "uçmaq", "təmir etmək"], correctIndex: 0, xp: 10 },
-            { id: "modal-vocab-t6", type: "multiple_choice", prompt: "'fix' sözünün mənası?", options: ["təmir etmək", "sürmək", "saymaq", "dırmaşmaq"], correctIndex: 0, xp: 10 },
-            { id: "modal-vocab-t7", type: "fill_blank", prompt: "'minmək' ingiliscə necə yazılır?", accepted: ["ride"], xp: 10 },
-            { id: "modal-vocab-t8", type: "fill_blank", prompt: "'saymaq' ingiliscə necə yazılır?", accepted: ["count"], xp: 10 },
-            { id: "modal-vocab-t9", type: "multiple_choice", speakOptions: true, prompt: "'A bird can ___.' (uçmaq)", options: ["fly", "swim", "drive", "count"], correctIndex: 0, xp: 10 },
-            { id: "modal-vocab-t10", type: "multiple_choice", speakOptions: true, prompt: "'I can ___ a bike.' (minmək)", options: ["ride", "fly", "draw", "fix"], correctIndex: 0, xp: 10 },
-            { id: "modal-vocab-t11", type: "fill_blank", prompt: "'uçmaq' ingiliscə necə yazılır?", accepted: ["fly"], xp: 10 },
-            { id: "modal-vocab-t12", type: "fill_blank", prompt: "'tullanmaq' ingiliscə necə yazılır?", accepted: ["jump"], xp: 10 },
-            { id: "modal-vocab-t13", type: "multiple_choice", speakOptions: true, prompt: "'A monkey can ___.' (dırmaşmaq)", options: ["climb", "fly", "drive", "count"], correctIndex: 0, xp: 10 },
-            { id: "modal-vocab-t14", type: "multiple_choice", prompt: "'drive' sözünün mənası?", options: ["sürmək", "minmək", "uçmaq", "saymaq"], correctIndex: 0, xp: 10 },
-            { id: "modal-vocab-t15", type: "multiple_choice", speakOptions: true, prompt: "'Dad can ___ the car.' (təmir etmək)", options: ["fix", "fly", "draw", "jump"], correctIndex: 0, xp: 15 },
-          ],
-          bonusTasks: [
-            { id: "modal-vocab-b1", type: "multiple_choice", prompt: "'count' sözünün mənası?", options: ["saymaq", "çəkmək", "sürmək", "uçmaq"], correctIndex: 0, xp: 15 },
-            { id: "modal-vocab-b2", type: "multiple_choice", prompt: "'ride' sözünün mənası?", options: ["minmək", "tullanmaq", "uçmaq", "saymaq"], correctIndex: 0, xp: 15 },
-            { id: "modal-vocab-b3", type: "multiple_choice", speakOptions: true, prompt: "'She can ___ a picture.' (rəsm çəkmək)", options: ["draw", "drive", "count", "climb"], correctIndex: 0, xp: 15 },
-          ],
-        },
-      ],
-    },
-    {
-      id: "en-c8-listening",
-      title: "Dinləmə: Modal fellər",
-      description: "Modal cümlələri dinlə və düzgün mənanı seç.",
-      lessons: [
-        {
-          id: "modal-listen",
-          title: "Dinlə və seç: can / must / should",
-          intro: "Cümləni dinlə və düzgün cavabı seç.",
-          sections: [
-            { heading: "Necə işləyir?", body: "«Dinlə» düyməsinə bas, cümləni eşit və düzgün variantı seç. İstədiyin qədər təkrar dinlə." },
-          ],
-          tasks: [
-            { id: "modal-listen-t1", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I can swim.", options: ["Mən üzə bilirəm.", "Mən üzmürəm.", "Mən üzmək istəyirəm.", "Mən üzürəm."], correctIndex: 0, xp: 10 },
-            { id: "modal-listen-t2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "You must stop.", options: ["Sən dayanmalısan.", "Sən getməlisən.", "Sən dayanma.", "Sən dayana bilərsən."], correctIndex: 0, xp: 10 },
-            { id: "modal-listen-t3", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "You should sleep early.", options: ["Sən erkən yatmalısan.", "Sən gec yatmalısan.", "Sən yatmamalısan.", "Sən erkən durmalısan."], correctIndex: 0, xp: 10 },
-            { id: "modal-listen-t4", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "Birds can fly.", options: ["Quşlar uça bilər.", "Quşlar uça bilməz.", "Balıqlar uça bilər.", "Quşlar üzə bilər."], correctIndex: 0, xp: 10 },
-            { id: "modal-listen-t5", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Can I open the window?", options: ["Pəncərəni aça bilərəm?", "Pəncərəni bağlaya bilərəm?", "Qapını aça bilərəm?", "Pəncərəni açmalıyam?"], correctIndex: 0, xp: 10 },
-            { id: "modal-listen-t6", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "You mustn't run here.", options: ["Sən burada qaçmamalısan.", "Sən burada qaça bilərsən.", "Sən burada gəzməlisən.", "Sən burada qaçmalısan."], correctIndex: 0, xp: 10 },
-            { id: "modal-listen-t7", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She can drive a car.", options: ["O maşın sürə bilir.", "O maşın sürə bilmir.", "O velosiped sürə bilir.", "O maşın sürməlidir."], correctIndex: 0, xp: 10 },
-            { id: "modal-listen-t8", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "We should help others.", options: ["Biz başqalarına kömək etməliyik.", "Biz kömək etməməliyik.", "Biz özümüzə kömək etməliyik.", "Biz kömək edə bilərik."], correctIndex: 0, xp: 10 },
-            { id: "modal-listen-t9", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I can jump high.", options: ["Mən hündür tullana bilirəm.", "Mən hündür tullana bilmirəm.", "Mən sürətli qaça bilirəm.", "Mən yüksəyə uça bilirəm."], correctIndex: 0, xp: 10 },
-            { id: "modal-listen-t10", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "You must be quiet.", options: ["Sən sakit olmalısan.", "Sən danışmalısan.", "Sən sakit ola bilərsən.", "Sən sakit olmamalısan."], correctIndex: 0, xp: 10 },
-            { id: "modal-listen-t11", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "A monkey can climb.", options: ["Meymun dırmaşa bilir.", "Meymun uça bilir.", "Meymun üzə bilir.", "Meymun dırmaşa bilmir."], correctIndex: 0, xp: 10 },
-            { id: "modal-listen-t12", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "You should drink water.", options: ["Sən su içməlisən.", "Sən su içməməlisən.", "Sən süd içməlisən.", "Sən su içə bilərsən."], correctIndex: 0, xp: 10 },
-            { id: "modal-listen-t13", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Can you count to ten?", options: ["Ona qədər saya bilirsən?", "Ona qədər saymalısan?", "Beşə qədər saya bilirsən?", "Ona qədər sayma."], correctIndex: 0, xp: 10 },
-            { id: "modal-listen-t14", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "He can fix a bike.", options: ["O velosipedi təmir edə bilir.", "O velosiped sürə bilir.", "O velosipedi təmir etməlidir.", "O maşını təmir edə bilir."], correctIndex: 0, xp: 10 },
-            { id: "modal-listen-t15", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "You mustn't shout here.", options: ["Sən burada qışqırmamalısan.", "Sən burada qışqıra bilərsən.", "Sən burada danışmamalısan.", "Sən burada qışqırmalısan."], correctIndex: 0, xp: 15 },
-          ],
-          bonusTasks: [
-            { id: "modal-listen-b1", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I can ride a bike.", options: ["Mən velosiped sürə bilirəm.", "Mən velosiped sürə bilmirəm.", "Mən maşın sürə bilirəm.", "Mən velosiped sürməliyəm."], correctIndex: 0, xp: 15 },
-            { id: "modal-listen-b2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "You shouldn't eat too much.", options: ["Sən çox yeməməlisən.", "Sən çox yeməlisən.", "Sən az yeməməlisən.", "Sən çox yeyə bilərsən."], correctIndex: 0, xp: 15 },
-          ],
-        },
-      ],
-    },
-    {
-      id: "en-c8-reading",
-      title: "Oxu: School rules",
-      description: "Məktəb qaydaları haqqında mətni oxu və suallara cavab ver (modallar).",
-      lessons: [
         {
           id: "modal-read",
-          title: "Reading: School rules",
+          title: "Oxu",
           intro: "Qısa mətni oxu və suallara cavab ver.",
           sections: [
             { heading: "Read the text (Mətni oxu)", body: "At our school there are some rules. You must come to school on time. You must listen to the teacher. You should do your homework every day. You can play in the yard at break time. You mustn't run in the classroom. You shouldn't shout. Good students always follow the rules." },
@@ -1512,16 +1235,38 @@ export const english: Subject = {
             { id: "modal-read-b2", type: "fill_blank", prompt: "'You ___ run in the classroom.' (qadağa — mətndən)", accepted: ["mustn't"], xp: 15 },
           ],
         },
-      ],
-    },
-    {
-      id: "en-c8-writing",
-      title: "Yazı: Modal fellər",
-      description: "Sözlərdən modal fellə cümlə qur.",
-      lessons: [
+        {
+          id: "modal-listen",
+          title: "Dinləmə",
+          intro: "Cümləni dinlə və düzgün cavabı seç.",
+          sections: [
+            { heading: "Necə işləyir?", body: "«Dinlə» düyməsinə bas, cümləni eşit və düzgün variantı seç. İstədiyin qədər təkrar dinlə." },
+          ],
+          tasks: [
+            { id: "modal-listen-t1", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I can swim.", options: ["Mən üzə bilirəm.", "Mən üzmürəm.", "Mən üzmək istəyirəm.", "Mən üzürəm."], correctIndex: 0, xp: 10 },
+            { id: "modal-listen-t2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "You must stop.", options: ["Sən dayanmalısan.", "Sən getməlisən.", "Sən dayanma.", "Sən dayana bilərsən."], correctIndex: 0, xp: 10 },
+            { id: "modal-listen-t3", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "You should sleep early.", options: ["Sən erkən yatmalısan.", "Sən gec yatmalısan.", "Sən yatmamalısan.", "Sən erkən durmalısan."], correctIndex: 0, xp: 10 },
+            { id: "modal-listen-t4", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "Birds can fly.", options: ["Quşlar uça bilər.", "Quşlar uça bilməz.", "Balıqlar uça bilər.", "Quşlar üzə bilər."], correctIndex: 0, xp: 10 },
+            { id: "modal-listen-t5", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Can I open the window?", options: ["Pəncərəni aça bilərəm?", "Pəncərəni bağlaya bilərəm?", "Qapını aça bilərəm?", "Pəncərəni açmalıyam?"], correctIndex: 0, xp: 10 },
+            { id: "modal-listen-t6", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "You mustn't run here.", options: ["Sən burada qaçmamalısan.", "Sən burada qaça bilərsən.", "Sən burada gəzməlisən.", "Sən burada qaçmalısan."], correctIndex: 0, xp: 10 },
+            { id: "modal-listen-t7", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "She can drive a car.", options: ["O maşın sürə bilir.", "O maşın sürə bilmir.", "O velosiped sürə bilir.", "O maşın sürməlidir."], correctIndex: 0, xp: 10 },
+            { id: "modal-listen-t8", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "We should help others.", options: ["Biz başqalarına kömək etməliyik.", "Biz kömək etməməliyik.", "Biz özümüzə kömək etməliyik.", "Biz kömək edə bilərik."], correctIndex: 0, xp: 10 },
+            { id: "modal-listen-t9", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I can jump high.", options: ["Mən hündür tullana bilirəm.", "Mən hündür tullana bilmirəm.", "Mən sürətli qaça bilirəm.", "Mən yüksəyə uça bilirəm."], correctIndex: 0, xp: 10 },
+            { id: "modal-listen-t10", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "You must be quiet.", options: ["Sən sakit olmalısan.", "Sən danışmalısan.", "Sən sakit ola bilərsən.", "Sən sakit olmamalısan."], correctIndex: 0, xp: 10 },
+            { id: "modal-listen-t11", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "A monkey can climb.", options: ["Meymun dırmaşa bilir.", "Meymun uça bilir.", "Meymun üzə bilir.", "Meymun dırmaşa bilmir."], correctIndex: 0, xp: 10 },
+            { id: "modal-listen-t12", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "You should drink water.", options: ["Sən su içməlisən.", "Sən su içməməlisən.", "Sən süd içməlisən.", "Sən su içə bilərsən."], correctIndex: 0, xp: 10 },
+            { id: "modal-listen-t13", type: "listening", prompt: "Dinlə və sualın mənasını seç.", audioText: "Can you count to ten?", options: ["Ona qədər saya bilirsən?", "Ona qədər saymalısan?", "Beşə qədər saya bilirsən?", "Ona qədər sayma."], correctIndex: 0, xp: 10 },
+            { id: "modal-listen-t14", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "He can fix a bike.", options: ["O velosipedi təmir edə bilir.", "O velosiped sürə bilir.", "O velosipedi təmir etməlidir.", "O maşını təmir edə bilir."], correctIndex: 0, xp: 10 },
+            { id: "modal-listen-t15", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "You mustn't shout here.", options: ["Sən burada qışqırmamalısan.", "Sən burada qışqıra bilərsən.", "Sən burada danışmamalısan.", "Sən burada qışqırmalısan."], correctIndex: 0, xp: 15 },
+          ],
+          bonusTasks: [
+            { id: "modal-listen-b1", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "I can ride a bike.", options: ["Mən velosiped sürə bilirəm.", "Mən velosiped sürə bilmirəm.", "Mən maşın sürə bilirəm.", "Mən velosiped sürməliyəm."], correctIndex: 0, xp: 15 },
+            { id: "modal-listen-b2", type: "listening", prompt: "Dinlə və cümlənin mənasını seç.", audioText: "You shouldn't eat too much.", options: ["Sən çox yeməməlisən.", "Sən çox yeməlisən.", "Sən az yeməməlisən.", "Sən çox yeyə bilərsən."], correctIndex: 0, xp: 15 },
+          ],
+        },
         {
           id: "modal-write",
-          title: "Cümlə qur: can / must / should",
+          title: "Cümlə qurma",
           intro: "Sözləri düzgün sıraya düz və modal cümlə qur.",
           sections: [
             { heading: "Necə işləyir?", body: "Sözlərə sıra ilə bas. Quruluş: kim + modal (can/must/should) + fel (əsas forma)." },
