@@ -14,9 +14,9 @@ export const math1: Subject = {
   units: [
     // ═══════════════ 1. Ədədlər 0-10 və sayma ═══════════════
     {
-      id: "ry1-sayma",
-      title: "Ədədlər 0-10 və sayma",
-      description: "0-dan 10-a qədər ədədləri tanımaq, saymaq və sıralamaq.",
+      id: "ry1-eded10",
+      title: "Ədədlər 0-10",
+      description: "10-a qədər sayma, müqayisə və məşq.",
       lessons: [
         {
           id: "ry1-sayma-l1",
@@ -83,13 +83,53 @@ export const math1: Subject = {
             { id: "ry1-sayma-l2-b5", type: "numeric", prompt: "3, 9, 1, 5 ədədlərindən ən böyüyü hansıdır?", answer: 9, xp: 15 },
           ],
         },
+        {
+          id: "ry1-eded10-chest",
+          title: "Sandıq",
+          kind: "chest",
+          intro: "Buraya çatdın! Sandığı aç və mükafatını al.",
+          tasks: [],
+        },
+        {
+          id: "ry1-eded10-mesq",
+          title: "Məşq",
+          intro: "10-a qədər ədədləri birlikdə məşq edək!",
+          sections: [
+            { heading: "Yadına salaq", body: "Sayma: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10. Böyük ədəd sağda, kiçik ədəd solda olur." },
+          ],
+          tasks: [
+            { id: "ry1-eded10-mesq-t1", type: "numeric", prompt: "5-dən sonra hansı ədəd gəlir?", answer: 6, xp: 10 },
+            { id: "ry1-eded10-mesq-t2", type: "numeric", prompt: "8-dən əvvəl hansı ədəd gəlir?", answer: 7, xp: 10 },
+            { id: "ry1-eded10-mesq-t3", type: "numeric", prompt: "🐤🐤🐤🐤 — neçə cücə var?", answer: 4, xp: 10 },
+            { id: "ry1-eded10-mesq-t4", type: "numeric", prompt: "🌸🌸🌸🌸🌸🌸 — neçə gül var?", answer: 6, xp: 10 },
+            { id: "ry1-eded10-mesq-t5", type: "multiple_choice", prompt: "Hansı daha böyükdür?", options: ["9", "4", "2", "0"], correctIndex: 0, xp: 10 },
+            { id: "ry1-eded10-mesq-t6", type: "multiple_choice", prompt: "Hansı daha kiçikdir?", options: ["1", "5", "8", "10"], correctIndex: 0, xp: 10 },
+            { id: "ry1-eded10-mesq-t7", type: "numeric", prompt: "10-dan əvvəl hansı ədəd gəlir?", answer: 9, xp: 10 },
+            { id: "ry1-eded10-mesq-t8", type: "multiple_choice", prompt: "'üç' ədədi rəqəmlə necə yazılır?", options: ["3", "5", "2", "8"], correctIndex: 0, xp: 10 },
+            { id: "ry1-eded10-mesq-t9", type: "numeric", prompt: "Ən böyük birrəqəmli ədəd hansıdır?", answer: 9, xp: 10 },
+            { id: "ry1-eded10-mesq-t10", type: "multiple_choice", prompt: "6 və 3 — hansı böyükdür?", options: ["6", "3", "bərabərdir", "bilinmir"], correctIndex: 0, xp: 10 },
+          ],
+          bonusTasks: [
+            { id: "ry1-eded10-mesq-b1", type: "numeric", prompt: "2, 4, 6, ... — növbəti ədəd?", answer: 8, xp: 15 },
+            { id: "ry1-eded10-mesq-b2", type: "numeric", prompt: "10, 9, 8, ... — növbəti ədəd?", answer: 7, xp: 15 },
+            { id: "ry1-eded10-mesq-b3", type: "multiple_choice", prompt: "Hansı sıra düzgündür?", options: ["1, 2, 3, 4", "4, 2, 1, 3", "2, 1, 4, 3", "3, 4, 2, 1"], correctIndex: 0, xp: 15 },
+            { id: "ry1-eded10-mesq-b4", type: "numeric", prompt: "🍏🍏🍏 və 🍏🍏 — cəmi neçə alma?", answer: 5, xp: 15 },
+            { id: "ry1-eded10-mesq-b5", type: "numeric", prompt: "0-dan 5-ə qədər neçə ədəd var? (0 da daxil)", answer: 6, xp: 15 },
+          ],
+        },
+        {
+          id: "ry1-eded10-test",
+          title: "Bölmə sonu test",
+          kind: "test",
+          intro: "Bu bölmədə öyrəndiklərini yoxla — suallar bütün dərslərdən qarışıq gəlir.",
+          tasks: [],
+        },
       ],
     },
-    // ═══════════════ 2. 10 dairəsində toplama ═══════════════
     {
-      id: "ry1-toplama",
-      title: "10 dairəsində toplama",
-      description: "10-a qədər ədədləri toplamağı öyrənək.",
+      id: "ry1-hesab10",
+      title: "10 dairəsində toplama və çıxma",
+      description: "10-a qədər toplama, çıxma və məşq.",
       lessons: [
         {
           id: "ry1-toplama-l1",
@@ -155,14 +195,6 @@ export const math1: Subject = {
             { id: "ry1-toplama-l2-b5", type: "numeric", prompt: "5 + 2 + 3 = ?", answer: 10, xp: 15 },
           ],
         },
-      ],
-    },
-    // ═══════════════ 3. 10 dairəsində çıxma ═══════════════
-    {
-      id: "ry1-cixma",
-      title: "10 dairəsində çıxma",
-      description: "10-a qədər ədədlərdən çıxmağı öyrənək.",
-      lessons: [
         {
           id: "ry1-cixma-l1",
           title: "Kiçik çıxma",
@@ -227,13 +259,53 @@ export const math1: Subject = {
             { id: "ry1-cixma-l2-b5", type: "numeric", prompt: "10 − 3 = ?", answer: 7, xp: 15 },
           ],
         },
+        {
+          id: "ry1-hesab10-chest",
+          title: "Sandıq",
+          kind: "chest",
+          intro: "Buraya çatdın! Sandığı aç və mükafatını al.",
+          tasks: [],
+        },
+        {
+          id: "ry1-hesab10-mesq",
+          title: "Məşq",
+          intro: "Toplama və çıxmanı birlikdə məşq edək!",
+          sections: [
+            { heading: "Yadına salaq", body: "Toplama (+) artırır: 3 + 2 = 5. Çıxma (−) azaldır: 5 − 2 = 3." },
+          ],
+          tasks: [
+            { id: "ry1-hesab10-mesq-t1", type: "numeric", prompt: "4 + 3 = ?", answer: 7, xp: 10 },
+            { id: "ry1-hesab10-mesq-t2", type: "numeric", prompt: "6 + 2 = ?", answer: 8, xp: 10 },
+            { id: "ry1-hesab10-mesq-t3", type: "numeric", prompt: "9 − 4 = ?", answer: 5, xp: 10 },
+            { id: "ry1-hesab10-mesq-t4", type: "numeric", prompt: "7 − 3 = ?", answer: 4, xp: 10 },
+            { id: "ry1-hesab10-mesq-t5", type: "numeric", prompt: "5 + 5 = ?", answer: 10, xp: 10 },
+            { id: "ry1-hesab10-mesq-t6", type: "numeric", prompt: "10 − 6 = ?", answer: 4, xp: 10 },
+            { id: "ry1-hesab10-mesq-t7", type: "numeric", prompt: "Nərgizin 3 şarı var idi, 2 şar da aldı. İndi neçə şarı var?", answer: 5, xp: 10 },
+            { id: "ry1-hesab10-mesq-t8", type: "numeric", prompt: "Budaqda 8 quş var idi, 3-ü uçdu. Neçə quş qaldı?", answer: 5, xp: 10 },
+            { id: "ry1-hesab10-mesq-t9", type: "numeric", prompt: "2 + 2 + 2 = ?", answer: 6, xp: 10 },
+            { id: "ry1-hesab10-mesq-t10", type: "numeric", prompt: "10 − 5 = ?", answer: 5, xp: 10 },
+          ],
+          bonusTasks: [
+            { id: "ry1-hesab10-mesq-b1", type: "numeric", prompt: "3 + ? = 9", answer: 6, xp: 15 },
+            { id: "ry1-hesab10-mesq-b2", type: "numeric", prompt: "? − 4 = 3", answer: 7, xp: 15 },
+            { id: "ry1-hesab10-mesq-b3", type: "numeric", prompt: "Anar 4 konfet yedi, 4 konfeti də qaldı. Əvvəlcə neçə konfeti var idi?", answer: 8, xp: 15 },
+            { id: "ry1-hesab10-mesq-b4", type: "numeric", prompt: "6 + 4 − 2 = ?", answer: 8, xp: 15 },
+            { id: "ry1-hesab10-mesq-b5", type: "numeric", prompt: "10 − 3 − 3 = ?", answer: 4, xp: 15 },
+          ],
+        },
+        {
+          id: "ry1-hesab10-test",
+          title: "Bölmə sonu test",
+          kind: "test",
+          intro: "Bu bölmədə öyrəndiklərini yoxla — suallar bütün dərslərdən qarışıq gəlir.",
+          tasks: [],
+        },
       ],
     },
-    // ═══════════════ 4. Ədədlər 11-20 ═══════════════
     {
-      id: "ry1-onluq",
+      id: "ry1-eded20",
       title: "Ədədlər 11-20",
-      description: "11-dən 20-yə qədər ədədləri tanımaq və saymaq.",
+      description: "11-20 arası ədədlər, toplama və çıxma.",
       lessons: [
         {
           id: "ry1-onluq-l1",
@@ -267,14 +339,6 @@ export const math1: Subject = {
             { id: "ry1-onluq-l1-b5", type: "numeric", prompt: "12 və 20 arasında 15-dən 1 böyük ədəd hansıdır?", answer: 16, xp: 15 },
           ],
         },
-      ],
-    },
-    // ═══════════════ 5. 20 dairəsində toplama və çıxma ═══════════════
-    {
-      id: "ry1-yirmi",
-      title: "20 dairəsində toplama və çıxma",
-      description: "20-yə qədər sadə toplama və çıxma.",
-      lessons: [
         {
           id: "ry1-yirmi-l1",
           title: "10-dan yuxarı toplama",
@@ -339,13 +403,53 @@ export const math1: Subject = {
             { id: "ry1-yirmi-l2-b5", type: "numeric", prompt: "14 − 4 = ?", answer: 10, xp: 15 },
           ],
         },
+        {
+          id: "ry1-eded20-chest",
+          title: "Sandıq",
+          kind: "chest",
+          intro: "Buraya çatdın! Sandığı aç və mükafatını al.",
+          tasks: [],
+        },
+        {
+          id: "ry1-eded20-mesq",
+          title: "Məşq",
+          intro: "20-yə qədər ədədləri məşq edək!",
+          sections: [
+            { heading: "Yadına salaq", body: "11, 12, 13 ... 20. Onluqdan sonra: 10 + 3 = 13. Ədədin birinci rəqəmi onluğu, ikincisi təkliyi göstərir." },
+          ],
+          tasks: [
+            { id: "ry1-eded20-mesq-t1", type: "numeric", prompt: "13-dən sonra hansı ədəd gəlir?", answer: 14, xp: 10 },
+            { id: "ry1-eded20-mesq-t2", type: "numeric", prompt: "17-dən əvvəl hansı ədəd gəlir?", answer: 16, xp: 10 },
+            { id: "ry1-eded20-mesq-t3", type: "numeric", prompt: "10 + 5 = ?", answer: 15, xp: 10 },
+            { id: "ry1-eded20-mesq-t4", type: "numeric", prompt: "10 + 8 = ?", answer: 18, xp: 10 },
+            { id: "ry1-eded20-mesq-t5", type: "numeric", prompt: "12 + 3 = ?", answer: 15, xp: 10 },
+            { id: "ry1-eded20-mesq-t6", type: "numeric", prompt: "16 − 4 = ?", answer: 12, xp: 10 },
+            { id: "ry1-eded20-mesq-t7", type: "numeric", prompt: "20 − 10 = ?", answer: 10, xp: 10 },
+            { id: "ry1-eded20-mesq-t8", type: "multiple_choice", prompt: "Hansı daha böyükdür?", options: ["18", "15", "12", "11"], correctIndex: 0, xp: 10 },
+            { id: "ry1-eded20-mesq-t9", type: "numeric", prompt: "19-dan sonra hansı ədəd gəlir?", answer: 20, xp: 10 },
+            { id: "ry1-eded20-mesq-t10", type: "numeric", prompt: "14 + 5 = ?", answer: 19, xp: 10 },
+          ],
+          bonusTasks: [
+            { id: "ry1-eded20-mesq-b1", type: "numeric", prompt: "11, 13, 15, ... — növbəti ədəd?", answer: 17, xp: 15 },
+            { id: "ry1-eded20-mesq-b2", type: "numeric", prompt: "10 + ? = 17", answer: 7, xp: 15 },
+            { id: "ry1-eded20-mesq-b3", type: "numeric", prompt: "Sinifdə 12 oğlan, 6 qız var. Cəmi neçə şagird var?", answer: 18, xp: 15 },
+            { id: "ry1-eded20-mesq-b4", type: "numeric", prompt: "20 − 5 − 5 = ?", answer: 10, xp: 15 },
+            { id: "ry1-eded20-mesq-b5", type: "numeric", prompt: "15 ədədində neçə onluq var?", answer: 1, xp: 15 },
+          ],
+        },
+        {
+          id: "ry1-eded20-test",
+          title: "Bölmə sonu test",
+          kind: "test",
+          intro: "Bu bölmədə öyrəndiklərini yoxla — suallar bütün dərslərdən qarışıq gəlir.",
+          tasks: [],
+        },
       ],
     },
-    // ═══════════════ 6. Müqayisə, fiqurlar və məsələlər ═══════════════
     {
       id: "ry1-fiqur",
-      title: "Fiqurlar və sadə məsələlər",
-      description: "Həndəsi fiqurları tanımaq və sadə mətn məsələlərini həll etmək.",
+      title: "Fiqurlar və məsələlər",
+      description: "Həndəsi fiqurlar və sadə mətn məsələləri.",
       lessons: [
         {
           id: "ry1-fiqur-l1",
@@ -410,6 +514,47 @@ export const math1: Subject = {
             { id: "ry1-fiqur-l2-b4", type: "numeric", prompt: "Nənənin 12 yumurtası var idi, 2-si sındı. Neçə yumurta qaldı?", answer: 10, xp: 15 },
             { id: "ry1-fiqur-l2-b5", type: "numeric", prompt: "Meşədə 8 dovşan var idi, 4 də gəldi. Neçə dovşan oldu?", answer: 12, xp: 15 },
           ],
+        },
+        {
+          id: "ry1-fiqur-chest",
+          title: "Sandıq",
+          kind: "chest",
+          intro: "Buraya çatdın! Sandığı aç və mükafatını al.",
+          tasks: [],
+        },
+        {
+          id: "ry1-fiqur-mesq",
+          title: "Məşq",
+          intro: "Fiqurları tanı və məsələləri həll et!",
+          sections: [
+            { heading: "Yadına salaq", body: "Kvadrat — 4 bərabər tərəf. Üçbucaq — 3 tərəf. Dairə — tərəfi yoxdur. Düzbucaqlı — 4 tərəf, qarşı tərəflər bərabər." },
+          ],
+          tasks: [
+            { id: "ry1-fiqur-mesq-t1", type: "numeric", prompt: "Üçbucağın neçə tərəfi var?", answer: 3, xp: 10 },
+            { id: "ry1-fiqur-mesq-t2", type: "numeric", prompt: "Kvadratın neçə tərəfi var?", answer: 4, xp: 10 },
+            { id: "ry1-fiqur-mesq-t3", type: "multiple_choice", prompt: "Hansı fiqurun küncü yoxdur?", options: ["Dairə", "Kvadrat", "Üçbucaq", "Düzbucaqlı"], correctIndex: 0, xp: 10 },
+            { id: "ry1-fiqur-mesq-t4", type: "multiple_choice", prompt: "Top hansı fiqura oxşayır?", options: ["Dairə", "Kvadrat", "Üçbucaq", "Düzbucaqlı"], correctIndex: 0, xp: 10 },
+            { id: "ry1-fiqur-mesq-t5", type: "numeric", prompt: "Leyla 5 kitab oxudu, Aysel 3 kitab. Cəmi neçə kitab oxudular?", answer: 8, xp: 10 },
+            { id: "ry1-fiqur-mesq-t6", type: "numeric", prompt: "Ağacda 9 alma var idi, 4-ü düşdü. Neçə alma qaldı?", answer: 5, xp: 10 },
+            { id: "ry1-fiqur-mesq-t7", type: "numeric", prompt: "Kvadratın bir tərəfi 2 sm-dir. Bütün tərəflərin cəmi neçə sm-dir?", answer: 8, xp: 10 },
+            { id: "ry1-fiqur-mesq-t8", type: "multiple_choice", prompt: "Pəncərə adətən hansı fiqura oxşayır?", options: ["Düzbucaqlı", "Dairə", "Üçbucaq", "Ulduz"], correctIndex: 0, xp: 10 },
+            { id: "ry1-fiqur-mesq-t9", type: "numeric", prompt: "Tuncay 7 şəkil çəkdi, 2-ni dostuna verdi. Neçə şəkli qaldı?", answer: 5, xp: 10 },
+            { id: "ry1-fiqur-mesq-t10", type: "numeric", prompt: "İki üçbucağın cəmi neçə tərəfi var?", answer: 6, xp: 10 },
+          ],
+          bonusTasks: [
+            { id: "ry1-fiqur-mesq-b1", type: "numeric", prompt: "Bir kvadrat və bir üçbucağın cəmi neçə tərəfi var?", answer: 7, xp: 15 },
+            { id: "ry1-fiqur-mesq-b2", type: "numeric", prompt: "Anarın 6 maşını var idi, 3 maşın da aldı, sonra 2-ni bağışladı. İndi neçə maşını var?", answer: 7, xp: 15 },
+            { id: "ry1-fiqur-mesq-b3", type: "multiple_choice", prompt: "Hansı fiqurun bütün tərəfləri bərabərdir?", options: ["Kvadrat", "Düzbucaqlı", "Dairə", "Heç biri"], correctIndex: 0, xp: 15 },
+            { id: "ry1-fiqur-mesq-b4", type: "numeric", prompt: "Səbətdə 10 armud var idi. Səhər 3, axşam 2 armud yedik. Neçə armud qaldı?", answer: 5, xp: 15 },
+            { id: "ry1-fiqur-mesq-b5", type: "numeric", prompt: "Üç dairənin cəmi neçə küncü var?", answer: 0, xp: 15 },
+          ],
+        },
+        {
+          id: "ry1-fiqur-test",
+          title: "Bölmə sonu test",
+          kind: "test",
+          intro: "Bu bölmədə öyrəndiklərini yoxla — suallar bütün dərslərdən qarışıq gəlir.",
+          tasks: [],
         },
       ],
     },
