@@ -94,6 +94,13 @@ export const math: Subject = {
           ],
         },
         {
+          id: "ry-natural-chest",
+          title: "Sandıq",
+          kind: "chest",
+          intro: "Buraya çatdın! Sandığı aç və mükafatını al.",
+          tasks: [],
+        },
+        {
           id: "ry-nat-l3",
           title: "Qalıqlı bölmə",
           intro: "Bölmə tam alınmayanda qalıq yaranır.",
@@ -163,6 +170,13 @@ export const math: Subject = {
             { id: "ry-nat-l4-b5", type: "numeric", prompt: "Hesabla: (12 + 8) : 4 + 6 = ?", answer: 11, xp: 15 },
           ],
         },
+        {
+          id: "ry-natural-test",
+          title: "Bölmə sonu test",
+          kind: "test",
+          intro: "Bu bölmədə öyrəndiklərini yoxla — suallar bütün dərslərdən qarışıq gəlir.",
+          tasks: [],
+        }
       ],
     },
 
@@ -244,6 +258,13 @@ export const math: Subject = {
           ],
         },
         {
+          id: "ry-fractions-chest",
+          title: "Sandıq",
+          kind: "chest",
+          intro: "Buraya çatdın! Sandığı aç və mükafatını al.",
+          tasks: [],
+        },
+        {
           id: "ry-frac-l3",
           title: "Qarışıq ədədlər",
           intro: "Tam hissə ilə kəsr hissədən ibarət ədədləri tanıyaq.",
@@ -313,6 +334,13 @@ export const math: Subject = {
             { id: "ry-frac-l4-b5", type: "numeric", prompt: "Bir bütöv 7/7-dir. 7/7 − 3/7 fərqinin surəti neçədir?", answer: 4, xp: 15 },
           ],
         },
+        {
+          id: "ry-fractions-test",
+          title: "Bölmə sonu test",
+          kind: "test",
+          intro: "Bu bölmədə öyrəndiklərini yoxla — suallar bütün dərslərdən qarışıq gəlir.",
+          tasks: [],
+        }
       ],
     },
 
@@ -392,6 +420,13 @@ export const math: Subject = {
           ],
         },
         {
+          id: "ry-decimals-chest",
+          title: "Sandıq",
+          kind: "chest",
+          intro: "Buraya çatdın! Sandığı aç və mükafatını al.",
+          tasks: [],
+        },
+        {
           id: "ry-dec-l3",
           title: "Onluq kəsrlər üzərində toplama, çıxma, vurma və bölmə",
           intro: "Onluq kəsrləri hesablamaq.",
@@ -459,6 +494,13 @@ export const math: Subject = {
             { id: "ry-dec-l4-b5", type: "numeric", prompt: "7,15 ədədini onda birə qədər yuvarlaqlaşdır (nəticəni yaz).", answer: 7.2, xp: 15 },
           ],
         },
+        {
+          id: "ry-decimals-test",
+          title: "Bölmə sonu test",
+          kind: "test",
+          intro: "Bu bölmədə öyrəndiklərini yoxla — suallar bütün dərslərdən qarışıq gəlir.",
+          tasks: [],
+        }
       ],
     },
 
@@ -537,6 +579,13 @@ export const math: Subject = {
           ],
         },
         {
+          id: "ry-percent-chest",
+          title: "Sandıq",
+          kind: "chest",
+          intro: "Buraya çatdın! Sandığı aç və mükafatını al.",
+          tasks: [],
+        },
+        {
           id: "ry-per-l3",
           title: "Nisbət və tənasüb anlayışına ilkin giriş",
           intro: "İki ədədi nisbətlə müqayisə etmək.",
@@ -604,6 +653,13 @@ export const math: Subject = {
             { id: "ry-per-l4-b5", type: "numeric", prompt: "3 : 1 : 2 nisbətində cəmi 60 olan üç ədəddən birinci neçədir?", answer: 30, xp: 15 },
           ],
         },
+        {
+          id: "ry-percent-test",
+          title: "Bölmə sonu test",
+          kind: "test",
+          intro: "Bu bölmədə öyrəndiklərini yoxla — suallar bütün dərslərdən qarışıq gəlir.",
+          tasks: [],
+        }
       ],
     },
 
@@ -717,6 +773,13 @@ export const math: Subject = {
           ],
         },
         {
+          id: "ry-geometry-chest",
+          title: "Sandıq",
+          kind: "chest",
+          intro: "Buraya çatdın! Sandığı aç və mükafatını al.",
+          tasks: [],
+        },
+        {
           id: "ry-geo-l4",
           title: "Perimetr və sahənin hesablanması",
           intro: "Fiqurun ətrafını və tutduğu yeri hesablamaq.",
@@ -818,6 +881,13 @@ export const math: Subject = {
             { id: "ry-geo-l6-b5", type: "numeric", prompt: "4 saat neçə dəqiqədir?", answer: 240, xp: 15 },
           ],
         },
+        {
+          id: "ry-geometry-test",
+          title: "Bölmə sonu test",
+          kind: "test",
+          intro: "Bu bölmədə öyrəndiklərini yoxla — suallar bütün dərslərdən qarışıq gəlir.",
+          tasks: [],
+        }
       ],
     },
 
@@ -897,6 +967,13 @@ export const math: Subject = {
           ],
         },
         {
+          id: "ry-data-chest",
+          title: "Sandıq",
+          kind: "chest",
+          intro: "Buraya çatdın! Sandığı aç və mükafatını al.",
+          tasks: [],
+        },
+        {
           id: "ry-data-l3",
           title: "Sadə ehtimal hadisələri",
           intro: "Bir hadisənin baş vermə şansını qiymətləndirmək.",
@@ -930,6 +1007,13 @@ export const math: Subject = {
             { id: "ry-data-l3-b5", type: "multiple_choice", prompt: "Baş verməsi qeyri-mümkün hadisə necə adlanır?", options: ["mümkün deyil", "mütləq", "çox mümkün", "adi"], correctIndex: 0, xp: 15 },
           ],
         },
+        {
+          id: "ry-data-test",
+          title: "Bölmə sonu test",
+          kind: "test",
+          intro: "Bu bölmədə öyrəndiklərini yoxla — suallar bütün dərslərdən qarışıq gəlir.",
+          tasks: [],
+        }
       ],
     },
     // ═══════════════ 7. Bölünmə əlamətləri və ədədlər ═══════════════
@@ -1009,6 +1093,13 @@ export const math: Subject = {
           ],
         },
         {
+          id: "ry-divis-chest",
+          title: "Sandıq",
+          kind: "chest",
+          intro: "Buraya çatdın! Sandığı aç və mükafatını al.",
+          tasks: [],
+        },
+        {
           id: "ry-div-l3",
           title: "Bölənlər, sadə və mürəkkəb ədədlər",
           intro: "Yalnız iki böləni olan ədədlər sadə, ikidən çox böləni olanlar mürəkkəb adlanır.",
@@ -1043,6 +1134,13 @@ export const math: Subject = {
             { id: "ry-div-l3-b5", type: "multiple_choice", prompt: "15 və 20 ədədlərinin ən böyük ortaq böləni (EBOB) neçədir?", options: ["3", "5", "10", "15"], correctIndex: 1, xp: 15 },
           ],
         },
+        {
+          id: "ry-divis-test",
+          title: "Bölmə sonu test",
+          kind: "test",
+          intro: "Bu bölmədə öyrəndiklərini yoxla — suallar bütün dərslərdən qarışıq gəlir.",
+          tasks: [],
+        }
       ],
     },
     // ═══════════════ 8. Çoxluqlar ═══════════════
@@ -1123,6 +1221,13 @@ export const math: Subject = {
           ],
         },
         {
+          id: "ry-coxluq-chest",
+          title: "Sandıq",
+          kind: "chest",
+          intro: "Buraya çatdın! Sandığı aç və mükafatını al.",
+          tasks: [],
+        },
+        {
           id: "ry-cox-l3",
           title: "Çoxluqların kəsişməsi (∩)",
           intro: "İki çoxluğun ortaq elementləri — kəsişmə.",
@@ -1190,6 +1295,13 @@ export const math: Subject = {
             { id: "ry-cox-l4-b5", type: "numeric", prompt: "A = {1, 2, 3, 4} (4 element), B = {3, 4, 5, 6} (4 element), ortaq 2 element. A ∪ B neçə elementlidir?", answer: 6, xp: 15 },
           ],
         },
+        {
+          id: "ry-coxluq-test",
+          title: "Bölmə sonu test",
+          kind: "test",
+          intro: "Bu bölmədə öyrəndiklərini yoxla — suallar bütün dərslərdən qarışıq gəlir.",
+          tasks: [],
+        }
       ],
     },
   ],
