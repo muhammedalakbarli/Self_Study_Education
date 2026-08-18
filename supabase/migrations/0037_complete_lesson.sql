@@ -71,6 +71,7 @@ grant execute on function complete_lesson(text, boolean) to authenticated;
 -- İndiyədək client birbaşa upsert edirdi (istənilən lesson_id/score) — artıq YALNIZ complete_lesson
 -- RPC-dən yazıla bilər (o da SECURITY DEFINER olduğu üçün öz sahibinin adından yazır, buradan təsirlənmir).
 drop policy if exists "own progress" on user_progress;
+drop policy if exists "own progress read" on user_progress;
 create policy "own progress read" on user_progress
   for select using (auth.uid() = user_id);
 revoke insert, update, delete on user_progress from authenticated, anon;
