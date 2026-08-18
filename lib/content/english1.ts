@@ -14,9 +14,9 @@ export const english1: Subject = {
   units: [
     // ═══════════════ 1. Salamlaşma ═══════════════
     {
-      id: "en1-greetings",
-      title: "Salamlaşma (Greetings)",
-      description: "Sadə salamlaşma sözləri: hello, goodbye, thank you, please.",
+      id: "en1-hello",
+      title: "Salamlaşma və tanışlıq",
+      description: "Salam sözləri, dinləmə və məşq.",
       lessons: [
         {
           id: "en1-greetings-vocab",
@@ -80,13 +80,53 @@ export const english1: Subject = {
             { id: "en1-greetings-listen-b3", type: "listening", prompt: "Dinlə və mənasını seç.", audioText: "You are welcome", options: ["Dəyməz / buyur", "Sağ ol", "Salam", "Xeyr"], correctIndex: 0, xp: 15 },
           ],
         },
+        {
+          id: "en1-hello-chest",
+          title: "Sandıq",
+          kind: "chest",
+          intro: "Buraya çatdın! Sandığı aç və mükafatını al.",
+          tasks: [],
+        },
+        {
+          id: "en1-hello-mesq",
+          title: "Məşq",
+          intro: "Salam sözlərini birlikdə məşq edək!",
+          sections: [
+            { heading: "Yadına salaq", body: "Hello — Salam · Good morning — Sabahın xeyir · Goodbye — Sağ ol/Əlvida · Thank you — Təşəkkür · My name is... — Mənim adım..." },
+          ],
+          tasks: [
+            { id: "en1-hello-mesq-t1", type: "multiple_choice", prompt: "'Hello' nə deməkdir?", options: ["Salam", "Sağ ol", "Təşəkkür", "Xeyr"], correctIndex: 0, xp: 10 },
+            { id: "en1-hello-mesq-t2", type: "multiple_choice", prompt: "'Goodbye' nə deməkdir?", options: ["Əlvida", "Salam", "Bəli", "Zəhmət olmasa"], correctIndex: 0, xp: 10 },
+            { id: "en1-hello-mesq-t3", type: "multiple_choice", prompt: "'Thank you' nə deməkdir?", options: ["Təşəkkür edirəm", "Salam", "Əlvida", "Bağışlayın"], correctIndex: 0, xp: 10 },
+            { id: "en1-hello-mesq-t4", type: "multiple_choice", speakOptions: true, prompt: "Səhər necə salamlaşırsan?", options: ["Good morning", "Good night", "Goodbye", "Thank you"], correctIndex: 0, xp: 10 },
+            { id: "en1-hello-mesq-t5", type: "multiple_choice", speakOptions: true, prompt: "Gecə yatmağa gedəndə nə deyirsən?", options: ["Good night", "Good morning", "Hello", "Please"], correctIndex: 0, xp: 10 },
+            { id: "en1-hello-mesq-t6", type: "multiple_choice", prompt: "'What is your name?' nə soruşur?", options: ["Adını", "Yaşını", "Rəngini", "Evini"], correctIndex: 0, xp: 10 },
+            { id: "en1-hello-mesq-t7", type: "multiple_choice", speakOptions: true, prompt: "«Mənim adım Ayan» — ingiliscə necə deyilir?", options: ["My name is Ayan", "Your name is Ayan", "I am name Ayan", "Name my Ayan"], correctIndex: 0, xp: 10 },
+            { id: "en1-hello-mesq-t8", type: "listening", prompt: "Dinlə və mənasını seç.", audioText: "Hello, my name is Tom.", options: ["Salam, mənim adım Tomdur.", "Sağ ol, Tom.", "Tom haradadır?", "Salam Tom, necəsən?"], correctIndex: 0, xp: 10 },
+            { id: "en1-hello-mesq-t9", type: "listening", prompt: "Dinlə və mənasını seç.", audioText: "Good morning!", options: ["Sabahın xeyir!", "Gecən xeyrə!", "Sağ ol!", "Salam!"], correctIndex: 0, xp: 10 },
+            { id: "en1-hello-mesq-t10", type: "multiple_choice", prompt: "'Please' nə deməkdir?", options: ["Zəhmət olmasa", "Təşəkkür", "Salam", "Bağışla"], correctIndex: 0, xp: 10 },
+          ],
+          bonusTasks: [
+            { id: "en1-hello-mesq-b1", type: "listening", prompt: "Dinlə və mənasını seç.", audioText: "How are you?", options: ["Necəsən?", "Adın nədir?", "Haradasan?", "Neçə yaşın var?"], correctIndex: 0, xp: 15 },
+            { id: "en1-hello-mesq-b2", type: "multiple_choice", speakOptions: true, prompt: "«Necəsən?» sualına cavab hansıdır?", options: ["I am fine", "My name is Ali", "Good morning", "Thank you"], correctIndex: 0, xp: 15 },
+            { id: "en1-hello-mesq-b3", type: "fill_blank", prompt: "'Salam' — ingiliscə yaz (bir söz).", accepted: ["hello", "Hello", "hi", "Hi"], xp: 15 },
+            { id: "en1-hello-mesq-b4", type: "multiple_choice", speakOptions: true, prompt: "Ayrılanda nə deyirsən?", options: ["Goodbye", "Hello", "Good morning", "Please"], correctIndex: 0, xp: 15 },
+            { id: "en1-hello-mesq-b5", type: "listening", prompt: "Dinlə və mənasını seç.", audioText: "Thank you very much.", options: ["Çox sağ ol.", "Salam.", "Zəhmət olmasa.", "Görüşərik."], correctIndex: 0, xp: 15 },
+          ],
+        },
+        {
+          id: "en1-hello-test",
+          title: "Bölmə sonu test",
+          kind: "test",
+          intro: "Bu bölmədə öyrəndiklərini yoxla — suallar bütün dərslərdən qarışıq gəlir.",
+          tasks: [],
+        },
       ],
     },
-    // ═══════════════ 2. Ədədlər 1-10 ═══════════════
     {
-      id: "en1-numbers",
-      title: "Ədədlər 1-10 (Numbers)",
-      description: "İngiliscə birdən ona qədər ədədlər.",
+      id: "en1-numcolor",
+      title: "Ədədlər və rənglər",
+      description: "1-10 ədədləri, rənglər və məşq.",
       lessons: [
         {
           id: "en1-numbers-vocab",
@@ -120,14 +160,6 @@ export const english1: Subject = {
             { id: "en1-numbers-vocab-b5", type: "multiple_choice", prompt: "'nine' hansı ədəddir?", options: ["9", "8", "7", "10"], correctIndex: 0, xp: 15 },
           ],
         },
-      ],
-    },
-    // ═══════════════ 3. Rənglər ═══════════════
-    {
-      id: "en1-colors",
-      title: "Rənglər (Colours)",
-      description: "Əsas rənglərin İngiliscə adları.",
-      lessons: [
         {
           id: "en1-colors-vocab",
           title: "Colours",
@@ -160,13 +192,53 @@ export const english1: Subject = {
             { id: "en1-colors-vocab-b5", type: "multiple_choice", prompt: "'orange' nə rəngdir?", options: ["narıncı", "yaşıl", "mavi", "qara"], correctIndex: 0, xp: 15 },
           ],
         },
+        {
+          id: "en1-numcolor-chest",
+          title: "Sandıq",
+          kind: "chest",
+          intro: "Buraya çatdın! Sandığı aç və mükafatını al.",
+          tasks: [],
+        },
+        {
+          id: "en1-numcolor-mesq",
+          title: "Məşq",
+          intro: "Ədədləri və rəngləri birlikdə məşq edək!",
+          sections: [
+            { heading: "Yadına salaq", body: "one, two, three, four, five, six, seven, eight, nine, ten · red (qırmızı), blue (mavi), green (yaşıl), yellow (sarı), black (qara), white (ağ)" },
+          ],
+          tasks: [
+            { id: "en1-numcolor-mesq-t1", type: "multiple_choice", speakOptions: true, prompt: "3 — ingiliscə necədir?", options: ["three", "two", "four", "five"], correctIndex: 0, xp: 10 },
+            { id: "en1-numcolor-mesq-t2", type: "multiple_choice", speakOptions: true, prompt: "7 — ingiliscə necədir?", options: ["seven", "six", "eight", "nine"], correctIndex: 0, xp: 10 },
+            { id: "en1-numcolor-mesq-t3", type: "multiple_choice", prompt: "'ten' neçədir?", options: ["10", "2", "9", "3"], correctIndex: 0, xp: 10 },
+            { id: "en1-numcolor-mesq-t4", type: "multiple_choice", prompt: "'red' nə rəngdir?", options: ["qırmızı", "mavi", "yaşıl", "sarı"], correctIndex: 0, xp: 10 },
+            { id: "en1-numcolor-mesq-t5", type: "multiple_choice", prompt: "'blue' nə rəngdir?", options: ["mavi", "qırmızı", "qara", "ağ"], correctIndex: 0, xp: 10 },
+            { id: "en1-numcolor-mesq-t6", type: "multiple_choice", speakOptions: true, prompt: "Yarpaq hansı rəngdədir?", options: ["green", "red", "black", "white"], correctIndex: 0, xp: 10 },
+            { id: "en1-numcolor-mesq-t7", type: "multiple_choice", speakOptions: true, prompt: "Günəş hansı rəngdədir?", options: ["yellow", "blue", "green", "black"], correctIndex: 0, xp: 10 },
+            { id: "en1-numcolor-mesq-t8", type: "listening", prompt: "Dinlə: neçədir?", audioText: "five", options: ["5", "4", "9", "1"], correctIndex: 0, xp: 10 },
+            { id: "en1-numcolor-mesq-t9", type: "listening", prompt: "Dinlə və rəngi seç.", audioText: "This is a red apple.", options: ["Qırmızı alma", "Yaşıl alma", "Sarı alma", "Mavi alma"], correctIndex: 0, xp: 10 },
+            { id: "en1-numcolor-mesq-t10", type: "fill_blank", prompt: "'iki' — ingiliscə yaz (bir söz).", accepted: ["two", "Two"], xp: 10 },
+          ],
+          bonusTasks: [
+            { id: "en1-numcolor-mesq-b1", type: "multiple_choice", speakOptions: true, prompt: "one + two = ?", options: ["three", "two", "four", "five"], correctIndex: 0, xp: 15 },
+            { id: "en1-numcolor-mesq-b2", type: "listening", prompt: "Dinlə: neçə pişik?", audioText: "I have three cats.", options: ["3", "2", "4", "1"], correctIndex: 0, xp: 15 },
+            { id: "en1-numcolor-mesq-b3", type: "fill_blank", prompt: "'qara' — ingiliscə yaz (bir söz).", accepted: ["black", "Black"], xp: 15 },
+            { id: "en1-numcolor-mesq-b4", type: "multiple_choice", prompt: "Qar hansı rəngdədir?", options: ["white", "black", "red", "green"], correctIndex: 0, xp: 15 },
+            { id: "en1-numcolor-mesq-b5", type: "listening", prompt: "Dinlə və mənasını seç.", audioText: "The sky is blue.", options: ["Göy mavidir.", "Göy yaşıldır.", "Dəniz mavidir.", "Göy qaradır."], correctIndex: 0, xp: 15 },
+          ],
+        },
+        {
+          id: "en1-numcolor-test",
+          title: "Bölmə sonu test",
+          kind: "test",
+          intro: "Bu bölmədə öyrəndiklərini yoxla — suallar bütün dərslərdən qarışıq gəlir.",
+          tasks: [],
+        },
       ],
     },
-    // ═══════════════ 4. Heyvanlar ═══════════════
     {
       id: "en1-animals",
-      title: "Heyvanlar (Animals)",
-      description: "Heyvanların İngiliscə adları.",
+      title: "Heyvanlar",
+      description: "Heyvan adları, dinləmə və məşq.",
       lessons: [
         {
           id: "en1-animals-vocab",
@@ -230,13 +302,53 @@ export const english1: Subject = {
             { id: "en1-animals-listen-b3", type: "listening", prompt: "Dinlə və mənasını seç.", audioText: "chicken", options: ["toyuq", "ördək", "quş", "qaz"], correctIndex: 0, xp: 15 },
           ],
         },
+        {
+          id: "en1-animals-chest",
+          title: "Sandıq",
+          kind: "chest",
+          intro: "Buraya çatdın! Sandığı aç və mükafatını al.",
+          tasks: [],
+        },
+        {
+          id: "en1-animals-mesq",
+          title: "Məşq",
+          intro: "Heyvan adlarını məşq edək!",
+          sections: [
+            { heading: "Yadına salaq", body: "cat — pişik · dog — it · bird — quş · fish — balıq · cow — inək · horse — at · sheep — qoyun · rabbit — dovşan" },
+          ],
+          tasks: [
+            { id: "en1-animals-mesq-t1", type: "multiple_choice", prompt: "'cat' nə deməkdir?", options: ["pişik", "it", "quş", "balıq"], correctIndex: 0, xp: 10 },
+            { id: "en1-animals-mesq-t2", type: "multiple_choice", prompt: "'dog' nə deməkdir?", options: ["it", "pişik", "at", "inək"], correctIndex: 0, xp: 10 },
+            { id: "en1-animals-mesq-t3", type: "multiple_choice", prompt: "'bird' nə deməkdir?", options: ["quş", "balıq", "dovşan", "qoyun"], correctIndex: 0, xp: 10 },
+            { id: "en1-animals-mesq-t4", type: "multiple_choice", prompt: "'fish' nə deməkdir?", options: ["balıq", "quş", "pişik", "at"], correctIndex: 0, xp: 10 },
+            { id: "en1-animals-mesq-t5", type: "multiple_choice", speakOptions: true, prompt: "Süd verən heyvan hansıdır?", options: ["cow", "cat", "bird", "fish"], correctIndex: 0, xp: 10 },
+            { id: "en1-animals-mesq-t6", type: "multiple_choice", speakOptions: true, prompt: "Suda yaşayan heyvan hansıdır?", options: ["fish", "horse", "sheep", "dog"], correctIndex: 0, xp: 10 },
+            { id: "en1-animals-mesq-t7", type: "multiple_choice", speakOptions: true, prompt: "Uzun qulaqlı heyvan hansıdır?", options: ["rabbit", "cow", "fish", "bird"], correctIndex: 0, xp: 10 },
+            { id: "en1-animals-mesq-t8", type: "listening", prompt: "Dinlə və heyvanı seç.", audioText: "I have a big dog.", options: ["it", "pişik", "quş", "at"], correctIndex: 0, xp: 10 },
+            { id: "en1-animals-mesq-t9", type: "listening", prompt: "Dinlə və mənasını seç.", audioText: "The cat is sleeping.", options: ["Pişik yatır.", "İt yatır.", "Pişik oynayır.", "Pişik yeyir."], correctIndex: 0, xp: 10 },
+            { id: "en1-animals-mesq-t10", type: "fill_blank", prompt: "'quş' — ingiliscə yaz (bir söz).", accepted: ["bird", "Bird"], xp: 10 },
+          ],
+          bonusTasks: [
+            { id: "en1-animals-mesq-b1", type: "multiple_choice", speakOptions: true, prompt: "Hansı heyvan uça bilir?", options: ["bird", "fish", "cow", "sheep"], correctIndex: 0, xp: 15 },
+            { id: "en1-animals-mesq-b2", type: "listening", prompt: "Dinlə: neçə pişik?", audioText: "There are two cats.", options: ["2", "1", "3", "4"], correctIndex: 0, xp: 15 },
+            { id: "en1-animals-mesq-b3", type: "fill_blank", prompt: "'balıq' — ingiliscə yaz (bir söz).", accepted: ["fish", "Fish"], xp: 15 },
+            { id: "en1-animals-mesq-b4", type: "multiple_choice", prompt: "«I like animals» nə deməkdir?", options: ["Mən heyvanları sevirəm.", "Heyvanlar məni sevir.", "Heyvanım var.", "Heyvanlar böyükdür."], correctIndex: 0, xp: 15 },
+            { id: "en1-animals-mesq-b5", type: "listening", prompt: "Dinlə və mənasını seç.", audioText: "The dog is running.", options: ["İt qaçır.", "Pişik qaçır.", "İt yatır.", "İtlər qaçır."], correctIndex: 0, xp: 15 },
+          ],
+        },
+        {
+          id: "en1-animals-test",
+          title: "Bölmə sonu test",
+          kind: "test",
+          intro: "Bu bölmədə öyrəndiklərini yoxla — suallar bütün dərslərdən qarışıq gəlir.",
+          tasks: [],
+        },
       ],
     },
-    // ═══════════════ 5. Ailə ═══════════════
     {
-      id: "en1-family",
-      title: "Ailə (Family)",
-      description: "Ailə üzvlərinin İngiliscə adları.",
+      id: "en1-famschool",
+      title: "Ailə və məktəb",
+      description: "Ailə üzvləri, məktəb əşyaları və məşq.",
       lessons: [
         {
           id: "en1-family-vocab",
@@ -270,14 +382,6 @@ export const english1: Subject = {
             { id: "en1-family-vocab-b5", type: "multiple_choice", prompt: "'baby' nə deməkdir?", options: ["körpə", "bacı", "ana", "nənə"], correctIndex: 0, xp: 15 },
           ],
         },
-      ],
-    },
-    // ═══════════════ 6. Məktəb və bədən ═══════════════
-    {
-      id: "en1-school",
-      title: "Məktəb və bədən (School & Body)",
-      description: "Məktəb əşyaları və bədən üzvlərinin İngiliscə adları.",
-      lessons: [
         {
           id: "en1-school-vocab",
           title: "School things",
@@ -309,6 +413,47 @@ export const english1: Subject = {
             { id: "en1-school-vocab-b4", type: "multiple_choice", speakOptions: true, prompt: "'qulaq' İngiliscə necədir?", options: ["ear", "eye", "nose", "head"], correctIndex: 0, xp: 15 },
             { id: "en1-school-vocab-b5", type: "multiple_choice", prompt: "'pencil' nə deməkdir?", options: ["karandaş", "qələm", "kitab", "çanta"], correctIndex: 0, xp: 15 },
           ],
+        },
+        {
+          id: "en1-famschool-chest",
+          title: "Sandıq",
+          kind: "chest",
+          intro: "Buraya çatdın! Sandığı aç və mükafatını al.",
+          tasks: [],
+        },
+        {
+          id: "en1-famschool-mesq",
+          title: "Məşq",
+          intro: "Ailə və məktəb sözlərini məşq edək!",
+          sections: [
+            { heading: "Yadına salaq", body: "mother — ana · father — ata · sister — bacı · brother — qardaş · book — kitab · pen — qələm · bag — çanta · desk — parta" },
+          ],
+          tasks: [
+            { id: "en1-famschool-mesq-t1", type: "multiple_choice", prompt: "'mother' nə deməkdir?", options: ["ana", "ata", "bacı", "qardaş"], correctIndex: 0, xp: 10 },
+            { id: "en1-famschool-mesq-t2", type: "multiple_choice", prompt: "'father' nə deməkdir?", options: ["ata", "ana", "baba", "qardaş"], correctIndex: 0, xp: 10 },
+            { id: "en1-famschool-mesq-t3", type: "multiple_choice", prompt: "'sister' nə deməkdir?", options: ["bacı", "qardaş", "ana", "nənə"], correctIndex: 0, xp: 10 },
+            { id: "en1-famschool-mesq-t4", type: "multiple_choice", prompt: "'book' nə deməkdir?", options: ["kitab", "qələm", "çanta", "parta"], correctIndex: 0, xp: 10 },
+            { id: "en1-famschool-mesq-t5", type: "multiple_choice", prompt: "'pen' nə deməkdir?", options: ["qələm", "kitab", "stul", "çanta"], correctIndex: 0, xp: 10 },
+            { id: "en1-famschool-mesq-t6", type: "multiple_choice", speakOptions: true, prompt: "Məktəbə nə ilə kitab aparırsan?", options: ["bag", "pen", "desk", "book"], correctIndex: 0, xp: 10 },
+            { id: "en1-famschool-mesq-t7", type: "multiple_choice", speakOptions: true, prompt: "Sinifdə hansı əşyanın arxasında oturursan?", options: ["desk", "bag", "pen", "book"], correctIndex: 0, xp: 10 },
+            { id: "en1-famschool-mesq-t8", type: "listening", prompt: "Dinlə və mənasını seç.", audioText: "This is my mother.", options: ["Bu mənim anamdır.", "Bu mənim atamdır.", "Bu mənim bacımdır.", "Bu anadır."], correctIndex: 0, xp: 10 },
+            { id: "en1-famschool-mesq-t9", type: "listening", prompt: "Dinlə və əşyanı seç.", audioText: "I have a red pen.", options: ["qələm", "kitab", "çanta", "parta"], correctIndex: 0, xp: 10 },
+            { id: "en1-famschool-mesq-t10", type: "fill_blank", prompt: "'kitab' — ingiliscə yaz (bir söz).", accepted: ["book", "Book"], xp: 10 },
+          ],
+          bonusTasks: [
+            { id: "en1-famschool-mesq-b1", type: "multiple_choice", speakOptions: true, prompt: "«Bu mənim qardaşımdır» — ingiliscə hansıdır?", options: ["This is my brother", "This is my sister", "This my brother", "My brother is this"], correctIndex: 0, xp: 15 },
+            { id: "en1-famschool-mesq-b2", type: "listening", prompt: "Dinlə və mənasını seç.", audioText: "My father is a teacher.", options: ["Atam müəllimdir.", "Anam müəllimdir.", "Atam həkimdir.", "Müəllim atamdır."], correctIndex: 0, xp: 15 },
+            { id: "en1-famschool-mesq-b3", type: "fill_blank", prompt: "'çanta' — ingiliscə yaz (bir söz).", accepted: ["bag", "Bag"], xp: 15 },
+            { id: "en1-famschool-mesq-b4", type: "multiple_choice", prompt: "«I love my family» nə deməkdir?", options: ["Ailəmi sevirəm.", "Ailəm məni sevir.", "Ailəm böyükdür.", "Ailəmlə yaşayıram."], correctIndex: 0, xp: 15 },
+            { id: "en1-famschool-mesq-b5", type: "listening", prompt: "Dinlə: neçə kitab?", audioText: "I have four books.", options: ["4", "3", "5", "2"], correctIndex: 0, xp: 15 },
+          ],
+        },
+        {
+          id: "en1-famschool-test",
+          title: "Bölmə sonu test",
+          kind: "test",
+          intro: "Bu bölmədə öyrəndiklərini yoxla — suallar bütün dərslərdən qarışıq gəlir.",
+          tasks: [],
         },
       ],
     },
