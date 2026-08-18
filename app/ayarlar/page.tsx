@@ -4,6 +4,8 @@
 // görünüş (tünd rejim) + dil (interfeys dili).
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { Download, Trash2 } from "lucide-react";
 import { useAuthUser } from "@/lib/useAuthUser";
 import { createClient } from "@/lib/supabase/client";
 import { userGrade, GRADES_WITH_CONTENT } from "@/lib/grade";
@@ -27,12 +29,18 @@ const LESSON_ROWS: { key: keyof Prefs; labelKey: string; hintKey: string }[] = [
 ];
 
 export default function SettingsPage() {
+  const router = useRouter();
   const { user, ready } = useAuthUser();
   const [prefs, setPrefs] = useState<Prefs | null>(null);
   const [pushOn, setPushOn] = useState(false);
   const [pushBusy, setPushBusy] = useState(false);
   const [pushMsg, setPushMsg] = useState("");
+  const [exporting, setExporting] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [deleteText, setDeleteText] = useState("");
+  const [deleting, setDeleting] = useState(false);
   const t = useT();
+  const DELETE_WORD = "SİL";
 
   useEffect(() => {
     // Hidrasiya-təhlükəsiz: localStorage tərcihlərini mount-dan sonra oxu.
@@ -74,6 +82,38 @@ export default function SettingsPage() {
     savePrefs(next);
     // Bütün səhifədəki mətnlərin yenilənməsi üçün təzələ.
     window.location.reload();
+  }
+
+  // Məlumatlarını JSON kimi endir (bax migration 0039, export_own_data RPC).
+  async function exportData() {
+    setExporting(true);
+    try {
+      const supabase = createClient();
+      const { data } = await supabase.rpc("export_own_data");
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "imparo-melumatlarim.json";
+      a.click();
+      URL.revokeObjectURL(url);
+    } finally {
+      setExporting(false);
+    }
+  }
+
+  // Hesabı həmişəlik sil (bax migration 0039, delete_own_account RPC) — geri qaytarılmaz.
+  async function deleteAccount() {
+    if (deleteText !== DELETE_WORD || deleting) return;
+    setDeleting(true);
+    const supabase = createClient();
+    try {
+      await supabase.rpc("delete_own_account");
+    } catch {
+      // sükutla ötür — hər halda çıxış edib yönləndiririk
+    }
+    await supabase.auth.signOut();
+    router.replace("/");
   }
 
   // Sinif dəyişdir — user_metadata.grade yenilə və yeni sinfin proqramına keç.
@@ -201,6 +241,68 @@ export default function SettingsPage() {
                 </option>
               ))}
             </select>
+          </div>
+        </div>
+
+        {/* Məlumatlarım — özünə-xidmət ixrac + silmə (məxfilik hüquqları) */}
+        <h2 className="mt-6 text-xs font-bold uppercase tracking-wide text-muted">
+          {t("settings.privacy")}
+        </h2>
+        <div className="mt-2 overflow-hidden rounded-2xl border border-line bg-panel">
+          <button
+            onClick={exportData}
+            disabled={exporting}
+            className="flex w-full items-center justify-between gap-4 border-b border-line px-4 py-3.5 text-left last:border-b-0 disabled:opacity-60"
+          >
+            <div className="flex items-center gap-3">
+              <Download size={18} className="text-muted" />
+              <div>
+                <div className="font-bold text-fg">{t("settings.exportData")}</div>
+                <div className="text-xs text-muted">{t("settings.exportDataHint")}</div>
+              </div>
+            </div>
+          </button>
+
+          <div className="px-4 py-3.5">
+            <button
+              onClick={() => setDeleteOpen((v) => !v)}
+              className="flex w-full items-center gap-3 text-left"
+            >
+              <Trash2 size={18} className="text-red-500" />
+              <div>
+                <div className="font-bold text-red-500">{t("settings.deleteAccount")}</div>
+                <div className="text-xs text-muted">{t("settings.deleteAccountHint")}</div>
+              </div>
+            </button>
+
+            {deleteOpen && (
+              <div className="mt-3 rounded-xl border-2 border-red-500/30 bg-red-500/5 p-3">
+                <p className="text-sm font-semibold text-fg">
+                  {t("settings.deleteAccountConfirm")} <span className="font-mono text-red-500">{DELETE_WORD}</span>
+                </p>
+                <input
+                  value={deleteText}
+                  onChange={(e) => setDeleteText(e.target.value)}
+                  className="mt-2 w-full rounded-lg border-2 border-line bg-panel px-3 py-2 text-sm font-bold text-fg outline-none focus:border-red-500"
+                  placeholder={DELETE_WORD}
+                />
+                <div className="mt-3 flex gap-2">
+                  <button
+                    onClick={() => { setDeleteOpen(false); setDeleteText(""); }}
+                    className="flex-1 rounded-lg border-2 border-line px-3 py-2 text-sm font-bold text-fg"
+                  >
+                    {t("settings.deleteAccountCancel")}
+                  </button>
+                  <button
+                    onClick={deleteAccount}
+                    disabled={deleteText !== DELETE_WORD || deleting}
+                    className="flex-1 rounded-lg bg-red-500 px-3 py-2 text-sm font-bold text-white disabled:opacity-40"
+                  >
+                    {t("settings.deleteAccountFinal")}
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </main>

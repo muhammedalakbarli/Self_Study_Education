@@ -531,6 +531,28 @@ const DICT: Dict = {
     ru: "Язык интерфейса",
   },
 
+  // ── Ayarlar → Məlumatlarım (özünə-xidmət məxfilik hüquqları) ──
+  "settings.privacy": { az: "Məlumatlarım", en: "My data", ru: "Мои данные" },
+  "settings.exportData": { az: "Məlumatlarımı yüklə", en: "Download my data", ru: "Скачать мои данные" },
+  "settings.exportDataHint": {
+    az: "Haqqında saxlanılan bütün məlumatın JSON çıxarışı",
+    en: "A JSON export of everything stored about you",
+    ru: "JSON-экспорт всех данных о вас",
+  },
+  "settings.deleteAccount": { az: "Hesabımı sil", en: "Delete my account", ru: "Удалить аккаунт" },
+  "settings.deleteAccountHint": {
+    az: "Bütün məlumatın həmişəlik silinir — geri qaytarıla bilməz",
+    en: "All your data is permanently deleted — cannot be undone",
+    ru: "Все данные удаляются навсегда — отменить нельзя",
+  },
+  "settings.deleteAccountConfirm": {
+    az: "Əminsən? Bunu yazaraq təsdiqlə:",
+    en: "Are you sure? Type this to confirm:",
+    ru: "Вы уверены? Введите для подтверждения:",
+  },
+  "settings.deleteAccountCancel": { az: "Ləğv et", en: "Cancel", ru: "Отмена" },
+  "settings.deleteAccountFinal": { az: "Bəli, həmişəlik sil", en: "Yes, delete forever", ru: "Да, удалить навсегда" },
+
   // ── Landing (ana səhifə) ──
   "home.login": { az: "Daxil ol", en: "Sign in", ru: "Войти" },
   "home.badge": {
@@ -754,6 +776,26 @@ const DICT: Dict = {
     ru: "Регистрация через Google",
   },
   "auth.signup.submit": { az: "Qeydiyyatdan keç", en: "Sign up", ru: "Зарегистрироваться" },
+  "auth.signup.guardianConsent": {
+    az: "Bu hesabı valideyn/müəllim nəzarəti ilə yaradıram",
+    en: "I'm creating this account under parent/teacher supervision",
+    ru: "Я создаю этот аккаунт под наблюдением родителя/учителя",
+  },
+  "auth.signup.parentEmail": {
+    az: "Valideyn email-i (könüllü)",
+    en: "Parent email (optional)",
+    ru: "Email родителя (необязательно)",
+  },
+  "auth.signup.parentEmailPlaceholder": {
+    az: "valideyn@email.com",
+    en: "parent@email.com",
+    ru: "parent@email.com",
+  },
+  "auth.err.guardianConsent": {
+    az: "Zəhmət olmasa valideyn/müəllim nəzarəti bəndini təsdiqlə",
+    en: "Please confirm parent/teacher supervision",
+    ru: "Подтвердите наблюдение родителя/учителя",
+  },
   "auth.signup.loading": {
     az: "Qeydiyyat aparılır...",
     en: "Signing up...",
@@ -972,7 +1014,7 @@ const DICT: Dict = {
   "ft.rights": { az: "Bütün hüquqlar qorunur.", en: "All rights reserved.", ru: "Все права защищены." },
 
   // ── Hüquqi (ümumi) ──
-  "legal.updated": { az: "Son yenilənmə: 12 avqust 2026", en: "Last updated: August 12, 2026", ru: "Обновлено: 12 августа 2026" },
+  "legal.updated": { az: "Son yenilənmə: 18 avqust 2026", en: "Last updated: August 18, 2026", ru: "Обновлено: 18 августа 2026" },
   "legal.contactLine": { az: "Sualın var? Bizə yaz:", en: "Have a question? Write to us:", ru: "Есть вопрос? Напишите нам:" },
 
   // ── Info səhifələri (Bloq, Karyera, İnvestorlar, Səmərəlilik) ──
@@ -1163,9 +1205,9 @@ const DICT: Dict = {
   },
   "privacy.s3.t": { az: "3. Kimlərlə paylaşırıq", en: "3. Who we share with", ru: "3. С кем мы делимся" },
   "privacy.s3.b": {
-    az: "Məlumatı satmırıq. Xidməti təmin edən etibarlı provayderlərlə paylaşırıq:\n• Supabase — məlumat bazası və autentifikasiya;\n• PostHog — anonim/aqreqat istifadə analitikası;\n• Google — istəyə bağlı “Google ilə giriş”;\n• Ödəniş provayderi — Imparo Plus ödənişləri.\nHəmçinin qanuni tələb olduqda (məhkəmə qərarı və s.) və ya təhlükə/saxtakarlığın qarşısını almaq üçün lazım olduqda paylaşa bilərik.",
-    en: "We do not sell data. We share it with trusted providers that run the Service:\n• Supabase — database and authentication;\n• PostHog — anonymous/aggregate usage analytics;\n• Google — optional “Sign in with Google”;\n• Payment provider — Imparo Plus payments.\nWe may also share when legally required (court order, etc.) or to prevent harm/fraud.",
-    ru: "Мы не продаём данные. Мы делимся ими с надёжными провайдерами, обеспечивающими Сервис:\n• Supabase — база данных и аутентификация;\n• PostHog — анонимная/сводная аналитика;\n• Google — опциональный «Вход через Google»;\n• Платёжный провайдер — платежи Imparo Plus.\nМы также можем делиться при законных требованиях (судебный приказ и т. п.) или для предотвращения вреда/мошенничества.",
+    az: "Məlumatı satmırıq. Xidməti təmin edən etibarlı provayderlərlə paylaşırıq:\n• Supabase — məlumat bazası və autentifikasiya;\n• PostHog (Aİ-də yerləşir) — istifadə analitikası; hesabınla və sinfinlə əlaqələndirilir (tam anonim deyil), platformanı yaxşılaşdırmaq üçün istifadə olunur;\n• Google — istəyə bağlı “Google ilə giriş”;\n• Ödəniş provayderi — Imparo Plus ödənişləri.\nHəmçinin qanuni tələb olduqda (məhkəmə qərarı və s.) və ya təhlükə/saxtakarlığın qarşısını almaq üçün lazım olduqda paylaşa bilərik.",
+    en: "We do not sell data. We share it with trusted providers that run the Service:\n• Supabase — database and authentication;\n• PostHog (EU-based) — usage analytics; linked to your account and grade (not fully anonymous), used to improve the platform;\n• Google — optional “Sign in with Google”;\n• Payment provider — Imparo Plus payments.\nWe may also share when legally required (court order, etc.) or to prevent harm/fraud.",
+    ru: "Мы не продаём данные. Мы делимся ими с надёжными провайдерами, обеспечивающими Сервис:\n• Supabase — база данных и аутентификация;\n• PostHog (расположен в ЕС) — аналитика использования; связана с вашим аккаунтом и классом (не полностью анонимна), используется для улучшения платформы;\n• Google — опциональный «Вход через Google»;\n• Платёжный провайдер — платежи Imparo Plus.\nМы также можем делиться при законных требованиях (судебный приказ и т. п.) или для предотвращения вреда/мошенничества.",
   },
   "privacy.s4.t": { az: "4. Profil və liqa", en: "4. Profile and league", ru: "4. Профиль и лига" },
   "privacy.s4.b": {
@@ -1175,9 +1217,9 @@ const DICT: Dict = {
   },
   "privacy.s5.t": { az: "5. Uşaq istifadəçilər", en: "5. Child users", ru: "5. Дети-пользователи" },
   "privacy.s5.b": {
-    az: "Uşaqlar əlavə qoruma layiqdir. 13 yaşdan kiçik uşaqların hesabları valideyn/qəyyum razılığı və nəzarəti ilə istifadə olunmalıdır və onlardan yalnız Xidmətin işləməsi üçün minimum məlumat toplayırıq. Uşaq istifadəçilər üçün:\n• Fərdiləşdirilmiş reklam və üçüncü tərəf davranış izləməsi söndürülür;\n• Sosial funksiyalar məhduddur (yalnız hazır mesajlar, real ad/şəkil yox);\n• Liqada real ad əvəzinə təhlükəsiz görünüş.\nValideyn kimi uşağının məlumatına baxmaq, dəyişmək və ya silinməsini tələb etmək hüququn var.",
-    en: "Children deserve extra protection. Accounts of children under 13 must be used with parental/guardian consent and supervision, and we collect only the minimum needed to make the Service work. For child users:\n• Personalized ads and third-party behavioral tracking are disabled;\n• Social features are limited (canned messages only, no real name/photo);\n• In the league, a safe display instead of the real name.\nAs a parent, you may access, change or request deletion of your child’s data.",
-    ru: "Дети заслуживают дополнительной защиты. Аккаунты детей младше 13 лет должны использоваться с согласия и под контролем родителей, и мы собираем лишь минимум, нужный для работы Сервиса. Для детей:\n• Персонализированная реклама и стороннее поведенческое отслеживание отключены;\n• Социальные функции ограничены (только шаблонные сообщения, без реального имени/фото);\n• В лиге — безопасное отображение вместо реального имени.\nКак родитель, вы можете просматривать, изменять или требовать удаления данных ребёнка.",
+    az: "Uşaqlar əlavə qoruma layiqdir — Imparo-nun bütün istifadəçiləri məktəblidir. Qeydiyyatda valideyn/müəllim nəzarətini təsdiqləyən bənd və könüllü valideyn e-poçtu sahəsi var. Reklam göstərmirik və məlumatı satmırıq. Liqa və profildə real ad görünür (bax bölmə 4) — bunu istəmirsənsə, adını dəyişə bilərsən. Valideyn/qəyyum kimi uşağının hesabına (onun öz girişi ilə) daxil olub Ayarlar bölməsindən məlumatını yükləyə və ya hesabı silə bilərsən; bunu edə bilmirsənsə, bizə yaz (bölmə 14) — sorğunu araşdırıb icra edərik.",
+    en: "Children deserve extra protection — every Imparo user is a school student. Signup includes a checkbox confirming parent/teacher supervision and an optional parent email field. We do not show ads and do not sell data. Your real name appears in the league and profile (see section 4) — you can change your display name if you'd rather not use your real one. As a parent/guardian, you can sign in with your child's own login and use Settings to download or delete their data; if you can't do that yourself, contact us (section 14) and we will action the request.",
+    ru: "Дети заслуживают дополнительной защиты — все пользователи Imparo являются школьниками. При регистрации есть флажок, подтверждающий контроль родителя/учителя, и необязательное поле email родителя. Мы не показываем рекламу и не продаём данные. Ваше настоящее имя отображается в лиге и профиле (см. раздел 4) — вы можете изменить отображаемое имя. Как родитель/опекун вы можете войти под учётной записью ребёнка и в Настройках скачать или удалить его данные; если это невозможно самостоятельно, напишите нам (раздел 14) — мы выполним запрос.",
   },
   "privacy.s6.t": { az: "6. Imparo Məktəb (müəllimlər)", en: "6. Imparo for Schools (teachers)", ru: "6. Imparo для школ (учителя)" },
   "privacy.s6.b": {
