@@ -132,12 +132,12 @@ export async function addXp(_userId: string, amount: number): Promise<void> {
   await supabase.rpc("add_user_xp", { p_amount: amount, p_touch_streak: false });
 }
 
-// Seriya qoruyucu (freeze) qazan — cap-ə qədər (default 2). Gündəlik sandıq açılanda
-// çağırılır. Yeni freeze sayını qaytarır (RPC yoxdursa/xəta olsa sükutla 0).
-export async function grantStreakFreeze(cap = 2): Promise<number> {
+// Seriya qoruyucu (freeze) qazan — server tərəfdə tavan 2 (RPC parametr qəbul ETMİR, təhlükəsizlik
+// üçün — bax migration 0033). Gündəlik sandıq açılanda çağırılır. Yeni freeze sayını qaytarır.
+export async function grantStreakFreeze(): Promise<number> {
   try {
     const supabase = createClient();
-    const { data } = await supabase.rpc("grant_streak_freeze", { p_cap: cap });
+    const { data } = await supabase.rpc("grant_streak_freeze");
     return typeof data === "number" ? data : 0;
   } catch {
     return 0;
