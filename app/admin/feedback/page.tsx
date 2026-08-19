@@ -31,14 +31,14 @@ function TaskDetail({ subjects, taskId }: { subjects: Subject[]; taskId: string 
   const info = findTaskInfo(subjects, taskId);
   if (!info) {
     return (
-      <div className="mt-2 rounded-xl border border-dashed border-line bg-panel-2 px-3 py-2 text-xs text-muted">
+      <div className="mt-2 rounded-md border border-dashed border-line bg-panel-2 px-3 py-2 text-xs text-muted">
         Sual məzmunda tapılmadı (silinmiş və ya köhnə id).
       </div>
     );
   }
   const { task, subject, unit, lesson } = info;
   return (
-    <div className="mt-2 rounded-xl border border-line bg-panel-2 px-3 py-2.5">
+    <div className="mt-2 rounded-md border border-line bg-panel-2 px-3 py-2.5">
       <div className="text-[11px] font-semibold text-muted">
         {subject.name} · {unit.title} · {lesson.title}
       </div>
@@ -134,7 +134,7 @@ export default function AdminFeedbackPage() {
 
   return (
     <div className="min-h-screen bg-ink">
-      <main className="mx-auto max-w-3xl px-4 py-6">
+      <main className="mx-auto max-w-[1180px] px-4 py-7 lg:px-8">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-bold text-fg">Admin · Rəylər</h1>
           <div className="flex gap-3 text-sm text-muted">
@@ -162,7 +162,7 @@ export default function AdminFeedbackPage() {
             {visible.map((r) => (
               <div
                 key={r.id}
-                className={`rounded-2xl border px-4 py-3 ${
+                className={`rounded-[10px] border px-4 py-3 ${
                   r.resolved ? "border-line bg-panel opacity-60" : "border-line bg-panel"
                 }`}
               >

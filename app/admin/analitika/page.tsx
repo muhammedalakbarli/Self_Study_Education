@@ -134,7 +134,7 @@ export default function AdminAnalyticsPage() {
 
   return (
     <div className="min-h-screen bg-ink">
-      <main className="mx-auto max-w-4xl px-4 py-6">
+      <main className="mx-auto max-w-[1180px] px-4 py-7 lg:px-8">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-bold text-fg">Admin · Analitika</h1>
           <div className="flex gap-3 text-sm text-muted">
@@ -192,7 +192,7 @@ export default function AdminAnalyticsPage() {
             <span className="text-xs font-bold uppercase tracking-wide text-muted">Aralıq:</span>
             {[7, 14, 30, 90].map((r) => (
               <button key={r} onClick={() => setRange(r)}
-                className={`rounded-lg px-3 py-1.5 text-sm font-bold ${range === r ? "bg-brand text-white" : "border-2 border-line bg-panel text-fg hover:border-brand"}`}>
+                className={`rounded-lg px-3 py-1.5 text-sm font-bold ${range === r ? "bg-brand text-white" : "border border-line bg-panel text-fg hover:border-brand"}`}>
                 {r} gün
               </button>
             ))}
@@ -310,8 +310,8 @@ export default function AdminAnalyticsPage() {
 
 function Stat({ label, value, small }: { label: string; value: number; small?: boolean }) {
   return (
-    <div className="rounded-2xl border border-line bg-panel p-4">
-      <div className={`font-extrabold text-fg ${small ? "text-xl" : "text-2xl"}`}>
+    <div className="rounded-[10px] border border-line bg-panel p-4">
+      <div className={`font-semibold text-fg ${small ? "text-xl" : "text-2xl"}`}>
         {value.toLocaleString("az-AZ")}
       </div>
       <div className="mt-0.5 text-xs text-muted">{label}</div>
@@ -323,9 +323,9 @@ function Stat({ label, value, small }: { label: string; value: number; small?: b
 function Ratio({ label, num, den, hint }: { label: string; num: number; den: number; hint?: string }) {
   const pct = den > 0 ? Math.round((num / den) * 1000) / 10 : 0;
   return (
-    <div className="rounded-2xl border border-line bg-panel p-4" title={hint}>
+    <div className="rounded-[10px] border border-line bg-panel p-4" title={hint}>
       <div className="flex items-baseline gap-1.5">
-        <span className="text-xl font-extrabold text-brand">{pct}%</span>
+        <span className="text-xl font-semibold text-brand">{pct}%</span>
         <span className="text-xs font-semibold text-muted">{num}/{den}</span>
       </div>
       <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-panel-2">
@@ -341,9 +341,9 @@ function Compare({ label, cur, prev }: { label: string; cur: number; prev: numbe
   const delta = prev > 0 ? Math.round(((cur - prev) / prev) * 1000) / 10 : cur > 0 ? 100 : 0;
   const up = cur >= prev;
   return (
-    <div className="rounded-2xl border border-line bg-panel p-4">
+    <div className="rounded-[10px] border border-line bg-panel p-4">
       <div className="flex items-baseline gap-2">
-        <span className="text-2xl font-extrabold text-fg">{cur.toLocaleString("az-AZ")}</span>
+        <span className="text-2xl font-semibold text-fg">{cur.toLocaleString("az-AZ")}</span>
         <span className={`text-xs font-bold ${up ? "text-emerald-600" : "text-red-500"}`}>
           {up ? "↑" : "↓"} {Math.abs(delta)}%
         </span>
@@ -361,7 +361,7 @@ function HourBars({ data }: { data: { hour: number; cnt: number }[] }) {
   const max = Math.max(1, ...hours.map((x) => x.n));
   const peak = hours.reduce((p, x) => (x.n > p.n ? x : p), hours[0]);
   return (
-    <div className="rounded-2xl border border-line bg-panel p-3">
+    <div className="rounded-[10px] border border-line bg-panel p-3">
       <div className="mb-3 flex flex-wrap items-baseline justify-between gap-x-3">
         <span className="text-sm font-bold text-fg">Saatlıq aktivlik (son giriş üzrə, Bakı vaxtı)</span>
         <span className="text-xs text-muted">ən aktiv saat <b className="text-fg">{String(peak.h).padStart(2, "0")}:00</b> ({peak.n})</span>
@@ -403,7 +403,7 @@ function MiniBars({ title, data, tone }: { title: string; data: { d: string; n: 
   const avg = data.length ? Math.round((total / data.length) * 10) / 10 : 0;
   const peak = data.reduce((p, x) => (x.n > p.n ? x : p), data[0] ?? { d: "", n: 0 });
   return (
-    <div className="rounded-2xl border border-line bg-panel p-3">
+    <div className="rounded-[10px] border border-line bg-panel p-3">
       <div className="mb-3 flex flex-wrap items-baseline justify-between gap-x-3">
         <span className="text-sm font-bold text-fg">{title}</span>
         <span className="text-xs text-muted">
@@ -443,7 +443,7 @@ function Table({
   rows: (string | number)[][];
 }) {
   return (
-    <div className="mt-2 overflow-hidden rounded-2xl border border-line bg-panel">
+    <div className="mt-2 overflow-hidden rounded-[10px] border border-line bg-panel">
       {title && <div className="border-b border-line px-4 py-2 text-sm font-bold text-fg">{title}</div>}
       <table className="w-full text-sm">
         <thead>

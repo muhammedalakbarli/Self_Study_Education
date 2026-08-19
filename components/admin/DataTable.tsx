@@ -93,23 +93,23 @@ export function DataTable<T>({
       {/* Alət paneli */}
       <div className="mb-3 flex flex-wrap items-center gap-2">
         {searchable && (
-          <div className="flex min-w-[200px] flex-1 items-center gap-2 rounded-xl border-2 border-line bg-panel px-3 py-2">
-            <Search size={16} className="text-muted" />
+          <div className="flex min-w-[220px] flex-1 items-center gap-2 rounded-md border border-line bg-panel px-2.5 py-[7px] focus-within:border-brand/50">
+            <Search size={15} className="shrink-0 text-muted" />
             <input value={q} onChange={(e) => { setQ(e.target.value); setPage(0); }}
-              placeholder={searchPlaceholder} className="flex-1 bg-transparent text-sm font-semibold text-fg outline-none" />
-            <span className="text-xs text-muted">{filtered.length}</span>
+              placeholder={searchPlaceholder} className="min-w-0 flex-1 bg-transparent text-[13px] text-fg outline-none placeholder:text-muted/70" />
+            <span className="tabular shrink-0 text-[11px] font-medium text-muted">{filtered.length}</span>
           </div>
         )}
         {toolbar}
         <div className="relative">
           <button onClick={() => setColMenu((v) => !v)}
-            className="flex items-center gap-1.5 rounded-xl border-2 border-line bg-panel px-3 py-2 text-sm font-bold text-fg hover:border-brand">
-            <SlidersHorizontal size={15} /> Sütunlar
+            className="flex items-center gap-1.5 rounded-md border border-line bg-panel px-2.5 py-[7px] text-[13px] font-medium text-fg transition-colors hover:bg-panel-2">
+            <SlidersHorizontal size={14} /> Sütunlar
           </button>
           {colMenu && (
-            <div className="absolute right-0 z-20 mt-1 w-48 rounded-xl border border-line bg-panel p-2 shadow-lg">
+            <div className="admin-surface absolute right-0 z-20 mt-1 w-52 rounded-md p-1.5" style={{ boxShadow: "var(--admin-shadow-lg)" }}>
               {columns.filter((c) => c.hideable).map((c) => (
-                <label key={c.key} className="flex cursor-pointer items-center gap-2 rounded-lg px-2 py-1.5 text-sm text-fg hover:bg-panel-2">
+                <label key={c.key} className="flex cursor-pointer items-center gap-2 rounded px-2 py-1.5 text-[13px] text-fg hover:bg-panel-2">
                   <input type="checkbox" checked={!hidden.has(c.key)} onChange={() => setHidden((prev) => {
                     const n = new Set(prev); n.has(c.key) ? n.delete(c.key) : n.add(c.key); return n;
                   })} />
@@ -121,24 +121,24 @@ export function DataTable<T>({
         </div>
         {csvName && (
           <button onClick={exportCsv}
-            className="flex items-center gap-1.5 rounded-xl border-2 border-line bg-panel px-3 py-2 text-sm font-bold text-fg hover:border-brand">
-            <Download size={15} /> CSV
+            className="flex items-center gap-1.5 rounded-md border border-line bg-panel px-2.5 py-[7px] text-[13px] font-medium text-fg transition-colors hover:bg-panel-2">
+            <Download size={14} /> CSV
           </button>
         )}
       </div>
 
       {loading ? <TableSkeleton /> : filtered.length === 0 ? <EmptyState text={emptyText} /> : (
-        <div className="overflow-x-auto rounded-2xl border border-line bg-panel">
-          <table className="w-full text-sm" style={{ minWidth }}>
+        <div className="admin-surface overflow-x-auto rounded-[10px]">
+          <table className="w-full text-[13px]" style={{ minWidth }}>
             <thead>
-              <tr className="border-b border-line text-left text-xs uppercase tracking-wide text-muted">
+              <tr className="border-b border-line bg-panel-2/50 text-left text-[11px] uppercase tracking-[0.05em] text-muted">
                 {selectable && (
-                  <th className="px-3 py-3"><input type="checkbox" checked={allPageSelected} onChange={togglePage} aria-label="Səhifəni seç" /></th>
+                  <th className="w-10 px-3 py-2.5"><input type="checkbox" checked={allPageSelected} onChange={togglePage} aria-label="Səhifəni seç" /></th>
                 )}
                 {visibleCols.map((c) => (
-                  <th key={c.key} className={`px-3 py-3 font-bold ${c.align === "right" ? "text-right" : c.align === "center" ? "text-center" : ""}`}>
+                  <th key={c.key} className={`px-3 py-2.5 font-semibold ${c.align === "right" ? "text-right" : c.align === "center" ? "text-center" : ""}`}>
                     {c.sortable ? (
-                      <button onClick={() => toggleSort(c)} className={`inline-flex items-center gap-1 hover:text-fg ${sortKey === c.key ? "text-fg" : ""}`}>
+                      <button onClick={() => toggleSort(c)} className={`inline-flex items-center gap-1 transition-colors hover:text-fg ${sortKey === c.key ? "text-fg" : ""}`}>
                         {c.header}{sortKey === c.key && (sortDir === 1 ? <ChevronUp size={12} /> : <ChevronDown size={12} />)}
                       </button>
                     ) : c.header}
@@ -151,7 +151,7 @@ export function DataTable<T>({
                 const id = getRowId(r);
                 return (
                   <tr key={id} onClick={() => onRowClick?.(r)}
-                    className={`border-b border-line/60 last:border-b-0 ${onRowClick ? "cursor-pointer hover:bg-panel-2" : ""} ${selected?.has(id) ? "bg-brand/5" : ""}`}>
+                    className={`border-b border-line/60 transition-colors last:border-b-0 ${onRowClick ? "cursor-pointer hover:bg-panel-2/70" : ""} ${selected?.has(id) ? "bg-brand/[0.06]" : ""}`}>
                     {selectable && (
                       <td className="px-3 py-2.5" onClick={(e) => e.stopPropagation()}>
                         <input type="checkbox" checked={selected?.has(id) ?? false} onChange={() => toggleRow(id)} aria-label="Seç" />
@@ -172,19 +172,22 @@ export function DataTable<T>({
 
       {/* Səhifələmə */}
       {!loading && filtered.length > pageSize && (
-        <div className="mt-3 flex items-center justify-between text-sm">
+        <div className="mt-3 flex items-center justify-between text-[12px]">
           <div className="flex items-center gap-2 text-muted">
-            <span>Səhifə {page + 1}/{pageCount}</span>
+            <span className="tabular">
+              {page * pageSize + 1}–{Math.min((page + 1) * pageSize, filtered.length)} / {filtered.length}
+            </span>
             <select value={pageSize} onChange={(e) => { setPageSize(Number(e.target.value)); setPage(0); }}
-              className="rounded-lg border border-line bg-panel px-2 py-1 text-fg">
+              className="rounded-md border border-line bg-panel px-1.5 py-1 text-fg">
               {[10, 25, 50, 100].map((n) => <option key={n} value={n}>{n}/səhifə</option>)}
             </select>
           </div>
-          <div className="flex gap-1">
-            <button disabled={page === 0} onClick={() => setPage((p) => p - 1)}
-              className="rounded-lg border border-line px-2 py-1 text-fg disabled:opacity-40"><ChevronLeft size={16} /></button>
-            <button disabled={page >= pageCount - 1} onClick={() => setPage((p) => p + 1)}
-              className="rounded-lg border border-line px-2 py-1 text-fg disabled:opacity-40"><ChevronRight size={16} /></button>
+          <div className="flex items-center gap-1.5">
+            <span className="tabular text-muted">Səhifə {page + 1}/{pageCount}</span>
+            <button disabled={page === 0} onClick={() => setPage((p) => p - 1)} aria-label="Əvvəlki"
+              className="rounded-md border border-line px-1.5 py-1 text-fg transition-colors hover:bg-panel-2 disabled:opacity-40 disabled:hover:bg-transparent"><ChevronLeft size={15} /></button>
+            <button disabled={page >= pageCount - 1} onClick={() => setPage((p) => p + 1)} aria-label="Növbəti"
+              className="rounded-md border border-line px-1.5 py-1 text-fg transition-colors hover:bg-panel-2 disabled:opacity-40 disabled:hover:bg-transparent"><ChevronRight size={15} /></button>
           </div>
         </div>
       )}

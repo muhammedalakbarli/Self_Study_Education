@@ -151,14 +151,14 @@ export default function AdminUsersPage() {
 
   return (
     <div className="min-h-screen bg-ink">
-      <main className="mx-auto max-w-6xl px-4 py-6">
+      <main className="mx-auto max-w-[1180px] px-4 py-7 lg:px-8">
         <div className="flex items-center justify-between">
           <Link href="/admin" className="flex items-center gap-1.5 text-sm font-bold text-muted hover:text-fg">
             <ArrowLeft size={16} /> Admin
           </Link>
           <button
             onClick={exportCsv}
-            className="flex items-center gap-1.5 rounded-xl border-2 border-line bg-panel px-3 py-1.5 text-sm font-bold text-fg hover:border-brand"
+            className="flex items-center gap-1.5 rounded-md border border-line bg-panel px-3 py-1.5 text-sm font-bold text-fg hover:border-brand"
           >
             <Download size={15} /> CSV
           </button>
@@ -174,7 +174,7 @@ export default function AdminUsersPage() {
           <StatCard Icon={Star} label="Ümumi XP" value={stats?.total_xp ?? 0} tint="text-accent" />
         </div>
 
-        <div className="mt-5 flex items-center gap-2 rounded-2xl border-2 border-line bg-panel px-4 py-2.5">
+        <div className="mt-5 flex items-center gap-2 rounded-[10px] border border-line bg-panel px-4 py-2.5">
           <Search size={18} className="text-muted" />
           <input
             value={q}
@@ -190,7 +190,7 @@ export default function AdminUsersPage() {
           <select
             value={fGrade}
             onChange={(e) => setFGrade(e.target.value === "all" ? "all" : Number(e.target.value))}
-            className="rounded-xl border-2 border-line bg-panel px-3 py-1.5 text-sm font-semibold text-fg"
+            className="rounded-md border border-line bg-panel px-3 py-1.5 text-sm font-semibold text-fg"
           >
             <option value="all">Bütün siniflər</option>
             {grades.map((g) => <option key={g} value={g}>{g}-ci sinif</option>)}
@@ -198,13 +198,13 @@ export default function AdminUsersPage() {
           <select
             value={fPlus}
             onChange={(e) => setFPlus(e.target.value as "all" | "plus" | "free")}
-            className="rounded-xl border-2 border-line bg-panel px-3 py-1.5 text-sm font-semibold text-fg"
+            className="rounded-md border border-line bg-panel px-3 py-1.5 text-sm font-semibold text-fg"
           >
             <option value="all">Hamısı (Plus/pulsuz)</option>
             <option value="plus">Yalnız Plus</option>
             <option value="free">Yalnız pulsuz</option>
           </select>
-          <label className="flex items-center gap-1.5 rounded-xl border-2 border-line bg-panel px-3 py-1.5 text-sm font-semibold text-fg">
+          <label className="flex items-center gap-1.5 rounded-md border border-line bg-panel px-3 py-1.5 text-sm font-semibold text-fg">
             <input type="checkbox" checked={fActive} onChange={(e) => setFActive(e.target.checked)} />
             Son 7 gün aktiv
           </label>
@@ -212,7 +212,7 @@ export default function AdminUsersPage() {
 
         {/* Toplu əməliyyat paneli */}
         {selected.size > 0 && (
-          <div className="mt-3 flex flex-wrap items-center gap-2 rounded-2xl border-2 border-brand/40 bg-brand/5 px-4 py-2.5">
+          <div className="mt-3 flex flex-wrap items-center gap-2 rounded-[10px] border border-brand/40 bg-brand/5 px-4 py-2.5">
             <span className="text-sm font-bold text-brand">{selected.size} seçildi</span>
             <button disabled={bulkBusy}
               onClick={() => bulk((id) => adminGrantPlus(id, 12), "Seçilənlərə 12 aylıq Plus verilsin?")}
@@ -221,7 +221,7 @@ export default function AdminUsersPage() {
             </button>
             <button disabled={bulkBusy}
               onClick={() => bulk((id) => adminSetBot(id, true), "Seçilənlər bot işarələnsin (gizlədilsin)?")}
-              className="rounded-lg border-2 border-line px-3 py-1.5 text-sm font-bold text-fg hover:border-brand disabled:opacity-50">
+              className="rounded-lg border border-line px-3 py-1.5 text-sm font-bold text-fg hover:border-brand disabled:opacity-50">
               Bot işarələ
             </button>
             <button onClick={() => setSelected(new Set())} className="text-sm font-semibold text-muted hover:text-fg">
@@ -230,7 +230,7 @@ export default function AdminUsersPage() {
           </div>
         )}
 
-        <div className="mt-4 overflow-x-auto rounded-2xl border border-line bg-panel">
+        <div className="mt-4 overflow-x-auto rounded-[10px] border border-line bg-panel">
           <table className="w-full min-w-[1140px] text-sm">
             <thead>
               <tr className="border-b border-line text-left text-xs uppercase tracking-wide text-muted">
@@ -333,7 +333,7 @@ function UserDetailModal({ uid, onClose, onChanged }: { uid: string; onClose: ()
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 p-0 sm:items-center sm:p-4" onClick={onClose}>
       <div
-        className="max-h-[92vh] w-full max-w-lg overflow-y-auto rounded-t-3xl bg-panel p-5 sm:rounded-3xl"
+        className="max-h-[92vh] w-full max-w-lg overflow-y-auto rounded-t-3xl bg-panel p-5 sm:rounded-[12px]"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-start justify-between">
@@ -398,7 +398,7 @@ function UserDetailModal({ uid, onClose, onChanged }: { uid: string; onClose: ()
 
 function Info({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl bg-panel-2 px-3 py-2">
+    <div className="rounded-md bg-panel-2 px-3 py-2">
       <div className="text-[10px] uppercase tracking-wide text-muted">{label}</div>
       <div className="truncate font-bold text-fg">{value}</div>
     </div>
@@ -414,10 +414,10 @@ function ActionBtn({
   const cls =
     tone === "gold" ? "bg-amber-500 text-white hover:bg-amber-600"
     : tone === "danger" ? "border-2 border-red-500/40 text-red-500 hover:bg-red-500/10"
-    : "border-2 border-line text-fg hover:border-brand";
+    : "border border-line text-fg hover:border-brand";
   return (
     <button disabled={busy} onClick={onClick}
-      className={`flex items-center justify-center gap-2 rounded-2xl px-4 py-2.5 font-bold disabled:opacity-50 ${cls}`}>
+      className={`flex items-center justify-center gap-2 rounded-[10px] px-4 py-2.5 font-bold disabled:opacity-50 ${cls}`}>
       <Icon size={16} /> {label}
     </button>
   );
@@ -430,9 +430,9 @@ function StatCard({
   label: string; value: number; tint: string;
 }) {
   return (
-    <div className="rounded-2xl border border-line bg-panel p-4 text-center">
+    <div className="rounded-[10px] border border-line bg-panel p-4 text-center">
       <Icon size={20} className={`mx-auto ${tint}`} />
-      <div className="mt-1 text-xl font-extrabold text-fg">{value.toLocaleString("az")}</div>
+      <div className="mt-1 text-xl font-semibold text-fg">{value.toLocaleString("az")}</div>
       <div className="text-[11px] text-muted">{label}</div>
     </div>
   );

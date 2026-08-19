@@ -49,7 +49,7 @@ export default function CommandPalette() {
   return (
     <Command.Dialog open={open} onOpenChange={setOpen} label="Admin axtarış"
       className="fixed inset-0 z-[70] flex items-start justify-center bg-black/50 p-4 pt-[15vh]">
-      <div className="w-full max-w-lg overflow-hidden rounded-2xl border border-line bg-panel shadow-2xl"
+      <div className="w-full max-w-lg overflow-hidden rounded-[10px] border border-line bg-panel shadow-2xl"
         onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center gap-2 border-b border-line px-4">
           <Search size={16} className="text-muted" />

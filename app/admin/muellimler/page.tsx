@@ -52,7 +52,7 @@ export default function AdminTeachersPage() {
 
   return (
     <div className="min-h-screen bg-ink">
-      <main className="mx-auto max-w-3xl px-4 py-6">
+      <main className="mx-auto max-w-[1180px] px-4 py-7 lg:px-8">
         <Link href="/admin" className="flex items-center gap-1.5 text-sm font-bold text-muted hover:text-fg">
           <ArrowLeft size={16} /> Admin
         </Link>
@@ -69,7 +69,7 @@ export default function AdminTeachersPage() {
         ) : (
           <div className="mt-2 space-y-3">
             {reqs.map((r) => (
-              <div key={r.user_id} className="rounded-2xl border border-brand/40 bg-brand/5 p-4">
+              <div key={r.user_id} className="rounded-[10px] border border-brand/40 bg-brand/5 p-4">
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
                     <div className="font-bold text-fg">{r.name}</div>
@@ -81,14 +81,14 @@ export default function AdminTeachersPage() {
                     <button
                       disabled={busy}
                       onClick={() => act(() => adminApproveTeacher(r.user_id), `${r.name} müəllim təsdiqləndi`)}
-                      className="flex items-center gap-1 rounded-xl bg-emerald-500 px-3 py-2 text-sm font-bold text-white hover:bg-emerald-600 disabled:opacity-50"
+                      className="flex items-center gap-1 rounded-md bg-emerald-500 px-3 py-2 text-sm font-bold text-white hover:bg-emerald-600 disabled:opacity-50"
                     >
                       <Check size={15} /> Təsdiq
                     </button>
                     <button
                       disabled={busy}
                       onClick={() => act(() => adminRejectTeacher(r.user_id), "Müraciət rədd edildi")}
-                      className="flex items-center gap-1 rounded-xl border-2 border-red-500/40 px-3 py-2 text-sm font-bold text-red-500 hover:bg-red-500/10 disabled:opacity-50"
+                      className="flex items-center gap-1 rounded-md border-2 border-red-500/40 px-3 py-2 text-sm font-bold text-red-500 hover:bg-red-500/10 disabled:opacity-50"
                     >
                       <X size={15} /> Rədd
                     </button>
@@ -106,7 +106,7 @@ export default function AdminTeachersPage() {
         {teachers.length === 0 ? (
           <p className="mt-2 text-sm text-muted">Hələ müəllim yoxdur.</p>
         ) : (
-          <div className="mt-2 overflow-x-auto rounded-2xl border border-line bg-panel">
+          <div className="mt-2 overflow-x-auto rounded-[10px] border border-line bg-panel">
             <table className="w-full min-w-[560px] text-sm">
               <thead>
                 <tr className="border-b border-line text-left text-xs uppercase tracking-wide text-muted">

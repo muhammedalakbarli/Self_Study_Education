@@ -33,7 +33,7 @@ export default function AdminSchoolsPage() {
 
   return (
     <div className="min-h-screen bg-ink">
-      <main className="mx-auto max-w-5xl px-4 py-6">
+      <main className="mx-auto max-w-[1180px] px-4 py-7 lg:px-8">
         <Link href="/admin" className="flex items-center gap-1.5 text-sm font-bold text-muted hover:text-fg">
           <ArrowLeft size={16} /> Admin
         </Link>
@@ -48,7 +48,7 @@ export default function AdminSchoolsPage() {
         {rows.length === 0 ? (
           <p className="mt-8 text-center text-muted">Hələ sinif yaradılmayıb.</p>
         ) : (
-          <div className="mt-4 overflow-x-auto rounded-2xl border border-line bg-panel">
+          <div className="mt-4 overflow-x-auto rounded-[10px] border border-line bg-panel">
             <table className="w-full min-w-[720px] text-sm">
               <thead>
                 <tr className="border-b border-line text-left text-xs uppercase tracking-wide text-muted">
@@ -87,9 +87,9 @@ function Card({ Icon, label, value, tint }: {
   label: string; value: number; tint: string;
 }) {
   return (
-    <div className="rounded-2xl border border-line bg-panel p-4 text-center">
+    <div className="rounded-[10px] border border-line bg-panel p-4 text-center">
       <Icon size={20} className={`mx-auto ${tint}`} />
-      <div className="mt-1 text-xl font-extrabold text-fg">{value.toLocaleString("az")}</div>
+      <div className="mt-1 text-xl font-semibold text-fg">{value.toLocaleString("az")}</div>
       <div className="text-[11px] text-muted">{label}</div>
     </div>
   );

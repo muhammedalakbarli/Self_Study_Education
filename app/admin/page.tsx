@@ -109,7 +109,7 @@ export default function AdminPage() {
 
   return (
     <div className="min-h-screen bg-ink">
-      <main className="mx-auto max-w-3xl px-4 py-6">
+      <main className="mx-auto max-w-[1180px] px-4 py-7 lg:px-8">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-bold text-fg">Admin · Məzmun</h1>
           <div className="flex items-center gap-4">
@@ -125,7 +125,7 @@ export default function AdminPage() {
             <Link href="/admin/muellimler" className="relative text-sm font-semibold text-brand hover:underline">
               Müəllimlər
               {pendingTeachers > 0 && (
-                <span className="ml-1 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1.5 text-[11px] font-extrabold text-white">
+                <span className="ml-1 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1.5 text-[11px] font-semibold text-white">
                   {pendingTeachers}
                 </span>
               )}
@@ -172,7 +172,7 @@ export default function AdminPage() {
         </div>
 
         {err && (
-          <p className="mt-3 rounded-xl bg-red-500/10 px-3 py-2 text-sm font-medium text-red-500">
+          <p className="mt-3 rounded-md bg-red-500/10 px-3 py-2 text-sm font-medium text-red-500">
             {err}
           </p>
         )}
@@ -405,7 +405,7 @@ function Row({
   last?: boolean;
 }) {
   return (
-    <div className="flex items-center gap-2 rounded-2xl border border-line bg-panel px-4 py-3">
+    <div className="flex items-center gap-2 rounded-[10px] border border-line bg-panel px-4 py-3">
       {/* Sıralama oxları */}
       <div className="flex flex-col">
         <button
@@ -448,7 +448,7 @@ function AddBtn({ label, onClick }: { label: string; onClick: () => void }) {
   return (
     <button
       onClick={onClick}
-      className="flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-line px-4 py-3 font-bold text-muted hover:border-brand hover:text-brand"
+      className="flex w-full items-center justify-center gap-2 rounded-[10px] border border-dashed border-line px-4 py-3 font-bold text-muted hover:border-brand hover:text-brand"
     >
       <Plus size={18} /> {label}
     </button>
@@ -524,7 +524,7 @@ function EditForm({
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 p-0 sm:items-center sm:p-4" onClick={onCancel}>
       <div
-        className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-t-3xl bg-panel p-5 sm:rounded-3xl"
+        className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-t-3xl bg-panel p-5 sm:rounded-[12px]"
         onClick={(e) => e.stopPropagation()}
       >
         <h2 className="text-lg font-bold text-fg">
@@ -566,7 +566,7 @@ function EditForm({
         </div>
 
         {formErr && (
-          <p className="mt-3 rounded-xl bg-red-500/10 px-3 py-2 text-sm font-medium text-red-500">
+          <p className="mt-3 rounded-md bg-red-500/10 px-3 py-2 text-sm font-medium text-red-500">
             {formErr}
           </p>
         )}
@@ -575,11 +575,11 @@ function EditForm({
           <button
             disabled={busy}
             onClick={submit}
-            className="flex-1 rounded-2xl bg-brand px-5 py-3 font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark disabled:opacity-50"
+            className="flex-1 rounded-[10px] bg-brand px-5 py-3 font-semibold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark disabled:opacity-50"
           >
             {busy ? "..." : "Yadda saxla"}
           </button>
-          <button onClick={onCancel} className="rounded-2xl border-2 border-line px-5 py-3 font-bold text-fg hover:border-brand">
+          <button onClick={onCancel} className="rounded-[10px] border border-line px-5 py-3 font-bold text-fg hover:border-brand">
             Ləğv et
           </button>
         </div>
@@ -603,7 +603,7 @@ function TaskFields({
       <select
         value={type}
         onChange={(e) => set("type", e.target.value)}
-        className="w-full rounded-xl border-2 border-line bg-panel-2 px-3 py-2 text-fg"
+        className="w-full rounded-md border border-line bg-panel-2 px-3 py-2 text-fg"
       >
         <option value="multiple_choice">Çoxseçimli</option>
         <option value="fill_blank">Boşluq doldurma</option>
@@ -640,7 +640,7 @@ function TaskFields({
                   next[i] = e.target.value;
                   set("options", next);
                 }}
-                className="flex-1 rounded-xl border-2 border-line bg-panel-2 px-3 py-2 text-fg"
+                className="flex-1 rounded-md border border-line bg-panel-2 px-3 py-2 text-fg"
               />
             </div>
           ))}
@@ -702,7 +702,7 @@ function SectionsEditor({
     <div>
       <label className="block text-sm font-bold text-fg">Qayda bölmələri</label>
       {value.map((s, i) => (
-        <div key={i} className="mt-2 space-y-1 rounded-xl border border-line p-2">
+        <div key={i} className="mt-2 space-y-1 rounded-md border border-line p-2">
           <input
             placeholder="Alt başlıq"
             value={s.heading ?? ""}
@@ -758,14 +758,14 @@ function Field({
         <textarea
           value={(value as string) ?? ""}
           onChange={(e) => onChange(e.target.value)}
-          className="mt-1 w-full rounded-xl border-2 border-line bg-panel-2 px-3 py-2 text-fg"
+          className="mt-1 w-full rounded-md border border-line bg-panel-2 px-3 py-2 text-fg"
         />
       ) : (
         <input
           type={type}
           value={(value as string) ?? ""}
           onChange={(e) => onChange(e.target.value)}
-          className="mt-1 w-full rounded-xl border-2 border-line bg-panel-2 px-3 py-2 text-fg"
+          className="mt-1 w-full rounded-md border border-line bg-panel-2 px-3 py-2 text-fg"
         />
       )}
     </div>

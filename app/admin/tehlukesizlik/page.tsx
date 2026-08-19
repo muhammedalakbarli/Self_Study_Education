@@ -85,7 +85,7 @@ export default function AdminSecurityPage() {
   if (isAdmin !== true) return null;
 
   return (
-    <main className="mx-auto max-w-5xl px-4 py-6 lg:px-8">
+    <main className="mx-auto max-w-[1180px] px-4 py-7 lg:px-8">
       <PageHeader
         Icon={ShieldAlert}
         title="Təhlükəsizlik"
@@ -97,7 +97,10 @@ export default function AdminSecurityPage() {
           {flagged === null ? (
             <p className="text-sm text-muted">Yüklənir…</p>
           ) : flagged.length === 0 ? (
-            <EmptyState icon="🛡️" text="Heç bir hesab işarələnməyib — sui-istifadə əlaməti yoxdur." />
+            <EmptyState
+              text="Heç bir hesab işarələnməyib"
+              hint="Hazırda sui-istifadə əlaməti aşkarlanmayıb. Şübhəli fəaliyyət olarsa hesablar burada görünəcək."
+            />
           ) : (
             <DataTable columns={flagCols} data={flagged} getRowId={(r) => r.user_id}
               loading={false} csvName="isarelenmis-hesablar" emptyText="—" minWidth={520} />

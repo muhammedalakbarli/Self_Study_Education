@@ -28,10 +28,10 @@ export function ConfirmProvider({ children }: { children: React.ReactNode }) {
       {children}
       {opts && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 p-4" onClick={() => close(false)}>
-          <div className="w-full max-w-sm rounded-3xl bg-panel p-5 shadow-2xl" onClick={(e) => e.stopPropagation()}>
+          <div className="w-full max-w-sm rounded-[12px] bg-panel p-5 shadow-2xl" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-start gap-3">
               {opts.danger && (
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-red-500/10 text-red-500">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] bg-red-500/10 text-red-500">
                   <AlertTriangle size={20} />
                 </span>
               )}
@@ -43,11 +43,11 @@ export function ConfirmProvider({ children }: { children: React.ReactNode }) {
             <div className="mt-5 flex gap-2">
               <button
                 onClick={() => close(true)}
-                className={`flex-1 rounded-2xl px-4 py-2.5 font-extrabold text-white btn-pop ${opts.danger ? "bg-red-500 hover:bg-red-600 [--pop:#b91c1c]" : "bg-brand hover:bg-brand-dark"}`}
+                className={`flex-1 rounded-[10px] px-4 py-2.5 font-semibold text-white btn-pop ${opts.danger ? "bg-red-500 hover:bg-red-600 [--pop:#b91c1c]" : "bg-brand hover:bg-brand-dark"}`}
               >
                 {opts.confirmText ?? "Təsdiq et"}
               </button>
-              <button onClick={() => close(false)} className="rounded-2xl border-2 border-line px-4 py-2.5 font-bold text-fg hover:border-brand">
+              <button onClick={() => close(false)} className="rounded-[10px] border border-line px-4 py-2.5 font-bold text-fg hover:border-brand">
                 Ləğv et
               </button>
             </div>

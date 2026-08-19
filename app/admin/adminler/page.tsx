@@ -23,8 +23,8 @@ export default function AdminAdminsPage() {
   if (!ready || !user || isAdmin !== true || !rows) return <PageSkeleton />;
 
   return (
-    <main className="mx-auto max-w-3xl px-4 py-6 lg:px-8">
-      <h1 className="flex items-center gap-2 text-2xl font-extrabold text-fg">
+    <main className="mx-auto max-w-[1180px] px-4 py-7 lg:px-8">
+      <h1 className="flex items-center gap-2 text-2xl font-semibold text-fg">
         <ShieldCheck size={22} className="text-brand" /> Adminlər
       </h1>
       <p className="mt-1 text-sm text-muted">
@@ -32,7 +32,7 @@ export default function AdminAdminsPage() {
         <b> moderator</b> qalan əməliyyatları edir.
       </p>
 
-      <div className="mt-4 overflow-hidden rounded-2xl border border-line bg-panel">
+      <div className="mt-4 overflow-hidden rounded-[10px] border border-line bg-panel">
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-line text-left text-xs uppercase tracking-wide text-muted">

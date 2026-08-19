@@ -490,3 +490,115 @@ html.dark .zefi-disk {
 html.dark .force-light .zefi-disk {
   background: transparent;
 }
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   İDARƏETMƏ PANELİ — korporativ tema (`.admin-theme`)
+   ------------------------------------------------------------------------------
+   Şagird tərəfi qəsdən uşaq üçün isti/oyuncaqdır (krem fon, narıncı brend, şişkin
+   Baloo başlıqlar, 3D "btn-pop" düymələr). İdarə paneli isə iş alətidir.
+   Bu blok YALNIZ /admin/* subtree-si üçün dizayn tokenlərini dəyişir.
+
+   Dizayn dili: AĞ kətan. Struktur rəngli fonlarla deyil, nazik hairline konturlar,
+   çoxqatlı yumşaq kölgələr və boşluqla qurulur (müasir SaaS konsolları kimi).
+   Şagird tərəfinə heç bir təsiri yoxdur.
+   ══════════════════════════════════════════════════════════════════════════════ */
+.admin-theme {
+  --color-ink: #ffffff; /* səhifə kətanı — təmiz ağ */
+  --color-panel: #ffffff; /* kartlar da ağ — sərhədlər strukturu daşıyır */
+  --color-panel-2: #f7f8fa; /* iç panellər: cədvəl başlığı, hover, zebra */
+  --color-line: #e7e9ef; /* hairline kontur */
+  --color-muted: #6b7280; /* ikinci dərəcəli mətn */
+  --color-fg: #101828; /* əsas mətn */
+
+  --color-brand: #3358f4; /* müasir korporativ mavi */
+  --color-brand-dark: #2544cf;
+  --color-brand-soft: #1e39ab;
+  --color-accent: #0ea5b7;
+
+  /* Yan panel ağ kətandan çox az fərqlənir — sərhəd onları ayırır. */
+  --admin-sidebar: #fcfcfd;
+  --admin-rail: #eef0f5; /* dekorativ ayırıcı */
+
+  /* Çoxqatlı, çox yumşaq kölgələr — ağ fonda "üzən" kart hissi. */
+  --admin-shadow: 0 1px 2px -1px rgb(16 24 40 / 0.06), 0 1px 3px 0 rgb(16 24 40 / 0.04);
+  --admin-shadow-lg: 0 12px 20px -8px rgb(16 24 40 / 0.1), 0 4px 8px -4px rgb(16 24 40 / 0.06);
+  --admin-ring: 0 0 0 1px rgb(16 24 40 / 0.04);
+
+  color-scheme: light;
+  font-family: var(--font-ui), "Segoe UI", system-ui, sans-serif;
+  letter-spacing: -0.008em;
+}
+
+html.dark .admin-theme {
+  --color-ink: #0a0c12; /* dərin, neytral tünd kətan */
+  --color-panel: #10131b;
+  --color-panel-2: #171b25;
+  --color-line: #222736;
+  --color-muted: #8d97ab;
+  --color-fg: #eaeef7;
+
+  --color-brand: #6b8dff;
+  --color-brand-dark: #4f74f5;
+  --color-brand-soft: #a3bcff;
+  --color-accent: #22c3d6;
+
+  --admin-sidebar: #0c0f16;
+  --admin-rail: #1c2130;
+
+  --admin-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.5);
+  --admin-shadow-lg: 0 16px 32px -12px rgb(0 0 0 / 0.7);
+  --admin-ring: 0 0 0 1px rgb(255 255 255 / 0.04);
+
+  color-scheme: dark;
+}
+
+/* Başlıqlar neytral qrotesk — şişkin Baloo korporativ panelə uymur. */
+.admin-theme h1,
+.admin-theme h2,
+.admin-theme h3,
+.admin-theme h4 {
+  font-family: var(--font-ui), "Segoe UI", system-ui, sans-serif;
+  letter-spacing: -0.021em;
+}
+
+/* Rəqəmlər sütun-sütun düzülsün (analitika/maliyyə oxunaqlığı). */
+.admin-theme table,
+.admin-theme .tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Şagird tərəfinin 3D düymə/kart kölgələri panelə düşməsin. */
+.admin-theme .btn-pop,
+.admin-theme .card-pop {
+  box-shadow: none;
+  border-width: 1px;
+  transform: none;
+}
+
+/* Kart səthi — ağ + hairline + iki qat çox yumşaq kölgə. */
+.admin-surface {
+  background: var(--color-panel);
+  border: 1px solid var(--color-line);
+  box-shadow: var(--admin-shadow);
+  transition: box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+/* İnteraktiv kartlar (keçid kartları) kursor altında bir az "qalxır". */
+.admin-surface-hover:hover {
+  border-color: color-mix(in srgb, var(--color-brand) 34%, var(--color-line));
+  box-shadow: var(--admin-shadow-lg);
+}
+
+/* Fokus halqası — klaviatura naviqasiyası üçün aydın və vahid. */
+.admin-theme :is(a, button, input, select, textarea):focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* Üst zolaq ağ kətanda "şüşə" effekti ilə ayrılsın. */
+.admin-topbar {
+  background: color-mix(in srgb, var(--color-panel) 82%, transparent);
+  backdrop-filter: saturate(1.6) blur(10px);
+}

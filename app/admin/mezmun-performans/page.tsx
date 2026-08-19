@@ -37,7 +37,7 @@ export default function AdminContentPerfPage() {
   if (isAdmin !== true) return null;
 
   return (
-    <main className="mx-auto max-w-4xl px-4 py-6 lg:px-8">
+    <main className="mx-auto max-w-[1180px] px-4 py-7 lg:px-8">
       <PageHeader Icon={BookOpen} title="Məzmun performansı" desc="Hansı dərslər çox/az tamamlanır — zəif nöqtələri tap." />
       <div className="mt-4">
         <DataTable columns={cols} data={data} getRowId={(r) => r.lesson_id}
@@ -45,7 +45,7 @@ export default function AdminContentPerfPage() {
           searchPlaceholder="Dərs adı…"
           toolbar={
             <select value={grade} onChange={(e) => setGrade(e.target.value === "all" ? "all" : Number(e.target.value))}
-              className="rounded-xl border-2 border-line bg-panel px-3 py-2 text-sm font-semibold text-fg">
+              className="rounded-md border border-line bg-panel px-3 py-2 text-sm font-semibold text-fg">
               <option value="all">Bütün siniflər</option>
               {grades.map((g) => <option key={g} value={g}>{g}-ci sinif</option>)}
             </select>

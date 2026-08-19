@@ -35,8 +35,8 @@ export default function AdminRevenuePage() {
   const estMrr = (rev.active_plus * MONTHLY_PRICE).toFixed(2);
 
   return (
-    <main className="mx-auto max-w-4xl px-4 py-6 lg:px-8">
-      <h1 className="flex items-center gap-2 text-2xl font-extrabold text-fg">
+    <main className="mx-auto max-w-[1180px] px-4 py-7 lg:px-8">
+      <h1 className="flex items-center gap-2 text-2xl font-semibold text-fg">
         <TrendingUp size={22} className="text-brand" /> Gəlir
       </h1>
       <p className="mt-1 text-sm text-muted">Imparo Plus abunə və təxmini gəlir.</p>
@@ -55,7 +55,7 @@ export default function AdminRevenuePage() {
       {list.length === 0 ? (
         <p className="mt-2 text-sm text-muted">Hələ aktiv abunəçi yoxdur.</p>
       ) : (
-        <div className="mt-2 overflow-x-auto rounded-2xl border border-line bg-panel">
+        <div className="mt-2 overflow-x-auto rounded-[10px] border border-line bg-panel">
           <table className="w-full min-w-[520px] text-sm">
             <thead>
               <tr className="border-b border-line text-left text-xs uppercase tracking-wide text-muted">
@@ -87,9 +87,9 @@ function Card({ Icon, label, value, tint }: {
   label: string; value: string; tint: string;
 }) {
   return (
-    <div className="rounded-2xl border border-line bg-panel p-4">
+    <div className="rounded-[10px] border border-line bg-panel p-4">
       <Icon size={18} className={tint} />
-      <div className="mt-2 text-2xl font-extrabold text-fg">{value}</div>
+      <div className="mt-2 text-2xl font-semibold text-fg">{value}</div>
       <div className="text-[11px] text-muted">{label}</div>
     </div>
   );

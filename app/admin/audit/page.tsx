@@ -47,7 +47,7 @@ export default function AdminAuditPage() {
   if (isAdmin !== true) return null;
 
   return (
-    <main className="mx-auto max-w-4xl px-4 py-6 lg:px-8">
+    <main className="mx-auto max-w-[1180px] px-4 py-7 lg:px-8">
       <PageHeader Icon={ShieldAlert} title="Audit log" desc="Bütün həssas admin əməliyyatları (Plus, bot, hesab silmə)." />
       <div className="mt-4">
         <DataTable columns={cols} data={rows ?? []} getRowId={(r) => String(r.id)}

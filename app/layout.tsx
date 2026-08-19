@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Nunito, Baloo_2, Geist_Mono } from "next/font/google";
+import { Nunito, Baloo_2, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import AppChrome from "@/components/AppChrome";
 import { ContentProvider } from "@/components/ContentProvider";
@@ -25,6 +25,15 @@ const baloo = Baloo_2({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+// İdarəetmə paneli şrifti — neytral, korporativ qrotesk. Şagird tərəfindəki yumşaq
+// Nunito/Baloo idarə panelində qeyri-ciddi görünürdü. Yalnız `.admin-theme` altında
+// işlədilir (bax globals.css). latin-ext → ə/ç/ş/ğ/ı hərfləri dəstəklənir.
+const inter = Inter({
+  variable: "--font-ui",
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500", "600", "700"],
 });
 
 const SITE_URL = "https://imparo.m-alakbarli2007.workers.dev";
@@ -148,7 +157,7 @@ export default function RootLayout({
   return (
     <html
       lang="az"
-      className={`${nunito.variable} ${baloo.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${nunito.variable} ${baloo.variable} ${geistMono.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         {/* Strukturlaşdırılmış data (SEO / zəngin nəticələr) */}

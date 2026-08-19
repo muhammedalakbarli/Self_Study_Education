@@ -47,7 +47,7 @@ export default function AdminAnnouncementsPage() {
 
   return (
     <div className="min-h-screen bg-ink">
-      <main className="mx-auto max-w-2xl px-4 py-6">
+      <main className="mx-auto max-w-[1180px] px-4 py-7 lg:px-8">
         <Link href="/admin" className="flex items-center gap-1.5 text-sm font-bold text-muted hover:text-fg">
           <ArrowLeft size={16} /> Admin
         </Link>
@@ -57,24 +57,24 @@ export default function AdminAnnouncementsPage() {
         <p className="mt-1 text-sm text-muted">Aktiv elan bütün istifadəçilərə banner kimi göstərilir.</p>
 
         {/* Yeni elan */}
-        <div className="mt-5 rounded-2xl border border-line bg-panel p-4">
+        <div className="mt-5 rounded-[10px] border border-line bg-panel p-4">
           <input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Başlıq (məs. Yeni dərslər əlavə olundu!)"
-            className="w-full rounded-xl border-2 border-line bg-panel-2 px-3 py-2 font-semibold text-fg outline-none focus:border-brand"
+            className="w-full rounded-md border border-line bg-panel-2 px-3 py-2 font-semibold text-fg outline-none focus:border-brand"
           />
           <textarea
             value={body}
             onChange={(e) => setBody(e.target.value)}
             placeholder="Mətn…"
             rows={3}
-            className="mt-2 w-full rounded-xl border-2 border-line bg-panel-2 px-3 py-2 text-fg outline-none focus:border-brand"
+            className="mt-2 w-full rounded-md border border-line bg-panel-2 px-3 py-2 text-fg outline-none focus:border-brand"
           />
           <button
             disabled={busy || !title.trim() || !body.trim()}
             onClick={post}
-            className="mt-3 flex items-center gap-2 rounded-2xl bg-brand px-5 py-2.5 font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark disabled:opacity-50"
+            className="mt-3 flex items-center gap-2 rounded-[10px] bg-brand px-5 py-2.5 font-semibold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark disabled:opacity-50"
           >
             <Send size={16} /> Yerləşdir
           </button>
@@ -84,7 +84,7 @@ export default function AdminAnnouncementsPage() {
         <div className="mt-5 space-y-3">
           {rows.length === 0 && <p className="text-center text-muted">Hələ elan yoxdur.</p>}
           {rows.map((a) => (
-            <div key={a.id} className={`rounded-2xl border p-4 ${a.active ? "border-brand/40 bg-brand/5" : "border-line bg-panel"}`}>
+            <div key={a.id} className={`rounded-[10px] border p-4 ${a.active ? "border-brand/40 bg-brand/5" : "border-line bg-panel"}`}>
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
                   <div className="flex items-center gap-2">
