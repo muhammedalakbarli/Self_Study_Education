@@ -126,21 +126,65 @@ export async function fetchContentTree(): Promise<Subject[] | null> {
 // Tapşırıqları TAM çək — Supabase sorğu başına default 1000 sətir qaytarır, tapşırıqlar
 // isə mindən çoxdur. Səhifələmə olmasa hər dərsin yalnız ilk ~10 tapşırığı gəlir (sort_order
 // 0–9 global kəsilir). Ona görə 1000-lik səhifələrlə hamısını yığırıq.
-async function fetchAllTasks(supabase: SupabaseClient): Promise<TaskRow[]> {
-  const PAGE = 1000;
+//
+// ƏVVƏL: səhifələr ARDICIL çəkilirdi — 9000+ tapşırıq = 10 gediş-gəliş bir-birinin ardınca,
+// yəni path açılana qədər ~5 saniyə skeleton. İNDİ: əvvəlcə ümumi say alınır, sonra bütün
+// səhifələr PARALEL çəkilir (bir gediş-gəliş qədər vaxt).
+async function fetchPage(
+  supabase: SupabaseClient,
+  from: number,
+  size: number,
+): Promise<TaskRow[] | null> {
+  const { data, error } = await supabase
+    .from("tasks")
+    .select("*")
+    .order("sort_order")
+    .order("id")
+    .range(from, from + size - 1);
+  if (error || !data) return null;
+  return data as TaskRow[];
+}
+
+// Ehtiyat yol: paralel çəkiliş alınmasa köhnə (ardıcıl) üsulla topla.
+async function fetchAllTasksSequential(
+  supabase: SupabaseClient,
+  page: number,
+): Promise<TaskRow[]> {
   const all: TaskRow[] = [];
-  for (let from = 0; ; from += PAGE) {
-    const { data, error } = await supabase
-      .from("tasks")
-      .select("*")
-      .order("sort_order")
-      .order("id")
-      .range(from, from + PAGE - 1);
-    if (error || !data || data.length === 0) break;
-    all.push(...(data as TaskRow[]));
-    if (data.length < PAGE) break;
+  for (let from = 0; ; from += page) {
+    const rows = await fetchPage(supabase, from, page);
+    if (!rows || rows.length === 0) break;
+    all.push(...rows);
+    if (rows.length < page) break;
   }
   return all;
+}
+
+async function fetchAllTasks(supabase: SupabaseClient): Promise<TaskRow[]> {
+  const PAGE = 1000;
+
+  const { count, error: countError } = await supabase
+    .from("tasks")
+    .select("id", { count: "exact", head: true });
+
+  // Say alınmadısa risk etmirik — köhnə, sınanmış ardıcıl yola keçirik.
+  if (countError || typeof count !== "number") {
+    return fetchAllTasksSequential(supabase, PAGE);
+  }
+  if (count === 0) return [];
+
+  const pages = Math.ceil(count / PAGE);
+  const results = await Promise.all(
+    Array.from({ length: pages }, (_, i) => fetchPage(supabase, i * PAGE, PAGE)),
+  );
+
+  // Bir səhifə belə uğursuz olsa NATAMAM məzmunla davam etmək olmaz (dərs tapşırıqsız
+  // görünər, mükafat 0 olar) — belə halda tam siyahını ardıcıl yenidən yığırıq.
+  if (results.some((r) => r === null)) {
+    return fetchAllTasksSequential(supabase, PAGE);
+  }
+
+  return results.flat() as TaskRow[];
 }
 
 // Eyni məntiq, amma verilmiş client ilə — server (route handler) tərəf üçün.
