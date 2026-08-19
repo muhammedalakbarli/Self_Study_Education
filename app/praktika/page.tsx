@@ -11,7 +11,8 @@ import { useContent } from "@/components/ContentProvider";
 import { subjectsForGrade } from "@/lib/grade";
 import { loadDueTaskIds, markCorrect, addWrong } from "@/lib/srs";
 import { refillHearts } from "@/lib/hearts";
-import { isPassageTask } from "@/lib/content";
+// DİQQƏT: "@/lib/content"-dən YOX — o, 25 fənn faylını (~500 ms CPU) bundle-a çəkir.
+import { isPassageTask } from "@/lib/content/helpers";
 import { isDailyDone, markDailyDone } from "@/lib/daily";
 import { useT, hasKey } from "@/lib/i18n";
 import type { Task } from "@/lib/types";

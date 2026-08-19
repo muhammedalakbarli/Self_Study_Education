@@ -1,12 +1,17 @@
 "use client";
 
 // Məzmun konteksti: app-a `subjects` + köməkçi funksiyaları verir (əvvəlki statik
-// `@/lib/content` API-nin eynisi). İlkin dəyər TS seed-dir (app dərhal işləyir),
-// mount-dan sonra DB-dən yüklənir; DB boş/xəta olsa seed qalır (fallback).
+// `@/lib/content` API-nin eynisi). Məzmun DB-dən yüklənir; DB boş/əlçatmaz olsa TS seed-ə
+// fallback edilir.
+//
+// VACİB: TS seed (`@/lib/content`) STATİK import EDİLMİR. O, 25 fənn faylını (~9500
+// tapşırıq) daşıyır və qiymətləndirilməsi ~500 ms CPU + 23 MB heap tutur — bu, həm
+// brauzerdə ilk açılışı ləngidir, həm də Cloudflare Worker-də soyuq başlanğıcda
+// "Error 1102 — Worker exceeded resource limits" verirdi. İndi seed yalnız DB
+// cavab vermədikdə lazy `import()` ilə yüklənir (offline/fallback halı).
 
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import type { Subject, Task } from "@/lib/types";
-import { subjects as seedSubjects } from "@/lib/content";
 import { fetchContentTree } from "@/lib/content/db";
 
 interface ContentAPI {
@@ -61,15 +66,24 @@ function buildApi(subjects: Subject[], loading: boolean): ContentAPI {
 }
 
 export function ContentProvider({ children }: { children: React.ReactNode }) {
-  const [subjects, setSubjects] = useState<Subject[]>(seedSubjects);
+  const [subjects, setSubjects] = useState<Subject[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let alive = true;
     fetchContentTree()
-      .then((tree) => {
+      .then(async (tree) => {
         if (!alive) return;
-        if (tree && tree.length) setSubjects(tree);
+        if (tree && tree.length) {
+          setSubjects(tree);
+          return;
+        }
+        // DB boş/əlçatmazdır → yalnız İNDİ ağır TS seed-i yüklə (offline ehtiyatı).
+        const { subjects: seedSubjects } = await import("@/lib/content");
+        if (alive) setSubjects(seedSubjects);
+      })
+      .catch(() => {
+        /* seed də yüklənməsə boş qalır — səhifələr `loading` bitəndən sonra göstərir */
       })
       .finally(() => {
         if (alive) setLoading(false);

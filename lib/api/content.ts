@@ -2,14 +2,18 @@
 
 import { createClient } from "../supabase/server";
 import { fetchContentTreeWith } from "../content/db";
-import { subjects as seedSubjects } from "../content";
 import type { Subject, Lesson } from "../types";
 
 // Bütün fənn ağacını qaytar (DB → yoxsa seed).
+// Seed STATİK import edilmir: Worker soyuq başlanğıcında 25 məzmun faylının
+// qiymətləndirilməsi (~500 ms CPU) resurs limitini aşırdı (Error 1102). Yalnız DB
+// cavab verməyəndə lazy yüklənir.
 export async function getTree(): Promise<Subject[]> {
   const supabase = await createClient();
   const tree = await fetchContentTreeWith(supabase);
-  return tree ?? seedSubjects;
+  if (tree) return tree;
+  const { subjects: seedSubjects } = await import("../content");
+  return seedSubjects;
 }
 
 export function findSubject(tree: Subject[], id: string): Subject | undefined {

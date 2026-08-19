@@ -2,7 +2,6 @@
 // DB boşdursa/xəta olsa null qaytarır → ContentProvider TS seed-ə fallback edir.
 
 import { createClient } from "../supabase/client";
-import { subjects as seedSubjects } from "./index";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type {
   Subject,
@@ -13,12 +12,13 @@ import type {
   RuleSection,
 } from "../types";
 
-// TS seed-dən dərs id → {sections, visual, intro} xəritəsi.
-// DB-də bu sahələr boş qalırsa (seed onları yazmayıbsa) buradan doldururuq —
-// beləcə qaydalar/şəkillər həmişə görünür (məzmun DB-də olsa da).
-const seedLessonById = new Map<string, Lesson>();
-for (const s of seedSubjects)
-  for (const u of s.units) for (const l of u.lessons) seedLessonById.set(l.id, l);
+// QEYD: əvvəl burada TS seed-dən dərs id → {intro, sections, visual} xəritəsi qurulurdu
+// (DB-də boş sahələri doldurmaq üçün). Ölçüldü: DB-nin 566 dərsinin HAMISINDA bu sahələr
+// artıq doludur — seed sıfır əlavə dəyər verirdi, əvəzində 25 məzmun faylını (~500 ms CPU,
+// 23 MB heap) həm brauzer, həm də Worker bundle-ına çəkirdi. Bu isə Cloudflare-də soyuq
+// başlanğıcda "Error 1102 — Worker exceeded resource limits" səbəbi idi. Ona görə seed
+// asılılığı SİLİNDİ; seed yalnız DB tamamilə əlçatmaz olanda (ContentProvider-də lazy
+// `import()` ilə) yüklənir.
 
 interface SubjectRow {
   id: string;
@@ -222,15 +222,13 @@ export async function fetchContentTreeWith(
     const lessonsByUnit = new Map<string, Lesson[]>();
     for (const row of lessonRows) {
       const t = tasksByLesson.get(row.id) ?? { main: [], bonus: [] };
-      const seed = seedLessonById.get(row.id); // DB-də boş sahələr üçün ehtiyat
       const lesson: Lesson = {
         id: row.id,
         title: row.title,
-        intro: row.intro ?? seed?.intro ?? "",
-        kind: (row.kind as Lesson["kind"]) ?? seed?.kind ?? "lesson",
-        visual: row.visual ?? seed?.visual,
-        sections:
-          row.sections && row.sections.length ? row.sections : seed?.sections,
+        intro: row.intro ?? "",
+        kind: (row.kind as Lesson["kind"]) ?? "lesson",
+        visual: row.visual ?? undefined,
+        sections: row.sections && row.sections.length ? row.sections : undefined,
         tasks: t.main,
         bonusTasks: t.bonus.length ? t.bonus : undefined,
       };
