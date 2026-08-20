@@ -25,7 +25,7 @@ const BENEFITS = [
 ];
 
 const PLANS = [
-  { id: "yearly", name: "İllik", price: "24.90 ₼", per: "il", note: "2 ay pulsuz", best: true, months: 12 },
+  { id: "yearly", name: "İllik", price: "23.99 ₼", per: "il", note: "3 ay pulsuz", best: true, months: 12 },
   { id: "monthly", name: "Aylıq", price: "2.99 ₼", per: "ay", note: "", best: false, months: 1 },
 ];
 
