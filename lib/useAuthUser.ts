@@ -8,7 +8,13 @@ import { createClient } from "./supabase/client";
 import { identifyUser, resetAnalytics, track } from "./analytics";
 import type { User } from "@supabase/supabase-js";
 
-export function useAuthUser(): { user: User | null; ready: boolean } {
+/**
+ * `optional: true` — girişsiz istifadəçini /login-ə YÖNLƏNDİRMİR, sadəcə user=null
+ * qaytarır. Onboarding-də ilk dərs hesabsız oynanır (Duolingo modeli), ona görə həmin
+ * səhifə qapını özü idarə etməlidir. Bütün digər çağırışlar əvvəlki kimi qorunur.
+ */
+export function useAuthUser(opts?: { optional?: boolean }): { user: User | null; ready: boolean } {
+  const optional = opts?.optional ?? false;
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [ready, setReady] = useState(false);
@@ -20,11 +26,11 @@ export function useAuthUser(): { user: User | null; ready: boolean } {
     supabase.auth.getSession().then(({ data: { session } }) => {
       const u = session?.user ?? null;
       if (!u) {
-        router.replace("/login");
+        if (!optional) router.replace("/login");
         setReady(true);
         return;
       }
-      if (!u.user_metadata?.onboarded) {
+      if (!optional && !u.user_metadata?.onboarded) {
         router.replace("/onboarding");
         setReady(true);
         return;
@@ -41,14 +47,14 @@ export function useAuthUser(): { user: User | null; ready: boolean } {
       if (event === "SIGNED_OUT" || !u) {
         resetAnalytics();
         setUser(null);
-        setReady(false);
-        router.replace("/login");
+        setReady(optional);
+        if (!optional) router.replace("/login");
         return;
       }
       if (event === "SIGNED_IN" || event === "TOKEN_REFRESHED") {
         identifyUser(u.id, { grade: u.user_metadata?.grade });
         if (event === "SIGNED_IN") track("session_start");
-        if (!u.user_metadata?.onboarded) {
+        if (!optional && !u.user_metadata?.onboarded) {
           router.replace("/onboarding");
           setReady(true);
           return;
@@ -60,7 +66,7 @@ export function useAuthUser(): { user: User | null; ready: boolean } {
     });
 
     return () => subscription.unsubscribe();
-  }, [router]);
+  }, [router, optional]);
 
   return { user, ready };
 }

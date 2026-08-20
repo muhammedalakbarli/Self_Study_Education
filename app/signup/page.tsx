@@ -4,6 +4,7 @@
 // Validasiya + şifrə gücü + təsdiq + real Supabase qeydiyyatı.
 
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Eye, EyeOff, CheckCircle, XCircle, Check } from "lucide-react";
@@ -12,6 +13,9 @@ import GoogleButton from "@/components/GoogleButton";
 import Mascot from "@/components/Mascot";
 import { signUpWithEmail } from "@/lib/auth";
 import { track } from "@/lib/analytics";
+import { getGuest, guestMetadata, clearGuest, setGuest } from "@/lib/guest";
+import { createClient } from "@/lib/supabase/client";
+import { completeLesson } from "@/lib/progress";
 import { useT } from "@/lib/i18n";
 
 export default function SignupPage() {
@@ -27,6 +31,12 @@ export default function SignupPage() {
   const [loading, setLoading] = useState(false);
   const [guardianConsent, setGuardianConsent] = useState(false);
   const [parentEmail, setParentEmail] = useState("");
+  // Onboarding-dən gələn şagirddən əvvəlcə yaş soruşulur (Duolingo axını) — yaş
+  // uşaq məxfiliyi qaydaları üçün lazımdır, bax məxfilik siyasəti bölmə 3.
+  const fromOnboarding = useSearchParams().get("from") === "onboarding";
+  const [age, setAge] = useState("");
+  const [askedAge, setAskedAge] = useState(false);
+  const needAge = fromOnboarding && !askedAge;
 
   // Şifrə gücü yoxlaması
   const getPasswordStrength = (pass: string) => {
@@ -78,8 +88,60 @@ export default function SignupPage() {
       router.push("/login?confirm=1");
       return;
     }
-    // Yeni istifadəçi — onboarding suallarına.
+    // Onboarding artıq qeydiyyatdan ƏVVƏL keçilib (Duolingo modeli) — cavabları və
+    // sınaq dərsini yeni hesaba köçür, sonra qonaq anbarını təmizlə.
+    const g = getGuest();
+    if (g.grade !== undefined) {
+      await createClient().auth.updateUser({ data: guestMetadata(g) }).catch(() => {});
+      // Dərsin mükafatı SERVERDƏ hesablanır (0037) — client məbləğ göndərmir.
+      for (const lessonId of g.lessons ?? []) {
+        await completeLesson(lessonId).catch(() => {});
+      }
+      clearGuest();
+      router.push("/dashboard");
+      return;
+    }
+    // Onboarding keçilməyibsə (birbaşa /signup-a gəlib) — suallara yönləndir.
     router.push("/onboarding");
+  }
+
+  if (needAge) {
+    const n = Number(age);
+    const valid = Number.isFinite(n) && n >= 5 && n <= 18;
+    return (
+      <div className="flex min-h-screen flex-col items-center justify-center bg-ink px-5">
+        <Mascot size={120} mood="happy" />
+        <h1 className="mt-6 text-2xl font-extrabold text-fg">Neçə yaşın var?</h1>
+        <p className="mt-2 max-w-sm text-center text-sm text-muted">
+          Yaşını bilmək sənə uyğun məzmunu göstərməyə kömək edir. Bax{" "}
+          <Link href="/mexfilik" className="font-bold text-brand underline">
+            Məxfilik siyasəti
+          </Link>
+          .
+        </p>
+        <input
+          type="number"
+          inputMode="numeric"
+          min={5}
+          max={18}
+          value={age}
+          onChange={(e) => setAge(e.target.value)}
+          placeholder="Yaş"
+          className="mt-7 w-40 rounded-2xl border-2 border-line bg-panel px-5 py-3.5 text-center text-2xl font-extrabold text-fg outline-none focus:border-brand"
+        />
+        <button
+          type="button"
+          disabled={!valid}
+          onClick={() => {
+            setGuest({ age: n });
+            setAskedAge(true);
+          }}
+          className="mt-7 w-full max-w-xs rounded-2xl bg-brand px-5 py-3.5 text-lg font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          Davam et
+        </button>
+      </div>
+    );
   }
 
   return (

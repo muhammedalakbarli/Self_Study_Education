@@ -6,6 +6,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Heart } from "lucide-react";
 import type { Lesson, Task } from "@/lib/types";
@@ -16,6 +17,8 @@ import { loadHearts, loseHeart, MAX_HEARTS } from "@/lib/hearts";
 import { loadPlus } from "@/lib/plus";
 import { addWrong as addMistake, markCorrect as removeMistake } from "@/lib/srs";
 import { recordAttempt, flushAttempts } from "@/lib/attempts";
+import { addGuestLesson } from "@/lib/guest";
+import RewardChain from "@/components/onboarding/RewardChain";
 import { bumpQuest, bumpQuests } from "@/lib/quests";
 import { addWeeklyXp } from "@/lib/leaderboard";
 import { addMonthlyXp } from "@/lib/monthly";
@@ -35,6 +38,10 @@ interface Props {
   slug: string;
   lesson: Lesson;
   userId: string;
+  /** Onboarding-də hesabsız oynanan dərs (Duolingo modeli: əvvəl sına, sonra qeydiyyat).
+   *  Bu rejimdə heç bir server yazısı getmir — nəticə qonaq anbarında saxlanılır və
+   *  hesab yaradılanda köçürülür (bax lib/guest.ts). */
+  guest?: boolean;
 }
 
 type Phase = "main" | "bonusPrompt" | "bonus" | "retry" | "done";
@@ -45,8 +52,9 @@ const XP_PER_CORRECT = 2; // hər düzgün cavab
 const COMBO_STEP = 5; // hər 5 ard-arda düzgün → bonus
 const COMBO_BONUS = 1; // bonus XP
 
-export default function LessonRunner({ slug, lesson, userId }: Props) {
+export default function LessonRunner({ slug, lesson, userId, guest = false }: Props) {
   const t = useT();
+  const router = useRouter();
   const mainTasks = lesson.tasks;
   const bonusTasks = lesson.bonusTasks ?? [];
 
@@ -61,7 +69,7 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
   const [combo, setCombo] = useState(0);
   const [bestCombo, setBestCombo] = useState(0);
   const [comboBonus, setComboBonus] = useState(0); // bu addımda verilən combo bonusu
-  const [startXp, setStartXp] = useState<number | null>(null);
+  const [startXp, setStartXp] = useState<number | null>(guest ? 0 : null);
   // Səhv cavablandırılan tapşırıqlar — bölmə sonunda düz cavablanana qədər təkrarlanır.
   const [wrongIds, setWrongIds] = useState<string[]>([]);
   const [retryQueue, setRetryQueue] = useState<Task[]>([]);
@@ -73,22 +81,27 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
   const [heartsOut, setHeartsOut] = useState(false);
   // Imparo Plus: limitsiz can + 2× zümrüd.
   const [plus, setPlus] = useState(false);
+  // Onboarding: statistikadan sonra mükafat zənciri (bal → seriya → sandıq → profil).
+  const [rewards, setRewards] = useState(false);
   // Cəhd jurnalı (migration 0044): sual göründüyü an + eyni tapşırığa neçənci cəhd.
   const shownAtRef = useRef<number>(Date.now());
   const attemptNoRef = useRef<Record<string, number>>({});
 
   // Level-up aşkarı üçün dərsə başlamazdan əvvəlki XP.
   useEffect(() => {
+    if (guest) return;
     loadProgress(userId).then((p) => setStartXp(p.totalXp)).catch(() => setStartXp(0));
-  }, [userId]);
+  }, [userId, guest]);
   // Cari can sayını yüklə (zaman əsaslı bərpa serverdə tətbiq olunur).
   useEffect(() => {
+    if (guest) return; // qonaqda canlar lokal MAX_HEARTS-dan başlayır
     loadHearts().then(setHearts).catch(() => {});
-  }, [userId]);
+  }, [userId, guest]);
   // Plus statusu (limitsiz can / 2× zümrüd).
   useEffect(() => {
+    if (guest) return; // qonaq Plus ola bilməz
     loadPlus().then(setPlus).catch(() => {});
-  }, [userId]);
+  }, [userId, guest]);
 
   // Analitika: dərs başlandı (funnel — signup→onboarding→dərs).
   useEffect(() => {
@@ -122,7 +135,7 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
     // işlədiyi üçün sinxrondur — dərsin axıcılığına heç bir təsiri yoxdur.
     const attemptNo = (attemptNoRef.current[task.id] ?? 0) + 1;
     attemptNoRef.current[task.id] = attemptNo;
-    recordAttempt({
+    if (!guest) recordAttempt({
       task_id: task.id,
       lesson_id: lesson.id,
       correct: result.correct,
@@ -135,11 +148,11 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
     // Təkrar mərhələsi — XP/combo/statistika dəyişmir, yalnız düz cavab tələb olunur.
     if (inRetry) {
       if (result.correct) {
-        removeMistake(task.id);
+        if (!guest) removeMistake(task.id);
         playCorrect();
         vibrateCorrect();
       } else {
-        addMistake(task.id);
+        if (!guest) addMistake(task.id);
         playWrong();
         vibrateWrong();
       }
@@ -155,7 +168,7 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
       setComboBonus(bonus);
       setEarnedXp((x) => x + XP_PER_CORRECT + bonus);
       setCorrectCount((c) => c + 1);
-      removeMistake(task.id);
+      if (!guest) removeMistake(task.id);
       bumpQuest("correct", 1);
       playCorrect();
       if (nextCombo >= 2) playCombo(nextCombo);
@@ -163,17 +176,25 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
     } else {
       setCombo(0);
       setComboBonus(0);
-      addMistake(task.id);
+      if (!guest) addMistake(task.id);
       // Bölmə sonunda təkrar üçün səhv tapşırığı yadda saxla (təkrarsız).
       setWrongIds((w) => (w.includes(task.id) ? w : [...w, task.id]));
       // Plus: limitsiz can (can aparılmır). Əks halda bir can apar.
       if (!plus) {
-        loseHeart()
-          .then((h) => {
-            setHearts(h);
-            if (h <= 0) setHeartsOut(true);
-          })
-          .catch(() => {});
+        if (guest) {
+          setHearts((h) => {
+            const n = Math.max(0, h - 1);
+            if (n <= 0) setHeartsOut(true);
+            return n;
+          });
+        } else {
+          loseHeart()
+            .then((h) => {
+              setHearts(h);
+              if (h <= 0) setHeartsOut(true);
+            })
+            .catch(() => {});
+        }
       }
       playWrong();
       vibrateWrong();
@@ -208,12 +229,17 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
   function finishLesson(finalXp: number) {
     // XP+zümrüd artıq serverdə (complete_lesson RPC) həqiqi tapşırıq sayından hesablanır —
     // client heç bir məbləğ göndərmir, idempotentdir (bax lib/progress.ts, migration 0037).
-    completeLesson(lesson.id)
-      .then(() => touchFriendStreaks())
-      .catch(() => {});
-    bumpQuests({ xp: finalXp, lessons: 1 });
-    addWeeklyXp(finalXp);
-    addMonthlyXp(finalXp);
+    if (guest) {
+      // Qonaq: mükafat serverdə hesablanmır — onboarding üçün lokal qeyd kifayətdir.
+      addGuestLesson(lesson.id, finalXp, 5);
+    } else {
+      completeLesson(lesson.id)
+        .then(() => touchFriendStreaks())
+        .catch(() => {});
+      bumpQuests({ xp: finalXp, lessons: 1 });
+      addWeeklyXp(finalXp);
+      addMonthlyXp(finalXp);
+    }
     const up =
       startXp !== null &&
       levelFromXp(startXp).level < levelFromXp(startXp + finalXp).level;
@@ -343,6 +369,16 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
 
   // ── Nəticə (bayram) ──
   if (phase === "done") {
+    // Onboarding axını: statistika → mükafat zənciri → qeydiyyat.
+    if (guest && rewards) {
+      return (
+        <RewardChain
+          xp={earnedXp}
+          onFinish={() => router.push("/signup?from=onboarding")}
+          onSkip={() => router.push("/")}   // "Sonra" — hesabsız ana səhifəyə qayıdır
+        />
+      );
+    }
     return (
       <DoneScreen
         slug={slug}
@@ -354,6 +390,8 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
           levelFromXp(startXp).level < levelFromXp(startXp + earnedXp).level
         }
         newLevel={startXp !== null ? levelFromXp(startXp + earnedXp).level : 0}
+        guest={guest}
+        onGuestContinue={() => setRewards(true)}
       />
     );
   }
@@ -583,12 +621,16 @@ function DoneScreen({
   bestCombo,
   leveledUp,
   newLevel,
+  guest = false,
+  onGuestContinue,
 }: {
   slug: string;
   earnedXp: number;
   accuracy: number;
   bestCombo: number;
   leveledUp: boolean;
+  guest?: boolean;
+  onGuestContinue?: () => void;
   newLevel: number;
 }) {
   const t = useT();
@@ -656,20 +698,34 @@ function DoneScreen({
         <Stat value={`🔥 ${bestCombo}`} label={t("cel.combo")} tone="text-orange-500" />
       </motion.div>
 
-      <div className="mt-8 flex justify-center gap-3">
-        <Link
-          href={`/subjects/${slug}`}
-          className="rounded-2xl bg-brand px-5 py-3 font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark"
-        >
-          {t("run.backToPath")}
-        </Link>
-        <Link
-          href="/dashboard"
-          className="rounded-2xl border-2 border-line px-5 py-3 font-bold text-fg btn-pop btn-pop-ghost hover:border-brand"
-        >
-          {t("run.home")}
-        </Link>
-      </div>
+      {/* Onboarding: hesabsız oynanan ilk dərsdən sonra tərəqqini saxlamaq üçün
+          profil təklif olunur (Duolingo modeli). Adi dərsdə isə yola qayıdırıq. */}
+      {guest ? (
+        <div className="mt-8 flex w-full max-w-xs flex-col gap-3">
+          <button
+            type="button"
+            onClick={onGuestContinue}
+            className="rounded-2xl bg-brand px-5 py-3.5 text-lg font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark"
+          >
+            Davam et
+          </button>
+        </div>
+      ) : (
+        <div className="mt-8 flex justify-center gap-3">
+          <Link
+            href={`/subjects/${slug}`}
+            className="rounded-2xl bg-brand px-5 py-3 font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark"
+          >
+            {t("run.backToPath")}
+          </Link>
+          <Link
+            href="/dashboard"
+            className="rounded-2xl border-2 border-line px-5 py-3 font-bold text-fg btn-pop btn-pop-ghost hover:border-brand"
+          >
+            {t("run.home")}
+          </Link>
+        </div>
+      )}
     </div>
   );
 }

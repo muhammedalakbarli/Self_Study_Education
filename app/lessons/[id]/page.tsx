@@ -3,7 +3,7 @@
 // Dərs səhifəsi (immersiv, sidebar-sız): giriş (Zefi + balon + qaydalar) → tapşırıqlar.
 
 import { use, useState } from "react";
-import { notFound } from "next/navigation";
+import { notFound, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { X } from "lucide-react";
 import { useContent } from "@/components/ContentProvider";
@@ -26,7 +26,11 @@ export default function LessonPage({
 }) {
   const { id } = use(params);
   const router = useRouter();
-  const { user, ready } = useAuthUser();
+  // Onboarding-də ilk dərs HESABSIZ oynanır (Duolingo modeli: əvvəl sına, sonra
+  // qeydiyyat). Yalnız bu halda auth qapısı açılır — qalan bütün dərslər girişlidir.
+  const onboarding = useSearchParams().get("onboarding") === "1";
+  const { user, ready } = useAuthUser({ optional: onboarding });
+  const guest = onboarding && !user;
   const { getLesson, orderedLessonIds, loading } = useContent();
   const [started, setStarted] = useState(false);
   const t = useT();
@@ -36,7 +40,8 @@ export default function LessonPage({
   // DB hələ yüklənirsə (seed-də olmayan yeni dərs ola bilər) 404 vermə, gözlə.
   if (!found && loading) return <PageSkeleton />;
   if (!found) notFound();
-  if (!ready || !user) return <PageSkeleton />;
+  if (!ready) return <PageSkeleton />;
+  if (!user && !guest) return <PageSkeleton />;
 
   const { subject, lesson } = found;
   const index = orderedLessonIds(subject.slug).indexOf(lesson.id);
@@ -60,7 +65,14 @@ export default function LessonPage({
   }
 
   if (started) {
-    return <LessonRunner slug={subject.slug} lesson={lesson} userId={user.id} />;
+    return (
+      <LessonRunner
+        slug={subject.slug}
+        lesson={lesson}
+        userId={user?.id ?? "guest"}
+        guest={guest}
+      />
+    );
   }
 
   return (

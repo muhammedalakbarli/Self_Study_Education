@@ -138,7 +138,7 @@ export default function LandingPage() {
           {/* CTA — mərkəzi, geniş (Duolingo kimi) */}
           <motion.div variants={fadeUp} className="mt-9 flex w-full max-w-sm flex-col gap-3">
             <Link
-              href="/signup"
+              href="/onboarding"
               className="rounded-2xl bg-brand px-8 py-4 text-lg font-extrabold uppercase tracking-wide text-white shadow-lg shadow-brand/25 btn-pop hover:bg-brand-dark"
             >
               {t("home.ctaStart")}
