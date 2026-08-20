@@ -13,7 +13,7 @@ import type { Subject } from "@/lib/types";
 import { C } from "@/lib/theme";
 import ZefiMascot, { type ZefiEmotion } from "@/components/ZefiMascot";
 
-// Yol boyu dövr edən Ulduz pozaları (Duolingo owl kimi, hər 5-ci düyündə).
+// Yol boyu dövr edən Zefi pozaları (Duolingo owl kimi, hər 5-ci düyündə).
 const PERCH_EMOTIONS: ZefiEmotion[] = ["happy", "welcome", "celebrating", "learning", "thinking"];
 
 export default function Learn() {
@@ -135,7 +135,7 @@ export default function Learn() {
           const offset = Math.round(Math.sin(i * 0.9) * 70);
           const bg = n.state === "done" ? C.success : n.state === "current" ? C.gold : C.panel2;
           const locked = n.state === "locked";
-          // Yol boyu Ulduz — hər 5-ci düyündə, cari düyün istisna, düyünün əks tərəfində.
+          // Yol boyu Zefi — hər 5-ci düyündə, cari düyün istisna, düyünün əks tərəfində.
           const showMascot = i > 0 && i % 5 === 2 && n.state !== "current";
           const mascotSide: "left" | "right" = offset >= 0 ? "left" : "right";
           const mascotEmotion = PERCH_EMOTIONS[Math.floor(i / 5) % PERCH_EMOTIONS.length];

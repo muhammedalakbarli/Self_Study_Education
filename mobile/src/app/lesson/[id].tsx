@@ -70,9 +70,9 @@ export default function LessonScreen() {
   const [shakeX] = useState(() => new Animated.Value(0)); // səhv cavabda titrəmə
   const [fbAnim] = useState(() => new Animated.Value(0)); // feedback banner slayd/opacity
   const [mascotScale] = useState(() => new Animated.Value(0)); // done ekranı maskot spring
-  const [buddyBounce] = useState(() => new Animated.Value(1)); // yoldaş Ulduz — cavabda bounce
+  const [buddyBounce] = useState(() => new Animated.Value(1)); // yoldaş Zefi — cavabda bounce
 
-  // Yoldaş Ulduz — sualı gözləyəndə düşünür, düz/səhv cavabda reaksiya verir (Duolingo owl kimi).
+  // Yoldaş Zefi — sualı gözləyəndə düşünür, düz/səhv cavabda reaksiya verir (Duolingo owl kimi).
   const buddyEmotion: ZefiEmotion = !checked ? "thinking" : correct ? "celebrating" : "worried";
   useEffect(() => {
     if (!checked) return;

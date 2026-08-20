@@ -2,7 +2,7 @@
 
 // Landing (marketinq) səhifəsi — Duolingo-səviyyəli: animasiyalı hero (üzən blob-lar,
 // stagger giriş), scroll-reveal bölmələr, count-up statistika, rəngli fənn kartları,
-// oyunlaşdırma vurğuları, "necə işləyir" addımları. Öz indigo brendimiz + Ulduz mascotu.
+// oyunlaşdırma vurğuları, "necə işləyir" addımları. Öz indigo brendimiz + Zefi mascotu.
 // Bütün hərəkət prefers-reduced-motion / .no-anim ilə söndürülür.
 
 import { useEffect, type ReactNode } from "react";

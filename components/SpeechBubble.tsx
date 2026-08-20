@@ -1,6 +1,6 @@
 "use client";
 
-// Ulduz-un danışıq balonu (Duolingo xarakter balonu hissi).
+// Zefi-nin danışıq balonu (Duolingo xarakter balonu hissi).
 // tail: balonun ucunun hansı tərəfə baxdığı (mascota doğru).
 
 import { motion } from "framer-motion";

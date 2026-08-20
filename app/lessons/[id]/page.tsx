@@ -1,6 +1,6 @@
 "use client";
 
-// Dərs səhifəsi (immersiv, sidebar-sız): giriş (Ulduz + balon + qaydalar) → tapşırıqlar.
+// Dərs səhifəsi (immersiv, sidebar-sız): giriş (Zefi + balon + qaydalar) → tapşırıqlar.
 
 import { use, useState } from "react";
 import { notFound } from "next/navigation";
@@ -75,7 +75,7 @@ export default function LessonPage({
           <X size={26} />
         </Link>
 
-        {/* Ulduz + danışıq balonu */}
+        {/* Zefi + danışıq balonu */}
         <div className="mt-4 flex items-end gap-3">
           <Mascot size={92} />
           <SpeechBubble className="mb-2 flex-1 font-semibold" tail="left">

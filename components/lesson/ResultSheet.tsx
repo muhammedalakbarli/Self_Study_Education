@@ -1,7 +1,7 @@
 "use client";
 
 // Duolingo imzalı "nəticə lövhəsi" — cavab yoxlananda aşağıdan qalxır.
-// Düzgün → yaşıl "Əla!"; səhv → qırmızı "Düzgün cavab: …". Böyük Ulduz + DAVAM ET.
+// Düzgün → yaşıl "Əla!"; səhv → qırmızı "Düzgün cavab: …". Böyük Zefi + DAVAM ET.
 
 import { motion } from "framer-motion";
 import { Check, X } from "lucide-react";

@@ -8,7 +8,7 @@ import { useSyncExternalStore } from "react";
 let current: HTMLAudioElement | null = null;
 
 // ── Qlobal "danışır" vəziyyəti (mascot lipsync üçün) ──
-// Audio çalınanda Ulduz ağzını sinxron oynadır; bunun üçün sadə pub/sub.
+// Audio çalınanda Zefi ağzını sinxron oynadır; bunun üçün sadə pub/sub.
 let speaking = false;
 const speakingListeners = new Set<(v: boolean) => void>();
 

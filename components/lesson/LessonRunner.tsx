@@ -15,6 +15,7 @@ import { completeLesson, loadProgress } from "@/lib/progress";
 import { loadHearts, loseHeart, MAX_HEARTS } from "@/lib/hearts";
 import { loadPlus } from "@/lib/plus";
 import { addWrong as addMistake, markCorrect as removeMistake } from "@/lib/srs";
+import { recordAttempt, flushAttempts } from "@/lib/attempts";
 import { bumpQuest, bumpQuests } from "@/lib/quests";
 import { addWeeklyXp } from "@/lib/leaderboard";
 import { addMonthlyXp } from "@/lib/monthly";
@@ -72,6 +73,9 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
   const [heartsOut, setHeartsOut] = useState(false);
   // Imparo Plus: limitsiz can + 2× zümrüd.
   const [plus, setPlus] = useState(false);
+  // Cəhd jurnalı (migration 0044): sual göründüyü an + eyni tapşırığa neçənci cəhd.
+  const shownAtRef = useRef<number>(Date.now());
+  const attemptNoRef = useRef<Record<string, number>>({});
 
   // Level-up aşkarı üçün dərsə başlamazdan əvvəlki XP.
   useEffect(() => {
@@ -91,6 +95,10 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
     track("lesson_started", { lessonId: lesson.id, subject: slug });
   }, [lesson.id, slug]);
 
+  // Səhifədən çıxanda buferdə qalanı göndər. Dərs YARIMÇIQ atılsa da data qalır —
+  // şagirdin məhz harada qırıldığı ən dəyərli siqnallardan biridir.
+  useEffect(() => () => void flushAttempts(), []);
+
   const inBonus = phase === "bonus";
   const inRetry = phase === "retry";
   const list: Task[] = inRetry ? retryQueue : inBonus ? bonusTasks : mainTasks;
@@ -109,6 +117,20 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
     const result = gradeTask(task, answer);
     setChecked(true);
     setLastCorrect(result.correct);
+
+    // Xam cəhdi jurnala yaz (bax lib/attempts.ts + migration 0044). Bufer üzərindən
+    // işlədiyi üçün sinxrondur — dərsin axıcılığına heç bir təsiri yoxdur.
+    const attemptNo = (attemptNoRef.current[task.id] ?? 0) + 1;
+    attemptNoRef.current[task.id] = attemptNo;
+    recordAttempt({
+      task_id: task.id,
+      lesson_id: lesson.id,
+      correct: result.correct,
+      chosen: chosenAnswerText(task, answer),
+      ms_taken: Date.now() - shownAtRef.current,
+      attempt_no: attemptNo,
+      is_review: inRetry,
+    });
 
     // Təkrar mərhələsi — XP/combo/statistika dəyişmir, yalnız düz cavab tələb olunur.
     if (inRetry) {
@@ -206,6 +228,7 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
       bestCombo,
       leveledUp: up,
     });
+    void flushAttempts(); // dərsin bütün cəhdlərini serverə yaz
     setPhase("done");
   }
 
@@ -213,6 +236,7 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
     setAnswer(null);
     setChecked(false);
     setComboBonus(0);
+    shownAtRef.current = Date.now(); // növbəti sualın düşünmə taymeri
 
     // Təkrar mərhələsi: düz cavab → növbatiyə keç; səhv → sona at (düz olana qədər dövr et).
     if (inRetry) {
@@ -267,6 +291,7 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
     setAfterRetry(target);
     setAnswer(null);
     setChecked(false);
+    shownAtRef.current = Date.now();
     setPhase("retry");
   }
 
@@ -529,6 +554,16 @@ export default function LessonRunner({ slug, lesson, userId }: Props) {
       </AnimatePresence>
     </div>
   );
+}
+
+// Şagirdin SEÇDİYİ cavabı mətn kimi qaytarır (jurnal üçün). Çoxseçimlidə indeks
+// YOX, mətn saxlanılır: balance.ts variantları qarışdırdığı üçün eyni indeks
+// re-seed-dən sonra tamam başqa cavabı göstərər və köhnə jurnal yalan danışar.
+function chosenAnswerText(task: Task, answer: UserAnswer): string | null {
+  if (task.type === "multiple_choice" || task.type === "listening") {
+    return task.options[Number(answer)] ?? null;
+  }
+  return String(answer);
 }
 
 // Tapşırığın düzgün cavabını mətn kimi qaytarır (nəticə lövhəsi üçün).

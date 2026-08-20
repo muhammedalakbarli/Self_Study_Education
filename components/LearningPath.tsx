@@ -3,7 +3,7 @@
 // "Imparo" öyrənmə xəritəsi — Duolingo-üslubu tək sütunlu zigzag yol.
 // Qalın 3D düyünlər (altında dərinlik kölgəsi), düyünlər arası xətt YOX (Duolingo kimi),
 // cari düyün qızılı + "BAŞLA" balonu + halo, kiliddə düyün toxunanda titrəyir. Hər bölmə
-// başında rəngli banner. Ulduz yolun yanında platformada. Reduced-motion/.no-anim tabedir.
+// başında rəngli banner. Zefi yolun yanında platformada. Reduced-motion/.no-anim tabedir.
 
 import Link from "next/link";
 import { useState } from "react";
@@ -234,7 +234,7 @@ function NodeLabel({ node }: { node: PathNode }) {
   );
 }
 
-// Ulduz yolun yanında kiçik platformada (Duolingo owl kimi).
+// Zefi yolun yanında kiçik platformada (Duolingo owl kimi).
 // Ölçü dərs dairələrindən (82px) bir qədər böyük — görkəmli.
 const MASCOT_SIZE = 104;
 // Mascotun düyün mərkəzindən üfüqi aralığı — qonşu (kilidli) bölmə ilə aydın boşluq.
@@ -307,9 +307,9 @@ export default function LearningPath({ nodes }: { nodes: PathNode[] }) {
       );
     }
 
-    // Ulduz-u aralıqlarda, düyünün əks tərəfində platformada göstər.
+    // Zefi-ni aralıqlarda, düyünün əks tərəfində platformada göstər.
     const showMascot = i > 0 && i % 5 === 2 && node.state !== "current";
-    const mascotSide = off >= 0 ? -1 : 1; // düyün sağdadırsa Ulduz solda
+    const mascotSide = off >= 0 ? -1 : 1; // düyün sağdadırsa Zefi solda
     // Hər görünüşdə fərqli poza (növbələşir).
     const mascotEmotion = PERCH_EMOTIONS[Math.floor(i / 5) % PERCH_EMOTIONS.length];
 
