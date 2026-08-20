@@ -1,4 +1,4 @@
--- Bilik Yolu — həftəlik liqa (leaderboard)
+-- Imparo — həftəlik liqa (leaderboard)
 -- Supabase SQL Editor-da işə salınır.
 -- Hər istifadəçinin həftəlik XP-si; liqa səhifəsi hamının sətrini oxuyur (yalnız ad + xp).
 

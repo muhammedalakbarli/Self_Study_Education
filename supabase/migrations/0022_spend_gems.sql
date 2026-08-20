@@ -1,4 +1,4 @@
--- Bilik Yolu — Zümrüd xərcləmə (mağaza).
+-- Imparo — Zümrüd xərcləmə (mağaza).
 -- Supabase SQL Editor-da işə salınır. İdempotentdir.
 --
 -- Kifayət qədər zümrüd varsa azaldır və yeni balansı qaytarır; çatmırsa -1 qaytarır

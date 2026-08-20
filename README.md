@@ -51,8 +51,8 @@ qeydiyyatdan keçir, sinfini seçir və öz sürəti ilə öyrənir. Məzmun rə
 ## Sürətli başlanğıc
 
 ```bash
-git clone https://github.com/muhammedalakbarli/Self_Study_Education.git
-cd Self_Study_Education
+git clone https://github.com/muhammedalakbarli/imparo.git
+cd imparo
 npm install
 cp .env.example .env.local   # dəyərləri doldur (aşağıya bax)
 npm run dev

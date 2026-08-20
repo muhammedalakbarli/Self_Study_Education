@@ -1,4 +1,4 @@
--- Bilik Yolu — Liqa rollover DÜZƏLİŞİ (tək, təhlükəsiz fayl).
+-- Imparo — Liqa rollover DÜZƏLİŞİ (tək, təhlükəsiz fayl).
 -- Supabase SQL Editor-da BİR DƏFƏ bütöv işə salın. Əvvəlki migrasiyalardakı
 -- funksiya imza/qaytarma tipi konfliktlərini aradan qaldırmaq üçün əvvəlcə DROP edir.
 --

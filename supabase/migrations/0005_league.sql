@@ -1,4 +1,4 @@
--- Bilik Yolu — Duolingo üslubu liqa: eyni pillədə (tier) 15 nəfərlik kohort həftəlik
+-- Imparo — Duolingo üslubu liqa: eyni pillədə (tier) 15 nəfərlik kohort həftəlik
 -- XP ilə yarışır; həftə sonu top 5 növbəti liqaya keçir, alt 5 aşağı düşür.
 -- Supabase SQL Editor-da işə salınır.
 

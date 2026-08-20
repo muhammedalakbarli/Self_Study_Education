@@ -1,4 +1,4 @@
--- Bilik Yolu — ümumi liqa: bütün real qeydiyyatlı istifadəçilər (ümumi XP üzrə).
+-- Imparo — ümumi liqa: bütün real qeydiyyatlı istifadəçilər (ümumi XP üzrə).
 -- profiles + user_stats own-rows RLS ilə qorunur; bu funksiya security definer ilə
 -- yalnız (ad + ümumi xp) qaytarır (şəxsi məlumat açılmır). Supabase SQL Editor-da işə salınır.
 

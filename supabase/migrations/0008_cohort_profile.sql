@@ -1,4 +1,4 @@
--- Bilik Yolu — get_cohort-a username + avatar əlavə (liqadan public profilə keçid üçün).
+-- Imparo — get_cohort-a username + avatar əlavə (liqadan public profilə keçid üçün).
 -- Return tipi dəyişdiyi üçün əvvəl DROP. Supabase SQL Editor-da işə salınır.
 
 drop function if exists get_cohort(text, int);

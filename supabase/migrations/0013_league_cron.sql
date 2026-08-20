@@ -1,4 +1,4 @@
--- Bilik Yolu — liqa rollover-in həftəlik avtomatlaşdırılması (pg_cron).
+-- Imparo — liqa rollover-in həftəlik avtomatlaşdırılması (pg_cron).
 -- Supabase SQL Editor-da işə salınır.
 --
 -- Niyə: run_league_rollover() (bax 0011) mövcuddur, amma heç vaxt avtomatik çağırılmırdı

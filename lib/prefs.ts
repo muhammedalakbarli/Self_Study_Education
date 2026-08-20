@@ -21,7 +21,7 @@ export const DEFAULT_PREFS: Prefs = {
   lang: "az",
 };
 
-const KEY = "bilik-prefs";
+const KEY = "imparo-prefs";
 
 export function loadPrefs(): Prefs {
   if (typeof window === "undefined") return DEFAULT_PREFS;

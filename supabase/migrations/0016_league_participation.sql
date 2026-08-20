@@ -1,4 +1,4 @@
--- Bilik Yolu — Liqa iştirak qaydası + idempotent həftəlik rollover.
+-- Imparo — Liqa iştirak qaydası + idempotent həftəlik rollover.
 -- Supabase SQL Editor-da işə salınır.
 --
 -- Niyə:

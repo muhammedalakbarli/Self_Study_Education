@@ -1,4 +1,4 @@
--- Bilik Yolu — sual rəyi (feedback): istifadəçilər sualla bağlı problem bildirir.
+-- Imparo — sual rəyi (feedback): istifadəçilər sualla bağlı problem bildirir.
 -- Supabase SQL Editor-da işə salınır.
 --
 -- Niyə: praktika/dərsdə istifadəçi "cavab səhvdir / anlaşılmır / yazı xətası" kimi

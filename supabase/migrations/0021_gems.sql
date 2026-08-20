@@ -1,4 +1,4 @@
--- Bilik Yolu — Zümrüd (gems) valyutası.
+-- Imparo — Zümrüd (gems) valyutası.
 -- Supabase SQL Editor-da işə salınır. İdempotentdir.
 --
 -- Zümrüd oyun daxili valyutadır (Duolingo gem/gem kimi). Dərs tamamlananda qazanılır.

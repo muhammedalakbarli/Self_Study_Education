@@ -1,4 +1,4 @@
--- Bilik Yolu — atomik XP/streak + liqa rollover düzəlişi.
+-- Imparo — atomik XP/streak + liqa rollover düzəlişi.
 -- Supabase SQL Editor-da işə salınır.
 --
 -- Niyə:

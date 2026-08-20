@@ -1,5 +1,5 @@
 {
-  "name": "bilik-yolu",
+  "name": "imparo",
   "version": "0.1.0",
   "private": true,
   "description": "Azərbaycan məktəbliləri (1–8-ci siniflər) üçün oyunlaşdırılmış öyrənmə platforması.",
@@ -8,7 +8,7 @@
   "homepage": "https://imparo.pages.dev",
   "repository": {
     "type": "git",
-    "url": "https://github.com/muhammedalakbarli/Self_Study_Education.git"
+    "url": "https://github.com/muhammedalakbarli/imparo.git"
   },
   "scripts": {
     "dev": "next dev",

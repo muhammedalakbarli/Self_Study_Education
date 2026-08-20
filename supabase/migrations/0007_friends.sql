@@ -1,4 +1,4 @@
--- Bilik Yolu — dostlar + friend streak. Supabase SQL Editor-da işə salınır.
+-- Imparo — dostlar + friend streak. Supabase SQL Editor-da işə salınır.
 
 create table if not exists friendships (
   a uuid not null references profiles(id) on delete cascade,

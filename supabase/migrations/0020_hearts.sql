@@ -1,4 +1,4 @@
--- Bilik Yolu — Canlar (hearts / lives).
+-- Imparo — Canlar (hearts / lives).
 -- Supabase SQL Editor-da işə salınır. İdempotentdir.
 --
 -- Duolingo-üslubu canlar: maksimum 5. Dərsdə səhv cavab 1 can aparır. Zamanla bərpa:

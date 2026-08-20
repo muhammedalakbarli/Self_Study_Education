@@ -1,4 +1,4 @@
--- Bilik Yolu — admin paneli üçün: məzmun sxemini tamamla + admin rolu + yazı RLS.
+-- Imparo — admin paneli üçün: məzmun sxemini tamamla + admin rolu + yazı RLS.
 -- Supabase SQL Editor-da işə salınır.
 --
 -- Niyə: məzmun (fənn/bölmə/dərs/tapşırıq) DB-yə keçir ki, admin paneldən redaktə oluna bilsin.

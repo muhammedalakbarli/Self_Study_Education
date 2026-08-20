@@ -1,4 +1,4 @@
--- Bilik Yolu — Streak Freeze (seriya qoruyucu).
+-- Imparo — Streak Freeze (seriya qoruyucu).
 -- Supabase SQL Editor-da işə salınır. İdempotentdir.
 --
 -- Niyə: retensiyanın #1 leveri. İstifadəçi bir gün buraxsa, seriya sıfırlanmır —

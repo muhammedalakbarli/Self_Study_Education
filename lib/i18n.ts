@@ -1,7 +1,7 @@
 "use client";
 
 // Sadə i18n: AZ/EN/RU lüğət + hydration-təhlükəsiz useT hook.
-// Dil `bilik-prefs` (localStorage) içində saxlanılır; dəyişəndə səhifə yenilənir.
+// Dil `imparo-prefs` (localStorage) içində saxlanılır; dəyişəndə səhifə yenilənir.
 // Qeyd: dərs məzmunu (suallar/variantlar) AZ kurikulumu olduğu üçün AZ qalır.
 
 import { useSyncExternalStore } from "react";
@@ -1303,7 +1303,7 @@ const DICT: Dict = {
 export function getLang(): Lang {
   if (typeof window === "undefined") return "az";
   try {
-    const p = JSON.parse(localStorage.getItem("bilik-prefs") || "{}");
+    const p = JSON.parse(localStorage.getItem("imparo-prefs") || "{}");
     return (p.lang as Lang) || "az";
   } catch {
     return "az";
@@ -1322,14 +1322,14 @@ export function hasKey(key: string): boolean {
 
 // Hydration-təhlükəsiz: server və hidrasiya "az", sonra real dil.
 // useSyncExternalStore hidrasiya uyğunsuzluğu vermədən localStorage dilini oxuyur
-// və "bilik-lang" / storage hadisələrində yenilənir.
+// və "imparo-lang" / storage hadisələrində yenilənir.
 function subscribeLang(cb: () => void): () => void {
   if (typeof window === "undefined") return () => {};
   window.addEventListener("storage", cb);
-  window.addEventListener("bilik-lang", cb);
+  window.addEventListener("imparo-lang", cb);
   return () => {
     window.removeEventListener("storage", cb);
-    window.removeEventListener("bilik-lang", cb);
+    window.removeEventListener("imparo-lang", cb);
   };
 }
 

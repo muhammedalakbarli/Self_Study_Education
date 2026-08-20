@@ -1,4 +1,4 @@
--- Bilik Yolu — izləmə (follow) sistemi: izləyici/izlənilən sayı. Qarşılıqlı izləmə = dost.
+-- Imparo — izləmə (follow) sistemi: izləyici/izlənilən sayı. Qarşılıqlı izləmə = dost.
 -- Supabase SQL Editor-da işə salınır.
 
 create table if not exists follows (

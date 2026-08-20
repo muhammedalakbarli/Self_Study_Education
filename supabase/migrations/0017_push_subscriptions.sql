@@ -1,4 +1,4 @@
--- Bilik Yolu — Web Push abunələri (re-engagement bildirişləri).
+-- Imparo — Web Push abunələri (re-engagement bildirişləri).
 -- Supabase SQL Editor-da işə salınır.
 --
 -- Niyə: istifadəçini geri qaytarmaq üçün (streak yanır, gündəlik quest hazırdır) push

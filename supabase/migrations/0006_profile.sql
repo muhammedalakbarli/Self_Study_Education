@@ -1,4 +1,4 @@
--- Bilik Yolu — sosial profil: username + avatar + public profil funksiyası.
+-- Imparo — sosial profil: username + avatar + public profil funksiyası.
 -- Supabase SQL Editor-da işə salınır.
 
 alter table profiles add column if not exists username text unique;

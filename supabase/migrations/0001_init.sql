@@ -1,4 +1,4 @@
--- Bilik Yolu — verilənlər bazası sxemi (ilkin)
+-- Imparo — verilənlər bazası sxemi (ilkin)
 -- Bu SQL Supabase layihəsində SQL Editor-da işə salınır.
 -- MVP-də proqres localStorage-dadır; bu sxem persistensiyaya keçidin təməlidir.
 

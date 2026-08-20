@@ -1,4 +1,4 @@
--- Bilik Yolu — public profili username VƏ YA user_id ilə aç (hər kəs kliklənən olsun);
+-- Imparo — public profili username VƏ YA user_id ilə aç (hər kəs kliklənən olsun);
 -- dostu id ilə əlavə et (username olmayanlar da). Supabase SQL Editor-da işə salınır.
 
 -- get_public_profile: id qaytarır, username və ya id ilə tapır.
