@@ -434,7 +434,7 @@ export const azerbaijani: Subject = {
             { id: "az-orfoqrafiya-t10", type: "multiple_choice", prompt: "Hansı söz düzgün yazılıb?", options: ["uşax", "uşaq", "usaq", "uşag"], correctIndex: 1, xp: 10 },
             { id: "az-orfoqrafiya-t11", type: "multiple_choice", prompt: "Hansı söz düzgün yazılıb?", options: ["çörəy", "çörək", "cörək", "çörəx"], correctIndex: 1, xp: 10 },
             { id: "az-orfoqrafiya-t12", type: "fill_blank", prompt: "Sözün düzgün tələffüzü ___ qaydalarıdır.", accepted: ["orfoepiya"], xp: 10 },
-            { id: "az-orfoqrafiya-t13", type: "multiple_choice", prompt: "Hansı söz düzgün yazılıb?", options: ["ağaç", "ağac", "agac", "ağac"], correctIndex: 1, xp: 10 },
+            { id: "az-orfoqrafiya-t13", type: "multiple_choice", prompt: "Hansı söz düzgün yazılıb?", options: ["ağaç", "ağac", "agac", "ahac"], correctIndex: 1, xp: 10 },
             { id: "az-orfoqrafiya-t14", type: "multiple_choice", prompt: "Hansı söz düzgün yazılıb?", options: ["sahər", "səhər", "seher", "səhar"], correctIndex: 1, xp: 10 },
             { id: "az-orfoqrafiya-t15", type: "multiple_choice", prompt: "Hansı söz düzgün yazılıb?", options: ["kömey", "kömək", "komək", "kömax"], correctIndex: 1, xp: 15 },
           ],

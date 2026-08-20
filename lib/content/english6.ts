@@ -403,7 +403,7 @@ export const english6: Subject = {
           tasks: [
             { id: "en6-adv-rule-t1", type: "multiple_choice", speakOptions: true, prompt: "'quick' sifətinin zərfi?", options: ["quickly", "quick", "quicker", "quickest"], correctIndex: 0, xp: 10 },
             { id: "en6-adv-rule-t2", type: "multiple_choice", speakOptions: true, prompt: "'slow' sifətinin zərfi?", options: ["slowly", "slow", "slowest", "slowic"], correctIndex: 0, xp: 10 },
-            { id: "en6-adv-rule-t3", type: "multiple_choice", speakOptions: true, prompt: "'good' sifətinin zərfi (istisna)?", options: ["well", "goodly", "gooder", "goodly"], correctIndex: 0, xp: 10 },
+            { id: "en6-adv-rule-t3", type: "multiple_choice", speakOptions: true, prompt: "'good' sifətinin zərfi (istisna)?", options: ["well", "goodly", "gooder", "more good"], correctIndex: 0, xp: 10 },
             { id: "en6-adv-rule-t4", type: "multiple_choice", speakOptions: true, prompt: "'She runs ___.' (sürətlə)", options: ["fast", "fastly", "faster", "fastest"], correctIndex: 0, xp: 10 },
             { id: "en6-adv-rule-t5", type: "multiple_choice", speakOptions: true, prompt: "'always' nə deməkdir?", options: ["həmişə", "heç vaxt", "bəzən", "adətən"], correctIndex: 0, xp: 10 },
             { id: "en6-adv-rule-t6", type: "multiple_choice", speakOptions: true, prompt: "'never' nə deməkdir?", options: ["heç vaxt", "həmişə", "tez-tez", "bəzən"], correctIndex: 0, xp: 10 },

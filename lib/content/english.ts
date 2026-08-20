@@ -792,7 +792,7 @@ export const english: Subject = {
             { id: "pc3-write-t5", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["I", "am", "jumping", "high"], answer: "I am jumping high", translation: "Mən hündür tullanıram.", xp: 10 },
             { id: "pc3-write-t6", type: "fill_blank", prompt: "'swim' felinin -ing forması nədir? (m iki dəfə)", accepted: ["swimming", "Swimming"], xp: 10 },
             { id: "pc3-write-t7", type: "fill_blank", prompt: "'ride' felinin -ing forması nədir? (e düşür)", accepted: ["riding", "Riding"], xp: 10 },
-            { id: "pc3-write-t8", type: "multiple_choice", prompt: "Düzgün forma hansıdır?", options: ["running", "runing", "runnning", "runing"], correctIndex: 0, xp: 10 },
+            { id: "pc3-write-t8", type: "multiple_choice", prompt: "Düzgün forma hansıdır?", options: ["running", "runing", "runnning", "runningg"], correctIndex: 0, xp: 10 },
             { id: "pc3-write-t9", type: "word_order", prompt: "Sözləri düzgün sıraya düz.", words: ["We", "are", "winning", "the", "game"], answer: "We are winning the game", translation: "Biz oyunu udurıq.", xp: 10 },
             { id: "pc3-write-t10", type: "fill_blank", prompt: "'jump' felinin -ing forması nədir?", accepted: ["jumping", "Jumping"], xp: 10 },
           ],

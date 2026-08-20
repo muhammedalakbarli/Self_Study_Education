@@ -656,7 +656,7 @@ export const azerbaijani6: Subject = {
             { id: "az6-orf-l1-t8", type: "multiple_choice", prompt: "İnsan adı hansı hərflə başlayır?", options: ["böyük", "kiçik", "fərqi yoxdur", "hamısı böyük"], correctIndex: 0, xp: 10 },
             { id: "az6-orf-l1-t9", type: "multiple_choice", prompt: "Hansı düzgün yazılıb?", options: ["şagird", "şagirt", "şaqird", "şagrid"], correctIndex: 0, xp: 10 },
             { id: "az6-orf-l1-t10", type: "multiple_choice", prompt: "Bir hərf sətirdə tək qala bilərmi (köçürəndə)?", options: ["Xeyr", "Bəli"], correctIndex: 0, xp: 10 },
-            { id: "az6-orf-l1-t11", type: "multiple_choice", prompt: "Hansı düzgün yazılıb?", options: ["məktəb", "mətkəb", "məktəb", "məktəp"], correctIndex: 0, xp: 10 },
+            { id: "az6-orf-l1-t11", type: "multiple_choice", prompt: "Hansı düzgün yazılıb?", options: ["məktəb", "mətkəb", "məkdəb", "məktəp"], correctIndex: 0, xp: 10 },
             { id: "az6-orf-l1-t12", type: "multiple_choice", prompt: "Ölkə adları necə yazılır?", options: ["böyük hərflə", "kiçik hərflə", "dırnaqda", "defislə"], correctIndex: 0, xp: 10 },
             { id: "az6-orf-l1-t13", type: "multiple_choice", prompt: "Hansı düzgün yazılıb?", options: ["qələm", "qelem", "kələm", "gələm"], correctIndex: 0, xp: 10 },
             { id: "az6-orf-l1-t14", type: "multiple_choice", prompt: "Cümlə hansı hərflə başlayır?", options: ["böyük", "kiçik", "fərqi yoxdur", "rəqəmlə"], correctIndex: 0, xp: 10 },
