@@ -8,9 +8,10 @@ import Link from "next/link";
 import { Flame, Shield, Heart, Gem, Gift, Trophy, ChevronRight, ChevronDown, Crown } from "lucide-react";
 import { useContent } from "@/components/ContentProvider";
 import { loadProgress, loadActiveDays, lessonState, type ProgressState } from "@/lib/progress";
+import { getFriends } from "@/lib/friends";
 import { loadHearts, MAX_HEARTS } from "@/lib/hearts";
 import { loadPlus } from "@/lib/plus";
-import StreakCalendar from "@/components/StreakCalendar";
+import StreakPopover from "@/components/StreakPopover";
 import { useAuthUser } from "@/lib/useAuthUser";
 import { userGrade, subjectsForGrade } from "@/lib/grade";
 import { track } from "@/lib/analytics";
@@ -40,13 +41,23 @@ export default function DashboardPage() {
   const shown = useMemo(() => subjectsForGrade(subjects, user), [subjects, user]);
   const [state, setState] = useState<ProgressState | null>(null);
   const [activeSlug, setActiveSlug] = useState("");
-  const [calOpen, setCalOpen] = useState(false);
   const [activeDays, setActiveDays] = useState<string[]>([]);
+  const [friendStreaks, setFriendStreaks] = useState(0);
   const [hearts, setHearts] = useState(MAX_HEARTS);
   const [plus, setPlus] = useState(false);
   const [quests, setQuests] = useState<QuestState | null>(null);
   const [chestOpen, setChestOpen] = useState(false);
   const t = useT();
+
+  // Seriya pəncərəsi hover-də dərhal açılır — data əvvəlcədən yüklənməlidir,
+  // yoxsa pəncərə boş həftə zolağı ilə görünür.
+  useEffect(() => {
+    if (!user) return;
+    loadActiveDays(user.id).then(setActiveDays).catch(() => {});
+    getFriends()
+      .then((f) => setFriendStreaks(f.filter((x) => x.friendStreak > 0).length))
+      .catch(() => {});
+  }, [user]);
 
   useEffect(() => {
     if (user) loadProgress(user.id).then(setState);
@@ -139,28 +150,20 @@ export default function DashboardPage() {
             t={t}
           />
           <div className="flex shrink-0 items-center gap-5 sm:gap-6">
-            <StatMini
-              Icon={Flame}
-              value={state.streakDays}
-              color="text-orange-500"
-              badge={state.streakFreezes}
-              onClick={() => {
-                setCalOpen(true);
-                if (user) loadActiveDays(user.id).then(setActiveDays);
-              }}
-            />
+            {/* Alovun uzerinde evvel mavi qalxan nisani vardi — cixarildi.
+                Dondurucu sayi indi hover penceresinde gosterilir. */}
+            <StreakPopover
+              streakDays={state.streakDays}
+              streakFreezes={state.streakFreezes}
+              activeDays={activeDays}
+              friendStreaks={friendStreaks}
+            >
+              <StatMini Icon={Flame} value={state.streakDays} color="text-orange-500" />
+            </StreakPopover>
             <StatMini Icon={Gem} value={state.gems} color="text-emerald-500" />
             <StatMini Icon={Heart} value={hearts} display={plus ? "∞" : undefined} color="text-red-500" />
           </div>
         </div>
-
-        {calOpen && (
-          <StreakCalendar
-            streakDays={state.streakDays}
-            activeDays={activeDays}
-            onClose={() => setCalOpen(false)}
-          />
-        )}
 
         {/* Mobil: tək sütun · Desktop: mərkəz yol + sağ sütun */}
         <div className="lg:grid lg:grid-cols-[1fr_20rem] lg:items-start lg:gap-6">
