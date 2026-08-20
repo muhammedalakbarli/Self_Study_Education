@@ -4,8 +4,20 @@
   "main": ".open-next/worker.js",
   "compatibility_date": "2025-06-01",
   "compatibility_flags": ["nodejs_compat"],
+  // routes/custom_domain əlavə olunanda wrangler workers.dev linkini defolt
+  // söndürür — qəsdən açıq saxlanılır ki, köhnə imparo.m-alakbarli2007.workers.dev
+  // linki qırılmasın (paylaşılmış ola bilər).
+  "workers_dev": true,
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"
-  }
+  },
+  // Cloudflare Custom Domains: eyni hesabdakı zona üçün DNS+SSL avtomatik
+  // qurulur (əl ilə CNAME/TXT lazım deyil). Qəsdən YALNIZ apex — "www" əlavə
+  // etmirik, çünki www→apex redirect məntiqi kodda yoxdur; ikisini də custom
+  // domain kimi bağlasaydıq, sayt İKİ ayrı URL-də eyni məzmunla açılardı
+  // (dublikat məzmun, SEO üçün zərərli).
+  "routes": [
+    { "pattern": "imparo.app", "custom_domain": true }
+  ]
 }
