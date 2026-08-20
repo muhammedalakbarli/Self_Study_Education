@@ -13,11 +13,10 @@
     "binding": "ASSETS"
   },
   // Cloudflare Custom Domains: eyni hesabdakı zona üçün DNS+SSL avtomatik
-  // qurulur (əl ilə CNAME/TXT lazım deyil). Qəsdən YALNIZ apex — "www" əlavə
-  // etmirik, çünki www→apex redirect məntiqi kodda yoxdur; ikisini də custom
-  // domain kimi bağlasaydıq, sayt İKİ ayrı URL-də eyni məzmunla açılardı
-  // (dublikat məzmun, SEO üçün zərərli).
+  // qurulur (əl ilə CNAME/TXT lazım deyil). "www" da bağlanıb — middleware.ts
+  // onu 301 ilə apex-ə yönləndirir (dublikat məzmun/SEO problemi olmasın).
   "routes": [
-    { "pattern": "imparo.app", "custom_domain": true }
+    { "pattern": "imparo.app", "custom_domain": true },
+    { "pattern": "www.imparo.app", "custom_domain": true }
   ]
 }
