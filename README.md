@@ -12,7 +12,7 @@ Holberton + Duolingo hibrid modeli əsasında qurulub.
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript)
 ![Supabase](https://img.shields.io/badge/Supabase-Postgres-3ECF8E?logo=supabase)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4-06B6D4?logo=tailwindcss)
-![Vercel](https://img.shields.io/badge/Deploy-Vercel-000000?logo=vercel)
+![Cloudflare Workers](https://img.shields.io/badge/Deploy-Cloudflare_Workers-F38020?logo=cloudflareworkers)
 
 </div>
 
@@ -46,7 +46,7 @@ qeydiyyatdan keçir, sinfini seçir və öz sürəti ilə öyrənir. Məzmun rə
 | Üslub | Tailwind CSS v4, Framer Motion |
 | Backend | Supabase (Postgres, Auth, Row-Level Security) |
 | Analitika | PostHog |
-| Deploy | Vercel |
+| Deploy | Cloudflare Workers (OpenNext) |
 
 ## Sürətli başlanğıc
 
@@ -63,7 +63,7 @@ Brauzerdə [http://localhost:3000](http://localhost:3000) aç.
 ## Mühit dəyişənləri
 
 Bütün dəyişənlər və izahları [`.env.example`](.env.example) faylındadır: Supabase, PostHog (istəyə
-bağlı), web push (VAPID) və Vercel Cron. `.env.local` git-ə əlavə olunmur (gizli qalır).
+bağlı), web push (VAPID) və re-engagement kronu. `.env.local` git-ə əlavə olunmur (gizli qalır).
 
 ## Verilənlər bazası (Supabase)
 
@@ -119,8 +119,13 @@ tests/               # Vitest testləri
 
 ## Deploy
 
-Vercel-ə deploy olunur. Mühit dəyişənləri Vercel layihə parametrlərində təyin edilir; `main`-ə
-hər merge avtomatik production deploy tetikləyir.
+Cloudflare Workers-ə deploy olunur (OpenNext adapteri): `npm run cf:deploy`. Mühit dəyişənləri
+`wrangler secret put <AD>` ilə Worker secret kimi qoyulur (Cloudflare dashboard-da da görünür).
+Custom domain: `imparo.app` (+ `www.imparo.app` → 301 redirect, bax `middleware.ts`).
+
+Gündəlik re-engagement bildirişi (`/api/cron/reminders`) GitHub Actions ilə işə salınır —
+bax [`.github/workflows/cron-reminders.yml`](.github/workflows/cron-reminders.yml)
+(hər gün saat 19:00 Bakı vaxtı, `CRON_SECRET` repo secret-indən oxunur).
 
 ## İş axını və töhfə
 

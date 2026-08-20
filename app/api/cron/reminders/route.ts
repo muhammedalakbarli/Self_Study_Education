@@ -1,4 +1,4 @@
-// GET /api/cron/reminders — Vercel Cron hər axşam çağırır (re-engagement).
+// GET /api/cron/reminders — GitHub Actions hər axşam çağırır (bax .github/workflows/cron-reminders.yml).
 // Bu gün aktiv olmayan, streak-i olan istifadəçilərə "streak-in yanır" push göndərir.
 // service_role ilə işləyir (RLS-i keçir). CRON_SECRET ilə qorunur.
 
