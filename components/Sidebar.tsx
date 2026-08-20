@@ -33,6 +33,7 @@ import {
 import { signOut } from "@/lib/auth";
 import { checkIsAdmin, adminListTeacherRequests } from "@/lib/adminApi";
 import { useT } from "@/lib/i18n";
+import { useOptionalUser } from "@/lib/useOptionalUser";
 
 // Hər bölmənin öz rəngi — uşaqlar üçün rəngarəng, cəlbedici naviqasiya.
 // icon: həmişə rəngli ikon; activeBg/activeText: aktiv olanda rəngli fon+mətn.
@@ -100,6 +101,10 @@ const NAV = [
 ];
 
 export default function Sidebar() {
+  // Girişsiz ziyarətçiyə sidebar göstərilmir: Liqa/Mağaza/Görevlər/Profil bəndlərinin
+  // HAMISI giriş tələb edir, yəni qonaq üçün ölü linklərdir. Bu, onboarding-də
+  // "Sonra" seçib yolda gəzən şagirdə də aiddir (bax lib/guest.ts).
+  const { user, ready: authReady } = useOptionalUser();
   const pathname = usePathname();
   const router = useRouter();
   const t = useT();
@@ -130,6 +135,9 @@ export default function Sidebar() {
     await signOut();
     router.replace("/");
   }
+
+  // Sessiya oxunana qədər heç nə göstərmirik ki, sidebar "yanıb-sönməsin".
+  if (!authReady || !user) return null;
 
   return (
     <>

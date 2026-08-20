@@ -56,7 +56,7 @@ export default function LessonPage({
             const r = await completeLesson(lesson.id).catch(() => ({ xp: 0, gems: 0 }));
             return { kind: "gems", amount: r.gems };
           }}
-          onClose={() => router.push(`/subjects/${subject.slug}`)}
+          onClose={() => router.push(`/subjects/${subject.slug}${guest ? "?onboarding=1" : ""}`)}
           titleKey="chest.unitTitle"
           subtitleKey="chest.unitReady"
         />
@@ -80,7 +80,7 @@ export default function LessonPage({
       <div className="mx-auto flex min-h-screen w-full max-w-xl flex-col px-4 pb-28 pt-5">
         {/* Yuxarı: çıxış */}
         <Link
-          href={`/subjects/${subject.slug}`}
+          href={`/subjects/${subject.slug}${guest ? "?onboarding=1" : ""}`}
           aria-label="Çıx"
           className="flex h-9 w-9 items-center justify-center rounded-full text-muted transition hover:bg-panel-2 hover:text-fg"
         >

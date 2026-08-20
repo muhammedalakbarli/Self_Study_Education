@@ -375,7 +375,7 @@ export default function LessonRunner({ slug, lesson, userId, guest = false }: Pr
         <RewardChain
           xp={earnedXp}
           onFinish={() => router.push("/signup?from=onboarding")}
-          onSkip={() => router.push("/")}   // "Sonra" — hesabsız ana səhifəyə qayıdır
+          onSkip={() => router.push(`/subjects/${slug}?onboarding=1`)} // "Sonra" — qonaq kimi yolda davam
         />
       );
     }
@@ -498,16 +498,24 @@ export default function LessonRunner({ slug, lesson, userId, guest = false }: Pr
               <h2 className="mt-4 text-xl font-extrabold text-fg">{t("hearts.outTitle")}</h2>
               <p className="mt-2 text-sm text-muted">{t("hearts.outBody")}</p>
               <div className="mt-6 flex flex-col gap-2">
-                <Link
-                  href="/praktika"
-                  className="rounded-2xl bg-brand px-5 py-3 font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark"
-                >
-                  {t("hearts.practice")}
-                </Link>
+                {/* Qonaqda /praktika ÖLÜ LİNKDİR (giriş tələb edir) — ona görə
+                    onboarding rejimində praktika təklifi göstərilmir. */}
+                {!guest && (
+                  <Link
+                    href="/praktika"
+                    className="rounded-2xl bg-brand px-5 py-3 font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark"
+                  >
+                    {t("hearts.practice")}
+                  </Link>
+                )}
                 <button
                   type="button"
                   onClick={() => setHeartsOut(false)}
-                  className="rounded-2xl border-2 border-line px-5 py-3 font-bold text-fg btn-pop btn-pop-ghost hover:border-brand"
+                  className={
+                    guest
+                      ? "rounded-2xl bg-brand px-5 py-3 font-extrabold uppercase tracking-wide text-white btn-pop hover:bg-brand-dark"
+                      : "rounded-2xl border-2 border-line px-5 py-3 font-bold text-fg btn-pop btn-pop-ghost hover:border-brand"
+                  }
                 >
                   {t("hearts.continue")}
                 </button>

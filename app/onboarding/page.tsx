@@ -187,12 +187,14 @@ export default function OnboardingPage() {
   async function onDiagnostic(r: DiagnosticResult) {
     setBusy(true);
     try {
-      // Giriş etmiş istifadəçi üçün nəticəni serverə yaz; qonaq üçün sadəcə keçirik
-      // (hesab yaradılanda diaqnostika təkrarlanmır — sadəlik üçün şüurlu qərar).
+      // Giriş etmiş istifadəçi üçün dərhal serverə yazırıq; qonaq üçün nəticə
+      // saxlanılır və qeydiyyat anında hesaba köçürülür (bax app/signup).
       const u = await getCurrentUser().catch(() => null);
       if (u) {
         for (const id of r.knownLessonIds) await completeLesson(id, false).catch(() => {});
         for (const t of r.wrongTaskIds) await addWrong(t).catch(() => {});
+      } else {
+        setGuest({ knownLessons: r.knownLessonIds, wrongTasks: r.wrongTaskIds });
       }
       track("diagnostic_completed", { known: r.knownLessonIds.length });
     } finally {

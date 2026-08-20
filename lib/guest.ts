@@ -24,6 +24,10 @@ export interface GuestState {
   age?: number;
   /** Onboarding-də bitirilən dərslər — qeydiyyatda serverdə təkrar hesablanır. */
   lessons?: string[];
+  /** Diaqnostikada "bilirəm" işarələnən dərslər (XP-siz tamamlanmış sayılır). */
+  knownLessons?: string[];
+  /** Diaqnostikada səhv cavablanan tapşırıqlar — qeydiyyatda SRS-ə düşür. */
+  wrongTasks?: string[];
   xp?: number;
   gems?: number;
   /** Onboarding skripti bitibmi (ilk dərs + mükafat zənciri daxil). */

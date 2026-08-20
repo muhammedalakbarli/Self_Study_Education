@@ -16,6 +16,7 @@ import { track } from "@/lib/analytics";
 import { getGuest, guestMetadata, clearGuest, setGuest } from "@/lib/guest";
 import { createClient } from "@/lib/supabase/client";
 import { completeLesson } from "@/lib/progress";
+import { addWrong } from "@/lib/srs";
 import { useT } from "@/lib/i18n";
 
 // useSearchParams() statik prerender-i pozur — Next sənədlərinə görə Suspense
@@ -107,6 +108,13 @@ function SignupInner() {
       // Dərsin mükafatı SERVERDƏ hesablanır (0037) — client məbləğ göndərmir.
       for (const lessonId of g.lessons ?? []) {
         await completeLesson(lessonId).catch(() => {});
+      }
+      // Diaqnostika: "bilirəm" dərsləri XP-SİZ tamamlanmış işarələnir, səhvlər SRS-ə.
+      for (const lessonId of g.knownLessons ?? []) {
+        await completeLesson(lessonId, false).catch(() => {});
+      }
+      for (const taskId of g.wrongTasks ?? []) {
+        await addWrong(taskId).catch(() => {});
       }
       clearGuest();
       router.push("/dashboard");
