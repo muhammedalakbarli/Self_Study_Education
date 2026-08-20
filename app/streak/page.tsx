@@ -6,7 +6,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Flame, Shield, Crown, Gift, ChevronLeft } from "lucide-react";
+import { Flame, Shield, Crown, Gift, ChevronLeft, ChevronRight } from "lucide-react";
 import { useAuthUser } from "@/lib/useAuthUser";
 import { loadProgress, loadActiveDays, type ProgressState } from "@/lib/progress";
 import { getFriends } from "@/lib/friends";
@@ -18,6 +18,8 @@ export default function StreakPage() {
   const [state, setState] = useState<ProgressState | null>(null);
   const [activeDays, setActiveDays] = useState<string[]>([]);
   const [friendStreaks, setFriendStreaks] = useState(0);
+  // Təqvimdə cari aydan neçə ay sürüşmüşük (0 = bu ay, -1 = keçən, +1 = gələn).
+  const [monthOffset, setMonthOffset] = useState(0);
 
   useEffect(() => {
     if (!user) return;
@@ -37,12 +39,11 @@ export default function StreakPage() {
   const active = new Set(activeDays);
   const doneToday = active.has(dayKey(new Date()));
 
-  // Keçən, cari və gələn ay.
+  // Təqvimdə göstərilən tək ay — oxlarla irəli/geri sürüşür.
   const now = new Date();
-  const months = [-1, 0, 1].map((off) => {
-    const d = new Date(now.getFullYear(), now.getMonth() + off, 1);
-    return { year: d.getFullYear(), month: d.getMonth() };
-  });
+  const shown = new Date(now.getFullYear(), now.getMonth() + monthOffset, 1);
+  const year = shown.getFullYear();
+  const month = shown.getMonth();
 
   return (
     <div className="min-h-screen bg-ink">
@@ -75,46 +76,67 @@ export default function StreakPage() {
           </p>
         </section>
 
-        {/* ── Təqvim ── */}
+        {/* ── Təqvim (tək ay + oxlarla naviqasiya) ── */}
         <section className="mt-5 rounded-3xl border-2 border-line bg-panel p-6">
-          <h2 className="text-lg font-extrabold text-fg">Təqvim</h2>
-          <div className="mt-4 space-y-7">
-            {months.map(({ year, month }) => (
-              <div key={`${year}-${month}`}>
-                <h3 className="text-sm font-extrabold uppercase tracking-wide text-muted">
-                  {MONTHS[month]} {year}
-                </h3>
-                <div className="mt-2 grid grid-cols-7 gap-1 text-center">
-                  {WEEKDAYS.map((w, i) => (
-                    <span key={i} className="py-1 text-[11px] font-bold text-muted">
-                      {w}
-                    </span>
-                  ))}
-                  {monthGrid(year, month).map(({ date, inMonth }, i) => {
-                    const on = active.has(dayKey(date));
-                    return (
-                      <span
-                        key={i}
-                        className={`flex aspect-square items-center justify-center rounded-lg text-xs font-bold ${
-                          !inMonth
-                            ? "text-muted/30"
-                            : on
-                              ? "bg-orange-500 text-white"
-                              : "bg-panel-2 text-muted"
-                        }`}
-                      >
-                        {on && inMonth ? (
-                          <Flame size={13} fill="currentColor" strokeWidth={0} />
-                        ) : (
-                          date.getDate()
-                        )}
-                      </span>
-                    );
-                  })}
-                </div>
-              </div>
-            ))}
+          <div className="flex items-center justify-between">
+            <button
+              type="button"
+              onClick={() => setMonthOffset((o) => o - 1)}
+              aria-label="Əvvəlki ay"
+              className="flex h-9 w-9 items-center justify-center rounded-xl text-muted transition hover:bg-panel-2 hover:text-fg"
+            >
+              <ChevronLeft size={20} strokeWidth={2.5} />
+            </button>
+            <h2 className="text-lg font-extrabold text-fg">
+              {MONTHS[month]} {year}
+            </h2>
+            <button
+              type="button"
+              onClick={() => setMonthOffset((o) => o + 1)}
+              aria-label="Növbəti ay"
+              className="flex h-9 w-9 items-center justify-center rounded-xl text-muted transition hover:bg-panel-2 hover:text-fg"
+            >
+              <ChevronRight size={20} strokeWidth={2.5} />
+            </button>
           </div>
+
+          <div className="mt-4 grid grid-cols-7 gap-1 text-center">
+            {WEEKDAYS.map((w, i) => (
+              <span key={i} className="py-1 text-[11px] font-bold text-muted">
+                {w}
+              </span>
+            ))}
+            {monthGrid(year, month).map(({ date, inMonth }, i) => {
+              const on = inMonth && active.has(dayKey(date));
+              const isToday = dayKey(date) === dayKey(now);
+              return (
+                <span
+                  key={i}
+                  className={`flex aspect-square items-center justify-center rounded-lg text-xs font-bold ${
+                    !inMonth
+                      ? "text-muted/30"
+                      : on
+                        ? "bg-orange-500 text-white"
+                        : isToday
+                          ? "border-2 border-orange-500/50 text-fg"
+                          : "bg-panel-2 text-muted"
+                  }`}
+                >
+                  {on ? <Flame size={13} fill="currentColor" strokeWidth={0} /> : date.getDate()}
+                </span>
+              );
+            })}
+          </div>
+
+          {monthOffset !== 0 && (
+            <button
+              type="button"
+              onClick={() => setMonthOffset(0)}
+              className="mt-4 w-full rounded-xl py-2 text-sm font-extrabold text-brand transition hover:bg-panel-2"
+            >
+              Bu aya qayıt
+            </button>
+          )}
         </section>
 
         {/* ── Seriya məqsədi ── */}
