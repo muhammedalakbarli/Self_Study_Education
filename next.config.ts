@@ -1,4 +1,10 @@
 import type { NextConfig } from "next";
+import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
+
+// `next dev` (yerli inkişaf) daxilində Cloudflare kontekstini (getCloudflareContext())
+// simulyasiya edir — olmasa API route-larda process.env ƏVƏZİNƏ işlədilən Worker
+// secret-ləri (CRON_SECRET və s.) yalnız `wrangler dev`-də görünərdi, `npm run dev`-də yox.
+initOpenNextCloudflareForDev();
 
 // CSP-də istifadə olunan xarici mənbələr: Supabase (DB/auth/REST), PostHog (analitika, EU host),
 // LemonSqueezy (ödəniş checkout — tam səhifə keçidi, iframe DEYİL, ona görə connect-src-ə lazım deyil).

@@ -4,6 +4,7 @@
 
 import webpush from "web-push";
 import { createClient } from "@supabase/supabase-js";
+import { getCloudflareContext } from "@opennextjs/cloudflare";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -26,19 +27,24 @@ interface Stat {
 }
 
 export async function GET(req: Request) {
+  // Bu 4 dəyər Cloudflare Worker SECRET-idir — `process.env`-dən OXUNMUR (bax
+  // cloudflare-env.d.ts). NEXT_PUBLIC_* dəyərlər isə build-də inline olunur,
+  // adi process.env ilə qalır.
+  const { env } = await getCloudflareContext({ async: true });
+
   // Fail-CLOSED: CRON_SECRET mühitdə YOXDURSA da endpoint açıq qalmasın (əvvəlki
   // `secret && ...` fail-open idi — mühit dəyişəni səhvən silinsə/qurulmasa, qoruma
   // sükutla keçirdi).
-  const secret = process.env.CRON_SECRET;
+  const secret = env.CRON_SECRET;
   if (!secret || req.headers.get("authorization") !== `Bearer ${secret}`) {
     return new Response("unauthorized", { status: secret ? 401 : 500 });
   }
 
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const serviceKey = env.SUPABASE_SERVICE_ROLE_KEY;
   const vapidPublic = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
-  const vapidPrivate = process.env.VAPID_PRIVATE_KEY;
-  const vapidSubject = process.env.VAPID_SUBJECT || "mailto:info@imparo.az";
+  const vapidPrivate = env.VAPID_PRIVATE_KEY;
+  const vapidSubject = env.VAPID_SUBJECT || "mailto:info@imparo.az";
   if (!url || !serviceKey || !vapidPublic || !vapidPrivate) {
     return Response.json({ ok: false, error: "missing_env" }, { status: 500 });
   }

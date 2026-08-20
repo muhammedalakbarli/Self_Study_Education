@@ -5,12 +5,15 @@
 import type { NextRequest } from "next/server";
 import crypto from "crypto";
 import { grantPlusServer, revokePlusServer } from "@/lib/plusServer";
+import { getCloudflareContext } from "@opennextjs/cloudflare";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
-  const secret = process.env.LEMONSQUEEZY_WEBHOOK_SECRET;
+  // Cloudflare Worker SECRET-idir — process.env-dən oxunmur (bax cloudflare-env.d.ts).
+  const { env } = await getCloudflareContext({ async: true });
+  const secret = env.LEMONSQUEEZY_WEBHOOK_SECRET;
   if (!secret) return new Response("webhook not configured", { status: 500 });
 
   const raw = await req.text();

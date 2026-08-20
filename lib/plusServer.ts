@@ -6,7 +6,7 @@ import { adminClient } from "./supabase/admin";
 export async function grantPlusServer(userId: string, months: number): Promise<void> {
   const until = new Date();
   until.setMonth(until.getMonth() + Math.max(1, months));
-  const admin = adminClient();
+  const admin = await adminClient();
   await admin
     .from("user_stats")
     .upsert(
@@ -16,6 +16,6 @@ export async function grantPlusServer(userId: string, months: number): Promise<v
 }
 
 export async function revokePlusServer(userId: string): Promise<void> {
-  const admin = adminClient();
+  const admin = await adminClient();
   await admin.from("user_stats").update({ is_plus: false, plus_until: null }).eq("user_id", userId);
 }
