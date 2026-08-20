@@ -49,6 +49,19 @@ export default function LandingPage() {
     });
   }, [router]);
 
+  // Vitrin rəqəmləri YUVARLAQ göstərilir: "776 dərs" səliqəsiz görünür, "750+" isə
+  // həm təmiz, həm dürüstdür (real say həmişə göstərilən rəqəmdən çoxdur).
+  // Addım rəqəmin böyüklüyünə uyğunlaşır: 776 → 750, 11 693 → 10 000.
+  function niceFloor(n: number): number {
+    if (n < 10) return n;
+    const step = Math.pow(10, Math.floor(Math.log10(n))) / 2;
+    return Math.floor(n / step) * step;
+  }
+
+  // Fənn sayı ADINA görə təkrarsızdır: bazada hər sinif üçün ayrıca sətir var
+  // (26 sətir), amma şagird üçün bu, 5 fərqli fənn deməkdir.
+  const subjectCount = new Set(subjects.map((s) => s.name)).size;
+
   const totalLessons = subjects.reduce(
     (n, s) => n + s.units.reduce((m, u) => m + u.lessons.length, 0),
     0,
@@ -154,9 +167,9 @@ export default function LandingPage() {
 
         {/* ── Statistika (count-up) ── */}
         <Reveal className="grid grid-cols-3 gap-4 pb-6">
-          <StatCard value={subjects.length} label={t("home.stat.subjects")} />
-          <StatCard value={totalLessons} label={t("home.stat.lessons")} />
-          <StatCard value={totalTasks} suffix="+" label={t("home.stat.tasks")} />
+          <StatCard value={subjectCount} label={t("home.stat.subjects")} />
+          <StatCard value={niceFloor(totalLessons)} suffix="+" label={t("home.stat.lessons")} />
+          <StatCard value={niceFloor(totalTasks)} suffix="+" label={t("home.stat.tasks")} />
         </Reveal>
 
 
@@ -288,6 +301,13 @@ function SectionHead({ title, body }: { title: string; body?: string }) {
   );
 }
 
+// Minlik ayırıcısı ƏL İLƏ qoyulur: `toLocaleString("az")` lokalda "10.000",
+// Cloudflare Workers-də isə (ICU məhdud olduğu üçün en-ə düşərək) "10,000" verirdi —
+// yəni rəqəm mühitdən asılı görünürdü. Dar boşluq hər yerdə eyni və AZ tipoqrafiyasına uyğundur.
+function groupThousands(n: number): string {
+  return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, "\u202F");
+}
+
 function StatCard({ value, label, suffix = "" }: { value: number; label: string; suffix?: string }) {
   const n = useCountUp(value, 1200);
   return (
@@ -296,7 +316,7 @@ function StatCard({ value, label, suffix = "" }: { value: number; label: string;
       className="rounded-2xl border border-line bg-panel/80 py-5 text-center backdrop-blur-sm"
     >
       <div className="text-3xl font-extrabold text-brand sm:text-4xl">
-        {n.toLocaleString("az")}
+        {groupThousands(n)}
         {suffix}
       </div>
       <div className="text-sm text-muted">{label}</div>
