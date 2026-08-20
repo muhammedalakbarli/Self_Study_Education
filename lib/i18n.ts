@@ -74,6 +74,7 @@ const DICT: Dict = {
   "subject.azerbaycan-dili-8": { az: "Azərbaycan dili", en: "Azerbaijani", ru: "Азербайджанский" },
   "subject.ingilis-dili-8": { az: "İngilis dili", en: "English", ru: "Английский" },
   "subject.reqemsal-tehlukesizlik-5": { az: "Rəqəmsal Təhlükəsizlik", en: "Digital Safety", ru: "Цифровая безопасность" },
+  "subject.maliyye-savadliligi-5": { az: "Maliyyə Savadlılığı", en: "Financial Literacy", ru: "Финансовая грамотность" },
 
   // Bölmə (unit) adları — Praktika "Bölmə üzrə" siyahısı
   "unit.ry-natural": {
