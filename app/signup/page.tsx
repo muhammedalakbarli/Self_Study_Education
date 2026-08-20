@@ -3,7 +3,7 @@
 // Qeydiyyat səhifəsi — login ilə eyni peşəkar split-ekran (solda brend, sağda forma).
 // Validasiya + şifrə gücü + təsdiq + real Supabase qeydiyyatı.
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -18,7 +18,18 @@ import { createClient } from "@/lib/supabase/client";
 import { completeLesson } from "@/lib/progress";
 import { useT } from "@/lib/i18n";
 
+// useSearchParams() statik prerender-i pozur — Next sənədlərinə görə Suspense
+// sərhədi tələb olunur. Səhifə qabığı serverdə hazırlanır, parametrdən asılı hissə
+// isə brauzerdə açılır.
 export default function SignupPage() {
+  return (
+    <Suspense fallback={null}>
+      <SignupInner />
+    </Suspense>
+  );
+}
+
+function SignupInner() {
   const router = useRouter();
   const t = useT();
   const [fullName, setFullName] = useState("");
